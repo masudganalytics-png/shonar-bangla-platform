@@ -1,536 +1,129 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { Loader2, LogOut, Plus, Trash2, Wallet, TrendingUp, Calendar, ListChecks } from "lucide-react";
-import { z } from "zod";
-
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/use-auth";
-import { CATEGORIES, CATEGORY_MAP, type ExpenseCategory } from "@/lib/expense-meta";
-import { formatBanglaCurrency, formatBanglaDate, toBanglaDigits } from "@/lib/bangla";
-
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, Zap, ShieldCheck, BarChart3, Bell, FileText, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import {
-  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
-  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { Card } from "@/components/ui/card";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "উখিয়া বিদ্যুৎ বিল — হোম" },
+      {
+        name: "description",
+        content: "উখিয়া উপজেলার বিদ্যুৎ বিল, তুলনা, অভিযোগ ও নোটিশ — এক প্ল্যাটফর্মে।",
+      },
+      { property: "og:title", content: "উখিয়া বিদ্যুৎ বিল — হোম" },
+      {
+        property: "og:description",
+        content: "স্বচ্ছ বিল, সচেতন গ্রাহক। আপনার বিদ্যুৎ বিল ট্র্যাক করুন সহজে।",
+      },
+    ],
+  }),
   component: HomePage,
 });
 
-interface ExpenseRow {
-  id: string;
-  amount: number;
-  category: ExpenseCategory;
-  note: string | null;
-  spent_at: string;
-  created_at: string;
-}
+const FEATURES = [
+  { icon: FileText, title: "বিল জমা ও ইতিহাস", desc: "প্রতি মাসের বিল সংরক্ষণ ও পরিশোধের অবস্থা।" },
+  { icon: BarChart3, title: "মাসিক তুলনা", desc: "গত মাসের সাথে ব্যবহার ও খরচের তুলনামূলক বিশ্লেষণ।" },
+  { icon: MessageSquare, title: "অভিযোগ দাখিল", desc: "মিটার, লোডশেডিং বা বিলিং সংক্রান্ত অভিযোগ পাঠান।" },
+  { icon: Bell, title: "নোটিশ ও ঘোষণা", desc: "কর্তৃপক্ষের সর্বশেষ ঘোষণা তাৎক্ষণিক পান।" },
+  { icon: ShieldCheck, title: "নিরাপদ অ্যাকাউন্ট", desc: "আধুনিক অথেনটিকেশন এবং গোপনীয়তা সুরক্ষা।" },
+  { icon: Zap, title: "দ্রুত ও রেসপনসিভ", desc: "মোবাইল ও ডেস্কটপ — সব ডিভাইসে নিখুঁত অভিজ্ঞতা।" },
+];
 
 function HomePage() {
-  const { session, loading } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!loading && !session) {
-      navigate({ to: "/auth" });
-    }
-  }, [session, loading, navigate]);
-
-  if (loading || !session) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  return <Dashboard />;
-}
-
-function Dashboard() {
-  const { user } = useAuth();
-  const qc = useQueryClient();
-
-  const { data: expenses = [], isLoading } = useQuery({
-    queryKey: ["expenses", user?.id],
-    enabled: !!user,
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("expenses")
-        .select("id, amount, category, note, spent_at, created_at")
-        .order("spent_at", { ascending: false })
-        .order("created_at", { ascending: false })
-        .limit(200);
-      if (error) throw error;
-      return (data ?? []).map((r) => ({ ...r, amount: Number(r.amount) })) as ExpenseRow[];
-    },
-  });
-
-  const summary = useMemo(() => computeSummary(expenses), [expenses]);
-
-  const onLogout = async () => {
-    await supabase.auth.signOut();
-    toast.success("সাইন আউট সম্পন্ন");
-  };
+  const { isAuthenticated } = useAuth();
 
   return (
-    <div className="min-h-screen bg-muted/40">
-      <header className="bg-card border-b sticky top-0 z-30">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-lg bg-[image:var(--gradient-primary)] grid place-items-center text-primary-foreground shadow-[var(--shadow-glow)]">
-              <Wallet className="w-5 h-5" />
-            </div>
-            <div className="leading-tight">
-              <h1 className="text-base sm:text-lg font-semibold">খরচের খাতা</h1>
-              <p className="text-xs text-muted-foreground hidden sm:block">
-                {user?.email}
-              </p>
-            </div>
-          </div>
-          <Button variant="ghost" size="sm" onClick={onLogout}>
-            <LogOut className="w-4 h-4 sm:mr-2" />
-            <span className="hidden sm:inline">সাইন আউট</span>
-          </Button>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-6xl px-4 sm:px-6 py-6 space-y-6">
-        <SummaryCards
-          monthTotal={summary.monthTotal}
-          todayTotal={summary.todayTotal}
-          count={summary.monthCount}
+    <>
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div
+          className="absolute inset-0 -z-10 opacity-95"
+          style={{ background: "var(--gradient-hero)" }}
+          aria-hidden
         />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,white/20,transparent_50%)]" aria-hidden />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1 space-y-6">
-            <AddExpenseCard
-              onAdded={() => qc.invalidateQueries({ queryKey: ["expenses"] })}
-            />
-            <CategoryBreakdown byCategory={summary.byCategory} monthTotal={summary.monthTotal} />
-          </div>
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center text-white">
+            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+              সরকারি ডিজিটাল সেবা
+            </div>
+            <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl">
+              উখিয়া বিদ্যুৎ বিল
+            </h1>
+            <p className="mt-4 text-lg font-medium text-white/90 sm:text-xl">স্বচ্ছ বিল, সচেতন গ্রাহক।</p>
+            <p className="mx-auto mt-4 max-w-2xl text-sm text-white/80 sm:text-base">
+              উখিয়া উপজেলার বিদ্যুৎ গ্রাহকদের জন্য বিল ব্যবস্থাপনা, তুলনামূলক বিশ্লেষণ, অভিযোগ দাখিল ও অফিসিয়াল নোটিশ — সব এক জায়গায়।
+            </p>
 
-          <div className="lg:col-span-2">
-            <RecentExpenses
-              expenses={expenses}
-              isLoading={isLoading}
-              onDeleted={() => qc.invalidateQueries({ queryKey: ["expenses"] })}
-            />
-          </div>
-        </div>
-      </main>
-    </div>
-  );
-}
-
-/* --------------------------------- Summary -------------------------------- */
-
-function computeSummary(rows: ExpenseRow[]) {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = now.getMonth();
-  const todayStr = now.toISOString().slice(0, 10);
-
-  let monthTotal = 0;
-  let todayTotal = 0;
-  let monthCount = 0;
-  const byCategory: Record<ExpenseCategory, number> = {
-    food: 0, transport: 0, shopping: 0, bills: 0,
-    health: 0, education: 0, entertainment: 0, other: 0,
-  };
-
-  for (const r of rows) {
-    const d = new Date(r.spent_at);
-    if (d.getFullYear() === y && d.getMonth() === m) {
-      monthTotal += r.amount;
-      monthCount += 1;
-      byCategory[r.category] += r.amount;
-    }
-    if (r.spent_at === todayStr) todayTotal += r.amount;
-  }
-
-  return { monthTotal, todayTotal, monthCount, byCategory };
-}
-
-function SummaryCards({
-  monthTotal, todayTotal, count,
-}: { monthTotal: number; todayTotal: number; count: number }) {
-  const now = new Date();
-  const monthName = formatBanglaDate(now).split(" ").slice(1).join(" ");
-
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <StatCard
-        icon={<TrendingUp className="w-5 h-5" />}
-        label={`এই মাসে (${monthName.replace(",", "")})`}
-        value={formatBanglaCurrency(monthTotal)}
-        accent="primary"
-      />
-      <StatCard
-        icon={<Calendar className="w-5 h-5" />}
-        label="আজকের খরচ"
-        value={formatBanglaCurrency(todayTotal)}
-        accent="accent"
-      />
-      <StatCard
-        icon={<ListChecks className="w-5 h-5" />}
-        label="এই মাসে মোট এন্ট্রি"
-        value={toBanglaDigits(count)}
-        accent="muted"
-      />
-    </div>
-  );
-}
-
-function StatCard({
-  icon, label, value, accent,
-}: { icon: React.ReactNode; label: string; value: string; accent: "primary" | "accent" | "muted" }) {
-  const bg =
-    accent === "primary" ? "bg-[image:var(--gradient-primary)] text-primary-foreground"
-      : accent === "accent" ? "bg-[image:var(--gradient-warm)] text-accent-foreground"
-        : "bg-card text-foreground border";
-  return (
-    <Card className={`${bg} shadow-[var(--shadow-md)] border-0`}>
-      <CardContent className="p-5">
-        <div className="flex items-center justify-between">
-          <p className={`text-sm font-medium ${accent === "muted" ? "text-muted-foreground" : "opacity-90"}`}>
-            {label}
-          </p>
-          <div className={`w-9 h-9 grid place-items-center rounded-lg ${accent === "muted" ? "bg-secondary text-secondary-foreground" : "bg-white/20"}`}>
-            {icon}
-          </div>
-        </div>
-        <p className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight tabular-nums">
-          {value}
-        </p>
-      </CardContent>
-    </Card>
-  );
-}
-
-/* ------------------------------- Add Expense ------------------------------ */
-
-const expenseSchema = z.object({
-  amount: z.number().positive("পরিমাণ শূন্যের বেশি হতে হবে"),
-  category: z.enum(["food", "transport", "shopping", "bills", "health", "education", "entertainment", "other"]),
-  note: z.string().max(200, "নোট সর্বাধিক ২০০ অক্ষর").optional(),
-  spent_at: z.string().min(1, "তারিখ দিন"),
-});
-
-function AddExpenseCard({ onAdded }: { onAdded: () => void }) {
-  const { user } = useAuth();
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState<ExpenseCategory>("food");
-  const [note, setNote] = useState("");
-  const [spentAt, setSpentAt] = useState(() => new Date().toISOString().slice(0, 10));
-
-  const addMutation = useMutation({
-    mutationFn: async () => {
-      const parsed = expenseSchema.safeParse({
-        amount: Number(amount),
-        category,
-        note: note.trim() || undefined,
-        spent_at: spentAt,
-      });
-      if (!parsed.success) {
-        throw new Error(parsed.error.issues[0]?.message ?? "তথ্য ভুল");
-      }
-      const { error } = await supabase.from("expenses").insert({
-        user_id: user!.id,
-        amount: parsed.data.amount,
-        category: parsed.data.category,
-        note: parsed.data.note ?? null,
-        spent_at: parsed.data.spent_at,
-      });
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      toast.success("খরচ যোগ করা হয়েছে");
-      setAmount("");
-      setNote("");
-      onAdded();
-    },
-    onError: (err: Error) => {
-      toast.error("সংরক্ষণ ব্যর্থ", { description: err.message });
-    },
-  });
-
-  return (
-    <Card className="shadow-[var(--shadow-md)]">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-lg flex items-center gap-2">
-          <Plus className="w-5 h-5 text-primary" />
-          নতুন খরচ যোগ করুন
-        </CardTitle>
-        <CardDescription>আজকের বা যেকোনো দিনের খরচ লিপিবদ্ধ করুন</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form
-          className="space-y-3"
-          onSubmit={(e) => {
-            e.preventDefault();
-            addMutation.mutate();
-          }}
-        >
-          <div className="space-y-1.5">
-            <Label htmlFor="amount">পরিমাণ (টাকা)</Label>
-            <Input
-              id="amount"
-              type="number"
-              inputMode="decimal"
-              step="0.01"
-              min="0"
-              placeholder="যেমন: ২৫০"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <Label>ক্যাটাগরি</Label>
-            <Select value={category} onValueChange={(v) => setCategory(v as ExpenseCategory)}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {CATEGORIES.map((c) => (
-                  <SelectItem key={c.value} value={c.value}>
-                    <span className="inline-flex items-center gap-2">
-                      <c.icon className="w-4 h-4" />
-                      {c.label}
-                    </span>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-1.5">
-            <Label htmlFor="spent_at">তারিখ</Label>
-            <Input
-              id="spent_at"
-              type="date"
-              value={spentAt}
-              onChange={(e) => setSpentAt(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <Label htmlFor="note">নোট (ঐচ্ছিক)</Label>
-            <Textarea
-              id="note"
-              rows={2}
-              maxLength={200}
-              placeholder="যেমন: দুপুরের খাবার"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-            />
-          </div>
-
-          <Button type="submit" className="w-full" disabled={addMutation.isPending}>
-            {addMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            সংরক্ষণ করুন
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
-  );
-}
-
-/* -------------------------- Category Breakdown ---------------------------- */
-
-function CategoryBreakdown({
-  byCategory, monthTotal,
-}: { byCategory: Record<ExpenseCategory, number>; monthTotal: number }) {
-  const rows = CATEGORIES
-    .map((c) => ({ ...c, total: byCategory[c.value] }))
-    .filter((r) => r.total > 0)
-    .sort((a, b) => b.total - a.total);
-
-  return (
-    <Card className="shadow-[var(--shadow-md)]">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-lg">এই মাসের বিভাগ অনুযায়ী খরচ</CardTitle>
-        <CardDescription>কোন খাতে কত খরচ হচ্ছে দেখে নিন</CardDescription>
-      </CardHeader>
-      <CardContent>
-        {rows.length === 0 ? (
-          <p className="text-sm text-muted-foreground py-4 text-center">
-            এখনো কোনো খরচ যোগ করা হয়নি।
-          </p>
-        ) : (
-          <div className="space-y-3">
-            {rows.map((r) => {
-              const pct = monthTotal > 0 ? (r.total / monthTotal) * 100 : 0;
-              return (
-                <div key={r.value}>
-                  <div className="flex items-center justify-between text-sm mb-1">
-                    <span className="inline-flex items-center gap-1.5 font-medium">
-                      <r.icon className={`w-4 h-4 ${r.text}`} />
-                      {r.label}
-                    </span>
-                    <span className="tabular-nums text-muted-foreground">
-                      {formatBanglaCurrency(r.total)}{" "}
-                      <span className="text-xs">
-                        ({toBanglaDigits(pct.toFixed(0))}%)
-                      </span>
-                    </span>
-                  </div>
-                  <div className="h-2 rounded-full bg-muted overflow-hidden">
-                    <div
-                      className="h-full bg-[image:var(--gradient-primary)] rounded-full transition-all"
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  );
-}
-
-/* ---------------------------- Recent Expenses ----------------------------- */
-
-function RecentExpenses({
-  expenses, isLoading, onDeleted,
-}: { expenses: ExpenseRow[]; isLoading: boolean; onDeleted: () => void }) {
-  const [filter, setFilter] = useState<ExpenseCategory | "all">("all");
-  const [pendingDelete, setPendingDelete] = useState<ExpenseRow | null>(null);
-
-  const filtered = filter === "all" ? expenses : expenses.filter((e) => e.category === filter);
-
-  const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from("expenses").delete().eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      toast.success("খরচ মুছে ফেলা হয়েছে");
-      onDeleted();
-    },
-    onError: (err: Error) => toast.error("মুছে ফেলা ব্যর্থ", { description: err.message }),
-  });
-
-  return (
-    <Card className="shadow-[var(--shadow-md)]">
-      <CardHeader className="pb-3 flex flex-row items-start justify-between gap-3">
-        <div>
-          <CardTitle className="text-lg">সাম্প্রতিক খরচ</CardTitle>
-          <CardDescription>আপনার সর্বশেষ খরচের তালিকা</CardDescription>
-        </div>
-        <Select value={filter} onValueChange={(v) => setFilter(v as ExpenseCategory | "all")}>
-          <SelectTrigger className="w-[150px]">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">সকল ক্যাটাগরি</SelectItem>
-            {CATEGORIES.map((c) => (
-              <SelectItem key={c.value} value={c.value}>
-                {c.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </CardHeader>
-      <CardContent>
-        {isLoading ? (
-          <div className="py-10 flex justify-center">
-            <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
-          </div>
-        ) : filtered.length === 0 ? (
-          <EmptyState hasAny={expenses.length > 0} />
-        ) : (
-          <ul className="divide-y">
-            {filtered.map((e) => {
-              const meta = CATEGORY_MAP[e.category];
-              const Icon = meta.icon;
-              return (
-                <li key={e.id} className="py-3 flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-lg grid place-items-center shrink-0 ${meta.chip}`}>
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <p className="font-medium truncate">{e.note || meta.label}</p>
-                      <Badge variant="secondary" className="text-xs">{meta.label}</Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {formatBanglaDate(e.spent_at)}
-                    </p>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <p className="font-semibold tabular-nums">{formatBanglaCurrency(e.amount)}</p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-muted-foreground hover:text-destructive"
-                    onClick={() => setPendingDelete(e)}
-                    aria-label="মুছে ফেলুন"
-                  >
-                    <Trash2 className="w-4 h-4" />
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              {isAuthenticated ? (
+                <Button asChild size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
+                  <Link to="/dashboard">
+                    ড্যাশবোর্ডে যান <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              ) : (
+                <>
+                  <Button asChild size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
+                    <Link to="/auth" search={{ mode: "register" }}>
+                      নিবন্ধন করুন <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </Button>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </CardContent>
+                  <Button asChild size="lg" variant="outline" className="border-white/40 bg-white/10 text-white hover:bg-white/20">
+                    <Link to="/notices">অতিথি হিসেবে নোটিশ দেখুন</Link>
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <AlertDialog open={!!pendingDelete} onOpenChange={(o) => !o && setPendingDelete(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>খরচটি মুছে ফেলবেন?</AlertDialogTitle>
-            <AlertDialogDescription>
-              এই কাজটি ফেরানো যাবে না। খরচের এন্ট্রি স্থায়ীভাবে মুছে যাবে।
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>বাতিল</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={() => {
-                if (pendingDelete) deleteMutation.mutate(pendingDelete.id);
-                setPendingDelete(null);
-              }}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
-              হ্যাঁ, মুছে ফেলুন
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </Card>
-  );
-}
+      {/* Features */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-bold tracking-tight">আপনার প্রয়োজনীয় সব ফিচার</h2>
+          <p className="mt-3 text-sm text-muted-foreground sm:text-base">
+            আধুনিক প্ল্যাটফর্মে বিদ্যুৎ বিল ব্যবস্থাপনার সম্পূর্ণ সমাধান।
+          </p>
+        </div>
 
-function EmptyState({ hasAny }: { hasAny: boolean }) {
-  return (
-    <div className="py-12 text-center">
-      <div className="mx-auto w-14 h-14 rounded-full bg-secondary grid place-items-center mb-3">
-        <Wallet className="w-6 h-6 text-secondary-foreground" />
-      </div>
-      <p className="font-medium">
-        {hasAny ? "এই ক্যাটাগরিতে কোনো খরচ নেই" : "এখনো কোনো খরচ যোগ হয়নি"}
-      </p>
-      <p className="text-sm text-muted-foreground mt-1">
-        পাশের ফর্ম থেকে আপনার প্রথম খরচ যোগ করুন।
-      </p>
-    </div>
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {FEATURES.map(({ icon: Icon, title, desc }) => (
+            <Card key={title} className="group p-6 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)]">
+              <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <Icon className="h-5 w-5" />
+              </div>
+              <h3 className="text-base font-semibold">{title}</h3>
+              <p className="mt-1.5 text-sm text-muted-foreground">{desc}</p>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      {!isAuthenticated && (
+        <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+          <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-br from-primary to-secondary p-10 text-center text-white shadow-[var(--shadow-lg)]">
+            <h2 className="text-2xl font-bold sm:text-3xl">আজই যুক্ত হোন</h2>
+            <p className="mx-auto mt-2 max-w-xl text-sm text-white/90">
+              বিনামূল্যে অ্যাকাউন্ট খুলুন — ইমেইল, গুগল বা অতিথি হিসেবে।
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90">
+                <Link to="/auth" search={{ mode: "register" }}>নিবন্ধন করুন</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-white/40 bg-transparent text-white hover:bg-white/10">
+                <Link to="/auth">সাইন ইন করুন</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+      )}
+    </>
   );
 }
