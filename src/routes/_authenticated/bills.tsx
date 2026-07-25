@@ -51,6 +51,9 @@ function BillsHistoryPage() {
   const navigate = useNavigate();
   const [bills, setBills] = useState<BillRow[] | null>(null);
   const [query, setQuery] = useState("");
+  const [monthFilter, setMonthFilter] = useState<string>("all");
+  const [unionFilter, setUnionFilter] = useState<string>("all");
+  const [meterFilter, setMeterFilter] = useState<string>("all");
   const [pendingDelete, setPendingDelete] = useState<BillRow | null>(null);
   const [deleting, setDeleting] = useState(false);
 
