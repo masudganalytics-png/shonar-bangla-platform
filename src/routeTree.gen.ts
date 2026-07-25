@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UtilitiesRouteImport } from './routes/utilities'
+import { Route as StatsRouteImport } from './routes/stats'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
@@ -38,6 +39,11 @@ import { Route as AuthenticatedBillsIdEditRouteImport } from './routes/_authenti
 const UtilitiesRoute = UtilitiesRouteImport.update({
   id: '/utilities',
   path: '/utilities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StatsRoute = StatsRouteImport.update({
+  id: '/stats',
+  path: '/stats',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -170,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/stats': typeof StatsRoute
   '/utilities': typeof UtilitiesRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/bills': typeof AuthenticatedBillsRouteWithChildren
@@ -196,6 +203,7 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/stats': typeof StatsRoute
   '/utilities': typeof UtilitiesRoute
   '/bills': typeof AuthenticatedBillsRouteWithChildren
   '/compare': typeof AuthenticatedCompareRoute
@@ -223,6 +231,7 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/stats': typeof StatsRoute
   '/utilities': typeof UtilitiesRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/bills': typeof AuthenticatedBillsRouteWithChildren
@@ -251,6 +260,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/notices'
     | '/reset-password'
+    | '/stats'
     | '/utilities'
     | '/admin'
     | '/bills'
@@ -277,6 +287,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/notices'
     | '/reset-password'
+    | '/stats'
     | '/utilities'
     | '/bills'
     | '/compare'
@@ -303,6 +314,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/notices'
     | '/reset-password'
+    | '/stats'
     | '/utilities'
     | '/_authenticated/admin'
     | '/_authenticated/bills'
@@ -331,6 +343,7 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   NoticesRoute: typeof NoticesRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  StatsRoute: typeof StatsRoute
   UtilitiesRoute: typeof UtilitiesRoute
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
   ApiPublicStatsRoute: typeof ApiPublicStatsRoute
@@ -343,6 +356,13 @@ declare module '@tanstack/react-router' {
       path: '/utilities'
       fullPath: '/utilities'
       preLoaderRoute: typeof UtilitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stats': {
+      id: '/stats'
+      path: '/stats'
+      fullPath: '/stats'
+      preLoaderRoute: typeof StatsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -581,6 +601,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   NoticesRoute: NoticesRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  StatsRoute: StatsRoute,
   UtilitiesRoute: UtilitiesRoute,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
   ApiPublicStatsRoute: ApiPublicStatsRoute,
