@@ -1,40 +1,43 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Bell, Loader2, AlertTriangle } from "lucide-react";
+import { useState } from "react";
+import { Bell, Loader2, AlertTriangle, MapPin } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { formatBanglaDate } from "@/lib/bangla";
+import { ANNOUNCEMENT_CATEGORIES, categoryMeta, priorityLabel } from "@/lib/announcement-constants";
+
+type CategoryFilter = "all" | typeof ANNOUNCEMENT_CATEGORIES[number]["value"];
 
 export const Route = createFileRoute("/notices")({
   head: () => ({
     meta: [
       { title: "নোটিশ বোর্ড — উখিয়া বিদ্যুৎ বিল" },
-      { name: "description", content: "উখিয়া বিদ্যুৎ কর্তৃপক্ষের সর্বশেষ ঘোষণা ও নোটিশ।" },
-      { property: "og:title", content: "নোটিশ বোর্ড" },
-      { property: "og:description", content: "সর্বশেষ বিদ্যুৎ সংক্রান্ত সরকারি ঘোষণা।" },
+      { name: "description", content: "উখিয়া বিদ্যুৎ কর্তৃপক্ষের সর্বশেষ ঘোষণা, বিদ্যুৎ বিভ্রাট ও ট্যারিফ পরিবর্তনের নোটিশ।" },
+      { property: "og:title", content: "নোটিশ বোর্ড — উখিয়া বিদ্যুৎ বিল" },
+      { property: "og:description", content: "সর্বশেষ সরকারি ঘোষণা, বিভ্রাট ও ট্যারিফ পরিবর্তন।" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: NoticesPage,
 });
 
-const PRIORITY_LABEL: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline" }> = {
-  urgent: { label: "জরুরি", variant: "destructive" },
-  high: { label: "গুরুত্বপূর্ণ", variant: "default" },
-  normal: { label: "সাধারণ", variant: "secondary" },
-  low: { label: "কম গুরুত্বপূর্ণ", variant: "outline" },
-};
-
 function NoticesPage() {
+  const [cat, setCat] = useState<CategoryFilter>("all");
   const { data, isLoading, error } = useQuery({
-    queryKey: ["announcements"],
+    queryKey: ["announcements", cat],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let q = supabase
         .from("announcements")
-        .select("id, title, body, priority, published_at")
+        .select("id, title, body, category, priority, location, published_at")
         .eq("is_published", true)
         .order("published_at", { ascending: false })
         .limit(50);
+      if (cat !== "all") q = q.eq("category", cat);
+      const { data, error } = await q;
       if (error) throw error;
       return data;
     },
@@ -42,20 +45,27 @@ function NoticesPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mb-8 flex items-center gap-3">
+      <div className="mb-6 flex items-center gap-3">
         <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
           <Bell className="h-5 w-5" />
         </div>
         <div>
           <h1 className="text-2xl font-bold">নোটিশ বোর্ড</h1>
-          <p className="text-sm text-muted-foreground">কর্তৃপক্ষের সর্বশেষ ঘোষণা</p>
+          <p className="text-sm text-muted-foreground">সরকারি ঘোষণা, বিদ্যুৎ বিভ্রাট ও ট্যারিফ পরিবর্তন</p>
         </div>
       </div>
 
+      <div className="mb-6 flex flex-wrap gap-2">
+        <Button size="sm" variant={cat === "all" ? "default" : "outline"} onClick={() => setCat("all")}>সব</Button>
+        {ANNOUNCEMENT_CATEGORIES.map((c) => (
+          <Button key={c.value} size="sm" variant={cat === c.value ? "default" : "outline"} onClick={() => setCat(c.value)}>
+            {c.label}
+          </Button>
+        ))}
+      </div>
+
       {isLoading && (
-        <div className="flex justify-center py-16">
-          <Loader2 className="h-6 w-6 animate-spin text-primary" />
-        </div>
+        <div className="flex justify-center py-16"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
       )}
 
       {error && (
@@ -74,15 +84,21 @@ function NoticesPage() {
 
       <div className="space-y-3">
         {data?.map((n) => {
-          const p = PRIORITY_LABEL[n.priority] ?? PRIORITY_LABEL.normal;
+          const c = categoryMeta(n.category);
           return (
             <Card key={n.id} className="p-5 transition-shadow hover:shadow-[var(--shadow-md)]">
-              <div className="flex flex-wrap items-start justify-between gap-2">
-                <h2 className="text-base font-semibold sm:text-lg">{n.title}</h2>
-                <Badge variant={p.variant}>{p.label}</Badge>
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge variant="outline" className={c.tone}>{c.label}</Badge>
+                <Badge variant="secondary">{priorityLabel(n.priority)}</Badge>
+                <span className="text-xs text-muted-foreground">{formatBanglaDate(n.published_at)}</span>
               </div>
+              <h2 className="mt-2 text-base font-semibold sm:text-lg">{n.title}</h2>
               <p className="mt-2 whitespace-pre-line text-sm text-muted-foreground">{n.body}</p>
-              <p className="mt-3 text-xs text-muted-foreground/80">{formatBanglaDate(n.published_at)}</p>
+              {n.location && (
+                <p className="mt-3 flex items-center gap-1 text-xs text-muted-foreground/80">
+                  <MapPin className="h-3 w-3" /> {n.location}
+                </p>
+              )}
             </Card>
           );
         })}

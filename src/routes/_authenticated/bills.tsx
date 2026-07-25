@@ -18,8 +18,9 @@ import { FileText, MoreVertical, Pencil, Plus, Search, Trash2, Zap } from "lucid
 import { toast } from "sonner";
 import { toBanglaDigits, formatBanglaCurrency } from "@/lib/bangla";
 import {
-  BN_MONTHS_FULL, providerLabel, meterTypeLabel, unionLabel,
+  BN_MONTHS_FULL, METER_TYPES, UNIONS, providerLabel, meterTypeLabel, unionLabel,
 } from "@/lib/bills-constants";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { Database } from "@/integrations/supabase/types";
 
 type BillRow = Database["public"]["Tables"]["bills"]["Row"];
@@ -50,6 +51,9 @@ function BillsHistoryPage() {
   const navigate = useNavigate();
   const [bills, setBills] = useState<BillRow[] | null>(null);
   const [query, setQuery] = useState("");
+  const [monthFilter, setMonthFilter] = useState<string>("all");
+  const [unionFilter, setUnionFilter] = useState<string>("all");
+  const [meterFilter, setMeterFilter] = useState<string>("all");
   const [pendingDelete, setPendingDelete] = useState<BillRow | null>(null);
   const [deleting, setDeleting] = useState(false);
 
@@ -75,13 +79,16 @@ function BillsHistoryPage() {
   const filtered = useMemo(() => {
     if (!bills) return null;
     const q = query.trim().toLowerCase();
-    if (!q) return bills;
-    return bills.filter((b) =>
-      [b.meter_no, b.village, b.union_name, b.provider]
+    return bills.filter((b) => {
+      if (monthFilter !== "all" && String(b.bill_month) !== monthFilter) return false;
+      if (unionFilter !== "all" && b.union_name !== unionFilter) return false;
+      if (meterFilter !== "all" && b.meter_type !== meterFilter) return false;
+      if (!q) return true;
+      return [b.meter_no, b.village, b.union_name, b.provider]
         .filter(Boolean)
-        .some((s) => String(s).toLowerCase().includes(q)),
-    );
-  }, [bills, query]);
+        .some((s) => String(s).toLowerCase().includes(q));
+    });
+  }, [bills, query, monthFilter, unionFilter, meterFilter]);
 
   const confirmDelete = async () => {
     if (!pendingDelete) return;
@@ -155,8 +162,8 @@ function BillsHistoryPage() {
           </div>
         )}
 
-        <div className="mb-4 flex items-center gap-2">
-          <div className="relative flex-1">
+        <div className="mb-4 grid gap-2 sm:grid-cols-[1fr_auto_auto_auto]">
+          <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder="মিটার, গ্রাম বা প্রোভাইডার দিয়ে খুঁজুন"
@@ -165,6 +172,33 @@ function BillsHistoryPage() {
               className="pl-9"
             />
           </div>
+          <Select value={monthFilter} onValueChange={setMonthFilter}>
+            <SelectTrigger className="sm:w-[140px]"><SelectValue placeholder="মাস" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">সব মাস</SelectItem>
+              {BN_MONTHS_FULL.map((m, i) => (
+                <SelectItem key={i} value={String(i + 1)}>{m}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select value={unionFilter} onValueChange={setUnionFilter}>
+            <SelectTrigger className="sm:w-[150px]"><SelectValue placeholder="ইউনিয়ন" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">সব ইউনিয়ন</SelectItem>
+              {UNIONS.map((u) => (
+                <SelectItem key={u.value} value={u.value}>{u.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select value={meterFilter} onValueChange={setMeterFilter}>
+            <SelectTrigger className="sm:w-[140px]"><SelectValue placeholder="মিটার ধরন" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">সব ধরন</SelectItem>
+              {METER_TYPES.map((m) => (
+                <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         {bills === null ? (

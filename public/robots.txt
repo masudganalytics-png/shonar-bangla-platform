@@ -1,3 +1,11 @@
 User-agent: *
 Allow: /
-Disallow: /auth
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /settings
+Disallow: /bills
+Disallow: /compare
+Disallow: /insights
+Disallow: /reports
+Disallow: /api/
