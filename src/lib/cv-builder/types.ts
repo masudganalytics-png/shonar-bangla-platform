@@ -1,5 +1,4 @@
-// Data model + presets for the CV Builder. All strings in Bangla for UI,
-// but keys stay in English for maintainability.
+// CV Builder data model + presets. Full English UI.
 
 export type CVTemplate = "government" | "ngo" | "ats" | "corporate" | "executive";
 
@@ -41,7 +40,7 @@ export interface ReferenceEntry {
 
 export interface CVData {
   id: string;
-  name: string; // internal label for the CV file
+  name: string;
   template: CVTemplate;
   updated_at: number;
   personal: {
@@ -60,7 +59,7 @@ export interface CVData {
     email: string;
     present_address: string;
     permanent_address: string;
-    photo: string; // data URL
+    photo: string;
   };
   objective: string;
   education: EducationEntry[];
@@ -85,49 +84,49 @@ export interface CVData {
 }
 
 export const TEMPLATES: { id: CVTemplate; label: string; desc: string }[] = [
-  { id: "government", label: "সরকারি স্ট্যান্ডার্ড", desc: "সরকারি চাকরির জন্য প্রথাগত ফরম্যাট" },
-  { id: "ngo", label: "এনজিও প্রফেশনাল", desc: "এনজিও/উন্নয়ন সংস্থার উপযোগী" },
-  { id: "ats", label: "ATS মডার্ন", desc: "ATS-friendly, সহজ ও পরিষ্কার" },
-  { id: "corporate", label: "কর্পোরেট", desc: "প্রাইভেট কোম্পানির জন্য" },
-  { id: "executive", label: "এক্সিকিউটিভ", desc: "সিনিয়র/ম্যানেজমেন্ট পদের জন্য" },
+  { id: "government", label: "Government Standard", desc: "Traditional format for government jobs" },
+  { id: "ngo",        label: "NGO Professional",    desc: "Ideal for NGO / development sector" },
+  { id: "ats",        label: "ATS Modern",          desc: "ATS-friendly, clean and simple" },
+  { id: "corporate",  label: "Corporate",           desc: "For private companies" },
+  { id: "executive",  label: "Executive",           desc: "Senior / management positions" },
 ];
 
 export const OBJECTIVE_PRESETS: { id: string; label: string; text: string }[] = [
   {
     id: "government",
-    label: "সরকারি চাকরি",
-    text: "একটি সম্মানজনক সরকারি প্রতিষ্ঠানে সততা, নিষ্ঠা ও দক্ষতার সাথে দায়িত্ব পালন করে জনগণের সেবায় নিয়োজিত থাকতে চাই এবং প্রতিষ্ঠানের উন্নয়নে গঠনমূলক ভূমিকা রাখতে চাই।",
+    label: "Government Job",
+    text: "To serve in a reputed government organization with integrity, dedication, and efficiency, contributing to public welfare and the institutional development of the nation.",
   },
   {
     id: "ngo",
-    label: "এনজিও চাকরি",
-    text: "একটি প্রগতিশীল উন্নয়ন সংস্থায় যোগদান করে সামাজিক পরিবর্তন, মানব উন্নয়ন ও টেকসই কার্যক্রমে অবদান রাখতে চাই এবং প্রান্তিক জনগোষ্ঠীর জীবনমান উন্নয়নে কাজ করতে চাই।",
+    label: "NGO Job",
+    text: "To join a progressive development organization and contribute meaningfully to social change, human development, and sustainable programs that improve the lives of marginalized communities.",
   },
   {
     id: "private",
-    label: "প্রাইভেট কোম্পানি",
-    text: "একটি গতিশীল ও পেশাদার প্রতিষ্ঠানে যোগদান করে আমার দক্ষতা কাজে লাগিয়ে প্রতিষ্ঠানের লক্ষ্য অর্জনে অবদান রাখতে চাই এবং একইসাথে নিজের ক্যারিয়ার বিকাশের সুযোগ পেতে চাই।",
+    label: "Private Company",
+    text: "To join a dynamic and professional organization where I can apply my skills to help achieve organizational goals while continuously developing my career.",
   },
   {
     id: "bank",
-    label: "ব্যাংক চাকরি",
-    text: "একটি স্বনামধন্য ব্যাংকিং প্রতিষ্ঠানে যোগদান করে গ্রাহকসেবা, আর্থিক ব্যবস্থাপনা ও প্রাতিষ্ঠানিক নীতিমালার প্রতি অঙ্গীকারবদ্ধ থেকে দক্ষতার সাথে দায়িত্ব পালন করতে আগ্রহী।",
+    label: "Bank Job",
+    text: "To join a leading banking institution and deliver excellence in customer service, financial management, and regulatory compliance with the highest standards of professionalism.",
   },
   {
     id: "fresh",
-    label: "ফ্রেশ গ্র্যাজুয়েট",
-    text: "একজন উদ্যমী নবীন গ্র্যাজুয়েট হিসেবে চ্যালেঞ্জিং কর্মপরিবেশে যোগদান করে প্রাতিষ্ঠানিক জ্ঞান ব্যবহারিক কাজে প্রয়োগ করতে চাই এবং শেখার মানসিকতা নিয়ে প্রতিষ্ঠানের সাফল্যে অবদান রাখতে চাই।",
+    label: "Fresh Graduate",
+    text: "As an enthusiastic fresh graduate, I seek a challenging role where I can translate academic knowledge into practical results and grow with a learning-oriented mindset.",
   },
   {
     id: "experienced",
-    label: "অভিজ্ঞ পেশাজীবী",
-    text: "বহুবছরের প্রাসঙ্গিক অভিজ্ঞতা কাজে লাগিয়ে দায়িত্বশীল পদে যোগদান করে টিম পরিচালনা, কৌশলগত পরিকল্পনা ও ফলাফলভিত্তিক কার্যক্রমের মাধ্যমে প্রতিষ্ঠানের অগ্রযাত্রায় ভূমিকা রাখতে চাই।",
+    label: "Experienced Professional",
+    text: "To leverage years of relevant experience in a responsible role, driving team performance, strategic planning, and result-oriented outcomes for the organization.",
   },
 ];
 
 const uid = () => Math.random().toString(36).slice(2, 10);
 
-export function emptyCV(name = "আমার সিভি"): CVData {
+export function emptyCV(name = "My CV"): CVData {
   return {
     id: uid(),
     name,
@@ -140,7 +139,7 @@ export function emptyCV(name = "আমার সিভি"): CVData {
       dob: "",
       gender: "",
       marital_status: "",
-      nationality: "বাংলাদেশী",
+      nationality: "Bangladeshi",
       religion: "",
       blood_group: "",
       nid: "",
@@ -159,7 +158,7 @@ export function emptyCV(name = "আমার সিভি"): CVData {
       computer: "",
       communication: "",
       leadership: "",
-      languages: "বাংলা, ইংরেজি",
+      languages: "Bangla, English",
       driving_license: "",
       typing_speed: "",
       technical: "",
