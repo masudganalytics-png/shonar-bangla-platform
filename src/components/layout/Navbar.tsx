@@ -24,8 +24,8 @@ const NAV_ITEMS: readonly NavItem[] = [
   { to: "/compare", label: "তুলনা", auth: true },
   { to: "/calculator", label: "ক্যালকুলেটর" },
   { to: "/helpline", label: "হেল্পলাইন" },
-  { to: "/reports", label: "অভিযোগ", auth: true },
 ];
+
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
