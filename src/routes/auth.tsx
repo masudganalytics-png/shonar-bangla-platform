@@ -108,7 +108,7 @@ function AuthPage() {
   );
 }
 
-function LoginForm() {
+function LoginForm({ disabled }: { disabled?: boolean }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -170,14 +170,14 @@ function LoginForm() {
           </button>
         </div>
       </div>
-      <Button type="submit" className="w-full" disabled={loading}>
+      <Button type="submit" className="w-full" disabled={loading || disabled}>
         {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} সাইন ইন
       </Button>
     </form>
   );
 }
 
-function RegisterForm() {
+function RegisterForm({ disabled }: { disabled?: boolean }) {
   const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -221,14 +221,14 @@ function RegisterForm() {
         <Label htmlFor="pass-reg">পাসওয়ার্ড</Label>
         <Input id="pass-reg" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="কমপক্ষে ৮ অক্ষর" autoComplete="new-password" required minLength={8} />
       </div>
-      <Button type="submit" className="w-full" disabled={loading}>
+      <Button type="submit" className="w-full" disabled={loading || disabled}>
         {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} নিবন্ধন করুন
       </Button>
     </form>
   );
 }
 
-function GoogleButton() {
+function GoogleButton({ disabled }: { disabled?: boolean }) {
   const [loading, setLoading] = useState(false);
   const onClick = async () => {
     setLoading(true);
@@ -241,11 +241,10 @@ function GoogleButton() {
       return;
     }
     if (result.redirected) return;
-    // Session already set — navigate
-    window.location.href = "/dashboard";
+    window.location.href = "/";
   };
   return (
-    <Button variant="outline" className="w-full" onClick={onClick} disabled={loading}>
+    <Button variant="outline" className="w-full" onClick={onClick} disabled={loading || disabled}>
       {loading ? (
         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
       ) : (
