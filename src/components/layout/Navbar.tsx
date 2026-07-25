@@ -15,14 +15,15 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 
-const NAV_ITEMS = [
+type NavItem = { to: string; label: string; auth?: boolean };
+const NAV_ITEMS: readonly NavItem[] = [
   { to: "/", label: "হোম" },
   { to: "/dashboard", label: "ড্যাশবোর্ড", auth: true },
   { to: "/bills", label: "বিল জমা", auth: true },
   { to: "/compare", label: "তুলনা", auth: true },
   { to: "/reports", label: "অভিযোগ", auth: true },
   { to: "/notices", label: "নোটিশ" },
-] as const;
+];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
