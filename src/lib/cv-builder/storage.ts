@@ -39,7 +39,7 @@ export function duplicateCV(id: string): CVData | null {
   const copy: CVData = {
     ...JSON.parse(JSON.stringify(src)),
     id: Math.random().toString(36).slice(2, 10),
-    name: src.name + " (কপি)",
+    name: src.name + " (Copy)",
     updated_at: Date.now(),
   };
   upsertCV(copy);
