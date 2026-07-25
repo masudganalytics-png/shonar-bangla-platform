@@ -186,16 +186,12 @@ function HelplinePage() {
 
             <div className="mt-5 flex flex-wrap gap-2">
               <Button asChild size="sm">
-                <Link to="/reports">
-                  অ্যাপে অভিযোগ জমা দিন <ArrowRight className="ml-1.5 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild size="sm" variant="outline">
                 <a href="tel:01769-401054">
                   <Phone className="mr-1.5 h-4 w-4" /> জোনাল অফিসে ফোন
                 </a>
               </Button>
             </div>
+
           </Card>
 
           {/* Helpline directory */}
