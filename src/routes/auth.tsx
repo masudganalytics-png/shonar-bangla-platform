@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { toast } from "sonner";
-import { Loader2, Zap, Phone, ShieldCheck } from "lucide-react";
+import { Loader2, Zap, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
@@ -19,9 +19,9 @@ export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
       { title: "সাইন ইন — উখিয়া বিদ্যুৎ বিল" },
-      { name: "description", content: "মোবাইল নম্বর দিয়ে সাইন ইন করুন — সহজ ও নিরাপদ OTP ভিত্তিক লগইন।" },
+      { name: "description", content: "মোবাইল নম্বর দিয়ে সরাসরি সাইন ইন করুন।" },
       { property: "og:title", content: "সাইন ইন — উখিয়া বিদ্যুৎ বিল" },
-      { property: "og:description", content: "মোবাইল নম্বর দিয়ে OTP-ভিত্তিক সাইন ইন।" },
+      { property: "og:description", content: "মোবাইল নম্বর দিয়ে সরাসরি সাইন ইন।" },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -31,10 +31,17 @@ export const Route = createFileRoute("/auth")({
 // Normalise BD numbers: accepts 01XXXXXXXXX, 8801XXXXXXXXX, +8801XXXXXXXXX
 function normalizeBdPhone(input: string): string | null {
   const digits = input.replace(/\D/g, "");
-  if (/^01[3-9]\d{8}$/.test(digits)) return `+88${digits}`;
-  if (/^8801[3-9]\d{8}$/.test(digits)) return `+${digits}`;
-  if (/^\+?8801[3-9]\d{8}$/.test(input.trim())) return input.trim().startsWith("+") ? input.trim() : `+${digits}`;
+  if (/^01[3-9]\d{8}$/.test(digits)) return `88${digits}`;
+  if (/^8801[3-9]\d{8}$/.test(digits)) return digits;
   return null;
+}
+
+function phoneCredentials(normalizedDigits: string) {
+  // Deterministic synthetic credentials — phone acts as sole identity.
+  return {
+    email: `${normalizedDigits}@phone.ukhiya-bill.local`,
+    password: `ukhiya_${normalizedDigits}_v1`,
+  };
 }
 
 function AuthPage() {
@@ -43,14 +50,9 @@ function AuthPage() {
   const { isAuthenticated, loading } = useAuth();
   const [acknowledged, setAcknowledged] = useState(false);
 
-  const [step, setStep] = useState<"phone" | "otp">("phone");
   const [phoneInput, setPhoneInput] = useState("");
-  const [normalizedPhone, setNormalizedPhone] = useState("");
-  const [otp, setOtp] = useState("");
   const [fullName, setFullName] = useState("");
-  const [sending, setSending] = useState(false);
-  const [verifying, setVerifying] = useState(false);
-  const [resendIn, setResendIn] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (!loading && isAuthenticated) {
@@ -58,48 +60,51 @@ function AuthPage() {
     }
   }, [isAuthenticated, loading, navigate, search.redirect]);
 
-  useEffect(() => {
-    if (resendIn <= 0) return;
-    const t = setTimeout(() => setResendIn((s) => s - 1), 1000);
-    return () => clearTimeout(t);
-  }, [resendIn]);
-
-  const sendOtp = async (e?: React.FormEvent) => {
-    e?.preventDefault();
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!acknowledged) return toast.error("আগে ডিসক্লেইমার-এ সম্মতি দিন");
     const normalized = normalizeBdPhone(phoneInput);
     if (!normalized) return toast.error("সঠিক বাংলাদেশি মোবাইল নম্বর দিন (যেমন ০১৭xxxxxxxx)");
-    setSending(true);
-    const { error } = await supabase.auth.signInWithOtp({
-      phone: normalized,
-      options: { channel: "sms", data: fullName.trim() ? { full_name: fullName.trim() } : undefined },
-    });
-    setSending(false);
-    if (error) {
-      toast.error(error.message || "OTP পাঠাতে সমস্যা হয়েছে");
-      return;
-    }
-    setNormalizedPhone(normalized);
-    setStep("otp");
-    setResendIn(45);
-    toast.success("আপনার মোবাইলে OTP পাঠানো হয়েছে");
-  };
 
-  const verifyOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (otp.trim().length < 4) return toast.error("সঠিক OTP কোড দিন");
-    setVerifying(true);
-    const { error } = await supabase.auth.verifyOtp({
-      phone: normalizedPhone,
-      token: otp.trim(),
-      type: "sms",
-    });
-    setVerifying(false);
-    if (error) {
-      toast.error(error.message || "OTP যাচাই ব্যর্থ হয়েছে");
-      return;
+    setSubmitting(true);
+    const { email, password } = phoneCredentials(normalized);
+
+    // Try to sign in first
+    const signInRes = await supabase.auth.signInWithPassword({ email, password });
+
+    if (signInRes.error) {
+      // Not registered — create the account now, then session is auto-established
+      const signUpRes = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+          data: {
+            full_name: fullName.trim() || `+${normalized}`,
+            phone: `+${normalized}`,
+          },
+        },
+      });
+      if (signUpRes.error) {
+        setSubmitting(false);
+        toast.error(signUpRes.error.message || "সাইন ইন ব্যর্থ হয়েছে");
+        return;
+      }
+      // If email confirmation is on, session will be null — sign in explicitly
+      if (!signUpRes.data.session) {
+        const retry = await supabase.auth.signInWithPassword({ email, password });
+        if (retry.error) {
+          setSubmitting(false);
+          toast.error("সাইন ইন ব্যর্থ হয়েছে — Auth সেটিংসে auto-confirm চালু করুন");
+          return;
+        }
+      }
+      toast.success("অ্যাকাউন্ট তৈরি হয়েছে ও সাইন ইন হয়েছে");
+    } else {
+      toast.success("সফলভাবে সাইন ইন হয়েছে");
     }
-    toast.success("সফলভাবে সাইন ইন হয়েছে");
+
+    setSubmitting(false);
     navigate({ to: search.redirect ?? "/", replace: true });
   };
 
@@ -135,101 +140,49 @@ function AuthPage() {
       </div>
 
       <Card className="p-6">
-        {step === "phone" ? (
-          <form onSubmit={sendOtp} className="space-y-4">
-            <div className="text-center">
-              <div className="mx-auto mb-2 grid h-12 w-12 place-items-center rounded-full bg-primary/10 text-primary">
-                <Phone className="h-6 w-6" />
-              </div>
-              <h2 className="text-lg font-semibold">মোবাইল নম্বর দিয়ে সাইন ইন</h2>
-              <p className="mt-1 text-xs text-muted-foreground">
-                নতুন ব্যবহারকারী হলে স্বয়ংক্রিয়ভাবে অ্যাকাউন্ট তৈরি হবে।
-              </p>
+        <form onSubmit={onSubmit} className="space-y-4">
+          <div className="text-center">
+            <div className="mx-auto mb-2 grid h-12 w-12 place-items-center rounded-full bg-primary/10 text-primary">
+              <Phone className="h-6 w-6" />
             </div>
+            <h2 className="text-lg font-semibold">মোবাইল নম্বর দিয়ে সাইন ইন</h2>
+            <p className="mt-1 text-xs text-muted-foreground">
+              নতুন ব্যবহারকারী হলে স্বয়ংক্রিয়ভাবে অ্যাকাউন্ট তৈরি হবে।
+            </p>
+          </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="name">পুরো নাম <span className="text-muted-foreground">(ঐচ্ছিক)</span></Label>
-              <Input
-                id="name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                placeholder="আপনার পূর্ণ নাম"
-                autoComplete="name"
-              />
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="name">পুরো নাম <span className="text-muted-foreground">(ঐচ্ছিক)</span></Label>
+            <Input
+              id="name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              placeholder="আপনার পূর্ণ নাম"
+              autoComplete="name"
+            />
+          </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="phone">মোবাইল নম্বর</Label>
-              <Input
-                id="phone"
-                type="tel"
-                inputMode="numeric"
-                value={phoneInput}
-                onChange={(e) => setPhoneInput(e.target.value)}
-                placeholder="01XXXXXXXXX"
-                autoComplete="tel"
-                required
-              />
-              <p className="text-xs text-muted-foreground">উদাহরণ: 01712345678 বা +8801712345678</p>
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="phone">মোবাইল নম্বর</Label>
+            <Input
+              id="phone"
+              type="tel"
+              inputMode="numeric"
+              value={phoneInput}
+              onChange={(e) => setPhoneInput(e.target.value)}
+              placeholder="01XXXXXXXXX"
+              autoComplete="tel"
+              required
+              className="text-lg"
+            />
+            <p className="text-xs text-muted-foreground">উদাহরণ: 01712345678</p>
+          </div>
 
-            <Button type="submit" className="w-full" disabled={sending || !acknowledged}>
-              {sending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              OTP পাঠান
-            </Button>
-          </form>
-        ) : (
-          <form onSubmit={verifyOtp} className="space-y-4">
-            <div className="text-center">
-              <div className="mx-auto mb-2 grid h-12 w-12 place-items-center rounded-full bg-secondary/10 text-secondary">
-                <ShieldCheck className="h-6 w-6" />
-              </div>
-              <h2 className="text-lg font-semibold">OTP যাচাই করুন</h2>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {normalizedPhone} নম্বরে পাঠানো ৬-সংখ্যার কোড লিখুন
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="otp">OTP কোড</Label>
-              <Input
-                id="otp"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                maxLength={6}
-                value={otp}
-                onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-                placeholder="123456"
-                className="text-center text-lg tracking-widest"
-                autoFocus
-                required
-              />
-            </div>
-
-            <Button type="submit" className="w-full" disabled={verifying}>
-              {verifying && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              যাচাই করুন ও সাইন ইন
-            </Button>
-
-            <div className="flex items-center justify-between text-xs">
-              <button
-                type="button"
-                onClick={() => { setStep("phone"); setOtp(""); }}
-                className="text-muted-foreground hover:text-foreground underline"
-              >
-                নম্বর পরিবর্তন করুন
-              </button>
-              <button
-                type="button"
-                disabled={resendIn > 0 || sending}
-                onClick={() => sendOtp()}
-                className="font-medium text-primary hover:underline disabled:opacity-50 disabled:no-underline"
-              >
-                {resendIn > 0 ? `আবার পাঠান (${resendIn}s)` : "আবার OTP পাঠান"}
-              </button>
-            </div>
-          </form>
-        )}
+          <Button type="submit" className="w-full" size="lg" disabled={submitting || !acknowledged}>
+            {submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            সাইন ইন / নিবন্ধন
+          </Button>
+        </form>
       </Card>
 
       <p className="mt-6 text-center text-xs text-muted-foreground">
