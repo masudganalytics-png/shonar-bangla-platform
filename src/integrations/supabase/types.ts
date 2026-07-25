@@ -17,34 +17,46 @@ export type Database = {
       announcements: {
         Row: {
           body: string
+          category: Database["public"]["Enums"]["announcement_category"]
           created_at: string
+          ends_at: string | null
           id: string
           is_published: boolean
+          location: string | null
           priority: Database["public"]["Enums"]["announcement_priority"]
           published_at: string
           published_by: string | null
+          starts_at: string | null
           title: string
           updated_at: string
         }
         Insert: {
           body: string
+          category?: Database["public"]["Enums"]["announcement_category"]
           created_at?: string
+          ends_at?: string | null
           id?: string
           is_published?: boolean
+          location?: string | null
           priority?: Database["public"]["Enums"]["announcement_priority"]
           published_at?: string
           published_by?: string | null
+          starts_at?: string | null
           title: string
           updated_at?: string
         }
         Update: {
           body?: string
+          category?: Database["public"]["Enums"]["announcement_category"]
           created_at?: string
+          ends_at?: string | null
           id?: string
           is_published?: boolean
+          location?: string | null
           priority?: Database["public"]["Enums"]["announcement_priority"]
           published_at?: string
           published_by?: string | null
+          starts_at?: string | null
           title?: string
           updated_at?: string
         }
@@ -268,6 +280,7 @@ export type Database = {
       }
     }
     Enums: {
+      announcement_category: "notice" | "outage" | "tariff" | "general"
       announcement_priority: "low" | "normal" | "high" | "urgent"
       app_role: "user" | "admin"
       bill_status: "pending" | "paid" | "overdue"
@@ -401,6 +414,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      announcement_category: ["notice", "outage", "tariff", "general"],
       announcement_priority: ["low", "normal", "high", "urgent"],
       app_role: ["user", "admin"],
       bill_status: ["pending", "paid", "overdue"],
