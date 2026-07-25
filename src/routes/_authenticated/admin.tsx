@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useRouterState, redirect } from "@tanstack/react-router";
-import { Users, FileText, MessageSquare, LayoutDashboard, ShieldAlert } from "lucide-react";
+import { Users, FileText, MessageSquare, LayoutDashboard, ShieldAlert, Megaphone } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 
@@ -8,6 +8,7 @@ const TABS: ReadonlyArray<{ to: string; label: string; icon: typeof Users; exact
   { to: "/admin/users", label: "ব্যবহারকারী", icon: Users },
   { to: "/admin/bills", label: "বিল ব্যবস্থাপনা", icon: FileText },
   { to: "/admin/complaints", label: "অভিযোগ", icon: MessageSquare },
+  { to: "/admin/announcements", label: "নোটিশ", icon: Megaphone },
 ];
 
 export const Route = createFileRoute("/_authenticated/admin")({
