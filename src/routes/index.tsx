@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Calculator, FileSignature, FileText, Scale } from "lucide-react";
+import { ArrowRight, Calculator, FileSignature, FileText, Scale, Wifi } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
+import logoAsset from "@/assets/ukhiya-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,8 +28,8 @@ const QUICK_ACTIONS = [
   {
     to: "/bills/new" as const,
     icon: FileText,
-    title: "বিল জমা দিন",
-    desc: "আপনার মাসিক বিদ্যুৎ বিলের তথ্য সংরক্ষণ করুন।",
+    title: "যাচাই",
+    desc: "আপনার মাসিক বিদ্যুৎ বিলের তথ্য যাচাই ও সংরক্ষণ করুন।",
     primary: true,
   },
   {
@@ -42,6 +43,12 @@ const QUICK_ACTIONS = [
     icon: Calculator,
     title: "বিল ক্যালকুলেটর",
     desc: "ইউনিট থেকে আনুমানিক বিল হিসাব করুন।",
+  },
+  {
+    to: "/isp" as const,
+    icon: Wifi,
+    title: "এরিয়াভিত্তিক ওয়াইফাই সেবা",
+    desc: "আপনার এলাকার ISP তালিকা ও যোগাযোগ নম্বর।",
   },
   {
     to: "/cv-builder" as const,
@@ -58,7 +65,12 @@ function HomePage() {
     <>
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-95" style={{ background: "var(--gradient-hero)" }} aria-hidden />
-        <div className="mx-auto max-w-3xl px-4 py-20 text-center text-white sm:px-6 sm:py-28">
+        <div className="mx-auto max-w-3xl px-4 py-16 text-center text-white sm:px-6 sm:py-24">
+          <img
+            src={logoAsset.url}
+            alt="উখিয়া বিদ্যুৎ বিল"
+            className="mx-auto mb-6 h-24 w-auto drop-shadow-2xl sm:h-32"
+          />
           <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl">
             আপনার বিদ্যুৎ বিল কি স্বাভাবিক?
           </h1>
@@ -69,7 +81,7 @@ function HomePage() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Button asChild size="lg" className="h-12 bg-white px-6 text-primary hover:bg-white/90">
               <Link to={isAuthenticated ? "/bills/new" : "/auth"} search={isAuthenticated ? undefined : { mode: "register", redirect: "/bills/new" }}>
-                বিল জমা দিন <ArrowRight className="ml-2 h-4 w-4" />
+                যাচাই <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 border-white/50 bg-white/10 px-6 text-white hover:bg-white/20">
@@ -79,6 +91,11 @@ function HomePage() {
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 border-white/50 bg-white/10 px-6 text-white hover:bg-white/20">
               <Link to="/calculator">বিল ক্যালকুলেটর</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="h-12 border-white/50 bg-white/10 px-6 text-white hover:bg-white/20">
+              <Link to="/isp">
+                <Wifi className="mr-2 h-4 w-4" /> এরিয়াভিত্তিক ওয়াইফাই সেবা
+              </Link>
             </Button>
           </div>
         </div>

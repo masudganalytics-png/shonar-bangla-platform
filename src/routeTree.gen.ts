@@ -13,6 +13,7 @@ import { Route as UtilitiesRouteImport } from './routes/utilities'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as NoticesRouteImport } from './routes/notices'
+import { Route as IspRouteImport } from './routes/isp'
 import { Route as HelplineRouteImport } from './routes/helpline'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as CvBuilderRouteImport } from './routes/cv-builder'
@@ -56,6 +57,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const NoticesRoute = NoticesRouteImport.update({
   id: '/notices',
   path: '/notices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IspRoute = IspRouteImport.update({
+  id: '/isp',
+  path: '/isp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HelplineRoute = HelplineRouteImport.update({
@@ -188,6 +194,7 @@ export interface FileRoutesByFullPath {
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
+  '/isp': typeof IspRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
@@ -217,6 +224,7 @@ export interface FileRoutesByTo {
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
+  '/isp': typeof IspRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
@@ -247,6 +255,7 @@ export interface FileRoutesById {
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
+  '/isp': typeof IspRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
@@ -278,6 +287,7 @@ export interface FileRouteTypes {
     | '/cv-builder'
     | '/forgot-password'
     | '/helpline'
+    | '/isp'
     | '/notices'
     | '/reset-password'
     | '/stats'
@@ -307,6 +317,7 @@ export interface FileRouteTypes {
     | '/cv-builder'
     | '/forgot-password'
     | '/helpline'
+    | '/isp'
     | '/notices'
     | '/reset-password'
     | '/stats'
@@ -336,6 +347,7 @@ export interface FileRouteTypes {
     | '/cv-builder'
     | '/forgot-password'
     | '/helpline'
+    | '/isp'
     | '/notices'
     | '/reset-password'
     | '/stats'
@@ -367,6 +379,7 @@ export interface RootRouteChildren {
   CvBuilderRoute: typeof CvBuilderRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   HelplineRoute: typeof HelplineRoute
+  IspRoute: typeof IspRoute
   NoticesRoute: typeof NoticesRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   StatsRoute: typeof StatsRoute
@@ -403,6 +416,13 @@ declare module '@tanstack/react-router' {
       path: '/notices'
       fullPath: '/notices'
       preLoaderRoute: typeof NoticesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/isp': {
+      id: '/isp'
+      path: '/isp'
+      fullPath: '/isp'
+      preLoaderRoute: typeof IspRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/helpline': {
@@ -641,6 +661,7 @@ const rootRouteChildren: RootRouteChildren = {
   CvBuilderRoute: CvBuilderRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   HelplineRoute: HelplineRoute,
+  IspRoute: IspRoute,
   NoticesRoute: NoticesRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   StatsRoute: StatsRoute,
