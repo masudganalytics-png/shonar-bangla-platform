@@ -349,17 +349,20 @@ export function BillForm({ mode, initial }: Props) {
               </button>
             )}
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 gap-2">
               <Button type="button" variant="outline" onClick={() => fileRef.current?.click()}>
                 <Upload className="mr-2 h-4 w-4" /> {previewUrl ? "পরিবর্তন" : "আপলোড"}
               </Button>
-              <Button type="button" onClick={handleOcr} disabled={ocrLoading || !previewUrl}>
-                {ocrLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                স্বয়ংক্রিয় পাঠ
-              </Button>
+              {/* OCR feature hidden in MVP — handler retained for future enable */}
+              {false && (
+                <Button type="button" onClick={handleOcr} disabled={ocrLoading || !previewUrl}>
+                  {ocrLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+                  স্বয়ংক্রিয় পাঠ
+                </Button>
+              )}
             </div>
             <p className="text-xs text-muted-foreground">
-              AI স্বয়ংক্রিয়ভাবে মাস, বছর, ইউনিট, বিল ও মিটার নম্বর পড়বে। প্রয়োজনে সম্পাদনা করতে পারবেন।
+              বিলের ছবি সংরক্ষণ করুন। নিচের ফর্মে ম্যানুয়ালি তথ্য পূরণ করুন।
             </p>
           </CardContent>
         </Card>

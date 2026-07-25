@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Zap, ShieldCheck, BarChart3, Bell, FileText, MessageSquare } from "lucide-react";
+import { ArrowRight, Calculator, FileText, Scale } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
@@ -7,28 +7,42 @@ import { useAuth } from "@/hooks/use-auth";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "উখিয়া বিদ্যুৎ বিল — হোম" },
+      { title: "আপনার বিদ্যুৎ বিল কি স্বাভাবিক? — উখিয়া বিদ্যুৎ বিল" },
       {
         name: "description",
-        content: "উখিয়া উপজেলার বিদ্যুৎ বিল, তুলনা, অভিযোগ ও নোটিশ — এক প্ল্যাটফর্মে।",
+        content:
+          "একই এলাকার গড় তথ্যের ভিত্তিতে আপনার বিদ্যুৎ বিল তুলনা করুন এবং আনুমানিক বিল হিসাব করুন।",
       },
-      { property: "og:title", content: "উখিয়া বিদ্যুৎ বিল — হোম" },
+      { property: "og:title", content: "আপনার বিদ্যুৎ বিল কি স্বাভাবিক?" },
       {
         property: "og:description",
-        content: "স্বচ্ছ বিল, সচেতন গ্রাহক। আপনার বিদ্যুৎ বিল ট্র্যাক করুন সহজে।",
+        content: "একই এলাকার গড় তথ্যের ভিত্তিতে আপনার বিদ্যুৎ বিল তুলনা করুন।",
       },
     ],
   }),
   component: HomePage,
 });
 
-const FEATURES = [
-  { icon: FileText, title: "বিল জমা ও ইতিহাস", desc: "প্রতি মাসের বিল সংরক্ষণ ও পরিশোধের অবস্থা।" },
-  { icon: BarChart3, title: "মাসিক তুলনা", desc: "গত মাসের সাথে ব্যবহার ও খরচের তুলনামূলক বিশ্লেষণ।" },
-  { icon: MessageSquare, title: "অভিযোগ দাখিল", desc: "মিটার, লোডশেডিং বা বিলিং সংক্রান্ত অভিযোগ পাঠান।" },
-  { icon: Bell, title: "নোটিশ ও ঘোষণা", desc: "কর্তৃপক্ষের সর্বশেষ ঘোষণা তাৎক্ষণিক পান।" },
-  { icon: ShieldCheck, title: "নিরাপদ অ্যাকাউন্ট", desc: "আধুনিক অথেনটিকেশন এবং গোপনীয়তা সুরক্ষা।" },
-  { icon: Zap, title: "দ্রুত ও রেসপনসিভ", desc: "মোবাইল ও ডেস্কটপ — সব ডিভাইসে নিখুঁত অভিজ্ঞতা।" },
+const QUICK_ACTIONS = [
+  {
+    to: "/bills/new" as const,
+    icon: FileText,
+    title: "বিল জমা দিন",
+    desc: "আপনার মাসিক বিদ্যুৎ বিলের তথ্য সংরক্ষণ করুন।",
+    primary: true,
+  },
+  {
+    to: "/compare" as const,
+    icon: Scale,
+    title: "বিল তুলনা করুন",
+    desc: "এলাকার গড়ের সাথে আপনার বিল তুলনা করুন।",
+  },
+  {
+    to: "/calculator" as const,
+    icon: Calculator,
+    title: "বিল ক্যালকুলেটর",
+    desc: "ইউনিট থেকে আনুমানিক বিল হিসাব করুন।",
+  },
 ];
 
 function HomePage() {
@@ -36,94 +50,49 @@ function HomePage() {
 
   return (
     <>
-      {/* Hero */}
       <section className="relative overflow-hidden">
-        <div
-          className="absolute inset-0 -z-10 opacity-95"
-          style={{ background: "var(--gradient-hero)" }}
-          aria-hidden
-        />
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,white/20,transparent_50%)]" aria-hidden />
+        <div className="absolute inset-0 -z-10 opacity-95" style={{ background: "var(--gradient-hero)" }} aria-hidden />
+        <div className="mx-auto max-w-3xl px-4 py-20 text-center text-white sm:px-6 sm:py-28">
+          <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl">
+            আপনার বিদ্যুৎ বিল কি স্বাভাবিক?
+          </h1>
+          <p className="mx-auto mt-5 max-w-xl text-base text-white/90 sm:text-lg">
+            একই এলাকার গড় তথ্যের ভিত্তিতে আপনার বিল তুলনা করুন।
+          </p>
 
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center text-white">
-            <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
-              সরকারি ডিজিটাল সেবা
-            </div>
-            <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl">
-              উখিয়া বিদ্যুৎ বিল
-            </h1>
-            <p className="mt-4 text-lg font-medium text-white/90 sm:text-xl">স্বচ্ছ বিল, সচেতন গ্রাহক।</p>
-            <p className="mx-auto mt-4 max-w-2xl text-sm text-white/80 sm:text-base">
-              উখিয়া উপজেলার বিদ্যুৎ গ্রাহকদের জন্য বিল ব্যবস্থাপনা, তুলনামূলক বিশ্লেষণ, অভিযোগ দাখিল ও অফিসিয়াল নোটিশ — সব এক জায়গায়।
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              {isAuthenticated ? (
-                <Button asChild size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
-                  <Link to="/dashboard">
-                    ড্যাশবোর্ডে যান <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              ) : (
-                <>
-                  <Button asChild size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
-                    <Link to="/auth" search={{ mode: "register" }}>
-                      নিবন্ধন করুন <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button asChild size="lg" variant="outline" className="border-white/40 bg-white/10 text-white hover:bg-white/20">
-                    <Link to="/notices">অতিথি হিসেবে নোটিশ দেখুন</Link>
-                  </Button>
-                </>
-              )}
-            </div>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Button asChild size="lg" className="h-12 bg-white px-6 text-primary hover:bg-white/90">
+              <Link to={isAuthenticated ? "/bills/new" : "/auth"} search={isAuthenticated ? undefined : { mode: "register", redirect: "/bills/new" }}>
+                বিল জমা দিন <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="h-12 border-white/50 bg-white/10 px-6 text-white hover:bg-white/20">
+              <Link to={isAuthenticated ? "/compare" : "/auth"} search={isAuthenticated ? undefined : { mode: "login", redirect: "/compare" }}>
+                বিল তুলনা করুন
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="h-12 border-white/50 bg-white/10 px-6 text-white hover:bg-white/20">
+              <Link to="/calculator">বিল ক্যালকুলেটর</Link>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight">আপনার প্রয়োজনীয় সব ফিচার</h2>
-          <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            আধুনিক প্ল্যাটফর্মে বিদ্যুৎ বিল ব্যবস্থাপনার সম্পূর্ণ সমাধান।
-          </p>
-        </div>
-
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map(({ icon: Icon, title, desc }) => (
-            <Card key={title} className="group p-6 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)]">
-              <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                <Icon className="h-5 w-5" />
-              </div>
-              <h3 className="text-base font-semibold">{title}</h3>
-              <p className="mt-1.5 text-sm text-muted-foreground">{desc}</p>
-            </Card>
+      <section className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
+        <div className="grid gap-4 sm:grid-cols-3">
+          {QUICK_ACTIONS.map(({ to, icon: Icon, title, desc, primary }) => (
+            <Link key={to} to={to} className="group">
+              <Card className={`h-full p-6 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)] ${primary ? "border-primary/40" : ""}`}>
+                <div className={`mb-4 grid h-12 w-12 place-items-center rounded-xl ${primary ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary"}`}>
+                  <Icon className="h-6 w-6" />
+                </div>
+                <h3 className="text-base font-semibold">{title}</h3>
+                <p className="mt-1.5 text-sm text-muted-foreground">{desc}</p>
+              </Card>
+            </Link>
           ))}
         </div>
       </section>
-
-      {/* CTA */}
-      {!isAuthenticated && (
-        <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-          <div className="overflow-hidden rounded-2xl border border-border/60 bg-gradient-to-br from-primary to-secondary p-10 text-center text-white shadow-[var(--shadow-lg)]">
-            <h2 className="text-2xl font-bold sm:text-3xl">আজই যুক্ত হোন</h2>
-            <p className="mx-auto mt-2 max-w-xl text-sm text-white/90">
-              বিনামূল্যে অ্যাকাউন্ট খুলুন — ইমেইল, গুগল বা অতিথি হিসেবে।
-            </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90">
-                <Link to="/auth" search={{ mode: "register" }}>নিবন্ধন করুন</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-white/40 bg-transparent text-white hover:bg-white/10">
-                <Link to="/auth">সাইন ইন করুন</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-      )}
     </>
   );
 }

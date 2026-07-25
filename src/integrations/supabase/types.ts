@@ -245,6 +245,48 @@ export type Database = {
         }
         Relationships: []
       }
+      tariff_slabs: {
+        Row: {
+          created_at: string
+          effective_from: string
+          id: string
+          is_active: boolean
+          meter_type: string
+          provider: string
+          rate_per_unit: number
+          slab_max: number | null
+          slab_min: number
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          effective_from?: string
+          id?: string
+          is_active?: boolean
+          meter_type?: string
+          provider?: string
+          rate_per_unit: number
+          slab_max?: number | null
+          slab_min: number
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          effective_from?: string
+          id?: string
+          is_active?: boolean
+          meter_type?: string
+          provider?: string
+          rate_per_unit?: number
+          slab_max?: number | null
+          slab_min?: number
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
