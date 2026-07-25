@@ -14,13 +14,14 @@ export const Route = createFileRoute("/api/public/stats")({
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: CORS }),
       GET: async () => {
-        // Use admin only for aggregate reads returning NO PII.
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-        const { data, error } = await supabaseAdmin
-          .from("bills")
-          .select("amount, units_consumed, union_name, bill_month, bill_year");
-        if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: { ...CORS, "Content-Type": "application/json" } });
-        const rows = data ?? [];
+        const [billsRes, profilesRes, reportsRes] = await Promise.all([
+          supabaseAdmin.from("bills").select("amount, units_consumed, union_name, bill_month, bill_year"),
+          supabaseAdmin.from("profiles").select("id", { count: "exact", head: true }),
+          supabaseAdmin.from("reports").select("id", { count: "exact", head: true }),
+        ]);
+        if (billsRes.error) return new Response(JSON.stringify({ error: billsRes.error.message }), { status: 500, headers: { ...CORS, "Content-Type": "application/json" } });
+        const rows = billsRes.data ?? [];
         const total = rows.length;
         const avgAmount = total ? rows.reduce((s, r) => s + Number(r.amount ?? 0), 0) / total : 0;
         const avgUnits = total ? rows.reduce((s, r) => s + Number(r.units_consumed ?? 0), 0) / total : 0;
@@ -41,6 +42,8 @@ export const Route = createFileRoute("/api/public/stats")({
         return new Response(JSON.stringify({
           generated_at: new Date().toISOString(),
           total_bills: total,
+          total_users: profilesRes.count ?? 0,
+          total_reports: reportsRes.count ?? 0,
           avg_amount: avgAmount,
           avg_units: avgUnits,
           by_union: unions,

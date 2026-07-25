@@ -20,6 +20,7 @@ export const UNIONS = [
   { value: "Haldiapalong", label: "হলদিয়াপালং" },
   { value: "Jaliapalong", label: "জালিয়াপালং" },
   { value: "Palongkhali", label: "পালংখালী" },
+  { value: "Walapalong", label: "ওয়ালাপালং" },
 ] as const;
 
 export const BN_MONTHS_FULL = [
