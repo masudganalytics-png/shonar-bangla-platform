@@ -3,12 +3,12 @@ import { Users, FileText, MessageSquare, LayoutDashboard, ShieldAlert } from "lu
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 
-const TABS = [
+const TABS: ReadonlyArray<{ to: string; label: string; icon: typeof Users; exact?: boolean }> = [
   { to: "/admin", label: "ওভারভিউ", icon: LayoutDashboard, exact: true },
   { to: "/admin/users", label: "ব্যবহারকারী", icon: Users },
   { to: "/admin/bills", label: "বিল ব্যবস্থাপনা", icon: FileText },
   { to: "/admin/complaints", label: "অভিযোগ", icon: MessageSquare },
-] as const;
+];
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
