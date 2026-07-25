@@ -36,10 +36,11 @@ function AuthPage() {
   const search = Route.useSearch();
   const navigate = useNavigate();
   const { isAuthenticated, loading } = useAuth();
+  const [acknowledged, setAcknowledged] = useState(false);
 
   useEffect(() => {
     if (!loading && isAuthenticated) {
-      navigate({ to: search.redirect ?? "/dashboard", replace: true });
+      navigate({ to: search.redirect ?? "/", replace: true });
     }
   }, [isAuthenticated, loading, navigate, search.redirect]);
 
@@ -53,6 +54,27 @@ function AuthPage() {
         <p className="mt-1 text-sm text-muted-foreground">স্বচ্ছ বিল, সচেতন গ্রাহক।</p>
       </div>
 
+      <div className="mb-4 rounded-lg border border-warning/40 bg-warning/5 p-4 text-sm">
+        <p className="font-semibold text-warning">গুরুত্বপূর্ণ তথ্য</p>
+        <p className="mt-2 text-foreground/90">
+          উখিয়া বিদ্যুৎ বিল একটি স্বাধীন জনসেবামূলক তথ্যভিত্তিক প্ল্যাটফর্ম। এটি কোনো সরকারি প্রতিষ্ঠান,
+          বাংলাদেশ পল্লী বিদ্যুৎ সমিতি (BREB), বা অন্য কোনো সরকারি সংস্থার অফিসিয়াল অ্যাপ বা ওয়েবসাইট নয়।
+        </p>
+        <p className="mt-2 text-xs text-muted-foreground">
+          এখানে প্রদর্শিত তুলনামূলক তথ্য ব্যবহারকারীদের স্বেচ্ছায় জমা দেওয়া তথ্য ও সমষ্টিগত (aggregated)
+          বিশ্লেষণের ভিত্তিতে তৈরি।
+        </p>
+        <label className="mt-3 flex items-start gap-2 text-sm">
+          <input
+            type="checkbox"
+            checked={acknowledged}
+            onChange={(e) => setAcknowledged(e.target.checked)}
+            className="mt-0.5 h-4 w-4 rounded border-border"
+          />
+          <span>আমি বুঝেছি যে এটি কোনো সরকারি অ্যাপ নয়।</span>
+        </label>
+      </div>
+
       <Card className="p-6">
         <Tabs defaultValue={search.mode} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
@@ -61,10 +83,10 @@ function AuthPage() {
           </TabsList>
 
           <TabsContent value="login" className="mt-6">
-            <LoginForm />
+            <LoginForm disabled={!acknowledged} />
           </TabsContent>
           <TabsContent value="register" className="mt-6">
-            <RegisterForm />
+            <RegisterForm disabled={!acknowledged} />
           </TabsContent>
         </Tabs>
 
@@ -74,14 +96,7 @@ function AuthPage() {
           <div className="h-px flex-1 bg-border" />
         </div>
 
-        <GoogleButton />
-
-        <Link
-          to="/notices"
-          className="mt-4 flex w-full items-center justify-center rounded-md border border-border bg-background px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-        >
-          অতিথি হিসেবে ব্রাউজ করুন
-        </Link>
+        <GoogleButton disabled={!acknowledged} />
       </Card>
 
       <p className="mt-6 text-center text-xs text-muted-foreground">
