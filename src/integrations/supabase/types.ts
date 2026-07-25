@@ -14,7 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      expenses: {
+        Row: {
+          amount: number
+          category: Database["public"]["Enums"]["expense_category"]
+          created_at: string
+          id: string
+          note: string | null
+          spent_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          category?: Database["public"]["Enums"]["expense_category"]
+          created_at?: string
+          id?: string
+          note?: string | null
+          spent_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          category?: Database["public"]["Enums"]["expense_category"]
+          created_at?: string
+          id?: string
+          note?: string | null
+          spent_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +76,15 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      expense_category:
+        | "food"
+        | "transport"
+        | "shopping"
+        | "bills"
+        | "health"
+        | "education"
+        | "entertainment"
+        | "other"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +211,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      expense_category: [
+        "food",
+        "transport",
+        "shopping",
+        "bills",
+        "health",
+        "education",
+        "entertainment",
+        "other",
+      ],
+    },
   },
 } as const
