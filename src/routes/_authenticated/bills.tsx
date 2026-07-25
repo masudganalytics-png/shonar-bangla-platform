@@ -18,8 +18,9 @@ import { FileText, MoreVertical, Pencil, Plus, Search, Trash2, Zap } from "lucid
 import { toast } from "sonner";
 import { toBanglaDigits, formatBanglaCurrency } from "@/lib/bangla";
 import {
-  BN_MONTHS_FULL, providerLabel, meterTypeLabel, unionLabel,
+  BN_MONTHS_FULL, METER_TYPES, UNIONS, providerLabel, meterTypeLabel, unionLabel,
 } from "@/lib/bills-constants";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import type { Database } from "@/integrations/supabase/types";
 
 type BillRow = Database["public"]["Tables"]["bills"]["Row"];
