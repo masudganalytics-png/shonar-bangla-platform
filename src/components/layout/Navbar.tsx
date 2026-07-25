@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { Menu, X, Zap, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun, ShieldCheck } from "lucide-react";
+import { Menu, X, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun, ShieldCheck } from "lucide-react";
+import logoAsset from "@/assets/ukhiya-logo.png.asset.json";
 import { NotificationsBell } from "@/components/notifications/NotificationsBell";
 import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "@/hooks/use-theme";
@@ -48,9 +49,7 @@ export function Navbar() {
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/70">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex min-w-0 items-center gap-2.5">
-          <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-primary to-primary-glow text-primary-foreground shadow-[var(--shadow-glow)]">
-            <Zap className="h-5 w-5" strokeWidth={2.5} />
-          </div>
+          <img src={logoAsset.url} alt="উখিয়া বিদ্যুৎ বিল" className="h-9 w-9 shrink-0 rounded-xl object-contain" />
           <div className="min-w-0 leading-tight">
             <div className="truncate text-sm font-bold text-foreground sm:text-base">উখিয়া বিদ্যুৎ বিল</div>
             <div className="hidden text-[10px] text-muted-foreground sm:block">স্বচ্ছ বিল, সচেতন গ্রাহক</div>
