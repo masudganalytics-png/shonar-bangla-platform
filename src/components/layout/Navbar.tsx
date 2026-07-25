@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 type NavItem = { to: string; label: string; auth?: boolean };
 const NAV_ITEMS: readonly NavItem[] = [
   { to: "/", label: "হোম" },
+  { to: "/stats", label: "পরিসংখ্যান" },
   { to: "/bills/new", label: "বিল জমা", auth: true },
   { to: "/compare", label: "তুলনা", auth: true },
   { to: "/calculator", label: "ক্যালকুলেটর" },
