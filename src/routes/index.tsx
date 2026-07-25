@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Calculator, FileText, Scale } from "lucide-react";
+import { ArrowRight, Calculator, FileSignature, FileText, Scale } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
@@ -43,6 +43,12 @@ const QUICK_ACTIONS = [
     title: "বিল ক্যালকুলেটর",
     desc: "ইউনিট থেকে আনুমানিক বিল হিসাব করুন।",
   },
+  {
+    to: "/cv-builder" as const,
+    icon: FileSignature,
+    title: "প্রফেশনাল সিভি তৈরি করুন",
+    desc: "সরকারি • এনজিও • ব্যাংক • প্রাইভেট চাকরির জন্য",
+  },
 ];
 
 function HomePage() {
@@ -79,7 +85,7 @@ function HomePage() {
       </section>
 
       <section className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {QUICK_ACTIONS.map(({ to, icon: Icon, title, desc, primary }) => (
             <Link key={to} to={to} className="group">
               <Card className={`h-full p-6 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)] ${primary ? "border-primary/40" : ""}`}>
