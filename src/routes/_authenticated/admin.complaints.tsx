@@ -16,7 +16,7 @@ import { COMPLAINT_STATUS, reasonLabel, statusLabel } from "@/lib/complaints-con
 import { formatBanglaDate } from "@/lib/bangla";
 
 export const Route = createFileRoute("/_authenticated/admin/complaints")({
-  component: AdminComplaints;
+  component: AdminComplaints,
 });
 
 function AdminComplaints() {
