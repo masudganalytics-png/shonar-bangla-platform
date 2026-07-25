@@ -49,4 +49,6 @@ export const Route = createFileRoute("/api/public/stats")({
           by_union: unions,
         }), { headers: { ...CORS, "Content-Type": "application/json" } });
       },
+    },
+  },
 });
