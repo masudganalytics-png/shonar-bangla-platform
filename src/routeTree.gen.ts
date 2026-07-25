@@ -13,6 +13,7 @@ import { Route as UtilitiesRouteImport } from './routes/utilities'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as NoticesRouteImport } from './routes/notices'
+import { Route as HelplineRouteImport } from './routes/helpline'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -54,6 +55,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const NoticesRoute = NoticesRouteImport.update({
   id: '/notices',
   path: '/notices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelplineRoute = HelplineRouteImport.update({
+  id: '/helpline',
+  path: '/helpline',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -174,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/calculator': typeof CalculatorRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/helpline': typeof HelplineRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
@@ -201,6 +208,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/calculator': typeof CalculatorRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/helpline': typeof HelplineRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
@@ -229,6 +237,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/calculator': typeof CalculatorRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/helpline': typeof HelplineRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
@@ -258,6 +267,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/calculator'
     | '/forgot-password'
+    | '/helpline'
     | '/notices'
     | '/reset-password'
     | '/stats'
@@ -285,6 +295,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/calculator'
     | '/forgot-password'
+    | '/helpline'
     | '/notices'
     | '/reset-password'
     | '/stats'
@@ -312,6 +323,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/calculator'
     | '/forgot-password'
+    | '/helpline'
     | '/notices'
     | '/reset-password'
     | '/stats'
@@ -341,6 +353,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   CalculatorRoute: typeof CalculatorRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  HelplineRoute: typeof HelplineRoute
   NoticesRoute: typeof NoticesRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   StatsRoute: typeof StatsRoute
@@ -377,6 +390,13 @@ declare module '@tanstack/react-router' {
       path: '/notices'
       fullPath: '/notices'
       preLoaderRoute: typeof NoticesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/helpline': {
+      id: '/helpline'
+      path: '/helpline'
+      fullPath: '/helpline'
+      preLoaderRoute: typeof HelplineRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -599,6 +619,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   CalculatorRoute: CalculatorRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  HelplineRoute: HelplineRoute,
   NoticesRoute: NoticesRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   StatsRoute: StatsRoute,
