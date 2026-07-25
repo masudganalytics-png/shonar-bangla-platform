@@ -180,10 +180,16 @@ function CVBuilderPage() {
   return (
     <div className="mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-6">
       <style>{`
+        @media screen and (max-width: 1023px) {
+          .cv-print-offscreen { position: fixed; left: -10000px; top: 0; width: 210mm; pointer-events: none; }
+        }
         @media print {
+          @page { size: A4; margin: 12mm; }
+          html, body { background: #fff !important; }
           body * { visibility: hidden !important; }
+          .cv-print-offscreen { position: static !important; left: auto !important; width: auto !important; }
           #cv-print-root, #cv-print-root * { visibility: visible !important; }
-          #cv-print-root { position: absolute; inset: 0; width: 100%; padding: 0 !important; }
+          #cv-print-root { position: absolute; left: 0; top: 0; width: 100%; padding: 0 !important; box-shadow: none !important; }
           .no-print { display: none !important; }
         }
       `}</style>
