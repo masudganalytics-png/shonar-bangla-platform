@@ -14,57 +14,207 @@ export type Database = {
   }
   public: {
     Tables: {
-      expenses: {
+      announcements: {
         Row: {
-          amount: number
-          category: Database["public"]["Enums"]["expense_category"]
+          body: string
           created_at: string
           id: string
-          note: string | null
-          spent_at: string
+          is_published: boolean
+          priority: Database["public"]["Enums"]["announcement_priority"]
+          published_at: string
+          published_by: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          is_published?: boolean
+          priority?: Database["public"]["Enums"]["announcement_priority"]
+          published_at?: string
+          published_by?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          is_published?: boolean
+          priority?: Database["public"]["Enums"]["announcement_priority"]
+          published_at?: string
+          published_by?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      bills: {
+        Row: {
+          amount: number
+          billing_month: string
+          created_at: string
+          due_date: string
+          id: string
+          meter_no: string
+          notes: string | null
+          paid_at: string | null
+          receipt_url: string | null
+          status: Database["public"]["Enums"]["bill_status"]
+          units_consumed: number
           updated_at: string
           user_id: string
         }
         Insert: {
-          amount: number
-          category?: Database["public"]["Enums"]["expense_category"]
+          amount?: number
+          billing_month: string
           created_at?: string
+          due_date: string
           id?: string
-          note?: string | null
-          spent_at?: string
+          meter_no: string
+          notes?: string | null
+          paid_at?: string | null
+          receipt_url?: string | null
+          status?: Database["public"]["Enums"]["bill_status"]
+          units_consumed?: number
           updated_at?: string
           user_id: string
         }
         Update: {
           amount?: number
-          category?: Database["public"]["Enums"]["expense_category"]
+          billing_month?: string
+          created_at?: string
+          due_date?: string
+          id?: string
+          meter_no?: string
+          notes?: string | null
+          paid_at?: string | null
+          receipt_url?: string | null
+          status?: Database["public"]["Enums"]["bill_status"]
+          units_consumed?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          is_read: boolean
+          link: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
           created_at?: string
           id?: string
-          note?: string | null
-          spent_at?: string
-          updated_at?: string
+          is_read?: boolean
+          link?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          title?: string
           user_id?: string
         }
         Relationships: []
       }
       profiles: {
         Row: {
+          address: string | null
+          avatar_url: string | null
           created_at: string
           full_name: string | null
           id: string
+          meter_no: string | null
+          phone: string | null
           updated_at: string
         }
         Insert: {
+          address?: string | null
+          avatar_url?: string | null
           created_at?: string
           full_name?: string | null
           id: string
+          meter_no?: string | null
+          phone?: string | null
           updated_at?: string
         }
         Update: {
+          address?: string | null
+          avatar_url?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
+          meter_no?: string | null
+          phone?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      reports: {
+        Row: {
+          admin_response: string | null
+          category: Database["public"]["Enums"]["report_category"]
+          created_at: string
+          description: string
+          id: string
+          status: Database["public"]["Enums"]["report_status"]
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_response?: string | null
+          category?: Database["public"]["Enums"]["report_category"]
+          created_at?: string
+          description: string
+          id?: string
+          status?: Database["public"]["Enums"]["report_status"]
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_response?: string | null
+          category?: Database["public"]["Enums"]["report_category"]
+          created_at?: string
+          description?: string
+          id?: string
+          status?: Database["public"]["Enums"]["report_status"]
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
         }
         Relationships: []
       }
@@ -73,18 +223,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      expense_category:
-        | "food"
-        | "transport"
-        | "shopping"
-        | "bills"
-        | "health"
-        | "education"
-        | "entertainment"
-        | "other"
+      announcement_priority: "low" | "normal" | "high" | "urgent"
+      app_role: "user" | "admin"
+      bill_status: "pending" | "paid" | "overdue"
+      report_category: "billing" | "outage" | "meter" | "connection" | "other"
+      report_status: "open" | "in_progress" | "resolved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -212,16 +364,11 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      expense_category: [
-        "food",
-        "transport",
-        "shopping",
-        "bills",
-        "health",
-        "education",
-        "entertainment",
-        "other",
-      ],
+      announcement_priority: ["low", "normal", "high", "urgent"],
+      app_role: ["user", "admin"],
+      bill_status: ["pending", "paid", "overdue"],
+      report_category: ["billing", "outage", "meter", "connection", "other"],
+      report_status: ["open", "in_progress", "resolved", "rejected"],
     },
   },
 } as const
