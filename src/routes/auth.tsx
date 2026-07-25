@@ -126,7 +126,7 @@ function LoginForm({ disabled }: { disabled?: boolean }) {
       return;
     }
     toast.success("সফলভাবে সাইন ইন হয়েছে");
-    navigate({ to: "/dashboard", replace: true });
+    navigate({ to: "/", replace: true });
   };
 
   return (
@@ -194,7 +194,7 @@ function RegisterForm({ disabled }: { disabled?: boolean }) {
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`,
+        emailRedirectTo: `${window.location.origin}/`,
         data: { full_name: fullName.trim() },
       },
     });
@@ -204,7 +204,7 @@ function RegisterForm({ disabled }: { disabled?: boolean }) {
       return;
     }
     toast.success("অ্যাকাউন্ট তৈরি হয়েছে!");
-    navigate({ to: "/dashboard", replace: true });
+    navigate({ to: "/", replace: true });
   };
 
   return (
