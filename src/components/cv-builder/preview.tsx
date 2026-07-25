@@ -1,15 +1,18 @@
 import type { CVData, CVTemplate } from "@/lib/cv-builder/types";
 
-// All templates share the same data. Styling differs. Colors use design tokens.
+// All templates share the same data. Styling differs.
+// The outer StyledBody wrapper applies per-template CSS via descendant selectors,
+// so Section itself only needs the generic .cv-section-title class.
 
-function Section({ title, children, titleClass }: { title: string; children: React.ReactNode; titleClass: string }) {
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="cv-section">
-      <h2 className={`cv-section-title ${titleClass}`}>{title}</h2>
+      <h2 className="cv-section-title">{title}</h2>
       <div className="cv-section-body">{children}</div>
     </section>
   );
 }
+
 
 
 function KV({ k, v }: { k: string; v?: string }) {
