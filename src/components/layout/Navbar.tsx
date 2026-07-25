@@ -28,7 +28,7 @@ const NAV_ITEMS: readonly NavItem[] = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const { user, isAuthenticated, signOut } = useAuth();
+  const { user, isAuthenticated, isAdmin, signOut } = useAuth();
   const { theme, toggle } = useTheme();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
