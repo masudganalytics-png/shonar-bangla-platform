@@ -53,48 +53,78 @@ export type Database = {
       bills: {
         Row: {
           amount: number
+          bill_image_url: string | null
+          bill_month: number | null
+          bill_year: number | null
           billing_month: string
           created_at: string
+          district: string | null
           due_date: string
+          family_members: number | null
           id: string
           meter_no: string
+          meter_type: string | null
           notes: string | null
           paid_at: string | null
+          provider: string | null
           receipt_url: string | null
           status: Database["public"]["Enums"]["bill_status"]
+          union_name: string | null
           units_consumed: number
+          upazila: string | null
           updated_at: string
           user_id: string
+          village: string | null
         }
         Insert: {
           amount?: number
+          bill_image_url?: string | null
+          bill_month?: number | null
+          bill_year?: number | null
           billing_month: string
           created_at?: string
+          district?: string | null
           due_date: string
+          family_members?: number | null
           id?: string
           meter_no: string
+          meter_type?: string | null
           notes?: string | null
           paid_at?: string | null
+          provider?: string | null
           receipt_url?: string | null
           status?: Database["public"]["Enums"]["bill_status"]
+          union_name?: string | null
           units_consumed?: number
+          upazila?: string | null
           updated_at?: string
           user_id: string
+          village?: string | null
         }
         Update: {
           amount?: number
+          bill_image_url?: string | null
+          bill_month?: number | null
+          bill_year?: number | null
           billing_month?: string
           created_at?: string
+          district?: string | null
           due_date?: string
+          family_members?: number | null
           id?: string
           meter_no?: string
+          meter_type?: string | null
           notes?: string | null
           paid_at?: string | null
+          provider?: string | null
           receipt_url?: string | null
           status?: Database["public"]["Enums"]["bill_status"]
+          union_name?: string | null
           units_consumed?: number
+          upazila?: string | null
           updated_at?: string
           user_id?: string
+          village?: string | null
         }
         Relationships: []
       }
