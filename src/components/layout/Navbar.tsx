@@ -82,6 +82,8 @@ export function Navbar() {
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
 
+          {isAuthenticated && <NotificationsBell />}
+
           {isAuthenticated ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
