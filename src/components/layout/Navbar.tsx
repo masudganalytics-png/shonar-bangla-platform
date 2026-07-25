@@ -109,6 +109,13 @@ export function Navbar() {
                     <SettingsIcon className="mr-2 h-4 w-4" /> সেটিংস
                   </Link>
                 </DropdownMenuItem>
+                {isAdmin && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin">
+                      <ShieldCheck className="mr-2 h-4 w-4" /> অ্যাডমিন প্যানেল
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut} className="text-destructive focus:text-destructive">
                   <LogOut className="mr-2 h-4 w-4" /> সাইন আউট
