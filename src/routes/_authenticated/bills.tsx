@@ -79,13 +79,16 @@ function BillsHistoryPage() {
   const filtered = useMemo(() => {
     if (!bills) return null;
     const q = query.trim().toLowerCase();
-    if (!q) return bills;
-    return bills.filter((b) =>
-      [b.meter_no, b.village, b.union_name, b.provider]
+    return bills.filter((b) => {
+      if (monthFilter !== "all" && String(b.bill_month) !== monthFilter) return false;
+      if (unionFilter !== "all" && b.union_name !== unionFilter) return false;
+      if (meterFilter !== "all" && b.meter_type !== meterFilter) return false;
+      if (!q) return true;
+      return [b.meter_no, b.village, b.union_name, b.provider]
         .filter(Boolean)
-        .some((s) => String(s).toLowerCase().includes(q)),
-    );
-  }, [bills, query]);
+        .some((s) => String(s).toLowerCase().includes(q));
+    });
+  }, [bills, query, monthFilter, unionFilter, meterFilter]);
 
   const confirmDelete = async () => {
     if (!pendingDelete) return;
