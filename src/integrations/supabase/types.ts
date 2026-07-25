@@ -198,6 +198,8 @@ export type Database = {
           created_at: string
           description: string
           id: string
+          image_url: string | null
+          reason: Database["public"]["Enums"]["complaint_reason"]
           status: Database["public"]["Enums"]["report_status"]
           title: string
           updated_at: string
@@ -209,6 +211,8 @@ export type Database = {
           created_at?: string
           description: string
           id?: string
+          image_url?: string | null
+          reason?: Database["public"]["Enums"]["complaint_reason"]
           status?: Database["public"]["Enums"]["report_status"]
           title: string
           updated_at?: string
@@ -220,6 +224,8 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          image_url?: string | null
+          reason?: Database["public"]["Enums"]["complaint_reason"]
           status?: Database["public"]["Enums"]["report_status"]
           title?: string
           updated_at?: string
@@ -265,6 +271,7 @@ export type Database = {
       announcement_priority: "low" | "normal" | "high" | "urgent"
       app_role: "user" | "admin"
       bill_status: "pending" | "paid" | "overdue"
+      complaint_reason: "high_bill" | "wrong_reading" | "wrong_tariff" | "other"
       report_category: "billing" | "outage" | "meter" | "connection" | "other"
       report_status: "open" | "in_progress" | "resolved" | "rejected"
     }
@@ -397,6 +404,7 @@ export const Constants = {
       announcement_priority: ["low", "normal", "high", "urgent"],
       app_role: ["user", "admin"],
       bill_status: ["pending", "paid", "overdue"],
+      complaint_reason: ["high_bill", "wrong_reading", "wrong_tariff", "other"],
       report_category: ["billing", "outage", "meter", "connection", "other"],
       report_status: ["open", "in_progress", "resolved", "rejected"],
     },
