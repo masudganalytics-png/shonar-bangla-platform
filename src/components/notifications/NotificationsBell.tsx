@@ -92,22 +92,21 @@ export function NotificationsBell() {
             <div className="p-6 text-center text-xs text-muted-foreground">কোনো বিজ্ঞপ্তি নেই।</div>
           ) : (
             items.map((n) => {
-              const Wrap = n.link ? Link : "div";
-              const wrapProps = n.link ? { to: n.link as string } : {};
-              return (
-                <Wrap
-                  key={n.id}
-                  {...(wrapProps as never)}
-                  onClick={() => markOne(n.id)}
-                  className={`block border-b px-3 py-2.5 text-sm last:border-0 hover:bg-accent ${!n.is_read ? "bg-primary/5" : ""}`}
-                >
+              const inner = (
+                <>
                   <div className="flex items-start justify-between gap-2">
                     <p className="font-medium leading-tight">{n.title}</p>
                     {!n.is_read && <Badge className="mt-0.5 h-1.5 w-1.5 rounded-full bg-primary p-0" />}
                   </div>
                   {n.body && <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{n.body}</p>}
                   <p className="mt-1 text-[10px] text-muted-foreground">{formatBanglaDate(n.created_at)}</p>
-                </Wrap>
+                </>
+              );
+              const cls = `block border-b px-3 py-2.5 text-sm last:border-0 hover:bg-accent ${!n.is_read ? "bg-primary/5" : ""}`;
+              return n.link ? (
+                <Link key={n.id} to={n.link} onClick={() => markOne(n.id)} className={cls}>{inner}</Link>
+              ) : (
+                <div key={n.id} onClick={() => markOne(n.id)} className={cls}>{inner}</div>
               );
             })
           )}
