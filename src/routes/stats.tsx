@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Users, FileText, MessageSquare, TrendingUp, Activity, MapPin, Zap, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { toBnDigits, formatBDT } from "@/lib/bangla";
+import { toBanglaDigits as toBnDigits, formatBanglaCurrency as formatBDT } from "@/lib/bangla";
 import { UNIONS } from "@/lib/bills-constants";
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
