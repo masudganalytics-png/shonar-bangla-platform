@@ -21,6 +21,8 @@ import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedCompareRouteImport } from './routes/_authenticated/compare'
 import { Route as AuthenticatedBillsRouteImport } from './routes/_authenticated/bills'
+import { Route as AuthenticatedBillsNewRouteImport } from './routes/_authenticated/bills.new'
+import { Route as AuthenticatedBillsIdEditRouteImport } from './routes/_authenticated/bills.$id.edit'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -81,6 +83,17 @@ const AuthenticatedBillsRoute = AuthenticatedBillsRouteImport.update({
   path: '/bills',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedBillsNewRoute = AuthenticatedBillsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AuthenticatedBillsRoute,
+} as any)
+const AuthenticatedBillsIdEditRoute =
+  AuthenticatedBillsIdEditRouteImport.update({
+    id: '/$id/edit',
+    path: '/$id/edit',
+    getParentRoute: () => AuthenticatedBillsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -88,12 +101,14 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/bills': typeof AuthenticatedBillsRoute
+  '/bills': typeof AuthenticatedBillsRouteWithChildren
   '/compare': typeof AuthenticatedCompareRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/bills/new': typeof AuthenticatedBillsNewRoute
+  '/bills/$id/edit': typeof AuthenticatedBillsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -101,12 +116,14 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/bills': typeof AuthenticatedBillsRoute
+  '/bills': typeof AuthenticatedBillsRouteWithChildren
   '/compare': typeof AuthenticatedCompareRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/bills/new': typeof AuthenticatedBillsNewRoute
+  '/bills/$id/edit': typeof AuthenticatedBillsIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,12 +133,14 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/_authenticated/bills': typeof AuthenticatedBillsRoute
+  '/_authenticated/bills': typeof AuthenticatedBillsRouteWithChildren
   '/_authenticated/compare': typeof AuthenticatedCompareRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/bills/new': typeof AuthenticatedBillsNewRoute
+  '/_authenticated/bills/$id/edit': typeof AuthenticatedBillsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -137,6 +156,8 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/bills/new'
+    | '/bills/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -150,6 +171,8 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/bills/new'
+    | '/bills/$id/edit'
   id:
     | '__root__'
     | '/'
@@ -164,6 +187,8 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
+    | '/_authenticated/bills/new'
+    | '/_authenticated/bills/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -261,11 +286,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBillsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/bills/new': {
+      id: '/_authenticated/bills/new'
+      path: '/new'
+      fullPath: '/bills/new'
+      preLoaderRoute: typeof AuthenticatedBillsNewRouteImport
+      parentRoute: typeof AuthenticatedBillsRoute
+    }
+    '/_authenticated/bills/$id/edit': {
+      id: '/_authenticated/bills/$id/edit'
+      path: '/$id/edit'
+      fullPath: '/bills/$id/edit'
+      preLoaderRoute: typeof AuthenticatedBillsIdEditRouteImport
+      parentRoute: typeof AuthenticatedBillsRoute
+    }
   }
 }
 
+interface AuthenticatedBillsRouteChildren {
+  AuthenticatedBillsNewRoute: typeof AuthenticatedBillsNewRoute
+  AuthenticatedBillsIdEditRoute: typeof AuthenticatedBillsIdEditRoute
+}
+
+const AuthenticatedBillsRouteChildren: AuthenticatedBillsRouteChildren = {
+  AuthenticatedBillsNewRoute: AuthenticatedBillsNewRoute,
+  AuthenticatedBillsIdEditRoute: AuthenticatedBillsIdEditRoute,
+}
+
+const AuthenticatedBillsRouteWithChildren =
+  AuthenticatedBillsRoute._addFileChildren(AuthenticatedBillsRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedBillsRoute: typeof AuthenticatedBillsRoute
+  AuthenticatedBillsRoute: typeof AuthenticatedBillsRouteWithChildren
   AuthenticatedCompareRoute: typeof AuthenticatedCompareRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
@@ -274,7 +326,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedBillsRoute: AuthenticatedBillsRoute,
+  AuthenticatedBillsRoute: AuthenticatedBillsRouteWithChildren,
   AuthenticatedCompareRoute: AuthenticatedCompareRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
