@@ -1,0 +1,14 @@
+# উখিয়া বিদ্যুৎ বিল (Ukhiya Electricity Bill)
+
+> স্বচ্ছ বিল, সচেতন গ্রাহক — Ukhiya, Cox's Bazar residents track, compare, and report electricity bills.
+
+A community platform for Ukhiya upazila residents to submit electricity bill data (via image OCR), compare against local union averages, receive AI-powered usage insights, and stay updated with government notices and power-outage announcements. UI is in Bangla; data is aggregated and anonymized.
+
+## Pages
+- [Home](/): Overview, features, and call to action
+- [Public Notices](/notices): Government notices, outages, tariff changes
+- [Sign in / Register](/auth): Email or Google authentication
+
+## Public API (for Android app / third parties)
+- [Announcements](/api/public/announcements): GET — recent published announcements (optional ?category= & ?limit=)
+- [Aggregate stats](/api/public/stats): GET — anonymized bill averages by union
