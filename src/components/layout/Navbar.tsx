@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { Menu, X, Zap, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun } from "lucide-react";
+import { Menu, X, Zap, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun, ShieldCheck } from "lucide-react";
+import { NotificationsBell } from "@/components/notifications/NotificationsBell";
 import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "@/hooks/use-theme";
 import { Button } from "@/components/ui/button";
@@ -27,7 +28,7 @@ const NAV_ITEMS: readonly NavItem[] = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const { user, isAuthenticated, signOut } = useAuth();
+  const { user, isAuthenticated, isAdmin, signOut } = useAuth();
   const { theme, toggle } = useTheme();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -81,6 +82,8 @@ export function Navbar() {
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
 
+          {isAuthenticated && <NotificationsBell />}
+
           {isAuthenticated ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -106,6 +109,13 @@ export function Navbar() {
                     <SettingsIcon className="mr-2 h-4 w-4" /> সেটিংস
                   </Link>
                 </DropdownMenuItem>
+                {isAdmin && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin">
+                      <ShieldCheck className="mr-2 h-4 w-4" /> অ্যাডমিন প্যানেল
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut} className="text-destructive focus:text-destructive">
                   <LogOut className="mr-2 h-4 w-4" /> সাইন আউট
