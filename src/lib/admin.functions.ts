@@ -124,7 +124,7 @@ export const updateBillStatus = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await ensureAdmin(context);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const patch: Record<string, unknown> = { status: data.status };
+    const patch: { status: "pending" | "paid" | "overdue"; paid_at?: string | null } = { status: data.status };
     if (data.status === "paid") patch.paid_at = new Date().toISOString();
     const { error } = await supabaseAdmin.from("bills").update(patch).eq("id", data.id);
     if (error) throw new Error(error.message);

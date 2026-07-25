@@ -21,7 +21,12 @@ import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedCompareRouteImport } from './routes/_authenticated/compare'
 import { Route as AuthenticatedBillsRouteImport } from './routes/_authenticated/bills'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedBillsNewRouteImport } from './routes/_authenticated/bills.new'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAdminComplaintsRouteImport } from './routes/_authenticated/admin.complaints'
+import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authenticated/admin.bills'
 import { Route as AuthenticatedBillsIdEditRouteImport } from './routes/_authenticated/bills.$id.edit'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -83,10 +88,36 @@ const AuthenticatedBillsRoute = AuthenticatedBillsRouteImport.update({
   path: '/bills',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedBillsNewRoute = AuthenticatedBillsNewRouteImport.update({
   id: '/new',
   path: '/new',
   getParentRoute: () => AuthenticatedBillsRoute,
+} as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminComplaintsRoute =
+  AuthenticatedAdminComplaintsRouteImport.update({
+    id: '/complaints',
+    path: '/complaints',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBillsRoute = AuthenticatedAdminBillsRouteImport.update({
+  id: '/bills',
+  path: '/bills',
+  getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
 const AuthenticatedBillsIdEditRoute =
   AuthenticatedBillsIdEditRouteImport.update({
@@ -101,13 +132,18 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/bills': typeof AuthenticatedBillsRouteWithChildren
   '/compare': typeof AuthenticatedCompareRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/admin/bills': typeof AuthenticatedAdminBillsRoute
+  '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/bills/new': typeof AuthenticatedBillsNewRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
   '/bills/$id/edit': typeof AuthenticatedBillsIdEditRoute
 }
 export interface FileRoutesByTo {
@@ -122,7 +158,11 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/admin/bills': typeof AuthenticatedAdminBillsRoute
+  '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/bills/new': typeof AuthenticatedBillsNewRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
   '/bills/$id/edit': typeof AuthenticatedBillsIdEditRoute
 }
 export interface FileRoutesById {
@@ -133,13 +173,18 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/bills': typeof AuthenticatedBillsRouteWithChildren
   '/_authenticated/compare': typeof AuthenticatedCompareRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/admin/bills': typeof AuthenticatedAdminBillsRoute
+  '/_authenticated/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/bills/new': typeof AuthenticatedBillsNewRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/bills/$id/edit': typeof AuthenticatedBillsIdEditRoute
 }
 export interface FileRouteTypes {
@@ -150,13 +195,18 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/notices'
     | '/reset-password'
+    | '/admin'
     | '/bills'
     | '/compare'
     | '/dashboard'
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/admin/bills'
+    | '/admin/complaints'
+    | '/admin/users'
     | '/bills/new'
+    | '/admin/'
     | '/bills/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -171,7 +221,11 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/admin/bills'
+    | '/admin/complaints'
+    | '/admin/users'
     | '/bills/new'
+    | '/admin'
     | '/bills/$id/edit'
   id:
     | '__root__'
@@ -181,13 +235,18 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/notices'
     | '/reset-password'
+    | '/_authenticated/admin'
     | '/_authenticated/bills'
     | '/_authenticated/compare'
     | '/_authenticated/dashboard'
     | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
+    | '/_authenticated/admin/bills'
+    | '/_authenticated/admin/complaints'
+    | '/_authenticated/admin/users'
     | '/_authenticated/bills/new'
+    | '/_authenticated/admin/'
     | '/_authenticated/bills/$id/edit'
   fileRoutesById: FileRoutesById
 }
@@ -286,12 +345,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBillsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/bills/new': {
       id: '/_authenticated/bills/new'
       path: '/new'
       fullPath: '/bills/new'
       preLoaderRoute: typeof AuthenticatedBillsNewRouteImport
       parentRoute: typeof AuthenticatedBillsRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/complaints': {
+      id: '/_authenticated/admin/complaints'
+      path: '/complaints'
+      fullPath: '/admin/complaints'
+      preLoaderRoute: typeof AuthenticatedAdminComplaintsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/bills': {
+      id: '/_authenticated/admin/bills'
+      path: '/bills'
+      fullPath: '/admin/bills'
+      preLoaderRoute: typeof AuthenticatedAdminBillsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/bills/$id/edit': {
       id: '/_authenticated/bills/$id/edit'
@@ -302,6 +396,23 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminBillsRoute: typeof AuthenticatedAdminBillsRoute
+  AuthenticatedAdminComplaintsRoute: typeof AuthenticatedAdminComplaintsRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminBillsRoute: AuthenticatedAdminBillsRoute,
+  AuthenticatedAdminComplaintsRoute: AuthenticatedAdminComplaintsRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
 
 interface AuthenticatedBillsRouteChildren {
   AuthenticatedBillsNewRoute: typeof AuthenticatedBillsNewRoute
@@ -317,6 +428,7 @@ const AuthenticatedBillsRouteWithChildren =
   AuthenticatedBillsRoute._addFileChildren(AuthenticatedBillsRouteChildren)
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedBillsRoute: typeof AuthenticatedBillsRouteWithChildren
   AuthenticatedCompareRoute: typeof AuthenticatedCompareRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -326,6 +438,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedBillsRoute: AuthenticatedBillsRouteWithChildren,
   AuthenticatedCompareRoute: AuthenticatedCompareRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
