@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { Menu, X, Zap, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun } from "lucide-react";
+import { Menu, X, Zap, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun, ShieldCheck } from "lucide-react";
+import { NotificationsBell } from "@/components/notifications/NotificationsBell";
 import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "@/hooks/use-theme";
 import { Button } from "@/components/ui/button";
