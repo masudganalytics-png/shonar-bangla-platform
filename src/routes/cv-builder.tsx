@@ -308,13 +308,13 @@ function CVBuilderPage() {
           </Card>
         </div>
 
-        <div className="hidden lg:block">
-          <div className="sticky top-20">
-            <div className="mb-2 flex items-center justify-between text-xs text-muted-foreground">
+        <div className="lg:block">
+          <div className="lg:sticky lg:top-20">
+            <div className="no-print mb-2 hidden items-center justify-between text-xs text-muted-foreground lg:flex">
               <span>Live preview (A4)</span>
               <Badge variant="outline">{TEMPLATES.find(t => t.id === data.template)?.label}</Badge>
             </div>
-            <div className="max-h-[calc(100vh-8rem)] overflow-auto rounded-md border border-border bg-white shadow-sm">
+            <div className="cv-print-offscreen lg:max-h-[calc(100vh-8rem)] lg:overflow-auto lg:rounded-md lg:border lg:border-border lg:bg-white lg:shadow-sm">
               <CVPreview data={data} />
             </div>
           </div>
