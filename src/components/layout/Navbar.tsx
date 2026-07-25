@@ -23,6 +23,7 @@ const NAV_ITEMS: readonly NavItem[] = [
   { to: "/bills/new", label: "বিল জমা", auth: true },
   { to: "/compare", label: "তুলনা", auth: true },
   { to: "/calculator", label: "ক্যালকুলেটর" },
+  { to: "/helpline", label: "হেল্পলাইন" },
   { to: "/reports", label: "অভিযোগ", auth: true },
 ];
 
