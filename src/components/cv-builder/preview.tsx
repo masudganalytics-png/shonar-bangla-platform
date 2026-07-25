@@ -242,40 +242,21 @@ export function CVPreview({ data }: { data: CVData }) {
   } as const)[t];
 
   return (
-    <div id="cv-print-root" className={`cv-doc ${styles.wrap}`} data-template={t}>
+    <div id="cv-print-root" className={`cv-doc cv-tpl-${t} ${styles.wrap}`} data-template={t}>
       <style>{`
         .cv-doc { color: #111; background: #fff; padding: 28px 32px; min-height: 297mm; width: 100%; font-size: 13px; line-height: 1.5; }
         .cv-section { margin-top: 14px; }
-        .cv-section-title { font-size: 13px; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 6px; }
-        .cv-section-title-gov  { text-transform: uppercase; border-bottom: 1.5px solid #000; padding-bottom: 2px; }
-        .cv-section-title-ngo  { color: #2E7D32; border-bottom: 2px solid #2E7D32; padding-bottom: 2px; }
-        .cv-section-title-ats  { text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 2px; font-size: 12.5px; }
-        .cv-section-title-corp { color: #1565C0; border-bottom: 2px solid #1565C0; padding-bottom: 2px; }
-        .cv-section-title-exec { font-family: serif; text-transform: uppercase; letter-spacing: 0.15em; border-bottom: 1px solid #000; padding-bottom: 3px; }
+        .cv-section-title { font-size: 13px; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 6px; display: block; }
+        .cv-tpl-government .cv-section-title { text-transform: uppercase; border-bottom: 1.5px solid #000; padding-bottom: 2px; }
+        .cv-tpl-ngo .cv-section-title        { color: #2E7D32; border-bottom: 2px solid #2E7D32; padding-bottom: 2px; }
+        .cv-tpl-ats .cv-section-title        { text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 2px; font-size: 12.5px; }
+        .cv-tpl-corporate .cv-section-title  { color: #1565C0; border-bottom: 2px solid #1565C0; padding-bottom: 2px; }
+        .cv-tpl-executive .cv-section-title  { font-family: serif; text-transform: uppercase; letter-spacing: 0.15em; border-bottom: 1px solid #000; padding-bottom: 3px; }
         @page { size: A4; margin: 12mm; }
       `}</style>
       <Header data={data} />
-      <div className={styles.sectionClass ? `[&_.cv-section-title]:${styles.sectionClass}` : ""}>
-        <div className="[&_.cv-section-title]:!block">
-          <div className="cv-body">
-            <StyledBody data={data} />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Body wrapper that injects the per-template section title class via CSS var trick.
-// Simpler: render sections with the class name directly by wrapping in a scope.
-function StyledBody({ data }: { data: CVData }) {
-  const cls = TEMPLATE_STYLES[data.template].sectionClass;
-  return (
-    <div className={`cv-scope-${data.template} [&_.cv-section-title]:${cls}`}>
-      <style>{`
-        .cv-scope-${data.template} .cv-section-title { ${data.template === "government" ? "text-transform:uppercase;border-bottom:1.5px solid #000;padding-bottom:2px;" : ""} ${data.template === "ngo" ? "color:#2E7D32;border-bottom:2px solid #2E7D32;padding-bottom:2px;" : ""} ${data.template === "ats" ? "text-transform:uppercase;border-bottom:1px solid #333;padding-bottom:2px;font-size:12.5px;" : ""} ${data.template === "corporate" ? "color:#1565C0;border-bottom:2px solid #1565C0;padding-bottom:2px;" : ""} ${data.template === "executive" ? "font-family:serif;text-transform:uppercase;letter-spacing:0.15em;border-bottom:1px solid #000;padding-bottom:3px;" : ""} }
-      `}</style>
       <CommonBody data={data} />
     </div>
   );
 }
+
