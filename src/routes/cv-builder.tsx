@@ -157,27 +157,14 @@ function CVBuilderPage() {
 
   const handleDownloadPDF = async () => {
     if (dirty) upsertCV(data);
-    const el = document.getElementById("cv-print-root");
-    if (!el) return;
     setExporting(true);
     try {
-      const mod: any = await import("html2pdf.js");
-      const html2pdf = mod.default || mod;
-      await html2pdf()
-        .from(el)
-        .set({
-          margin: 0,
-          filename: `${(data.name || "cv").replace(/[^a-z0-9-_ ]/gi, "_")}.pdf`,
-          image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff" },
-          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-          pagebreak: { mode: ["css", "legacy"] },
-        })
-        .save();
-      toast.success("PDF downloaded");
+      await new Promise((r) => setTimeout(r, 60));
+      window.print();
+      toast.success("Choose 'Save as PDF' in the print dialog");
     } catch (err) {
       console.error(err);
-      toast.error("PDF export failed — try Print instead");
+      toast.error("Could not open print dialog");
     } finally {
       setExporting(false);
     }
@@ -185,7 +172,7 @@ function CVBuilderPage() {
 
   const handlePrint = () => {
     if (dirty) upsertCV(data);
-    window.print();
+    setTimeout(() => window.print(), 60);
   };
 
   const requiredMissing = !data.personal.full_name || !data.personal.mobile || !data.personal.email;
