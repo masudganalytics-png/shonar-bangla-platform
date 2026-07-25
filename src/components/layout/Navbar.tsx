@@ -22,6 +22,7 @@ const NAV_ITEMS: readonly NavItem[] = [
   { to: "/dashboard", label: "ড্যাশবোর্ড", auth: true },
   { to: "/bills", label: "বিল জমা", auth: true },
   { to: "/compare", label: "তুলনা", auth: true },
+  { to: "/insights", label: "AI বিশ্লেষণ", auth: true },
   { to: "/reports", label: "অভিযোগ", auth: true },
   { to: "/notices", label: "নোটিশ" },
 ];
