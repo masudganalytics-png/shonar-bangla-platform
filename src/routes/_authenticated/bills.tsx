@@ -162,8 +162,8 @@ function BillsHistoryPage() {
           </div>
         )}
 
-        <div className="mb-4 flex items-center gap-2">
-          <div className="relative flex-1">
+        <div className="mb-4 grid gap-2 sm:grid-cols-[1fr_auto_auto_auto]">
+          <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder="মিটার, গ্রাম বা প্রোভাইডার দিয়ে খুঁজুন"
@@ -172,6 +172,33 @@ function BillsHistoryPage() {
               className="pl-9"
             />
           </div>
+          <Select value={monthFilter} onValueChange={setMonthFilter}>
+            <SelectTrigger className="sm:w-[140px]"><SelectValue placeholder="মাস" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">সব মাস</SelectItem>
+              {BN_MONTHS_FULL.map((m, i) => (
+                <SelectItem key={i} value={String(i + 1)}>{m}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select value={unionFilter} onValueChange={setUnionFilter}>
+            <SelectTrigger className="sm:w-[150px]"><SelectValue placeholder="ইউনিয়ন" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">সব ইউনিয়ন</SelectItem>
+              {UNIONS.map((u) => (
+                <SelectItem key={u.value} value={u.value}>{u.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select value={meterFilter} onValueChange={setMeterFilter}>
+            <SelectTrigger className="sm:w-[140px]"><SelectValue placeholder="মিটার ধরন" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">সব ধরন</SelectItem>
+              {METER_TYPES.map((m) => (
+                <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         {bills === null ? (
