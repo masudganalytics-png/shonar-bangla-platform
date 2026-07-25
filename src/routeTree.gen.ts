@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UtilitiesRouteImport } from './routes/utilities'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
@@ -33,6 +34,11 @@ import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
 import { Route as AuthenticatedBillsIdEditRouteImport } from './routes/_authenticated/bills.$id.edit'
 
+const UtilitiesRoute = UtilitiesRouteImport.update({
+  id: '/utilities',
+  path: '/utilities',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
@@ -157,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/utilities': typeof UtilitiesRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/bills': typeof AuthenticatedBillsRouteWithChildren
   '/compare': typeof AuthenticatedCompareRoute
@@ -181,6 +188,7 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/utilities': typeof UtilitiesRoute
   '/bills': typeof AuthenticatedBillsRouteWithChildren
   '/compare': typeof AuthenticatedCompareRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -206,6 +214,7 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/utilities': typeof UtilitiesRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/bills': typeof AuthenticatedBillsRouteWithChildren
   '/_authenticated/compare': typeof AuthenticatedCompareRoute
@@ -232,6 +241,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/notices'
     | '/reset-password'
+    | '/utilities'
     | '/admin'
     | '/bills'
     | '/compare'
@@ -256,6 +266,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/notices'
     | '/reset-password'
+    | '/utilities'
     | '/bills'
     | '/compare'
     | '/dashboard'
@@ -280,6 +291,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/notices'
     | '/reset-password'
+    | '/utilities'
     | '/_authenticated/admin'
     | '/_authenticated/bills'
     | '/_authenticated/compare'
@@ -306,12 +318,20 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   NoticesRoute: typeof NoticesRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  UtilitiesRoute: typeof UtilitiesRoute
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
   ApiPublicStatsRoute: typeof ApiPublicStatsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/utilities': {
+      id: '/utilities'
+      path: '/utilities'
+      fullPath: '/utilities'
+      preLoaderRoute: typeof UtilitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
@@ -540,6 +560,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   NoticesRoute: NoticesRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  UtilitiesRoute: UtilitiesRoute,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
   ApiPublicStatsRoute: ApiPublicStatsRoute,
 }
