@@ -1,217 +1,244 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { Wallet, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
 import { toast } from "sonner";
-
+import { Eye, EyeOff, Loader2, Zap } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useEffect } from "react";
+
+const searchSchema = z.object({
+  mode: z.enum(["login", "register"]).optional().default("login"),
+  redirect: z.string().optional(),
+});
 
 export const Route = createFileRoute("/auth")({
+  validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "সাইন ইন — খরচের খাতা" },
-      { name: "description", content: "আপনার খরচের খাতা অ্যাকাউন্টে সাইন ইন করুন বা নতুন অ্যাকাউন্ট তৈরি করুন।" },
-      { property: "og:title", content: "সাইন ইন — খরচের খাতা" },
-      { property: "og:description", content: "আপনার খরচের খাতা অ্যাকাউন্টে সাইন ইন করুন।" },
+      { title: "সাইন ইন / নিবন্ধন — উখিয়া বিদ্যুৎ বিল" },
+      { name: "description", content: "আপনার অ্যাকাউন্টে সাইন ইন করুন অথবা নতুন অ্যাকাউন্ট তৈরি করুন।" },
+      { property: "og:title", content: "সাইন ইন — উখিয়া বিদ্যুৎ বিল" },
+      { property: "og:description", content: "নিরাপদ লগইন — ইমেইল বা গুগল দিয়ে।" },
+      { name: "robots", content: "noindex" },
     ],
   }),
   component: AuthPage,
 });
 
-const signInSchema = z.object({
-  email: z.string().email("সঠিক ইমেইল ঠিকানা দিন"),
-  password: z.string().min(6, "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে"),
-});
-
-const signUpSchema = signInSchema.extend({
-  fullName: z.string().min(2, "আপনার নাম লিখুন"),
-});
-
 function AuthPage() {
+  const search = Route.useSearch();
   const navigate = useNavigate();
-  const { session, loading } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
 
   useEffect(() => {
-    if (!loading && session) {
-      navigate({ to: "/" });
+    if (!loading && isAuthenticated) {
+      navigate({ to: search.redirect ?? "/dashboard", replace: true });
     }
-  }, [session, loading, navigate]);
+  }, [isAuthenticated, loading, navigate, search.redirect]);
 
   return (
-    <div className="min-h-screen bg-[image:var(--gradient-hero)] flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-6 text-primary-foreground">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-sm mb-3">
-            <Wallet className="w-7 h-7" />
-          </div>
-          <h1 className="text-3xl font-bold">খরচের খাতা</h1>
-          <p className="text-sm opacity-90 mt-1">দৈনিক খরচ হিসাব রাখুন সহজে</p>
+    <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center px-4 py-10 sm:px-6">
+      <div className="mb-6 text-center">
+        <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-primary to-primary-glow text-primary-foreground shadow-[var(--shadow-glow)]">
+          <Zap className="h-7 w-7" strokeWidth={2.5} />
+        </div>
+        <h1 className="mt-4 text-2xl font-bold">উখিয়া বিদ্যুৎ বিল</h1>
+        <p className="mt-1 text-sm text-muted-foreground">স্বচ্ছ বিল, সচেতন গ্রাহক।</p>
+      </div>
+
+      <Card className="p-6">
+        <Tabs defaultValue={search.mode} className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="login">সাইন ইন</TabsTrigger>
+            <TabsTrigger value="register">নিবন্ধন</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="login" className="mt-6">
+            <LoginForm />
+          </TabsContent>
+          <TabsContent value="register" className="mt-6">
+            <RegisterForm />
+          </TabsContent>
+        </Tabs>
+
+        <div className="my-6 flex items-center gap-3">
+          <div className="h-px flex-1 bg-border" />
+          <span className="text-xs text-muted-foreground">অথবা</span>
+          <div className="h-px flex-1 bg-border" />
         </div>
 
-        <Card className="shadow-lg">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-xl">স্বাগতম</CardTitle>
-            <CardDescription>সাইন ইন করুন অথবা নতুন অ্যাকাউন্ট তৈরি করুন</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Tabs defaultValue="signin">
-              <TabsList className="grid w-full grid-cols-2 mb-4">
-                <TabsTrigger value="signin">সাইন ইন</TabsTrigger>
-                <TabsTrigger value="signup">নিবন্ধন</TabsTrigger>
-              </TabsList>
-              <TabsContent value="signin">
-                <SignInForm />
-              </TabsContent>
-              <TabsContent value="signup">
-                <SignUpForm />
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
-      </div>
+        <GoogleButton />
+
+        <Link
+          to="/notices"
+          className="mt-4 flex w-full items-center justify-center rounded-md border border-border bg-background px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+        >
+          অতিথি হিসেবে ব্রাউজ করুন
+        </Link>
+      </Card>
+
+      <p className="mt-6 text-center text-xs text-muted-foreground">
+        সাইন ইন করে আপনি আমাদের{" "}
+        <Link to="/terms" className="underline hover:text-foreground">শর্তাবলী</Link> ও{" "}
+        <Link to="/privacy" className="underline hover:text-foreground">গোপনীয়তা নীতি</Link>-তে সম্মত হন।
+      </p>
     </div>
   );
 }
 
-function SignInForm() {
+function LoginForm() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [busy, setBusy] = useState(false);
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const parsed = signInSchema.safeParse({ email, password });
-    if (!parsed.success) {
-      toast.error(parsed.error.issues[0]?.message ?? "তথ্য যাচাই ব্যর্থ");
-      return;
-    }
-    setBusy(true);
+    if (!email || !password) return toast.error("ইমেইল ও পাসওয়ার্ড দিন");
+    setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setBusy(false);
+    setLoading(false);
     if (error) {
-      toast.error("সাইন ইন ব্যর্থ", { description: "ইমেইল অথবা পাসওয়ার্ড ভুল।" });
+      toast.error(error.message === "Invalid login credentials" ? "ভুল ইমেইল বা পাসওয়ার্ড" : error.message);
       return;
     }
-    toast.success("স্বাগতম!");
+    toast.success("সফলভাবে সাইন ইন হয়েছে");
+    navigate({ to: "/dashboard", replace: true });
   };
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="signin-email">ইমেইল</Label>
+        <Label htmlFor="email-login">ইমেইল</Label>
         <Input
-          id="signin-email"
+          id="email-login"
           type="email"
-          placeholder="আপনার ইমেইল লিখুন"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com"
           autoComplete="email"
           required
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="signin-password">পাসওয়ার্ড</Label>
-        <Input
-          id="signin-password"
-          type="password"
-          placeholder="পাসওয়ার্ড দিন"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete="current-password"
-          required
-        />
+        <div className="flex items-center justify-between">
+          <Label htmlFor="pass-login">পাসওয়ার্ড</Label>
+          <Link to="/forgot-password" className="text-xs font-medium text-primary hover:underline">
+            পাসওয়ার্ড ভুলে গেছেন?
+          </Link>
+        </div>
+        <div className="relative">
+          <Input
+            id="pass-login"
+            type={show ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+            autoComplete="current-password"
+            required
+          />
+          <button
+            type="button"
+            onClick={() => setShow((s) => !s)}
+            className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+            aria-label="পাসওয়ার্ড দেখান"
+          >
+            {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          </button>
+        </div>
       </div>
-      <Button type="submit" className="w-full" disabled={busy}>
-        {busy && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        সাইন ইন করুন
+      <Button type="submit" className="w-full" disabled={loading}>
+        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} সাইন ইন
       </Button>
     </form>
   );
 }
 
-function SignUpForm() {
+function RegisterForm() {
+  const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [busy, setBusy] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const parsed = signUpSchema.safeParse({ fullName, email, password });
-    if (!parsed.success) {
-      toast.error(parsed.error.issues[0]?.message ?? "তথ্য যাচাই ব্যর্থ");
-      return;
-    }
-    setBusy(true);
-    const redirectUrl = `${window.location.origin}/`;
+    if (!fullName.trim()) return toast.error("পুরো নাম দিন");
+    if (password.length < 8) return toast.error("পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে");
+
+    setLoading(true);
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: redirectUrl,
-        data: { full_name: fullName },
+        emailRedirectTo: `${window.location.origin}/dashboard`,
+        data: { full_name: fullName.trim() },
       },
     });
-    setBusy(false);
+    setLoading(false);
     if (error) {
-      if (error.message.toLowerCase().includes("already")) {
-        toast.error("এই ইমেইল দিয়ে ইতিমধ্যে অ্যাকাউন্ট রয়েছে। সাইন ইন করুন।");
-      } else {
-        toast.error("নিবন্ধন ব্যর্থ", { description: error.message });
-      }
+      toast.error(error.message);
       return;
     }
-    toast.success("অ্যাকাউন্ট তৈরি হয়েছে! এখন সাইন ইন করা হচ্ছে…");
+    toast.success("অ্যাকাউন্ট তৈরি হয়েছে!");
+    navigate({ to: "/dashboard", replace: true });
   };
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="signup-name">পূর্ণ নাম</Label>
-        <Input
-          id="signup-name"
-          type="text"
-          placeholder="যেমন: রফিকুল ইসলাম"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-          autoComplete="name"
-          required
-        />
+        <Label htmlFor="name-reg">পুরো নাম</Label>
+        <Input id="name-reg" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="আপনার পূর্ণ নাম" required />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="signup-email">ইমেইল</Label>
-        <Input
-          id="signup-email"
-          type="email"
-          placeholder="আপনার ইমেইল লিখুন"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          autoComplete="email"
-          required
-        />
+        <Label htmlFor="email-reg">ইমেইল</Label>
+        <Input id="email-reg" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" autoComplete="email" required />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="signup-password">পাসওয়ার্ড</Label>
-        <Input
-          id="signup-password"
-          type="password"
-          placeholder="কমপক্ষে ৬ অক্ষরের"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete="new-password"
-          required
-        />
+        <Label htmlFor="pass-reg">পাসওয়ার্ড</Label>
+        <Input id="pass-reg" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="কমপক্ষে ৮ অক্ষর" autoComplete="new-password" required minLength={8} />
       </div>
-      <Button type="submit" className="w-full" disabled={busy}>
-        {busy && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        অ্যাকাউন্ট তৈরি করুন
+      <Button type="submit" className="w-full" disabled={loading}>
+        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} নিবন্ধন করুন
       </Button>
     </form>
+  );
+}
+
+function GoogleButton() {
+  const [loading, setLoading] = useState(false);
+  const onClick = async () => {
+    setLoading(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+    });
+    if (result.error) {
+      setLoading(false);
+      toast.error("গুগল সাইন ইন ব্যর্থ হয়েছে");
+      return;
+    }
+    if (result.redirected) return;
+    // Session already set — navigate
+    window.location.href = "/dashboard";
+  };
+  return (
+    <Button variant="outline" className="w-full" onClick={onClick} disabled={loading}>
+      {loading ? (
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+      ) : (
+        <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" aria-hidden>
+          <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.2 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.1.8 3.8 1.5l2.6-2.5C16.7 3.4 14.6 2.5 12 2.5 6.8 2.5 2.7 6.7 2.7 12s4.1 9.5 9.3 9.5c5.4 0 8.9-3.8 8.9-9.1 0-.6-.1-1.1-.2-1.6H12z"/>
+        </svg>
+      )}
+      গুগল দিয়ে চালিয়ে যান
+    </Button>
   );
 }
