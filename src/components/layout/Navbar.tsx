@@ -19,12 +19,10 @@ import { cn } from "@/lib/utils";
 type NavItem = { to: string; label: string; auth?: boolean };
 const NAV_ITEMS: readonly NavItem[] = [
   { to: "/", label: "হোম" },
-  { to: "/dashboard", label: "ড্যাশবোর্ড", auth: true },
-  { to: "/bills", label: "বিল জমা", auth: true },
+  { to: "/bills/new", label: "বিল জমা", auth: true },
   { to: "/compare", label: "তুলনা", auth: true },
-  { to: "/insights", label: "AI বিশ্লেষণ", auth: true },
+  { to: "/calculator", label: "ক্যালকুলেটর" },
   { to: "/reports", label: "অভিযোগ", auth: true },
-  { to: "/notices", label: "নোটিশ" },
 ];
 
 export function Navbar() {
@@ -83,7 +81,7 @@ export function Navbar() {
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
 
-          {isAuthenticated && <NotificationsBell />}
+          {/* NotificationsBell hidden in MVP */}
 
           {isAuthenticated ? (
             <DropdownMenu>
