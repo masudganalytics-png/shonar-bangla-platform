@@ -85,13 +85,19 @@ function AdminWorkers() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-1 rounded-lg border bg-card p-1">
-        {tabs.map((t) => (
-          <button key={t.k} onClick={() => setTab(t.k)}
-            className={`rounded-md px-3 py-2 text-sm font-medium ${tab === t.k ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent"}`}>
-            {t.label}
-          </button>
-        ))}
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap gap-1 rounded-lg border bg-card p-1">
+          {tabs.map((t) => (
+            <button key={t.k} onClick={() => setTab(t.k)}
+              className={`rounded-md px-3 py-2 text-sm font-medium ${tab === t.k ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent"}`}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+        <AddWorkerDialog
+          categories={cq.data ?? []}
+          onCreate={async (v) => { await createFn({ data: v }); toast.success("কাজের লোক যোগ হয়েছে"); invalidate(); }}
+        />
       </div>
 
       {tab === "categories" ? (
