@@ -11,7 +11,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import type { CategoryRow } from "@/lib/workers-shared";
-import { listAllWorkers, setWorkerStatus, setWorkerVerified, deleteWorker, upsertWorkerCategory, deleteWorkerCategory, type AdminWorker } from "@/lib/workers.functions";
+import { listAllWorkers, setWorkerStatus, setWorkerVerified, deleteWorker, upsertWorkerCategory, deleteWorkerCategory, adminCreateWorker, type AdminWorker } from "@/lib/workers.functions";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { formatBanglaDate } from "@/lib/bangla";
 
 export const Route = createFileRoute("/_authenticated/admin/workers")({
