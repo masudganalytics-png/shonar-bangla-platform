@@ -22,6 +22,7 @@ import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WorkersIndexRouteImport } from './routes/workers.index'
 import { Route as WorkersRegisterRouteImport } from './routes/workers.register'
 import { Route as WorkersIdRouteImport } from './routes/workers.$id'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
@@ -106,6 +107,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const WorkersIndexRoute = WorkersIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => WorkersRoute,
 } as any)
 const WorkersRegisterRoute = WorkersRegisterRouteImport.update({
   id: '/register',
@@ -235,6 +241,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AuthenticatedSettingsRoute
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
+  '/workers/': typeof WorkersIndexRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/bills': typeof AuthenticatedAdminBillsRoute
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
@@ -258,7 +265,6 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
   '/utilities': typeof UtilitiesRoute
-  '/workers': typeof WorkersRouteWithChildren
   '/bills': typeof AuthenticatedBillsRouteWithChildren
   '/compare': typeof AuthenticatedCompareRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -268,6 +274,7 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsRoute
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
+  '/workers': typeof WorkersIndexRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/bills': typeof AuthenticatedAdminBillsRoute
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
@@ -304,6 +311,7 @@ export interface FileRoutesById {
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
+  '/workers/': typeof WorkersIndexRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/_authenticated/admin/bills': typeof AuthenticatedAdminBillsRoute
   '/_authenticated/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
@@ -340,6 +348,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/workers/$id'
     | '/workers/register'
+    | '/workers/'
     | '/admin/announcements'
     | '/admin/bills'
     | '/admin/complaints'
@@ -363,7 +372,6 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/stats'
     | '/utilities'
-    | '/workers'
     | '/bills'
     | '/compare'
     | '/dashboard'
@@ -373,6 +381,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/workers/$id'
     | '/workers/register'
+    | '/workers'
     | '/admin/announcements'
     | '/admin/bills'
     | '/admin/complaints'
@@ -408,6 +417,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings'
     | '/workers/$id'
     | '/workers/register'
+    | '/workers/'
     | '/_authenticated/admin/announcements'
     | '/_authenticated/admin/bills'
     | '/_authenticated/admin/complaints'
@@ -530,6 +540,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/workers/': {
+      id: '/workers/'
+      path: '/'
+      fullPath: '/workers/'
+      preLoaderRoute: typeof WorkersIndexRouteImport
+      parentRoute: typeof WorkersRoute
     }
     '/workers/register': {
       id: '/workers/register'
@@ -736,11 +753,13 @@ const AuthenticatedRouteRouteWithChildren =
 interface WorkersRouteChildren {
   WorkersIdRoute: typeof WorkersIdRoute
   WorkersRegisterRoute: typeof WorkersRegisterRoute
+  WorkersIndexRoute: typeof WorkersIndexRoute
 }
 
 const WorkersRouteChildren: WorkersRouteChildren = {
   WorkersIdRoute: WorkersIdRoute,
   WorkersRegisterRoute: WorkersRegisterRoute,
+  WorkersIndexRoute: WorkersIndexRoute,
 }
 
 const WorkersRouteWithChildren =
