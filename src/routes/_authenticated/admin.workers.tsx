@@ -31,6 +31,7 @@ function AdminWorkers() {
   const delFn = useServerFn(deleteWorker);
   const upsertCatFn = useServerFn(upsertWorkerCategory);
   const delCatFn = useServerFn(deleteWorkerCategory);
+  const createFn = useServerFn(adminCreateWorker);
 
   const wq = useQuery({
     queryKey: ["admin", "workers"],
