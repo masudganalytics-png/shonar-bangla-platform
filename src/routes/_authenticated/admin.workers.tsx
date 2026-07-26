@@ -11,7 +11,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import type { CategoryRow } from "@/lib/workers-shared";
-import { listAllWorkers, setWorkerStatus, setWorkerVerified, deleteWorker, upsertWorkerCategory, deleteWorkerCategory, type AdminWorker } from "@/lib/workers.functions";
+import { listAllWorkers, setWorkerStatus, setWorkerVerified, deleteWorker, upsertWorkerCategory, deleteWorkerCategory, adminCreateWorker, type AdminWorker } from "@/lib/workers.functions";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { formatBanglaDate } from "@/lib/bangla";
 
 export const Route = createFileRoute("/_authenticated/admin/workers")({
@@ -28,6 +31,7 @@ function AdminWorkers() {
   const delFn = useServerFn(deleteWorker);
   const upsertCatFn = useServerFn(upsertWorkerCategory);
   const delCatFn = useServerFn(deleteWorkerCategory);
+  const createFn = useServerFn(adminCreateWorker);
 
   const wq = useQuery({
     queryKey: ["admin", "workers"],
@@ -81,13 +85,19 @@ function AdminWorkers() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-1 rounded-lg border bg-card p-1">
-        {tabs.map((t) => (
-          <button key={t.k} onClick={() => setTab(t.k)}
-            className={`rounded-md px-3 py-2 text-sm font-medium ${tab === t.k ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent"}`}>
-            {t.label}
-          </button>
-        ))}
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap gap-1 rounded-lg border bg-card p-1">
+          {tabs.map((t) => (
+            <button key={t.k} onClick={() => setTab(t.k)}
+              className={`rounded-md px-3 py-2 text-sm font-medium ${tab === t.k ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent"}`}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+        <AddWorkerDialog
+          categories={cq.data ?? []}
+          onCreate={async (v) => { await createFn({ data: v }); toast.success("কাজের লোক যোগ হয়েছে"); invalidate(); }}
+        />
       </div>
 
       {tab === "categories" ? (
@@ -247,5 +257,195 @@ function CategoryRowEditor({ cat, onSave, onDelete, pending }: {
         <Button size="sm" variant="ghost" className="ml-1" onClick={() => setEdit(false)}>বাতিল</Button>
       </td>
     </tr>
+  );
+}
+
+type NewWorker = {
+  full_name: string;
+  phone: string;
+  whatsapp?: string | null;
+  category_id?: string | null;
+  skills?: string | null;
+  experience_years?: number | null;
+  district: string;
+  upazila: string;
+  area?: string | null;
+  photo_url?: string | null;
+  description?: string | null;
+  is_available: boolean;
+  is_verified: boolean;
+  status: "pending" | "approved" | "rejected" | "inactive";
+};
+
+function AddWorkerDialog({ categories, onCreate }: {
+  categories: CategoryRow[];
+  onCreate: (v: NewWorker) => Promise<void>;
+}) {
+  const [open, setOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [form, setForm] = useState({
+    full_name: "", phone: "", whatsapp: "", category_id: "",
+    skills: "", experience_years: "", district: "Cox's Bazar",
+    upazila: "Ukhiya", area: "", description: "", photo_url: "",
+    is_available: true, is_verified: false,
+    status: "approved" as "pending" | "approved" | "rejected" | "inactive",
+  });
+
+  const reset = () => setForm({
+    full_name: "", phone: "", whatsapp: "", category_id: "",
+    skills: "", experience_years: "", district: "Cox's Bazar",
+    upazila: "Ukhiya", area: "", description: "", photo_url: "",
+    is_available: true, is_verified: false, status: "approved",
+  });
+
+  async function handlePhoto(file: File) {
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+      const path = `admin/${crypto.randomUUID()}.${ext}`;
+      const { error } = await supabase.storage.from("worker-images").upload(path, file, {
+        contentType: file.type, upsert: false,
+      });
+      if (error) throw error;
+      setForm((f) => ({ ...f, photo_url: `worker-images/${path}` }));
+      toast.success("ছবি আপলোড হয়েছে");
+    } catch (e) {
+      toast.error((e as Error).message);
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  async function submit() {
+    if (!form.full_name.trim() || !form.phone.trim()) {
+      toast.error("নাম ও ফোন নম্বর আবশ্যক");
+      return;
+    }
+    setSaving(true);
+    try {
+      await onCreate({
+        full_name: form.full_name.trim(),
+        phone: form.phone.trim(),
+        whatsapp: form.whatsapp.trim() || null,
+        category_id: form.category_id || null,
+        skills: form.skills.trim() || null,
+        experience_years: form.experience_years === "" ? null : Number(form.experience_years),
+        district: form.district.trim() || "Cox's Bazar",
+        upazila: form.upazila.trim() || "Ukhiya",
+        area: form.area.trim() || null,
+        photo_url: form.photo_url || null,
+        description: form.description.trim() || null,
+        is_available: form.is_available,
+        is_verified: form.is_verified,
+        status: form.status,
+      });
+      reset();
+      setOpen(false);
+    } catch (e) {
+      toast.error((e as Error).message);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={(o) => { setOpen(o); if (!o) reset(); }}>
+      <DialogTrigger asChild>
+        <Button><Plus className="mr-1 h-4 w-4" /> নতুন কাজের লোক যোগ করুন</Button>
+      </DialogTrigger>
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>নতুন কাজের লোক যোগ করুন</DialogTitle>
+        </DialogHeader>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <Label>পূর্ণ নাম *</Label>
+            <Input value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} />
+          </div>
+          <div>
+            <Label>ফোন *</Label>
+            <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="01XXXXXXXXX" />
+          </div>
+          <div>
+            <Label>WhatsApp</Label>
+            <Input value={form.whatsapp} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} />
+          </div>
+          <div>
+            <Label>ক্যাটাগরি</Label>
+            <select
+              className="mt-1 w-full rounded-md border bg-background px-3 py-2 text-sm"
+              value={form.category_id}
+              onChange={(e) => setForm({ ...form, category_id: e.target.value })}
+            >
+              <option value="">নির্বাচন করুন</option>
+              {categories.filter((c) => c.is_active).map((c) => (
+                <option key={c.id} value={c.id}>{c.name_bn}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <Label>অভিজ্ঞতা (বছর)</Label>
+            <Input type="number" min="0" value={form.experience_years} onChange={(e) => setForm({ ...form, experience_years: e.target.value })} />
+          </div>
+          <div className="sm:col-span-2">
+            <Label>দক্ষতা</Label>
+            <Input value={form.skills} onChange={(e) => setForm({ ...form, skills: e.target.value })} placeholder="যেমনঃ ওয়ারিং, সুইচবোর্ড" />
+          </div>
+          <div>
+            <Label>জেলা</Label>
+            <Input value={form.district} onChange={(e) => setForm({ ...form, district: e.target.value })} />
+          </div>
+          <div>
+            <Label>উপজেলা</Label>
+            <Input value={form.upazila} onChange={(e) => setForm({ ...form, upazila: e.target.value })} />
+          </div>
+          <div className="sm:col-span-2">
+            <Label>এলাকা</Label>
+            <Input value={form.area} onChange={(e) => setForm({ ...form, area: e.target.value })} />
+          </div>
+          <div className="sm:col-span-2">
+            <Label>সংক্ষিপ্ত পরিচিতি</Label>
+            <Textarea rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+          </div>
+          <div className="sm:col-span-2">
+            <Label>প্রোফাইল ছবি</Label>
+            <Input type="file" accept="image/*" disabled={uploading} onChange={(e) => { const f = e.target.files?.[0]; if (f) handlePhoto(f); }} />
+            {uploading && <p className="mt-1 text-xs text-muted-foreground">আপলোড হচ্ছে…</p>}
+            {form.photo_url && !uploading && <p className="mt-1 text-xs text-secondary">ছবি প্রস্তুত ✓</p>}
+          </div>
+          <div>
+            <Label>স্ট্যাটাস</Label>
+            <select
+              className="mt-1 w-full rounded-md border bg-background px-3 py-2 text-sm"
+              value={form.status}
+              onChange={(e) => setForm({ ...form, status: e.target.value as typeof form.status })}
+            >
+              <option value="approved">অনুমোদিত</option>
+              <option value="pending">অপেক্ষমাণ</option>
+              <option value="inactive">নিষ্ক্রিয়</option>
+              <option value="rejected">প্রত্যাখ্যাত</option>
+            </select>
+          </div>
+          <div className="flex items-end gap-4">
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={form.is_verified} onChange={(e) => setForm({ ...form, is_verified: e.target.checked })} />
+              যাচাইকৃত
+            </label>
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" checked={form.is_available} onChange={(e) => setForm({ ...form, is_available: e.target.checked })} />
+              এখন উপলব্ধ
+            </label>
+          </div>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setOpen(false)} disabled={saving}>বাতিল</Button>
+          <Button onClick={submit} disabled={saving || uploading}>
+            {saving ? <Loader2 className="mr-1 h-4 w-4 animate-spin" /> : <Plus className="mr-1 h-4 w-4" />}
+            সংরক্ষণ করুন
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
