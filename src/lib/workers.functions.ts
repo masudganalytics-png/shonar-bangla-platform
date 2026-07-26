@@ -88,6 +88,37 @@ export const deleteWorker = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
+export const adminCreateWorker = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) =>
+    z.object({
+      full_name: z.string().trim().min(1).max(120),
+      phone: z.string().trim().min(6).max(30),
+      whatsapp: z.string().trim().max(30).optional().nullable(),
+      category_id: z.string().uuid().optional().nullable(),
+      skills: z.string().trim().max(500).optional().nullable(),
+      experience_years: z.number().int().min(0).max(80).optional().nullable(),
+      district: z.string().trim().min(1).max(80).default("Cox's Bazar"),
+      upazila: z.string().trim().min(1).max(80).default("Ukhiya"),
+      area: z.string().trim().max(120).optional().nullable(),
+      photo_url: z.string().url().optional().nullable(),
+      description: z.string().trim().max(1000).optional().nullable(),
+      is_available: z.boolean().default(true),
+      is_verified: z.boolean().default(false),
+      status: z.enum(["pending", "approved", "rejected", "inactive"]).default("approved"),
+    }).parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    await ensureAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: row, error } = await supabaseAdmin.from("workers").insert({
+      ...data,
+      submitted_by: context.userId,
+    }).select("id").single();
+    if (error) throw new Error(error.message);
+    return { ok: true, id: row.id };
+  });
+
 export const upsertWorkerCategory = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: unknown) =>
