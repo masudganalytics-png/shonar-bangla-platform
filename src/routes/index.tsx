@@ -103,6 +103,11 @@ function HomePage() {
                 <Wifi className="mr-2 h-4 w-4" /> এরিয়াভিত্তিক ওয়াইফাই সেবা
               </Link>
             </Button>
+            <Button asChild size="lg" variant="outline" className="h-12 border-white/50 bg-white/10 px-6 text-white hover:bg-white/20">
+              <Link to="/workers">
+                <HardHat className="mr-2 h-4 w-4" /> কাজের লোক খুঁজুন
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
