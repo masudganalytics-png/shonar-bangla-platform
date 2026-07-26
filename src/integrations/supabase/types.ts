@@ -308,6 +308,139 @@ export type Database = {
         }
         Relationships: []
       }
+      worker_categories: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          name_bn: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name_bn: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name_bn?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      worker_gallery: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string
+          sort_order: number
+          worker_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url: string
+          sort_order?: number
+          worker_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string
+          sort_order?: number
+          worker_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "worker_gallery_worker_id_fkey"
+            columns: ["worker_id"]
+            isOneToOne: false
+            referencedRelation: "workers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workers: {
+        Row: {
+          area: string | null
+          category_id: string | null
+          created_at: string
+          description: string | null
+          district: string
+          experience_years: number | null
+          full_name: string
+          id: string
+          is_available: boolean
+          is_verified: boolean
+          phone: string
+          photo_url: string | null
+          skills: string | null
+          status: Database["public"]["Enums"]["worker_status"]
+          submitted_by: string | null
+          upazila: string
+          updated_at: string
+          whatsapp: string | null
+        }
+        Insert: {
+          area?: string | null
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          district?: string
+          experience_years?: number | null
+          full_name: string
+          id?: string
+          is_available?: boolean
+          is_verified?: boolean
+          phone: string
+          photo_url?: string | null
+          skills?: string | null
+          status?: Database["public"]["Enums"]["worker_status"]
+          submitted_by?: string | null
+          upazila?: string
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Update: {
+          area?: string | null
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          district?: string
+          experience_years?: number | null
+          full_name?: string
+          id?: string
+          is_available?: boolean
+          is_verified?: boolean
+          phone?: string
+          photo_url?: string | null
+          skills?: string | null
+          status?: Database["public"]["Enums"]["worker_status"]
+          submitted_by?: string | null
+          upazila?: string
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workers_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "worker_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -329,6 +462,7 @@ export type Database = {
       complaint_reason: "high_bill" | "wrong_reading" | "wrong_tariff" | "other"
       report_category: "billing" | "outage" | "meter" | "connection" | "other"
       report_status: "open" | "in_progress" | "resolved" | "rejected"
+      worker_status: "pending" | "approved" | "rejected" | "inactive"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -463,6 +597,7 @@ export const Constants = {
       complaint_reason: ["high_bill", "wrong_reading", "wrong_tariff", "other"],
       report_category: ["billing", "outage", "meter", "connection", "other"],
       report_status: ["open", "in_progress", "resolved", "rejected"],
+      worker_status: ["pending", "approved", "rejected", "inactive"],
     },
   },
 } as const
