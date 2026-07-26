@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Calculator, FileSignature, FileText, Scale, Wifi } from "lucide-react";
+import { ArrowRight, Calculator, FileSignature, FileText, HardHat, Scale, Wifi } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
@@ -55,6 +55,12 @@ const QUICK_ACTIONS = [
     icon: FileSignature,
     title: "প্রফেশনাল সিভি তৈরি করুন",
     desc: "সরকারি • এনজিও • ব্যাংক • প্রাইভেট চাকরির জন্য",
+  },
+  {
+    to: "/workers" as const,
+    icon: HardHat,
+    title: "👷 কাজের লোক খুঁজুন",
+    desc: "আপনার এলাকার দক্ষ কাজের লোক সহজে খুঁজুন।",
   },
 ];
 
