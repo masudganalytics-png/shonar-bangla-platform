@@ -82,14 +82,20 @@ function TeacherRegister() {
     try {
       let photo_url: string | null = null;
       if (photoFile) {
+        if (!user?.id) {
+          toast.error("ছবি আপলোড করতে লগইন করুন");
+          setSubmitting(false);
+          return;
+        }
         const ext = photoFile.name.split(".").pop()?.toLowerCase() || "jpg";
-        const path = `submissions/${crypto.randomUUID()}.${ext}`;
+        const path = `submissions/${user.id}/${crypto.randomUUID()}.${ext}`;
         const { error: upErr } = await supabase.storage.from("teacher-images").upload(path, photoFile, {
           contentType: photoFile.type, upsert: false,
         });
         if (upErr) throw upErr;
         photo_url = `teacher-images/${path}`;
       }
+
       const { error } = await supabase.from("teachers").insert({
         submitted_by: user?.id ?? null,
         full_name: parsed.data.full_name,
