@@ -121,6 +121,11 @@ function HomePage() {
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 border-white/50 bg-white/10 px-6 text-white hover:bg-white/20">
+              <Link to="/cv-builder">
+                <FileSignature className="mr-2 h-4 w-4" /> প্রফেশনাল সিভি তৈরি করুন
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="h-12 border-white/50 bg-white/10 px-6 text-white hover:bg-white/20">
               <Link to="/teachers">
                 <GraduationCap className="mr-2 h-4 w-4" /> উখিয়ার শিক্ষক খুঁজুন
               </Link>
