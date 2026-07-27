@@ -104,6 +104,9 @@ function TeacherRegister() {
         upazila: parsed.data.upazila,
         area: parsed.data.area || null,
         description: parsed.data.description || null,
+        gender: parsed.data.gender ?? null,
+        student_class: parsed.data.student_class || null,
+        bio: parsed.data.bio || null,
         photo_url,
         status: "pending",
       });
