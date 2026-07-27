@@ -8,16 +8,16 @@ import logoAsset from "@/assets/ukhiya-logo.png.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "আপনার বিদ্যুৎ বিল কি স্বাভাবিক? — উখিয়া বিদ্যুৎ বিল" },
+      { title: "উখিয়ার সব প্রয়োজনীয় সেবা, এক জায়গায় — উখিয়া সেবা" },
       {
         name: "description",
         content:
-          "একই এলাকার গড় তথ্যের ভিত্তিতে আপনার বিদ্যুৎ বিল তুলনা করুন এবং আনুমানিক বিল হিসাব করুন।",
+          "বিদ্যুৎ বিল, গ্যাস বিল, পানি বিল, মোবাইল রিচার্জ, প্রয়োজনীয় সরকারি ওয়েবসাইট, স্থানীয় সেবা, চাকরির খবর, টেন্ডার, জরুরি নম্বর এবং আরও অনেক কিছু—সব এক প্ল্যাটফর্মে।",
       },
-      { property: "og:title", content: "আপনার বিদ্যুৎ বিল কি স্বাভাবিক?" },
+      { property: "og:title", content: "উখিয়ার সব প্রয়োজনীয় সেবা, এক জায়গায়" },
       {
         property: "og:description",
-        content: "একই এলাকার গড় তথ্যের ভিত্তিতে আপনার বিদ্যুৎ বিল তুলনা করুন।",
+        content: "বিদ্যুৎ বিল, গ্যাস বিল, পানি বিল, মোবাইল রিচার্জ, সরকারি ওয়েবসাইট, স্থানীয় সেবা, চাকরির খবর, টেন্ডার, জরুরি নম্বর—সব এক প্ল্যাটফর্মে।",
       },
     ],
   }),
@@ -86,14 +86,14 @@ function HomePage() {
         <div className="mx-auto max-w-3xl px-4 py-16 text-center text-white sm:px-6 sm:py-24">
           <img
             src={logoAsset.url}
-            alt="উখিয়া বিদ্যুৎ বিল"
+            alt="উখিয়া সেবা"
             className="mx-auto mb-6 h-24 w-auto drop-shadow-2xl sm:h-32"
           />
           <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl">
-            উখিয়ার সব প্রয়োজনীয় সেবা, এক জায়গায়।
+            উখিয়ার সব প্রয়োজনীয় সেবা, এক জায়গায়
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-base text-white/90 sm:text-lg">
-            বিদ্যুৎ বিল যাচাই, টিউশন, প্রয়োজনীয় ওয়েবসাইট, স্থানীয় সেবা এবং আরও অনেক কিছু—সব এক প্ল্যাটফর্মে, সম্পূর্ণ বিনামূল্যে।
+            বিদ্যুৎ বিল, গ্যাস বিল, পানি বিল, মোবাইল রিচার্জ, প্রয়োজনীয় সরকারি ওয়েবসাইট, স্থানীয় সেবা, চাকরির খবর, টেন্ডার, জরুরি নম্বর এবং আরও অনেক কিছু—সব এক প্ল্যাটফর্মে।
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

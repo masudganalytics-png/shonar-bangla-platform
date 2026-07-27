@@ -54,8 +54,8 @@ export function Navbar() {
         <Link to="/" className="flex min-w-0 items-center gap-2.5">
           <img src={logoAsset.url} alt="উখিয়া বিদ্যুৎ বিল" className="h-9 w-9 shrink-0 rounded-xl object-contain" />
           <div className="min-w-0 leading-tight">
-            <div className="truncate text-sm font-bold text-foreground sm:text-base">উখিয়া বিদ্যুৎ বিল</div>
-            <div className="hidden text-[10px] text-muted-foreground sm:block">স্বচ্ছ বিল, সচেতন গ্রাহক</div>
+            <div className="truncate text-sm font-bold text-foreground sm:text-base">উখিয়া সেবা</div>
+            <div className="hidden text-[10px] text-muted-foreground sm:block">উখিয়ার সকল ডিজিটাল সেবা, এক জায়গায়</div>
           </div>
         </Link>
 
