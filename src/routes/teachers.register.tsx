@@ -208,9 +208,28 @@ function TeacherRegister() {
               <Input value={form.area} onChange={(e) => update("area", e.target.value)} placeholder="যেমন: কুতুপালং" />
             </div>
 
+            <div>
+              <Label>লিঙ্গ</Label>
+              <Select value={form.gender} onValueChange={(v) => update("gender", v as "male"|"female"|"any")}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{TUTOR_GENDERS.map((g) => <SelectItem key={g.value} value={g.value}>{g.label}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>যে শ্রেণি পড়ান</Label>
+              <Select value={form.student_class} onValueChange={(v) => update("student_class", v)}>
+                <SelectTrigger><SelectValue placeholder="নির্বাচন করুন" /></SelectTrigger>
+                <SelectContent>{STUDENT_CLASSES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
+
             <div className="sm:col-span-2">
               <Label>সংক্ষিপ্ত বিবরণ</Label>
               <Textarea value={form.description} onChange={(e) => update("description", e.target.value)} placeholder="নিজের সম্পর্কে সংক্ষেপে লিখুন" rows={3} />
+            </div>
+            <div className="sm:col-span-2">
+              <Label>বায়ো / পরিচিতি</Label>
+              <Textarea value={form.bio} onChange={(e) => update("bio", e.target.value)} placeholder="অভিজ্ঞতা, পড়ানোর ধরন…" rows={3} />
             </div>
 
             <div className="sm:col-span-2">
