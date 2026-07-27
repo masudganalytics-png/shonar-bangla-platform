@@ -96,7 +96,12 @@ function AdminTeachers() {
         </div>
         <AddTeacherDialog
           categories={cq.data ?? []}
-          onCreate={async (v) => { await createFn({ data: v }); toast.success("শিক্ষক যোগ হয়েছে"); invalidate(); }}
+          onCreate={async (v) => {
+            await createFn({ data: v });
+            toast.success("শিক্ষক যোগ হয়েছে");
+            invalidate();
+            if (v.status !== "categories") setTab(v.status);
+          }}
         />
       </div>
 
