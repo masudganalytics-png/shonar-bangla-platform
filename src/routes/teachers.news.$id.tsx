@@ -10,6 +10,7 @@ import { EducationSubNav } from "@/components/teachers/EducationSubNav";
 import { formatBanglaDate } from "@/lib/bangla";
 import type { EducationNewsRow } from "@/lib/education-shared";
 import { EducationImage } from "@/components/teachers/EducationImage";
+import { ShareButtons } from "@/components/teachers/ShareButtons";
 
 export const Route = createFileRoute("/teachers/news/$id")({
   component: NewsDetail,
