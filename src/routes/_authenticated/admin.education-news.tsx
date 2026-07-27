@@ -26,8 +26,7 @@ async function uploadCover(file: File): Promise<string> {
   const path = `news/${crypto.randomUUID()}.${ext}`;
   const { error } = await supabase.storage.from("education-media").upload(path, file, { contentType: file.type, upsert: false });
   if (error) throw error;
-  const { data } = supabase.storage.from("education-media").getPublicUrl(path);
-  return data.publicUrl;
+  return path;
 }
 
 function AdminNews() {
