@@ -1,3 +1,13 @@
+import { supabase } from "@/integrations/supabase/client";
+
+export async function signEducationMedia(pathOrUrl: string | null | undefined): Promise<string | null> {
+  if (!pathOrUrl) return null;
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+  const path = pathOrUrl.startsWith("education-media/") ? pathOrUrl.slice("education-media/".length) : pathOrUrl;
+  const { data } = await supabase.storage.from("education-media").createSignedUrl(path, 60 * 60);
+  return data?.signedUrl ?? null;
+}
+
 export const TUTOR_GENDERS = [
   { value: "male", label: "পুরুষ" },
   { value: "female", label: "মহিলা" },
