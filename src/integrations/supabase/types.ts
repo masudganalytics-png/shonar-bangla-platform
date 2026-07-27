@@ -140,6 +140,51 @@ export type Database = {
         }
         Relationships: []
       }
+      education_news: {
+        Row: {
+          author_id: string | null
+          category: string | null
+          content: string
+          cover_image_url: string | null
+          created_at: string
+          excerpt: string | null
+          id: string
+          is_published: boolean
+          publish_date: string
+          slug: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          category?: string | null
+          content: string
+          cover_image_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          is_published?: boolean
+          publish_date?: string
+          slug?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          category?: string | null
+          content?: string
+          cover_image_url?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          is_published?: boolean
+          publish_date?: string
+          slug?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           body: string | null
@@ -245,6 +290,93 @@ export type Database = {
         }
         Relationships: []
       }
+      student_achievements: {
+        Row: {
+          achievement: string
+          area: string | null
+          created_at: string
+          id: string
+          institution: string | null
+          is_published: boolean
+          photo_url: string | null
+          story: string | null
+          student_name: string
+          updated_at: string
+        }
+        Insert: {
+          achievement: string
+          area?: string | null
+          created_at?: string
+          id?: string
+          institution?: string | null
+          is_published?: boolean
+          photo_url?: string | null
+          story?: string | null
+          student_name: string
+          updated_at?: string
+        }
+        Update: {
+          achievement?: string
+          area?: string | null
+          created_at?: string
+          id?: string
+          institution?: string | null
+          is_published?: boolean
+          photo_url?: string | null
+          story?: string | null
+          student_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      study_resources: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          external_url: string
+          id: string
+          is_published: boolean
+          resource_type: Database["public"]["Enums"]["resource_type"]
+          sort_order: number
+          student_class: string | null
+          subject: string | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          external_url: string
+          id?: string
+          is_published?: boolean
+          resource_type?: Database["public"]["Enums"]["resource_type"]
+          sort_order?: number
+          student_class?: string | null
+          subject?: string | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          external_url?: string
+          id?: string
+          is_published?: boolean
+          resource_type?: Database["public"]["Enums"]["resource_type"]
+          sort_order?: number
+          student_class?: string | null
+          subject?: string | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       tariff_slabs: {
         Row: {
           created_at: string
@@ -320,6 +452,7 @@ export type Database = {
       teachers: {
         Row: {
           area: string | null
+          bio: string | null
           category_id: string | null
           created_at: string
           description: string | null
@@ -327,6 +460,7 @@ export type Database = {
           email: string | null
           experience_years: number | null
           full_name: string
+          gender: Database["public"]["Enums"]["tutor_gender"] | null
           id: string
           is_available: boolean
           is_verified: boolean
@@ -334,6 +468,7 @@ export type Database = {
           photo_url: string | null
           qualification: string | null
           status: Database["public"]["Enums"]["teacher_status"]
+          student_class: string | null
           subjects: string | null
           submitted_by: string | null
           upazila: string
@@ -342,6 +477,7 @@ export type Database = {
         }
         Insert: {
           area?: string | null
+          bio?: string | null
           category_id?: string | null
           created_at?: string
           description?: string | null
@@ -349,6 +485,7 @@ export type Database = {
           email?: string | null
           experience_years?: number | null
           full_name: string
+          gender?: Database["public"]["Enums"]["tutor_gender"] | null
           id?: string
           is_available?: boolean
           is_verified?: boolean
@@ -356,6 +493,7 @@ export type Database = {
           photo_url?: string | null
           qualification?: string | null
           status?: Database["public"]["Enums"]["teacher_status"]
+          student_class?: string | null
           subjects?: string | null
           submitted_by?: string | null
           upazila?: string
@@ -364,6 +502,7 @@ export type Database = {
         }
         Update: {
           area?: string | null
+          bio?: string | null
           category_id?: string | null
           created_at?: string
           description?: string | null
@@ -371,6 +510,7 @@ export type Database = {
           email?: string | null
           experience_years?: number | null
           full_name?: string
+          gender?: Database["public"]["Enums"]["tutor_gender"] | null
           id?: string
           is_available?: boolean
           is_verified?: boolean
@@ -378,6 +518,7 @@ export type Database = {
           photo_url?: string | null
           qualification?: string | null
           status?: Database["public"]["Enums"]["teacher_status"]
+          student_class?: string | null
           subjects?: string | null
           submitted_by?: string | null
           upazila?: string
@@ -390,6 +531,135 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "teacher_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tuition_applications: {
+        Row: {
+          applied_by: string
+          created_at: string
+          id: string
+          message: string | null
+          request_id: string
+          status: Database["public"]["Enums"]["tuition_app_status"]
+          tutor_id: string
+          updated_at: string
+        }
+        Insert: {
+          applied_by: string
+          created_at?: string
+          id?: string
+          message?: string | null
+          request_id: string
+          status?: Database["public"]["Enums"]["tuition_app_status"]
+          tutor_id: string
+          updated_at?: string
+        }
+        Update: {
+          applied_by?: string
+          created_at?: string
+          id?: string
+          message?: string | null
+          request_id?: string
+          status?: Database["public"]["Enums"]["tuition_app_status"]
+          tutor_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tuition_applications_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "public_tuition_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tuition_applications_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "tuition_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tuition_applications_tutor_id_fkey"
+            columns: ["tutor_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tuition_requests: {
+        Row: {
+          area: string | null
+          budget: number | null
+          created_at: string
+          days_per_week: number | null
+          district: string
+          id: string
+          matched_tutor_id: string | null
+          mode: Database["public"]["Enums"]["tuition_mode"]
+          notes: string | null
+          parent_name: string
+          phone: string
+          preferred_gender: Database["public"]["Enums"]["tutor_gender"]
+          preferred_time: string | null
+          status: Database["public"]["Enums"]["tuition_status"]
+          student_class: string
+          subject: string
+          submitted_by: string | null
+          upazila: string
+          updated_at: string
+        }
+        Insert: {
+          area?: string | null
+          budget?: number | null
+          created_at?: string
+          days_per_week?: number | null
+          district?: string
+          id?: string
+          matched_tutor_id?: string | null
+          mode?: Database["public"]["Enums"]["tuition_mode"]
+          notes?: string | null
+          parent_name: string
+          phone: string
+          preferred_gender?: Database["public"]["Enums"]["tutor_gender"]
+          preferred_time?: string | null
+          status?: Database["public"]["Enums"]["tuition_status"]
+          student_class: string
+          subject: string
+          submitted_by?: string | null
+          upazila?: string
+          updated_at?: string
+        }
+        Update: {
+          area?: string | null
+          budget?: number | null
+          created_at?: string
+          days_per_week?: number | null
+          district?: string
+          id?: string
+          matched_tutor_id?: string | null
+          mode?: Database["public"]["Enums"]["tuition_mode"]
+          notes?: string | null
+          parent_name?: string
+          phone?: string
+          preferred_gender?: Database["public"]["Enums"]["tutor_gender"]
+          preferred_time?: string | null
+          status?: Database["public"]["Enums"]["tuition_status"]
+          student_class?: string
+          subject?: string
+          submitted_by?: string | null
+          upazila?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tuition_requests_matched_tutor_id_fkey"
+            columns: ["matched_tutor_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
             referencedColumns: ["id"]
           },
         ]
@@ -550,7 +820,57 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_tuition_requests: {
+        Row: {
+          area: string | null
+          budget: number | null
+          created_at: string | null
+          days_per_week: number | null
+          district: string | null
+          id: string | null
+          mode: Database["public"]["Enums"]["tuition_mode"] | null
+          notes: string | null
+          preferred_gender: Database["public"]["Enums"]["tutor_gender"] | null
+          preferred_time: string | null
+          status: Database["public"]["Enums"]["tuition_status"] | null
+          student_class: string | null
+          subject: string | null
+          upazila: string | null
+        }
+        Insert: {
+          area?: string | null
+          budget?: number | null
+          created_at?: string | null
+          days_per_week?: number | null
+          district?: string | null
+          id?: string | null
+          mode?: Database["public"]["Enums"]["tuition_mode"] | null
+          notes?: string | null
+          preferred_gender?: Database["public"]["Enums"]["tutor_gender"] | null
+          preferred_time?: string | null
+          status?: Database["public"]["Enums"]["tuition_status"] | null
+          student_class?: string | null
+          subject?: string | null
+          upazila?: string | null
+        }
+        Update: {
+          area?: string | null
+          budget?: number | null
+          created_at?: string | null
+          days_per_week?: number | null
+          district?: string | null
+          id?: string | null
+          mode?: Database["public"]["Enums"]["tuition_mode"] | null
+          notes?: string | null
+          preferred_gender?: Database["public"]["Enums"]["tutor_gender"] | null
+          preferred_time?: string | null
+          status?: Database["public"]["Enums"]["tuition_status"] | null
+          student_class?: string | null
+          subject?: string | null
+          upazila?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
@@ -569,7 +889,18 @@ export type Database = {
       complaint_reason: "high_bill" | "wrong_reading" | "wrong_tariff" | "other"
       report_category: "billing" | "outage" | "meter" | "connection" | "other"
       report_status: "open" | "in_progress" | "resolved" | "rejected"
+      resource_type: "website" | "gdrive" | "youtube" | "pdf" | "link"
       teacher_status: "pending" | "approved" | "rejected" | "inactive"
+      tuition_app_status: "pending" | "accepted" | "rejected" | "withdrawn"
+      tuition_mode: "online" | "offline" | "both"
+      tuition_status:
+        | "pending"
+        | "approved"
+        | "rejected"
+        | "matched"
+        | "filled"
+        | "closed"
+      tutor_gender: "male" | "female" | "any"
       worker_status: "pending" | "approved" | "rejected" | "inactive"
     }
     CompositeTypes: {
@@ -705,7 +1036,19 @@ export const Constants = {
       complaint_reason: ["high_bill", "wrong_reading", "wrong_tariff", "other"],
       report_category: ["billing", "outage", "meter", "connection", "other"],
       report_status: ["open", "in_progress", "resolved", "rejected"],
+      resource_type: ["website", "gdrive", "youtube", "pdf", "link"],
       teacher_status: ["pending", "approved", "rejected", "inactive"],
+      tuition_app_status: ["pending", "accepted", "rejected", "withdrawn"],
+      tuition_mode: ["online", "offline", "both"],
+      tuition_status: [
+        "pending",
+        "approved",
+        "rejected",
+        "matched",
+        "filled",
+        "closed",
+      ],
+      tutor_gender: ["male", "female", "any"],
       worker_status: ["pending", "approved", "rejected", "inactive"],
     },
   },
