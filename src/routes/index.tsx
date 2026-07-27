@@ -78,10 +78,10 @@ function HomePage() {
             className="mx-auto mb-6 h-24 w-auto drop-shadow-2xl sm:h-32"
           />
           <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl">
-            আপনার বিদ্যুৎ বিল কি স্বাভাবিক?
+            উখিয়ার সব প্রয়োজনীয় সেবা, এক জায়গায়।
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-base text-white/90 sm:text-lg">
-            একই এলাকার গড় তথ্যের ভিত্তিতে আপনার বিল তুলনা করুন।
+            বিদ্যুৎ বিল যাচাই, টিউশন, প্রয়োজনীয় ওয়েবসাইট, স্থানীয় সেবা এবং আরও অনেক কিছু—সব এক প্ল্যাটফর্মে, সম্পূর্ণ বিনামূল্যে।
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
