@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { UPAZILAS, DISTRICTS, type CategoryRow } from "@/lib/teachers-shared";
+import { TUTOR_GENDERS, STUDENT_CLASSES } from "@/lib/education-shared";
 import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/teachers/register")({
@@ -38,6 +39,9 @@ const schema = z.object({
   upazila: z.string(),
   area: z.string().trim().max(120).optional().or(z.literal("")),
   description: z.string().trim().max(1000).optional().or(z.literal("")),
+  gender: z.enum(["male", "female", "any"]).optional(),
+  student_class: z.string().trim().max(200).optional().or(z.literal("")),
+  bio: z.string().trim().max(1000).optional().or(z.literal("")),
 });
 
 function TeacherRegister() {
@@ -50,6 +54,7 @@ function TeacherRegister() {
     full_name: "", phone: "", whatsapp: "", email: "", category_id: "",
     subjects: "", qualification: "", experience_years: "", district: DISTRICTS[0] as string,
     upazila: "Ukhiya" as string, area: "", description: "",
+    gender: "any" as "male"|"female"|"any", student_class: "", bio: "",
   });
 
   const catsQ = useQuery({
@@ -99,6 +104,9 @@ function TeacherRegister() {
         upazila: parsed.data.upazila,
         area: parsed.data.area || null,
         description: parsed.data.description || null,
+        gender: parsed.data.gender ?? null,
+        student_class: parsed.data.student_class || null,
+        bio: parsed.data.bio || null,
         photo_url,
         status: "pending",
       });
@@ -200,9 +208,28 @@ function TeacherRegister() {
               <Input value={form.area} onChange={(e) => update("area", e.target.value)} placeholder="যেমন: কুতুপালং" />
             </div>
 
+            <div>
+              <Label>লিঙ্গ</Label>
+              <Select value={form.gender} onValueChange={(v) => update("gender", v as "male"|"female"|"any")}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{TUTOR_GENDERS.map((g) => <SelectItem key={g.value} value={g.value}>{g.label}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>যে শ্রেণি পড়ান</Label>
+              <Select value={form.student_class} onValueChange={(v) => update("student_class", v)}>
+                <SelectTrigger><SelectValue placeholder="নির্বাচন করুন" /></SelectTrigger>
+                <SelectContent>{STUDENT_CLASSES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
+
             <div className="sm:col-span-2">
               <Label>সংক্ষিপ্ত বিবরণ</Label>
               <Textarea value={form.description} onChange={(e) => update("description", e.target.value)} placeholder="নিজের সম্পর্কে সংক্ষেপে লিখুন" rows={3} />
+            </div>
+            <div className="sm:col-span-2">
+              <Label>বায়ো / পরিচিতি</Label>
+              <Textarea value={form.bio} onChange={(e) => update("bio", e.target.value)} placeholder="অভিজ্ঞতা, পড়ানোর ধরন…" rows={3} />
             </div>
 
             <div className="sm:col-span-2">
