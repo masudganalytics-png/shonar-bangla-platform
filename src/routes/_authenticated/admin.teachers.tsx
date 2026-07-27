@@ -100,7 +100,7 @@ function AdminTeachers() {
             await createFn({ data: v });
             toast.success("শিক্ষক যোগ হয়েছে");
             invalidate();
-            if (v.status !== "categories") setTab(v.status);
+            setTab(v.status);
           }}
         />
       </div>
