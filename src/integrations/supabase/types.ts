@@ -317,38 +317,6 @@ export type Database = {
         }
         Relationships: []
       }
-      teacher_gallery: {
-        Row: {
-          created_at: string
-          id: string
-          image_url: string
-          sort_order: number
-          teacher_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          image_url: string
-          sort_order?: number
-          teacher_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          image_url?: string
-          sort_order?: number
-          teacher_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "teacher_gallery_teacher_id_fkey"
-            columns: ["teacher_id"]
-            isOneToOne: false
-            referencedRelation: "teachers"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       teachers: {
         Row: {
           area: string | null
