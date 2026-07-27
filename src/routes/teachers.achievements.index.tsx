@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { EducationSubNav } from "@/components/teachers/EducationSubNav";
 import type { AchievementRow } from "@/lib/education-shared";
+import { EducationImage } from "@/components/teachers/EducationImage";
 
 export const Route = createFileRoute("/teachers/achievements/")({
   head: () => ({ meta: [
@@ -50,7 +51,7 @@ function AchievementsList() {
               <Card className="h-full overflow-hidden transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)]">
                 {a.photo_url ? (
                   <div className="aspect-square overflow-hidden bg-muted">
-                    <img src={a.photo_url} alt={a.student_name} className="h-full w-full object-cover transition-transform group-hover:scale-105" loading="lazy" />
+                    <EducationImage path={a.photo_url} alt={a.student_name} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
                   </div>
                 ) : (
                   <div className="flex aspect-square items-center justify-center bg-muted"><Trophy className="h-12 w-12 text-muted-foreground/40" /></div>

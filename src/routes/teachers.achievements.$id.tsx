@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { EducationSubNav } from "@/components/teachers/EducationSubNav";
 import type { AchievementRow } from "@/lib/education-shared";
+import { EducationImage } from "@/components/teachers/EducationImage";
 
 export const Route = createFileRoute("/teachers/achievements/$id")({
   component: AchievementDetail,
@@ -40,7 +41,7 @@ function AchievementDetail() {
         <CardContent className="p-6">
           <div className="flex flex-col gap-6 sm:flex-row">
             {a.photo_url ? (
-              <img src={a.photo_url} alt={a.student_name} className="h-48 w-48 shrink-0 rounded-lg object-cover" />
+              <EducationImage path={a.photo_url} alt={a.student_name} className="h-48 w-48 shrink-0 rounded-lg object-cover" />
             ) : (
               <div className="flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-muted"><Trophy className="h-16 w-16 text-muted-foreground/40" /></div>
             )}

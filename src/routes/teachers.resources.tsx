@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { EducationSubNav } from "@/components/teachers/EducationSubNav";
 import type { ResourceRow } from "@/lib/education-shared";
+import { EducationImage } from "@/components/teachers/EducationImage";
 
 export const Route = createFileRoute("/teachers/resources")({
   head: () => ({ meta: [
@@ -89,7 +90,7 @@ function ResourcesPage() {
               <Card key={r.id} className="flex h-full flex-col overflow-hidden">
                 {r.thumbnail_url ? (
                   <div className="aspect-video overflow-hidden bg-muted">
-                    <img src={r.thumbnail_url} alt={r.title} className="h-full w-full object-cover" loading="lazy" />
+                    <EducationImage path={r.thumbnail_url} alt={r.title} className="h-full w-full object-cover" />
                   </div>
                 ) : (
                   <div className="flex aspect-video items-center justify-center bg-muted"><Icon className="h-10 w-10 text-muted-foreground/40" /></div>

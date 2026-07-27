@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { listNewsAdmin, upsertNews, deleteNews, setNewsPublished } from "@/lib/education.functions";
+import { EducationImage } from "@/components/teachers/EducationImage";
 import type { EducationNewsRow } from "@/lib/education-shared";
 import { formatBanglaDate } from "@/lib/bangla";
 
@@ -102,7 +103,7 @@ function AdminNews() {
             <Card key={n.id}>
               <CardContent className="flex flex-wrap items-start justify-between gap-3 p-4">
                 <div className="flex min-w-0 flex-1 gap-3">
-                  {n.cover_image_url && <img src={n.cover_image_url} alt={n.title} className="h-16 w-24 rounded object-cover" />}
+                  {n.cover_image_url && <EducationImage path={n.cover_image_url} alt={n.title} className="h-16 w-24 rounded object-cover" />}
                   <div className="min-w-0">
                     <div className="flex items-center gap-2"><h3 className="font-semibold">{n.title}</h3>{n.is_published ? <Badge className="bg-secondary text-secondary-foreground">প্রকাশিত</Badge> : <Badge variant="outline">খসড়া</Badge>}</div>
                     <p className="text-xs text-muted-foreground">{n.category ?? ""} · {formatBanglaDate(n.publish_date)}</p>

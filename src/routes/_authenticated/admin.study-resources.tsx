@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { listResourcesAdmin, upsertResource, deleteResource, setResourcePublished } from "@/lib/education.functions";
 import { RESOURCE_TYPES, STUDENT_CLASSES, type ResourceRow } from "@/lib/education-shared";
+import { EducationImage } from "@/components/teachers/EducationImage";
 
 export const Route = createFileRoute("/_authenticated/admin/study-resources")({
   component: AdminResources,
@@ -26,7 +27,7 @@ async function uploadThumb(file: File): Promise<string> {
   const path = `resources/${crypto.randomUUID()}.${ext}`;
   const { error } = await supabase.storage.from("education-media").upload(path, file, { contentType: file.type });
   if (error) throw error;
-  return supabase.storage.from("education-media").getPublicUrl(path).data.publicUrl;
+  return path;
 }
 
 function AdminResources() {
