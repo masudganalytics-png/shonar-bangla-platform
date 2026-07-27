@@ -334,8 +334,8 @@ function AddTeacherDialog({ categories, onCreate }: {
       await onCreate({
         full_name: form.full_name.trim(),
         phone: form.phone.replace(/[\s-]/g, "").trim(),
-        whatsapp: form.whatsapp.replace(/[\s-]/g, "").trim() || null,
-        email: form.email.trim() || null,
+        whatsapp: form.whatsapp.replace(/[\s-]/g, "").trim() || "",
+        email: form.email.trim() || "",
         category_id: form.category_id || null,
         subjects: form.subjects.trim() || null,
         qualification: form.qualification.trim() || null,
