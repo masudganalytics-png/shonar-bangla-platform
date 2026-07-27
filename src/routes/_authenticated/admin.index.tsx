@@ -71,6 +71,18 @@ function AdminOverview() {
           </div>
         </Card>
       </div>
+
+      <div className="mt-8">
+        <h2 className="mb-3 text-lg font-semibold">🎓 শিক্ষা মডিউল ব্যবস্থাপনা</h2>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Card className="p-4"><p className="mb-2 text-sm font-medium">শিক্ষক</p><Button asChild size="sm" variant="outline"><Link to="/admin/teachers">খুলুন</Link></Button></Card>
+          <Card className="p-4"><p className="mb-2 text-sm font-medium">টিউশন রিকোয়েস্ট</p><Button asChild size="sm" variant="outline"><Link to="/admin/tuition-requests">খুলুন</Link></Button></Card>
+          <Card className="p-4"><p className="mb-2 text-sm font-medium">টিউশন আবেদন</p><Button asChild size="sm" variant="outline"><Link to="/admin/tuition-applications">খুলুন</Link></Button></Card>
+          <Card className="p-4"><p className="mb-2 text-sm font-medium">শিক্ষা সংবাদ</p><Button asChild size="sm" variant="outline"><Link to="/admin/education-news">খুলুন</Link></Button></Card>
+          <Card className="p-4"><p className="mb-2 text-sm font-medium">শিক্ষার্থী সাফল্য</p><Button asChild size="sm" variant="outline"><Link to="/admin/achievements">খুলুন</Link></Button></Card>
+          <Card className="p-4"><p className="mb-2 text-sm font-medium">শিক্ষা রিসোর্স</p><Button asChild size="sm" variant="outline"><Link to="/admin/study-resources">খুলুন</Link></Button></Card>
+        </div>
+      </div>
     </div>
   );
 }
