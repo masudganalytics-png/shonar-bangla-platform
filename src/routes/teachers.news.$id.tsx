@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { EducationSubNav } from "@/components/teachers/EducationSubNav";
 import { formatBanglaDate } from "@/lib/bangla";
 import type { EducationNewsRow } from "@/lib/education-shared";
+import { EducationImage } from "@/components/teachers/EducationImage";
 
 export const Route = createFileRoute("/teachers/news/$id")({
   component: NewsDetail,
@@ -40,7 +41,7 @@ function NewsDetail() {
         <ArrowLeft className="h-4 w-4" /> সংবাদ
       </Link>
       <article>
-        {n.cover_image_url && <div className="mb-5 overflow-hidden rounded-lg"><img src={n.cover_image_url} alt={n.title} className="w-full" /></div>}
+        {n.cover_image_url && <div className="mb-5 overflow-hidden rounded-lg"><EducationImage path={n.cover_image_url} alt={n.title} className="w-full" /></div>}
         {n.category && <Badge variant="secondary" className="mb-2">{n.category}</Badge>}
         <h1 className="text-2xl font-bold sm:text-3xl">{n.title}</h1>
         <p className="mt-2 flex items-center gap-1 text-xs text-muted-foreground"><Calendar className="h-3 w-3" /> {formatBanglaDate(n.publish_date)}</p>

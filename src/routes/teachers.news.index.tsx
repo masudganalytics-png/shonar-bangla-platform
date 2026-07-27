@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { EducationSubNav } from "@/components/teachers/EducationSubNav";
 import { formatBanglaDate } from "@/lib/bangla";
 import type { EducationNewsRow } from "@/lib/education-shared";
+import { EducationImage } from "@/components/teachers/EducationImage";
 
 export const Route = createFileRoute("/teachers/news/")({
   head: () => ({ meta: [
@@ -52,7 +53,7 @@ function NewsList() {
               <Card className="h-full overflow-hidden transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)]">
                 {n.cover_image_url ? (
                   <div className="aspect-video overflow-hidden bg-muted">
-                    <img src={n.cover_image_url} alt={n.title} className="h-full w-full object-cover transition-transform group-hover:scale-105" loading="lazy" />
+                    <EducationImage path={n.cover_image_url} alt={n.title} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
                   </div>
                 ) : (
                   <div className="flex aspect-video items-center justify-center bg-muted"><Newspaper className="h-10 w-10 text-muted-foreground/40" /></div>

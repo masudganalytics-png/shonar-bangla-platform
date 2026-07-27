@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { listAchievementsAdmin, upsertAchievement, deleteAchievement, setAchievementPublished } from "@/lib/education.functions";
 import type { AchievementRow } from "@/lib/education-shared";
+import { EducationImage } from "@/components/teachers/EducationImage";
 
 export const Route = createFileRoute("/_authenticated/admin/achievements")({
   component: AdminAchievements,
@@ -25,7 +26,7 @@ async function uploadPhoto(file: File): Promise<string> {
   const path = `achievements/${crypto.randomUUID()}.${ext}`;
   const { error } = await supabase.storage.from("education-media").upload(path, file, { contentType: file.type });
   if (error) throw error;
-  return supabase.storage.from("education-media").getPublicUrl(path).data.publicUrl;
+  return path;
 }
 
 function AdminAchievements() {
@@ -94,7 +95,7 @@ function AdminAchievements() {
             <Card key={a.id}>
               <CardContent className="flex flex-wrap items-start justify-between gap-3 p-4">
                 <div className="flex min-w-0 flex-1 gap-3">
-                  {a.photo_url && <img src={a.photo_url} alt={a.student_name} className="h-16 w-16 rounded object-cover" />}
+                  {a.photo_url && <EducationImage path={a.photo_url} alt={a.student_name} className="h-16 w-16 rounded object-cover" />}
                   <div className="min-w-0">
                     <div className="flex items-center gap-2"><h3 className="font-semibold">{a.student_name}</h3>{a.is_published ? <Badge className="bg-secondary text-secondary-foreground">প্রকাশিত</Badge> : <Badge variant="outline">খসড়া</Badge>}</div>
                     <p className="text-sm text-primary">{a.achievement}</p>
