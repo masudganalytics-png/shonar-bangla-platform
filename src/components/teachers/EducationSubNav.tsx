@@ -1,13 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { Users, BookOpen, Sparkles, Newspaper, Trophy, GraduationCap } from "lucide-react";
 
-const items = [
+const items: { to: string; label: string; icon: typeof Users; exact?: boolean }[] = [
   { to: "/teachers", label: "শিক্ষক", icon: GraduationCap, exact: true },
   { to: "/teachers/tuitions", label: "টিউশন", icon: Users },
   { to: "/teachers/resources", label: "রিসোর্স", icon: BookOpen },
   { to: "/teachers/news", label: "শিক্ষা সংবাদ", icon: Newspaper },
   { to: "/teachers/achievements", label: "সাফল্য", icon: Trophy },
-] as const;
+];
 
 export function EducationSubNav() {
   return (
