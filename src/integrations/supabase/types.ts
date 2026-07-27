@@ -140,6 +140,278 @@ export type Database = {
         }
         Relationships: []
       }
+      business_categories: {
+        Row: {
+          created_at: string
+          group_bn: string
+          icon: string | null
+          id: string
+          is_active: boolean
+          name_bn: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          group_bn: string
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          name_bn: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          group_bn?: string
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          name_bn?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      business_gallery: {
+        Row: {
+          business_id: string
+          caption: string | null
+          created_at: string
+          id: string
+          image_url: string
+          sort_order: number
+        }
+        Insert: {
+          business_id: string
+          caption?: string | null
+          created_at?: string
+          id?: string
+          image_url: string
+          sort_order?: number
+        }
+        Update: {
+          business_id?: string
+          caption?: string | null
+          created_at?: string
+          id?: string
+          image_url?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_gallery_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      business_hours: {
+        Row: {
+          business_id: string
+          close_time: string | null
+          created_at: string
+          day: Database["public"]["Enums"]["business_day"]
+          id: string
+          is_closed: boolean
+          open_time: string | null
+          updated_at: string
+        }
+        Insert: {
+          business_id: string
+          close_time?: string | null
+          created_at?: string
+          day: Database["public"]["Enums"]["business_day"]
+          id?: string
+          is_closed?: boolean
+          open_time?: string | null
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string
+          close_time?: string | null
+          created_at?: string
+          day?: Database["public"]["Enums"]["business_day"]
+          id?: string
+          is_closed?: boolean
+          open_time?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_hours_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      business_reviews: {
+        Row: {
+          business_id: string
+          comment: string | null
+          created_at: string
+          id: string
+          is_hidden: boolean
+          rating: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          business_id: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          is_hidden?: boolean
+          rating: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          business_id?: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          is_hidden?: boolean
+          rating?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_reviews_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      businesses: {
+        Row: {
+          address: string | null
+          area: string | null
+          avg_rating: number
+          category_id: string | null
+          cover_url: string | null
+          created_at: string
+          district: string
+          email: string | null
+          established_year: number | null
+          facebook_url: string | null
+          full_description: string | null
+          id: string
+          is_featured: boolean
+          is_sponsored: boolean
+          is_verified: boolean
+          lat: number | null
+          lng: number | null
+          logo_url: string | null
+          name: string
+          owner_id: string | null
+          owner_photo_url: string | null
+          phone: string
+          products: string[]
+          review_count: number
+          short_description: string | null
+          slug: string | null
+          sponsor_until: string | null
+          status: Database["public"]["Enums"]["business_status"]
+          union_name: string | null
+          upazila: string
+          updated_at: string
+          view_count: number
+          website_url: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          address?: string | null
+          area?: string | null
+          avg_rating?: number
+          category_id?: string | null
+          cover_url?: string | null
+          created_at?: string
+          district?: string
+          email?: string | null
+          established_year?: number | null
+          facebook_url?: string | null
+          full_description?: string | null
+          id?: string
+          is_featured?: boolean
+          is_sponsored?: boolean
+          is_verified?: boolean
+          lat?: number | null
+          lng?: number | null
+          logo_url?: string | null
+          name: string
+          owner_id?: string | null
+          owner_photo_url?: string | null
+          phone: string
+          products?: string[]
+          review_count?: number
+          short_description?: string | null
+          slug?: string | null
+          sponsor_until?: string | null
+          status?: Database["public"]["Enums"]["business_status"]
+          union_name?: string | null
+          upazila?: string
+          updated_at?: string
+          view_count?: number
+          website_url?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          address?: string | null
+          area?: string | null
+          avg_rating?: number
+          category_id?: string | null
+          cover_url?: string | null
+          created_at?: string
+          district?: string
+          email?: string | null
+          established_year?: number | null
+          facebook_url?: string | null
+          full_description?: string | null
+          id?: string
+          is_featured?: boolean
+          is_sponsored?: boolean
+          is_verified?: boolean
+          lat?: number | null
+          lng?: number | null
+          logo_url?: string | null
+          name?: string
+          owner_id?: string | null
+          owner_photo_url?: string | null
+          phone?: string
+          products?: string[]
+          review_count?: number
+          short_description?: string | null
+          slug?: string | null
+          sponsor_until?: string | null
+          status?: Database["public"]["Enums"]["business_status"]
+          union_name?: string | null
+          upazila?: string
+          updated_at?: string
+          view_count?: number
+          website_url?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "businesses_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "business_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       education_news: {
         Row: {
           author_id: string | null
@@ -886,6 +1158,8 @@ export type Database = {
       announcement_priority: "low" | "normal" | "high" | "urgent"
       app_role: "user" | "admin"
       bill_status: "pending" | "paid" | "overdue"
+      business_day: "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun"
+      business_status: "pending" | "approved" | "rejected" | "suspended"
       complaint_reason: "high_bill" | "wrong_reading" | "wrong_tariff" | "other"
       report_category: "billing" | "outage" | "meter" | "connection" | "other"
       report_status: "open" | "in_progress" | "resolved" | "rejected"
@@ -1033,6 +1307,8 @@ export const Constants = {
       announcement_priority: ["low", "normal", "high", "urgent"],
       app_role: ["user", "admin"],
       bill_status: ["pending", "paid", "overdue"],
+      business_day: ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
+      business_status: ["pending", "approved", "rejected", "suspended"],
       complaint_reason: ["high_bill", "wrong_reading", "wrong_tariff", "other"],
       report_category: ["billing", "outage", "meter", "connection", "other"],
       report_status: ["open", "in_progress", "resolved", "rejected"],

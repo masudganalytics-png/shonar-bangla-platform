@@ -20,11 +20,13 @@ import { Route as HelplineRouteImport } from './routes/helpline'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as CvBuilderRouteImport } from './routes/cv-builder'
 import { Route as CalculatorRouteImport } from './routes/calculator'
+import { Route as BusinessRouteImport } from './routes/business'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WorkersIndexRouteImport } from './routes/workers.index'
 import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
+import { Route as BusinessIndexRouteImport } from './routes/business.index'
 import { Route as WorkersRegisterRouteImport } from './routes/workers.register'
 import { Route as WorkersIdRouteImport } from './routes/workers.$id'
 import { Route as TeachersTuitionsRouteImport } from './routes/teachers.tuitions'
@@ -33,9 +35,13 @@ import { Route as TeachersRegisterRouteImport } from './routes/teachers.register
 import { Route as TeachersNewsRouteImport } from './routes/teachers.news'
 import { Route as TeachersAchievementsRouteImport } from './routes/teachers.achievements'
 import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
+import { Route as BusinessRegisterRouteImport } from './routes/business.register'
+import { Route as BusinessDirectoryRouteImport } from './routes/business.directory'
+import { Route as BusinessSlugRouteImport } from './routes/business.$slug'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedMyBusinessRouteImport } from './routes/_authenticated/my-business'
 import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedCompareRouteImport } from './routes/_authenticated/compare'
@@ -60,6 +66,9 @@ import { Route as AuthenticatedAdminTeachersRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_authenticated/admin.study-resources'
 import { Route as AuthenticatedAdminEducationNewsRouteImport } from './routes/_authenticated/admin.education-news'
 import { Route as AuthenticatedAdminComplaintsRouteImport } from './routes/_authenticated/admin.complaints'
+import { Route as AuthenticatedAdminBusinessesRouteImport } from './routes/_authenticated/admin.businesses'
+import { Route as AuthenticatedAdminBusinessReviewsRouteImport } from './routes/_authenticated/admin.business-reviews'
+import { Route as AuthenticatedAdminBusinessCategoriesRouteImport } from './routes/_authenticated/admin.business-categories'
 import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authenticated/admin.bills'
 import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
 import { Route as AuthenticatedAdminAchievementsRouteImport } from './routes/_authenticated/admin.achievements'
@@ -120,6 +129,11 @@ const CalculatorRoute = CalculatorRouteImport.update({
   path: '/calculator',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BusinessRoute = BusinessRouteImport.update({
+  id: '/business',
+  path: '/business',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -143,6 +157,11 @@ const TeachersIndexRoute = TeachersIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => TeachersRoute,
+} as any)
+const BusinessIndexRoute = BusinessIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BusinessRoute,
 } as any)
 const WorkersRegisterRoute = WorkersRegisterRouteImport.update({
   id: '/register',
@@ -184,6 +203,21 @@ const TeachersIdRoute = TeachersIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => TeachersRoute,
 } as any)
+const BusinessRegisterRoute = BusinessRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => BusinessRoute,
+} as any)
+const BusinessDirectoryRoute = BusinessDirectoryRouteImport.update({
+  id: '/directory',
+  path: '/directory',
+  getParentRoute: () => BusinessRoute,
+} as any)
+const BusinessSlugRoute = BusinessSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BusinessRoute,
+} as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -197,6 +231,11 @@ const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyBusinessRoute = AuthenticatedMyBusinessRouteImport.update({
+  id: '/my-business',
+  path: '/my-business',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedInsightsRoute = AuthenticatedInsightsRouteImport.update({
@@ -327,6 +366,24 @@ const AuthenticatedAdminComplaintsRoute =
     path: '/complaints',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminBusinessesRoute =
+  AuthenticatedAdminBusinessesRouteImport.update({
+    id: '/businesses',
+    path: '/businesses',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBusinessReviewsRoute =
+  AuthenticatedAdminBusinessReviewsRouteImport.update({
+    id: '/business-reviews',
+    path: '/business-reviews',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBusinessCategoriesRoute =
+  AuthenticatedAdminBusinessCategoriesRouteImport.update({
+    id: '/business-categories',
+    path: '/business-categories',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminBillsRoute = AuthenticatedAdminBillsRouteImport.update({
   id: '/bills',
   path: '/bills',
@@ -354,6 +411,7 @@ const AuthenticatedBillsIdEditRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
@@ -370,9 +428,13 @@ export interface FileRoutesByFullPath {
   '/compare': typeof AuthenticatedCompareRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/insights': typeof AuthenticatedInsightsRoute
+  '/my-business': typeof AuthenticatedMyBusinessRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/business/$slug': typeof BusinessSlugRoute
+  '/business/directory': typeof BusinessDirectoryRoute
+  '/business/register': typeof BusinessRegisterRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -381,11 +443,15 @@ export interface FileRoutesByFullPath {
   '/teachers/tuitions': typeof TeachersTuitionsRouteWithChildren
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
+  '/business/': typeof BusinessIndexRoute
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
   '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/bills': typeof AuthenticatedAdminBillsRoute
+  '/admin/business-categories': typeof AuthenticatedAdminBusinessCategoriesRoute
+  '/admin/business-reviews': typeof AuthenticatedAdminBusinessReviewsRoute
+  '/admin/businesses': typeof AuthenticatedAdminBusinessesRoute
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
@@ -423,19 +489,27 @@ export interface FileRoutesByTo {
   '/compare': typeof AuthenticatedCompareRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/insights': typeof AuthenticatedInsightsRoute
+  '/my-business': typeof AuthenticatedMyBusinessRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/business/$slug': typeof BusinessSlugRoute
+  '/business/directory': typeof BusinessDirectoryRoute
+  '/business/register': typeof BusinessRegisterRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/register': typeof TeachersRegisterRoute
   '/teachers/resources': typeof TeachersResourcesRoute
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
+  '/business': typeof BusinessIndexRoute
   '/teachers': typeof TeachersIndexRoute
   '/workers': typeof WorkersIndexRoute
   '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/bills': typeof AuthenticatedAdminBillsRoute
+  '/admin/business-categories': typeof AuthenticatedAdminBusinessCategoriesRoute
+  '/admin/business-reviews': typeof AuthenticatedAdminBusinessReviewsRoute
+  '/admin/businesses': typeof AuthenticatedAdminBusinessesRoute
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
@@ -462,6 +536,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
@@ -478,9 +553,13 @@ export interface FileRoutesById {
   '/_authenticated/compare': typeof AuthenticatedCompareRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/insights': typeof AuthenticatedInsightsRoute
+  '/_authenticated/my-business': typeof AuthenticatedMyBusinessRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/business/$slug': typeof BusinessSlugRoute
+  '/business/directory': typeof BusinessDirectoryRoute
+  '/business/register': typeof BusinessRegisterRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -489,11 +568,15 @@ export interface FileRoutesById {
   '/teachers/tuitions': typeof TeachersTuitionsRouteWithChildren
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
+  '/business/': typeof BusinessIndexRoute
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
   '/_authenticated/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/_authenticated/admin/bills': typeof AuthenticatedAdminBillsRoute
+  '/_authenticated/admin/business-categories': typeof AuthenticatedAdminBusinessCategoriesRoute
+  '/_authenticated/admin/business-reviews': typeof AuthenticatedAdminBusinessReviewsRoute
+  '/_authenticated/admin/businesses': typeof AuthenticatedAdminBusinessesRoute
   '/_authenticated/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/_authenticated/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/_authenticated/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
@@ -520,6 +603,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/business'
     | '/calculator'
     | '/cv-builder'
     | '/forgot-password'
@@ -536,9 +620,13 @@ export interface FileRouteTypes {
     | '/compare'
     | '/dashboard'
     | '/insights'
+    | '/my-business'
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/business/$slug'
+    | '/business/directory'
+    | '/business/register'
     | '/teachers/$id'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -547,11 +635,15 @@ export interface FileRouteTypes {
     | '/teachers/tuitions'
     | '/workers/$id'
     | '/workers/register'
+    | '/business/'
     | '/teachers/'
     | '/workers/'
     | '/admin/achievements'
     | '/admin/announcements'
     | '/admin/bills'
+    | '/admin/business-categories'
+    | '/admin/business-reviews'
+    | '/admin/businesses'
     | '/admin/complaints'
     | '/admin/education-news'
     | '/admin/study-resources'
@@ -589,19 +681,27 @@ export interface FileRouteTypes {
     | '/compare'
     | '/dashboard'
     | '/insights'
+    | '/my-business'
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/business/$slug'
+    | '/business/directory'
+    | '/business/register'
     | '/teachers/$id'
     | '/teachers/register'
     | '/teachers/resources'
     | '/workers/$id'
     | '/workers/register'
+    | '/business'
     | '/teachers'
     | '/workers'
     | '/admin/achievements'
     | '/admin/announcements'
     | '/admin/bills'
+    | '/admin/business-categories'
+    | '/admin/business-reviews'
+    | '/admin/businesses'
     | '/admin/complaints'
     | '/admin/education-news'
     | '/admin/study-resources'
@@ -627,6 +727,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/business'
     | '/calculator'
     | '/cv-builder'
     | '/forgot-password'
@@ -643,9 +744,13 @@ export interface FileRouteTypes {
     | '/_authenticated/compare'
     | '/_authenticated/dashboard'
     | '/_authenticated/insights'
+    | '/_authenticated/my-business'
     | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
+    | '/business/$slug'
+    | '/business/directory'
+    | '/business/register'
     | '/teachers/$id'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -654,11 +759,15 @@ export interface FileRouteTypes {
     | '/teachers/tuitions'
     | '/workers/$id'
     | '/workers/register'
+    | '/business/'
     | '/teachers/'
     | '/workers/'
     | '/_authenticated/admin/achievements'
     | '/_authenticated/admin/announcements'
     | '/_authenticated/admin/bills'
+    | '/_authenticated/admin/business-categories'
+    | '/_authenticated/admin/business-reviews'
+    | '/_authenticated/admin/businesses'
     | '/_authenticated/admin/complaints'
     | '/_authenticated/admin/education-news'
     | '/_authenticated/admin/study-resources'
@@ -685,6 +794,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  BusinessRoute: typeof BusinessRouteWithChildren
   CalculatorRoute: typeof CalculatorRoute
   CvBuilderRoute: typeof CvBuilderRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
@@ -779,6 +889,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalculatorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/business': {
+      id: '/business'
+      path: '/business'
+      fullPath: '/business'
+      preLoaderRoute: typeof BusinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -813,6 +930,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/teachers/'
       preLoaderRoute: typeof TeachersIndexRouteImport
       parentRoute: typeof TeachersRoute
+    }
+    '/business/': {
+      id: '/business/'
+      path: '/'
+      fullPath: '/business/'
+      preLoaderRoute: typeof BusinessIndexRouteImport
+      parentRoute: typeof BusinessRoute
     }
     '/workers/register': {
       id: '/workers/register'
@@ -870,6 +994,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeachersIdRouteImport
       parentRoute: typeof TeachersRoute
     }
+    '/business/register': {
+      id: '/business/register'
+      path: '/register'
+      fullPath: '/business/register'
+      preLoaderRoute: typeof BusinessRegisterRouteImport
+      parentRoute: typeof BusinessRoute
+    }
+    '/business/directory': {
+      id: '/business/directory'
+      path: '/directory'
+      fullPath: '/business/directory'
+      preLoaderRoute: typeof BusinessDirectoryRouteImport
+      parentRoute: typeof BusinessRoute
+    }
+    '/business/$slug': {
+      id: '/business/$slug'
+      path: '/$slug'
+      fullPath: '/business/$slug'
+      preLoaderRoute: typeof BusinessSlugRouteImport
+      parentRoute: typeof BusinessRoute
+    }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
       path: '/settings'
@@ -889,6 +1034,13 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my-business': {
+      id: '/_authenticated/my-business'
+      path: '/my-business'
+      fullPath: '/my-business'
+      preLoaderRoute: typeof AuthenticatedMyBusinessRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/insights': {
@@ -1059,6 +1211,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminComplaintsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/businesses': {
+      id: '/_authenticated/admin/businesses'
+      path: '/businesses'
+      fullPath: '/admin/businesses'
+      preLoaderRoute: typeof AuthenticatedAdminBusinessesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/business-reviews': {
+      id: '/_authenticated/admin/business-reviews'
+      path: '/business-reviews'
+      fullPath: '/admin/business-reviews'
+      preLoaderRoute: typeof AuthenticatedAdminBusinessReviewsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/business-categories': {
+      id: '/_authenticated/admin/business-categories'
+      path: '/business-categories'
+      fullPath: '/admin/business-categories'
+      preLoaderRoute: typeof AuthenticatedAdminBusinessCategoriesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/bills': {
       id: '/_authenticated/admin/bills'
       path: '/bills'
@@ -1094,6 +1267,9 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAchievementsRoute: typeof AuthenticatedAdminAchievementsRoute
   AuthenticatedAdminAnnouncementsRoute: typeof AuthenticatedAdminAnnouncementsRoute
   AuthenticatedAdminBillsRoute: typeof AuthenticatedAdminBillsRoute
+  AuthenticatedAdminBusinessCategoriesRoute: typeof AuthenticatedAdminBusinessCategoriesRoute
+  AuthenticatedAdminBusinessReviewsRoute: typeof AuthenticatedAdminBusinessReviewsRoute
+  AuthenticatedAdminBusinessesRoute: typeof AuthenticatedAdminBusinessesRoute
   AuthenticatedAdminComplaintsRoute: typeof AuthenticatedAdminComplaintsRoute
   AuthenticatedAdminEducationNewsRoute: typeof AuthenticatedAdminEducationNewsRoute
   AuthenticatedAdminStudyResourcesRoute: typeof AuthenticatedAdminStudyResourcesRoute
@@ -1109,6 +1285,11 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAchievementsRoute: AuthenticatedAdminAchievementsRoute,
   AuthenticatedAdminAnnouncementsRoute: AuthenticatedAdminAnnouncementsRoute,
   AuthenticatedAdminBillsRoute: AuthenticatedAdminBillsRoute,
+  AuthenticatedAdminBusinessCategoriesRoute:
+    AuthenticatedAdminBusinessCategoriesRoute,
+  AuthenticatedAdminBusinessReviewsRoute:
+    AuthenticatedAdminBusinessReviewsRoute,
+  AuthenticatedAdminBusinessesRoute: AuthenticatedAdminBusinessesRoute,
   AuthenticatedAdminComplaintsRoute: AuthenticatedAdminComplaintsRoute,
   AuthenticatedAdminEducationNewsRoute: AuthenticatedAdminEducationNewsRoute,
   AuthenticatedAdminStudyResourcesRoute: AuthenticatedAdminStudyResourcesRoute,
@@ -1144,6 +1325,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCompareRoute: typeof AuthenticatedCompareRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedInsightsRoute: typeof AuthenticatedInsightsRoute
+  AuthenticatedMyBusinessRoute: typeof AuthenticatedMyBusinessRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
@@ -1155,6 +1337,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCompareRoute: AuthenticatedCompareRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedInsightsRoute: AuthenticatedInsightsRoute,
+  AuthenticatedMyBusinessRoute: AuthenticatedMyBusinessRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
@@ -1162,6 +1345,24 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
+interface BusinessRouteChildren {
+  BusinessSlugRoute: typeof BusinessSlugRoute
+  BusinessDirectoryRoute: typeof BusinessDirectoryRoute
+  BusinessRegisterRoute: typeof BusinessRegisterRoute
+  BusinessIndexRoute: typeof BusinessIndexRoute
+}
+
+const BusinessRouteChildren: BusinessRouteChildren = {
+  BusinessSlugRoute: BusinessSlugRoute,
+  BusinessDirectoryRoute: BusinessDirectoryRoute,
+  BusinessRegisterRoute: BusinessRegisterRoute,
+  BusinessIndexRoute: BusinessIndexRoute,
+}
+
+const BusinessRouteWithChildren = BusinessRoute._addFileChildren(
+  BusinessRouteChildren,
+)
 
 interface TeachersAchievementsRouteChildren {
   TeachersAchievementsIdRoute: typeof TeachersAchievementsIdRoute
@@ -1248,6 +1449,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  BusinessRoute: BusinessRouteWithChildren,
   CalculatorRoute: CalculatorRoute,
   CvBuilderRoute: CvBuilderRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
@@ -1265,13 +1467,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
