@@ -14,12 +14,12 @@ export function Footer() {
                 <Zap className="h-5 w-5" strokeWidth={2.5} />
               </div>
               <div className="leading-tight">
-                <div className="text-sm font-bold">উখিয়া বিদ্যুৎ বিল</div>
-                <div className="text-[10px] text-muted-foreground">স্বচ্ছ বিল, সচেতন গ্রাহক</div>
+                <div className="text-sm font-bold">উখিয়া সেবা</div>
+                <div className="text-[10px] text-muted-foreground">উখিয়ার সকল ডিজিটাল সেবা, এক জায়গায়।</div>
               </div>
             </div>
             <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-              উখিয়া উপজেলার বিদ্যুৎ গ্রাহকদের জন্য ডিজিটাল বিল ব্যবস্থাপনা প্ল্যাটফর্ম।
+              বিদ্যুৎ বিল, গ্যাস বিল, পানি বিল, মোবাইল রিচার্জ, প্রয়োজনীয় সরকারি ওয়েবসাইট, স্থানীয় সেবা, চাকরির খবর, টেন্ডার, জরুরি নম্বর এবং আরও অনেক কিছু—সব এক প্ল্যাটফর্মে।
             </p>
           </div>
 
@@ -63,7 +63,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 border-t border-border/60 pt-6 text-center text-xs text-muted-foreground">
-          © {year} উখিয়া বিদ্যুৎ বিল। সর্বস্বত্ব সংরক্ষিত।
+          © {year} Ukhiya Seba. সর্বস্বত্ব সংরক্ষিত।
         </div>
       </div>
     </footer>
