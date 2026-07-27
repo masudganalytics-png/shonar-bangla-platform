@@ -54,10 +54,15 @@ import { Route as ApiPublicAnnouncementsRouteImport } from './routes/api/public/
 import { Route as AuthenticatedBillsNewRouteImport } from './routes/_authenticated/bills.new'
 import { Route as AuthenticatedAdminWorkersRouteImport } from './routes/_authenticated/admin.workers'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAdminTuitionRequestsRouteImport } from './routes/_authenticated/admin.tuition-requests'
+import { Route as AuthenticatedAdminTuitionApplicationsRouteImport } from './routes/_authenticated/admin.tuition-applications'
 import { Route as AuthenticatedAdminTeachersRouteImport } from './routes/_authenticated/admin.teachers'
+import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_authenticated/admin.study-resources'
+import { Route as AuthenticatedAdminEducationNewsRouteImport } from './routes/_authenticated/admin.education-news'
 import { Route as AuthenticatedAdminComplaintsRouteImport } from './routes/_authenticated/admin.complaints'
 import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authenticated/admin.bills'
 import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
+import { Route as AuthenticatedAdminAchievementsRouteImport } from './routes/_authenticated/admin.achievements'
 import { Route as AuthenticatedBillsIdEditRouteImport } from './routes/_authenticated/bills.$id.edit'
 
 const WorkersRoute = WorkersRouteImport.update({
@@ -286,10 +291,34 @@ const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminTuitionRequestsRoute =
+  AuthenticatedAdminTuitionRequestsRouteImport.update({
+    id: '/tuition-requests',
+    path: '/tuition-requests',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminTuitionApplicationsRoute =
+  AuthenticatedAdminTuitionApplicationsRouteImport.update({
+    id: '/tuition-applications',
+    path: '/tuition-applications',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminTeachersRoute =
   AuthenticatedAdminTeachersRouteImport.update({
     id: '/teachers',
     path: '/teachers',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminStudyResourcesRoute =
+  AuthenticatedAdminStudyResourcesRouteImport.update({
+    id: '/study-resources',
+    path: '/study-resources',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminEducationNewsRoute =
+  AuthenticatedAdminEducationNewsRouteImport.update({
+    id: '/education-news',
+    path: '/education-news',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminComplaintsRoute =
@@ -307,6 +336,12 @@ const AuthenticatedAdminAnnouncementsRoute =
   AuthenticatedAdminAnnouncementsRouteImport.update({
     id: '/announcements',
     path: '/announcements',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminAchievementsRoute =
+  AuthenticatedAdminAchievementsRouteImport.update({
+    id: '/achievements',
+    path: '/achievements',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedBillsIdEditRoute =
@@ -348,10 +383,15 @@ export interface FileRoutesByFullPath {
   '/workers/register': typeof WorkersRegisterRoute
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
+  '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/bills': typeof AuthenticatedAdminBillsRoute
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
+  '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
+  '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
+  '/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
+  '/admin/tuition-requests': typeof AuthenticatedAdminTuitionRequestsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/admin/workers': typeof AuthenticatedAdminWorkersRoute
   '/bills/new': typeof AuthenticatedBillsNewRoute
@@ -393,10 +433,15 @@ export interface FileRoutesByTo {
   '/workers/register': typeof WorkersRegisterRoute
   '/teachers': typeof TeachersIndexRoute
   '/workers': typeof WorkersIndexRoute
+  '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/bills': typeof AuthenticatedAdminBillsRoute
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
+  '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
+  '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
+  '/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
+  '/admin/tuition-requests': typeof AuthenticatedAdminTuitionRequestsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/admin/workers': typeof AuthenticatedAdminWorkersRoute
   '/bills/new': typeof AuthenticatedBillsNewRoute
@@ -446,10 +491,15 @@ export interface FileRoutesById {
   '/workers/register': typeof WorkersRegisterRoute
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
+  '/_authenticated/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/_authenticated/admin/bills': typeof AuthenticatedAdminBillsRoute
   '/_authenticated/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
+  '/_authenticated/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
+  '/_authenticated/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/_authenticated/admin/teachers': typeof AuthenticatedAdminTeachersRoute
+  '/_authenticated/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
+  '/_authenticated/admin/tuition-requests': typeof AuthenticatedAdminTuitionRequestsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/admin/workers': typeof AuthenticatedAdminWorkersRoute
   '/_authenticated/bills/new': typeof AuthenticatedBillsNewRoute
@@ -499,10 +549,15 @@ export interface FileRouteTypes {
     | '/workers/register'
     | '/teachers/'
     | '/workers/'
+    | '/admin/achievements'
     | '/admin/announcements'
     | '/admin/bills'
     | '/admin/complaints'
+    | '/admin/education-news'
+    | '/admin/study-resources'
     | '/admin/teachers'
+    | '/admin/tuition-applications'
+    | '/admin/tuition-requests'
     | '/admin/users'
     | '/admin/workers'
     | '/bills/new'
@@ -544,10 +599,15 @@ export interface FileRouteTypes {
     | '/workers/register'
     | '/teachers'
     | '/workers'
+    | '/admin/achievements'
     | '/admin/announcements'
     | '/admin/bills'
     | '/admin/complaints'
+    | '/admin/education-news'
+    | '/admin/study-resources'
     | '/admin/teachers'
+    | '/admin/tuition-applications'
+    | '/admin/tuition-requests'
     | '/admin/users'
     | '/admin/workers'
     | '/bills/new'
@@ -596,10 +656,15 @@ export interface FileRouteTypes {
     | '/workers/register'
     | '/teachers/'
     | '/workers/'
+    | '/_authenticated/admin/achievements'
     | '/_authenticated/admin/announcements'
     | '/_authenticated/admin/bills'
     | '/_authenticated/admin/complaints'
+    | '/_authenticated/admin/education-news'
+    | '/_authenticated/admin/study-resources'
     | '/_authenticated/admin/teachers'
+    | '/_authenticated/admin/tuition-applications'
+    | '/_authenticated/admin/tuition-requests'
     | '/_authenticated/admin/users'
     | '/_authenticated/admin/workers'
     | '/_authenticated/bills/new'
@@ -952,11 +1017,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/tuition-requests': {
+      id: '/_authenticated/admin/tuition-requests'
+      path: '/tuition-requests'
+      fullPath: '/admin/tuition-requests'
+      preLoaderRoute: typeof AuthenticatedAdminTuitionRequestsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/tuition-applications': {
+      id: '/_authenticated/admin/tuition-applications'
+      path: '/tuition-applications'
+      fullPath: '/admin/tuition-applications'
+      preLoaderRoute: typeof AuthenticatedAdminTuitionApplicationsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/teachers': {
       id: '/_authenticated/admin/teachers'
       path: '/teachers'
       fullPath: '/admin/teachers'
       preLoaderRoute: typeof AuthenticatedAdminTeachersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/study-resources': {
+      id: '/_authenticated/admin/study-resources'
+      path: '/study-resources'
+      fullPath: '/admin/study-resources'
+      preLoaderRoute: typeof AuthenticatedAdminStudyResourcesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/education-news': {
+      id: '/_authenticated/admin/education-news'
+      path: '/education-news'
+      fullPath: '/admin/education-news'
+      preLoaderRoute: typeof AuthenticatedAdminEducationNewsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/complaints': {
@@ -980,6 +1073,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAnnouncementsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/achievements': {
+      id: '/_authenticated/admin/achievements'
+      path: '/achievements'
+      fullPath: '/admin/achievements'
+      preLoaderRoute: typeof AuthenticatedAdminAchievementsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/bills/$id/edit': {
       id: '/_authenticated/bills/$id/edit'
       path: '/$id/edit'
@@ -991,20 +1091,32 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAchievementsRoute: typeof AuthenticatedAdminAchievementsRoute
   AuthenticatedAdminAnnouncementsRoute: typeof AuthenticatedAdminAnnouncementsRoute
   AuthenticatedAdminBillsRoute: typeof AuthenticatedAdminBillsRoute
   AuthenticatedAdminComplaintsRoute: typeof AuthenticatedAdminComplaintsRoute
+  AuthenticatedAdminEducationNewsRoute: typeof AuthenticatedAdminEducationNewsRoute
+  AuthenticatedAdminStudyResourcesRoute: typeof AuthenticatedAdminStudyResourcesRoute
   AuthenticatedAdminTeachersRoute: typeof AuthenticatedAdminTeachersRoute
+  AuthenticatedAdminTuitionApplicationsRoute: typeof AuthenticatedAdminTuitionApplicationsRoute
+  AuthenticatedAdminTuitionRequestsRoute: typeof AuthenticatedAdminTuitionRequestsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminWorkersRoute: typeof AuthenticatedAdminWorkersRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAchievementsRoute: AuthenticatedAdminAchievementsRoute,
   AuthenticatedAdminAnnouncementsRoute: AuthenticatedAdminAnnouncementsRoute,
   AuthenticatedAdminBillsRoute: AuthenticatedAdminBillsRoute,
   AuthenticatedAdminComplaintsRoute: AuthenticatedAdminComplaintsRoute,
+  AuthenticatedAdminEducationNewsRoute: AuthenticatedAdminEducationNewsRoute,
+  AuthenticatedAdminStudyResourcesRoute: AuthenticatedAdminStudyResourcesRoute,
   AuthenticatedAdminTeachersRoute: AuthenticatedAdminTeachersRoute,
+  AuthenticatedAdminTuitionApplicationsRoute:
+    AuthenticatedAdminTuitionApplicationsRoute,
+  AuthenticatedAdminTuitionRequestsRoute:
+    AuthenticatedAdminTuitionRequestsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminWorkersRoute: AuthenticatedAdminWorkersRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
