@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Calculator, FileSignature, FileText, HardHat, Scale, Wifi } from "lucide-react";
+import { ArrowRight, Calculator, FileSignature, FileText, GraduationCap, HardHat, Scale, Wifi } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
@@ -62,6 +62,12 @@ const QUICK_ACTIONS = [
     title: "👷 কাজের লোক খুঁজুন",
     desc: "আপনার এলাকার দক্ষ কাজের লোক সহজে খুঁজুন।",
   },
+  {
+    to: "/teachers" as const,
+    icon: GraduationCap,
+    title: "🎓 উখিয়ার শিক্ষক খুঁজুন",
+    desc: "আপনার এলাকার যাচাইকৃত শিক্ষক ও টিউটর খুঁজুন।",
+  },
 ];
 
 function HomePage() {
@@ -106,6 +112,11 @@ function HomePage() {
             <Button asChild size="lg" variant="outline" className="h-12 border-white/50 bg-white/10 px-6 text-white hover:bg-white/20">
               <Link to="/workers">
                 <HardHat className="mr-2 h-4 w-4" /> কাজের লোক খুঁজুন
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="h-12 border-white/50 bg-white/10 px-6 text-white hover:bg-white/20">
+              <Link to="/teachers">
+                <GraduationCap className="mr-2 h-4 w-4" /> উখিয়ার শিক্ষক খুঁজুন
               </Link>
             </Button>
           </div>

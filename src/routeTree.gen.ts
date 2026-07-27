@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkersRouteImport } from './routes/workers'
 import { Route as UtilitiesRouteImport } from './routes/utilities'
+import { Route as TeachersRouteImport } from './routes/teachers'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as NoticesRouteImport } from './routes/notices'
@@ -23,8 +24,11 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WorkersIndexRouteImport } from './routes/workers.index'
+import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
 import { Route as WorkersRegisterRouteImport } from './routes/workers.register'
 import { Route as WorkersIdRouteImport } from './routes/workers.$id'
+import { Route as TeachersRegisterRouteImport } from './routes/teachers.register'
+import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -39,6 +43,7 @@ import { Route as ApiPublicAnnouncementsRouteImport } from './routes/api/public/
 import { Route as AuthenticatedBillsNewRouteImport } from './routes/_authenticated/bills.new'
 import { Route as AuthenticatedAdminWorkersRouteImport } from './routes/_authenticated/admin.workers'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAdminTeachersRouteImport } from './routes/_authenticated/admin.teachers'
 import { Route as AuthenticatedAdminComplaintsRouteImport } from './routes/_authenticated/admin.complaints'
 import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authenticated/admin.bills'
 import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
@@ -52,6 +57,11 @@ const WorkersRoute = WorkersRouteImport.update({
 const UtilitiesRoute = UtilitiesRouteImport.update({
   id: '/utilities',
   path: '/utilities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeachersRoute = TeachersRouteImport.update({
+  id: '/teachers',
+  path: '/teachers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StatsRoute = StatsRouteImport.update({
@@ -113,6 +123,11 @@ const WorkersIndexRoute = WorkersIndexRouteImport.update({
   path: '/',
   getParentRoute: () => WorkersRoute,
 } as any)
+const TeachersIndexRoute = TeachersIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TeachersRoute,
+} as any)
 const WorkersRegisterRoute = WorkersRegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -122,6 +137,16 @@ const WorkersIdRoute = WorkersIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => WorkersRoute,
+} as any)
+const TeachersRegisterRoute = TeachersRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => TeachersRoute,
+} as any)
+const TeachersIdRoute = TeachersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => TeachersRoute,
 } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
@@ -194,6 +219,12 @@ const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminTeachersRoute =
+  AuthenticatedAdminTeachersRouteImport.update({
+    id: '/teachers',
+    path: '/teachers',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminComplaintsRoute =
   AuthenticatedAdminComplaintsRouteImport.update({
     id: '/complaints',
@@ -229,6 +260,7 @@ export interface FileRoutesByFullPath {
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
+  '/teachers': typeof TeachersRouteWithChildren
   '/utilities': typeof UtilitiesRoute
   '/workers': typeof WorkersRouteWithChildren
   '/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -239,12 +271,16 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/teachers/$id': typeof TeachersIdRoute
+  '/teachers/register': typeof TeachersRegisterRoute
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
+  '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/bills': typeof AuthenticatedAdminBillsRoute
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
+  '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/admin/workers': typeof AuthenticatedAdminWorkersRoute
   '/bills/new': typeof AuthenticatedBillsNewRoute
@@ -272,12 +308,16 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/teachers/$id': typeof TeachersIdRoute
+  '/teachers/register': typeof TeachersRegisterRoute
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
+  '/teachers': typeof TeachersIndexRoute
   '/workers': typeof WorkersIndexRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/bills': typeof AuthenticatedAdminBillsRoute
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
+  '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/admin/workers': typeof AuthenticatedAdminWorkersRoute
   '/bills/new': typeof AuthenticatedBillsNewRoute
@@ -299,6 +339,7 @@ export interface FileRoutesById {
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
+  '/teachers': typeof TeachersRouteWithChildren
   '/utilities': typeof UtilitiesRoute
   '/workers': typeof WorkersRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -309,12 +350,16 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/teachers/$id': typeof TeachersIdRoute
+  '/teachers/register': typeof TeachersRegisterRoute
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
+  '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/_authenticated/admin/bills': typeof AuthenticatedAdminBillsRoute
   '/_authenticated/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
+  '/_authenticated/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/admin/workers': typeof AuthenticatedAdminWorkersRoute
   '/_authenticated/bills/new': typeof AuthenticatedBillsNewRoute
@@ -336,6 +381,7 @@ export interface FileRouteTypes {
     | '/notices'
     | '/reset-password'
     | '/stats'
+    | '/teachers'
     | '/utilities'
     | '/workers'
     | '/admin'
@@ -346,12 +392,16 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/teachers/$id'
+    | '/teachers/register'
     | '/workers/$id'
     | '/workers/register'
+    | '/teachers/'
     | '/workers/'
     | '/admin/announcements'
     | '/admin/bills'
     | '/admin/complaints'
+    | '/admin/teachers'
     | '/admin/users'
     | '/admin/workers'
     | '/bills/new'
@@ -379,12 +429,16 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/teachers/$id'
+    | '/teachers/register'
     | '/workers/$id'
     | '/workers/register'
+    | '/teachers'
     | '/workers'
     | '/admin/announcements'
     | '/admin/bills'
     | '/admin/complaints'
+    | '/admin/teachers'
     | '/admin/users'
     | '/admin/workers'
     | '/bills/new'
@@ -405,6 +459,7 @@ export interface FileRouteTypes {
     | '/notices'
     | '/reset-password'
     | '/stats'
+    | '/teachers'
     | '/utilities'
     | '/workers'
     | '/_authenticated/admin'
@@ -415,12 +470,16 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
+    | '/teachers/$id'
+    | '/teachers/register'
     | '/workers/$id'
     | '/workers/register'
+    | '/teachers/'
     | '/workers/'
     | '/_authenticated/admin/announcements'
     | '/_authenticated/admin/bills'
     | '/_authenticated/admin/complaints'
+    | '/_authenticated/admin/teachers'
     | '/_authenticated/admin/users'
     | '/_authenticated/admin/workers'
     | '/_authenticated/bills/new'
@@ -442,6 +501,7 @@ export interface RootRouteChildren {
   NoticesRoute: typeof NoticesRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   StatsRoute: typeof StatsRoute
+  TeachersRoute: typeof TeachersRouteWithChildren
   UtilitiesRoute: typeof UtilitiesRoute
   WorkersRoute: typeof WorkersRouteWithChildren
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
@@ -462,6 +522,13 @@ declare module '@tanstack/react-router' {
       path: '/utilities'
       fullPath: '/utilities'
       preLoaderRoute: typeof UtilitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teachers': {
+      id: '/teachers'
+      path: '/teachers'
+      fullPath: '/teachers'
+      preLoaderRoute: typeof TeachersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/stats': {
@@ -548,6 +615,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkersIndexRouteImport
       parentRoute: typeof WorkersRoute
     }
+    '/teachers/': {
+      id: '/teachers/'
+      path: '/'
+      fullPath: '/teachers/'
+      preLoaderRoute: typeof TeachersIndexRouteImport
+      parentRoute: typeof TeachersRoute
+    }
     '/workers/register': {
       id: '/workers/register'
       path: '/register'
@@ -561,6 +635,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/workers/$id'
       preLoaderRoute: typeof WorkersIdRouteImport
       parentRoute: typeof WorkersRoute
+    }
+    '/teachers/register': {
+      id: '/teachers/register'
+      path: '/register'
+      fullPath: '/teachers/register'
+      preLoaderRoute: typeof TeachersRegisterRouteImport
+      parentRoute: typeof TeachersRoute
+    }
+    '/teachers/$id': {
+      id: '/teachers/$id'
+      path: '/$id'
+      fullPath: '/teachers/$id'
+      preLoaderRoute: typeof TeachersIdRouteImport
+      parentRoute: typeof TeachersRoute
     }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
@@ -660,6 +748,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/teachers': {
+      id: '/_authenticated/admin/teachers'
+      path: '/teachers'
+      fullPath: '/admin/teachers'
+      preLoaderRoute: typeof AuthenticatedAdminTeachersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/complaints': {
       id: '/_authenticated/admin/complaints'
       path: '/complaints'
@@ -695,6 +790,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAnnouncementsRoute: typeof AuthenticatedAdminAnnouncementsRoute
   AuthenticatedAdminBillsRoute: typeof AuthenticatedAdminBillsRoute
   AuthenticatedAdminComplaintsRoute: typeof AuthenticatedAdminComplaintsRoute
+  AuthenticatedAdminTeachersRoute: typeof AuthenticatedAdminTeachersRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminWorkersRoute: typeof AuthenticatedAdminWorkersRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
@@ -704,6 +800,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAnnouncementsRoute: AuthenticatedAdminAnnouncementsRoute,
   AuthenticatedAdminBillsRoute: AuthenticatedAdminBillsRoute,
   AuthenticatedAdminComplaintsRoute: AuthenticatedAdminComplaintsRoute,
+  AuthenticatedAdminTeachersRoute: AuthenticatedAdminTeachersRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminWorkersRoute: AuthenticatedAdminWorkersRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
@@ -750,6 +847,22 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface TeachersRouteChildren {
+  TeachersIdRoute: typeof TeachersIdRoute
+  TeachersRegisterRoute: typeof TeachersRegisterRoute
+  TeachersIndexRoute: typeof TeachersIndexRoute
+}
+
+const TeachersRouteChildren: TeachersRouteChildren = {
+  TeachersIdRoute: TeachersIdRoute,
+  TeachersRegisterRoute: TeachersRegisterRoute,
+  TeachersIndexRoute: TeachersIndexRoute,
+}
+
+const TeachersRouteWithChildren = TeachersRoute._addFileChildren(
+  TeachersRouteChildren,
+)
+
 interface WorkersRouteChildren {
   WorkersIdRoute: typeof WorkersIdRoute
   WorkersRegisterRoute: typeof WorkersRegisterRoute
@@ -777,6 +890,7 @@ const rootRouteChildren: RootRouteChildren = {
   NoticesRoute: NoticesRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   StatsRoute: StatsRoute,
+  TeachersRoute: TeachersRouteWithChildren,
   UtilitiesRoute: UtilitiesRoute,
   WorkersRoute: WorkersRouteWithChildren,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
