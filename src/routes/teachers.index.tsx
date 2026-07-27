@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { UPAZILAS, type TeacherRow, type CategoryRow } from "@/lib/teachers-shared";
 import { TeacherPhoto } from "@/components/teachers/TeacherPhoto";
+import { EducationSubNav } from "@/components/teachers/EducationSubNav";
 
 export const Route = createFileRoute("/teachers/")({
   head: () => ({
@@ -67,6 +68,7 @@ function TeachersDirectory() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+      <EducationSubNav />
       <header className="mb-6 flex flex-wrap items-start justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold sm:text-3xl">🎓 উখিয়ার শিক্ষক খুঁজুন</h1>
