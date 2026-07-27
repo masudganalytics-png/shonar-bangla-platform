@@ -15,7 +15,7 @@ import { listAllTeachers, setTeacherStatus, setTeacherVerified, deleteTeacherAdm
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { formatBanglaDate, toBanglaNumber as toBnNum } from "@/lib/bangla";
+import { formatBanglaDate, toBanglaDigits as toBnNum } from "@/lib/bangla";
 
 export const Route = createFileRoute("/_authenticated/admin/teachers")({
   component: AdminTeachers,
