@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { Menu, X, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun, ShieldCheck } from "lucide-react";
+import { Menu, X, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun, ShieldCheck, GraduationCap } from "lucide-react";
 import logoAsset from "@/assets/ukhiya-logo.png.asset.json";
 import { NotificationsBell } from "@/components/notifications/NotificationsBell";
 import { useAuth } from "@/hooks/use-auth";
@@ -26,6 +26,8 @@ const NAV_ITEMS: readonly NavItem[] = [
   { to: "/calculator", label: "ক্যালকুলেটর" },
   { to: "/isp", label: "ওয়াইফাই সেবা" },
   { to: "/helpline", label: "হেল্পলাইন" },
+  { to: "/teachers", label: "শিক্ষক খুঁজুন" },
+  { to: "/workers", label: "কাজের লোক" },
 ];
 
 
