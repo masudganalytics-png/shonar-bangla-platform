@@ -398,8 +398,33 @@ function AddTeacherDialog({ categories, onCreate }: {
             </select>
           </div>
           <div className="sm:col-span-2">
-            <Label>পড়ানো বিষয়</Label>
-            <Input value={form.subjects} onChange={(e) => setForm({ ...form, subjects: e.target.value })} placeholder="যেমন: বাংলা, ইংরেজি, গণিত" />
+            <Label>পড়ানো শ্রেণি (একাধিক নির্বাচন করা যাবে)</Label>
+            <div className="mt-2 grid grid-cols-3 gap-2 rounded-md border p-3 sm:grid-cols-4">
+              {Array.from({ length: 12 }, (_, i) => `শ্রেণি ${toBnNum(i + 1)}`).map((cls) => {
+                const selected = (form.subjects ? form.subjects.split(",").map((s) => s.trim()).filter(Boolean) : []);
+                const checked = selected.includes(cls);
+                return (
+                  <label key={cls} className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={(e) => {
+                        const next = new Set(selected);
+                        if (e.target.checked) next.add(cls); else next.delete(cls);
+                        setForm({ ...form, subjects: Array.from(next).join(", ") });
+                      }}
+                    />
+                    {cls}
+                  </label>
+                );
+              })}
+            </div>
+            <Input
+              className="mt-2"
+              value={form.subjects}
+              onChange={(e) => setForm({ ...form, subjects: e.target.value })}
+              placeholder="অতিরিক্ত বিষয় (কমা দিয়ে আলাদা করুন)"
+            />
           </div>
           <div>
             <Label>যোগ্যতা</Label>
