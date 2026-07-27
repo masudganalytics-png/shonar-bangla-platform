@@ -287,6 +287,113 @@ export type Database = {
         }
         Relationships: []
       }
+      teacher_categories: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          name_bn: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name_bn: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name_bn?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      teachers: {
+        Row: {
+          area: string | null
+          category_id: string | null
+          created_at: string
+          description: string | null
+          district: string
+          email: string | null
+          experience_years: number | null
+          full_name: string
+          id: string
+          is_available: boolean
+          is_verified: boolean
+          phone: string
+          photo_url: string | null
+          qualification: string | null
+          status: Database["public"]["Enums"]["teacher_status"]
+          subjects: string | null
+          submitted_by: string | null
+          upazila: string
+          updated_at: string
+          whatsapp: string | null
+        }
+        Insert: {
+          area?: string | null
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          district?: string
+          email?: string | null
+          experience_years?: number | null
+          full_name: string
+          id?: string
+          is_available?: boolean
+          is_verified?: boolean
+          phone: string
+          photo_url?: string | null
+          qualification?: string | null
+          status?: Database["public"]["Enums"]["teacher_status"]
+          subjects?: string | null
+          submitted_by?: string | null
+          upazila?: string
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Update: {
+          area?: string | null
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          district?: string
+          email?: string | null
+          experience_years?: number | null
+          full_name?: string
+          id?: string
+          is_available?: boolean
+          is_verified?: boolean
+          phone?: string
+          photo_url?: string | null
+          qualification?: string | null
+          status?: Database["public"]["Enums"]["teacher_status"]
+          subjects?: string | null
+          submitted_by?: string | null
+          upazila?: string
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "teachers_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "teacher_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -462,6 +569,7 @@ export type Database = {
       complaint_reason: "high_bill" | "wrong_reading" | "wrong_tariff" | "other"
       report_category: "billing" | "outage" | "meter" | "connection" | "other"
       report_status: "open" | "in_progress" | "resolved" | "rejected"
+      teacher_status: "pending" | "approved" | "rejected" | "inactive"
       worker_status: "pending" | "approved" | "rejected" | "inactive"
     }
     CompositeTypes: {
@@ -597,6 +705,7 @@ export const Constants = {
       complaint_reason: ["high_bill", "wrong_reading", "wrong_tariff", "other"],
       report_category: ["billing", "outage", "meter", "connection", "other"],
       report_status: ["open", "in_progress", "resolved", "rejected"],
+      teacher_status: ["pending", "approved", "rejected", "inactive"],
       worker_status: ["pending", "approved", "rejected", "inactive"],
     },
   },
