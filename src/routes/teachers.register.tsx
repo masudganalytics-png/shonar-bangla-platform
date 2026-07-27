@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { UPAZILAS, DISTRICTS, type CategoryRow } from "@/lib/teachers-shared";
+import { TUTOR_GENDERS, STUDENT_CLASSES } from "@/lib/education-shared";
 import { useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/teachers/register")({
@@ -38,6 +39,9 @@ const schema = z.object({
   upazila: z.string(),
   area: z.string().trim().max(120).optional().or(z.literal("")),
   description: z.string().trim().max(1000).optional().or(z.literal("")),
+  gender: z.enum(["male", "female", "any"]).optional(),
+  student_class: z.string().trim().max(200).optional().or(z.literal("")),
+  bio: z.string().trim().max(1000).optional().or(z.literal("")),
 });
 
 function TeacherRegister() {
@@ -50,6 +54,7 @@ function TeacherRegister() {
     full_name: "", phone: "", whatsapp: "", email: "", category_id: "",
     subjects: "", qualification: "", experience_years: "", district: DISTRICTS[0] as string,
     upazila: "Ukhiya" as string, area: "", description: "",
+    gender: "any" as "male"|"female"|"any", student_class: "", bio: "",
   });
 
   const catsQ = useQuery({
