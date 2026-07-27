@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { EducationSubNav } from "@/components/teachers/EducationSubNav";
 import type { AchievementRow } from "@/lib/education-shared";
 import { EducationImage } from "@/components/teachers/EducationImage";
+import { ShareButtons } from "@/components/teachers/ShareButtons";
 
 export const Route = createFileRoute("/teachers/achievements/$id")({
   component: AchievementDetail,
@@ -60,6 +61,7 @@ function AchievementDetail() {
           )}
         </CardContent>
       </Card>
+      <div className="mt-6"><ShareButtons title={`${a.student_name} — ${a.achievement}`} /></div>
     </div>
   );
 }

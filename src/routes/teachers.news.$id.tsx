@@ -47,6 +47,7 @@ function NewsDetail() {
         <h1 className="text-2xl font-bold sm:text-3xl">{n.title}</h1>
         <p className="mt-2 flex items-center gap-1 text-xs text-muted-foreground"><Calendar className="h-3 w-3" /> {formatBanglaDate(n.publish_date)}</p>
         <Card className="mt-5"><CardContent className="prose prose-sm max-w-none whitespace-pre-wrap p-6 dark:prose-invert">{n.content}</CardContent></Card>
+        <div className="mt-6"><ShareButtons title={n.title} /></div>
       </article>
     </div>
   );
