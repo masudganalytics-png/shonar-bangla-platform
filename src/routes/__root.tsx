@@ -84,16 +84,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "theme-color", content: "#1565C0" },
-      { title: "উখিয়া বিদ্যুৎ বিল — স্বচ্ছ বিল, সচেতন গ্রাহক" },
+      { title: "উখিয়া সেবা — উখিয়ার সকল ডিজিটাল সেবা, এক জায়গায়" },
       {
         name: "description",
         content:
-          "উখিয়া উপজেলার বিদ্যুৎ গ্রাহকদের জন্য ডিজিটাল বিল ব্যবস্থাপনা, তুলনা, অভিযোগ ও নোটিশ প্ল্যাটফর্ম।",
+          "বিদ্যুৎ বিল, গ্যাস বিল, পানি বিল, মোবাইল রিচার্জ, প্রয়োজনীয় সরকারি ওয়েবসাইট, স্থানীয় সেবা, চাকরির খবর, টেন্ডার, জরুরি নম্বর এবং আরও অনেক কিছু—সব এক প্ল্যাটফর্মে।",
       },
-      { property: "og:title", content: "উখিয়া বিদ্যুৎ বিল" },
+      { property: "og:title", content: "উখিয়া সেবা" },
       {
         property: "og:description",
-        content: "স্বচ্ছ বিল, সচেতন গ্রাহক — বিদ্যুৎ বিল ব্যবস্থাপনার আধুনিক সমাধান।",
+        content: "উখিয়ার সকল ডিজিটাল সেবা, এক জায়গায়।",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -104,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
