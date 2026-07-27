@@ -83,6 +83,15 @@ function AdminOverview() {
           <Card className="p-4"><p className="mb-2 text-sm font-medium">শিক্ষা রিসোর্স</p><Button asChild size="sm" variant="outline"><Link to="/admin/study-resources">খুলুন</Link></Button></Card>
         </div>
       </div>
+
+      <div className="mt-8">
+        <h2 className="mb-3 text-lg font-semibold">🏪 স্থানীয় ব্যবসা ব্যবস্থাপনা</h2>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Card className="p-4"><p className="mb-2 text-sm font-medium">ব্যবসা</p><Button asChild size="sm" variant="outline"><Link to="/admin/businesses">খুলুন</Link></Button></Card>
+          <Card className="p-4"><p className="mb-2 text-sm font-medium">ক্যাটাগরি</p><Button asChild size="sm" variant="outline"><Link to="/admin/business-categories">খুলুন</Link></Button></Card>
+          <Card className="p-4"><p className="mb-2 text-sm font-medium">পর্যালোচনা</p><Button asChild size="sm" variant="outline"><Link to="/admin/business-reviews">খুলুন</Link></Button></Card>
+        </div>
+      </div>
     </div>
   );
 }
