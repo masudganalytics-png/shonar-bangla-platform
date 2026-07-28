@@ -81,6 +81,18 @@ const QUICK_ACTIONS = [
     title: "⚖️ আইনি সহায়তা",
     desc: "যাচাইকৃত অ্যাডভোকেটদের সাথে WhatsApp-এ পরামর্শ নিন।",
   },
+  {
+    to: "/blood-donors" as const,
+    icon: Droplet,
+    title: "❤️ রক্তদাতা খুঁজুন",
+    desc: "উখিয়ার যাচাইকৃত রক্তদাতাদের সাথে সরাসরি যোগাযোগ করুন।",
+  },
+  {
+    to: "/request-blood" as const,
+    icon: Heart,
+    title: "🩸 রক্তের অনুরোধ",
+    desc: "রোগীর জন্য জরুরি রক্তের অনুরোধ পাঠান।",
+  },
 ];
 
 function HomePage() {
