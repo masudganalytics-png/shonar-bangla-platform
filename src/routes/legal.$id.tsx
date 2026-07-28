@@ -125,7 +125,7 @@ function AdvocateProfile() {
                 {a.is_verified && <Badge className="gap-1 bg-primary text-primary-foreground"><BadgeCheck className="h-3.5 w-3.5" /> যাচাইকৃত</Badge>}
               </div>
               <div className="mt-2 flex flex-wrap gap-1">
-                {(a.practice_areas ?? []).map((pa) => (
+                {(a.practice_areas ?? []).map((pa: string) => (
                   <Badge key={pa} variant="outline">{practiceAreaLabel(pa)}</Badge>
                 ))}
               </div>
