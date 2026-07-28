@@ -92,6 +92,13 @@ function AdminOverview() {
           <Card className="p-4"><p className="mb-2 text-sm font-medium">পর্যালোচনা</p><Button asChild size="sm" variant="outline"><Link to="/admin/business-reviews">খুলুন</Link></Button></Card>
         </div>
       </div>
+
+      <div className="mt-8">
+        <h2 className="mb-3 text-lg font-semibold">⚖️ আইনি সহায়তা ব্যবস্থাপনা</h2>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Card className="p-4"><p className="mb-2 text-sm font-medium">অ্যাডভোকেট ও লিড</p><Button asChild size="sm" variant="outline"><Link to="/admin/legal">খুলুন</Link></Button></Card>
+        </div>
+      </div>
     </div>
   );
 }
