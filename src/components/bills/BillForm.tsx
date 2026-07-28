@@ -107,19 +107,25 @@ export function BillForm({ mode, initial }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    // Load a signed preview for existing image
+    // Load a signed preview for existing image (legacy Supabase Storage paths only).
+    // Cloudinary URLs are used directly.
     let cancelled = false;
     if (initial?.bill_image_url && !imageFile) {
       const url = initial.bill_image_url;
-      // path stored as `<uid>/bills/<id>.<ext>` — try to parse the bucket path
-      const marker = "/bill-images/";
-      const idx = url.indexOf(marker);
-      const path = idx >= 0 ? url.slice(idx + marker.length).split("?")[0] : null;
-      if (path) {
-        setExistingImagePath(path);
-        supabase.storage.from("bill-images").createSignedUrl(path, 60 * 60).then(({ data }) => {
-          if (!cancelled && data?.signedUrl) setPreviewUrl(data.signedUrl);
-        });
+      if (/^https?:\/\//i.test(url) && !url.includes("/bill-images/")) {
+        // Cloudinary or external HTTPS URL — display as-is.
+        setPreviewUrl(url);
+        setExistingImagePath(null);
+      } else {
+        const marker = "/bill-images/";
+        const idx = url.indexOf(marker);
+        const path = idx >= 0 ? url.slice(idx + marker.length).split("?")[0] : url;
+        if (path) {
+          setExistingImagePath(path);
+          supabase.storage.from("bill-images").createSignedUrl(path, 60 * 60).then(({ data }) => {
+            if (!cancelled && data?.signedUrl) setPreviewUrl(data.signedUrl);
+          });
+        }
       }
     }
     return () => { cancelled = true; };
@@ -235,19 +241,13 @@ export function BillForm({ mode, initial }: Props) {
         return;
       }
 
-      // Upload image (if new)
+      // Upload image (if new) — Cloudinary
       let bill_image_url: string | null = initial?.bill_image_url ?? null;
-      let newImagePath: string | null = null;
+      let newImageUploaded = false;
       if (imageFile) {
-        const ext = imageFile.name.split(".").pop()?.toLowerCase() || "jpg";
-        const path = `${user.id}/bills/${crypto.randomUUID()}.${ext}`;
-        const { error: upErr } = await supabase.storage
-          .from("bill-images")
-          .upload(path, imageFile, { contentType: imageFile.type, upsert: false });
-        if (upErr) throw upErr;
-        newImagePath = path;
-        // Store path (not signed url) — we'll sign on read. Keep a stable reference.
-        bill_image_url = `bill-images/${path}`;
+        const { uploadImageToCloudinary } = await import("@/lib/cloudinary");
+        bill_image_url = await uploadImageToCloudinary(imageFile, `ukhiya-seba/bills/${user.id}`);
+        newImageUploaded = true;
       }
 
       const payload = {
@@ -273,8 +273,6 @@ export function BillForm({ mode, initial }: Props) {
       if (mode === "create") {
         const { error } = await supabase.from("bills").insert(payload);
         if (error) {
-          // clean up uploaded image if insert fails
-          if (newImagePath) await supabase.storage.from("bill-images").remove([newImagePath]);
           if ((error as { code?: string }).code === "23505") {
             toast.error("ডুপ্লিকেট বিল — এই মিটার ও মাসের জন্য ইতিমধ্যে জমা দেওয়া হয়েছে");
             setErrors((e) => ({ ...e, meter_no: "এই মিটার ও মাসের জন্য বিল আগে থেকেই আছে" }));
@@ -286,13 +284,10 @@ export function BillForm({ mode, initial }: Props) {
         toast.success("বিল সফলভাবে জমা হয়েছে");
       } else if (initial) {
         const { error } = await supabase.from("bills").update(payload).eq("id", initial.id);
-        if (error) {
-          if (newImagePath) await supabase.storage.from("bill-images").remove([newImagePath]);
-          throw error;
-        }
-        // remove previous image if replaced
-        if (newImagePath && existingImagePath && existingImagePath !== newImagePath) {
-          await supabase.storage.from("bill-images").remove([existingImagePath]);
+        if (error) throw error;
+        // Remove previous legacy Supabase Storage image if replaced (no-op for Cloudinary).
+        if (newImageUploaded && existingImagePath) {
+          await supabase.storage.from("bill-images").remove([existingImagePath]).catch(() => {});
         }
         toast.success("বিল আপডেট হয়েছে");
       }

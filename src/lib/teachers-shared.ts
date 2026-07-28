@@ -28,6 +28,7 @@ export type CategoryRow = { id: string; name_bn: string; slug: string; sort_orde
 
 export async function signTeacherPhoto(pathOrUrl: string | null | undefined): Promise<string | null> {
   if (!pathOrUrl) return null;
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl; // Cloudinary / external URL — use directly.
   const path = pathOrUrl.startsWith("teacher-images/") ? pathOrUrl.slice("teacher-images/".length) : pathOrUrl;
   const { data } = await supabase.storage.from("teacher-images").createSignedUrl(path, 60 * 60);
   return data?.signedUrl ?? null;

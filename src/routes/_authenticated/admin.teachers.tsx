@@ -309,13 +309,9 @@ function AddTeacherDialog({ categories, onCreate }: {
   async function handlePhoto(file: File) {
     setUploading(true);
     try {
-      const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
-      const path = `admin/${crypto.randomUUID()}.${ext}`;
-      const { error } = await supabase.storage.from("teacher-images").upload(path, file, {
-        contentType: file.type, upsert: false,
-      });
-      if (error) throw error;
-      setForm((f) => ({ ...f, photo_url: `teacher-images/${path}` }));
+      const { uploadImageToCloudinary } = await import("@/lib/cloudinary");
+      const url = await uploadImageToCloudinary(file, "ukhiya-seba/teachers/admin");
+      setForm((f) => ({ ...f, photo_url: url }));
       toast.success("ছবি আপলোড হয়েছে");
     } catch (e) {
       toast.error((e as Error).message);

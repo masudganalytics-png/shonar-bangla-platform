@@ -125,6 +125,11 @@ function ReportItem({ row, onDelete }: { row: ReportRow; onDelete: () => void })
   const [signedUrl, setSignedUrl] = useState<string | null>(null);
   useEffect(() => {
     if (!row.image_url) return;
+    // Newer uploads store a full Cloudinary HTTPS URL — use it directly.
+    if (/^https?:\/\//i.test(row.image_url) && !row.image_url.includes("/complaint-images/")) {
+      setSignedUrl(row.image_url);
+      return;
+    }
     const path = extractPath(row.image_url);
     if (!path) return;
     supabase.storage.from("complaint-images").createSignedUrl(path, 3600).then(({ data }) => {
@@ -219,11 +224,8 @@ function ComplaintForm({ onDone }: { onDone: () => void }) {
 
       let image_url: string | null = null;
       if (file) {
-        const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
-        const path = `${user.id}/${Date.now()}.${ext}`;
-        const { error: upErr } = await supabase.storage.from("complaint-images").upload(path, file, { upsert: false, contentType: file.type });
-        if (upErr) throw upErr;
-        image_url = path; // store path; signed URL generated on read
+        const { uploadImageToCloudinary } = await import("@/lib/cloudinary");
+        image_url = await uploadImageToCloudinary(file, `ukhiya-seba/complaints/${user.id}`);
       }
 
       const { error } = await supabase.from("reports").insert({

@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import { listResourcesAdmin, upsertResource, deleteResource, setResourcePublished } from "@/lib/education.functions";
 import { RESOURCE_TYPES, STUDENT_CLASSES, type ResourceRow } from "@/lib/education-shared";
 import { EducationImage } from "@/components/teachers/EducationImage";
@@ -23,11 +23,7 @@ export const Route = createFileRoute("/_authenticated/admin/study-resources")({
 });
 
 async function uploadThumb(file: File): Promise<string> {
-  const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  const path = `resources/${crypto.randomUUID()}.${ext}`;
-  const { error } = await supabase.storage.from("education-media").upload(path, file, { contentType: file.type });
-  if (error) throw error;
-  return path;
+  return uploadImageToCloudinary(file, "ukhiya-seba/resources");
 }
 
 function AdminResources() {

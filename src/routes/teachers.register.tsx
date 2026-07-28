@@ -87,13 +87,8 @@ function TeacherRegister() {
           setSubmitting(false);
           return;
         }
-        const ext = photoFile.name.split(".").pop()?.toLowerCase() || "jpg";
-        const path = `submissions/${user.id}/${crypto.randomUUID()}.${ext}`;
-        const { error: upErr } = await supabase.storage.from("teacher-images").upload(path, photoFile, {
-          contentType: photoFile.type, upsert: false,
-        });
-        if (upErr) throw upErr;
-        photo_url = `teacher-images/${path}`;
+        const { uploadImageToCloudinary } = await import("@/lib/cloudinary");
+        photo_url = await uploadImageToCloudinary(photoFile, `ukhiya-seba/teachers/${user.id}`);
       }
 
       const { error } = await supabase.from("teachers").insert({
