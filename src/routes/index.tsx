@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Calculator, FileSignature, FileText, GraduationCap, HardHat, Scale, Store, Wifi, Scale as ScaleIcon } from "lucide-react";
+import { ArrowRight, Calculator, FileSignature, FileText, GraduationCap, HardHat, Scale, Store, Wifi, Scale as ScaleIcon, Droplet, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
 import logoAsset from "@/assets/ukhiya-logo.png.asset.json";
+import { EmergencyBloodBanner } from "@/components/blood/EmergencyBloodBanner";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -80,6 +81,18 @@ const QUICK_ACTIONS = [
     title: "⚖️ আইনি সহায়তা",
     desc: "যাচাইকৃত অ্যাডভোকেটদের সাথে WhatsApp-এ পরামর্শ নিন।",
   },
+  {
+    to: "/blood-donors" as const,
+    icon: Droplet,
+    title: "❤️ রক্তদাতা খুঁজুন",
+    desc: "উখিয়ার যাচাইকৃত রক্তদাতাদের সাথে সরাসরি যোগাযোগ করুন।",
+  },
+  {
+    to: "/request-blood" as const,
+    icon: Heart,
+    title: "🩸 রক্তের অনুরোধ",
+    desc: "রোগীর জন্য জরুরি রক্তের অনুরোধ পাঠান।",
+  },
 ];
 
 function HomePage() {
@@ -87,6 +100,7 @@ function HomePage() {
 
   return (
     <>
+      <EmergencyBloodBanner />
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-95" style={{ background: "var(--gradient-hero)" }} aria-hidden />
         <div className="mx-auto max-w-3xl px-4 py-16 text-center text-white sm:px-6 sm:py-24">

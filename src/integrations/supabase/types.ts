@@ -203,6 +203,129 @@ export type Database = {
         }
         Relationships: []
       }
+      blood_donors: {
+        Row: {
+          address: string | null
+          age: number | null
+          available: boolean
+          blood_group: Database["public"]["Enums"]["blood_group"]
+          created_at: string
+          full_name: string
+          gender: Database["public"]["Enums"]["donor_gender"] | null
+          id: string
+          is_active: boolean
+          last_donation_date: string | null
+          notes: string | null
+          phone: string
+          photo_url: string | null
+          status: Database["public"]["Enums"]["donor_status"]
+          union_name: string | null
+          updated_at: string
+          user_id: string | null
+          village: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          address?: string | null
+          age?: number | null
+          available?: boolean
+          blood_group: Database["public"]["Enums"]["blood_group"]
+          created_at?: string
+          full_name: string
+          gender?: Database["public"]["Enums"]["donor_gender"] | null
+          id?: string
+          is_active?: boolean
+          last_donation_date?: string | null
+          notes?: string | null
+          phone: string
+          photo_url?: string | null
+          status?: Database["public"]["Enums"]["donor_status"]
+          union_name?: string | null
+          updated_at?: string
+          user_id?: string | null
+          village?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          address?: string | null
+          age?: number | null
+          available?: boolean
+          blood_group?: Database["public"]["Enums"]["blood_group"]
+          created_at?: string
+          full_name?: string
+          gender?: Database["public"]["Enums"]["donor_gender"] | null
+          id?: string
+          is_active?: boolean
+          last_donation_date?: string | null
+          notes?: string | null
+          phone?: string
+          photo_url?: string | null
+          status?: Database["public"]["Enums"]["donor_status"]
+          union_name?: string | null
+          updated_at?: string
+          user_id?: string | null
+          village?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      blood_requests: {
+        Row: {
+          bags_needed: number
+          blood_group: Database["public"]["Enums"]["blood_group"]
+          contact_person: string
+          created_at: string
+          hospital_location: string | null
+          hospital_name: string
+          id: string
+          notes: string | null
+          patient_name: string
+          phone: string
+          requester_id: string | null
+          required_date: string
+          required_time: string | null
+          status: Database["public"]["Enums"]["blood_request_status"]
+          updated_at: string
+          whatsapp: string | null
+        }
+        Insert: {
+          bags_needed?: number
+          blood_group: Database["public"]["Enums"]["blood_group"]
+          contact_person: string
+          created_at?: string
+          hospital_location?: string | null
+          hospital_name: string
+          id?: string
+          notes?: string | null
+          patient_name: string
+          phone: string
+          requester_id?: string | null
+          required_date: string
+          required_time?: string | null
+          status?: Database["public"]["Enums"]["blood_request_status"]
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Update: {
+          bags_needed?: number
+          blood_group?: Database["public"]["Enums"]["blood_group"]
+          contact_person?: string
+          created_at?: string
+          hospital_location?: string | null
+          hospital_name?: string
+          id?: string
+          notes?: string | null
+          patient_name?: string
+          phone?: string
+          requester_id?: string | null
+          required_date?: string
+          required_time?: string | null
+          status?: Database["public"]["Enums"]["blood_request_status"]
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
       business_categories: {
         Row: {
           created_at: string
@@ -1460,9 +1583,18 @@ export type Database = {
       announcement_priority: "low" | "normal" | "high" | "urgent"
       app_role: "user" | "admin"
       bill_status: "pending" | "paid" | "overdue"
+      blood_group: "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-"
+      blood_request_status:
+        | "pending"
+        | "approved"
+        | "fulfilled"
+        | "closed"
+        | "rejected"
       business_day: "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun"
       business_status: "pending" | "approved" | "rejected" | "suspended"
       complaint_reason: "high_bill" | "wrong_reading" | "wrong_tariff" | "other"
+      donor_gender: "male" | "female" | "other"
+      donor_status: "pending" | "approved" | "rejected"
       lead_status: "new" | "contacted" | "closed"
       listing_status: "pending" | "approved" | "rejected"
       profile_role: "user" | "business" | "admin"
@@ -1612,9 +1744,19 @@ export const Constants = {
       announcement_priority: ["low", "normal", "high", "urgent"],
       app_role: ["user", "admin"],
       bill_status: ["pending", "paid", "overdue"],
+      blood_group: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+      blood_request_status: [
+        "pending",
+        "approved",
+        "fulfilled",
+        "closed",
+        "rejected",
+      ],
       business_day: ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
       business_status: ["pending", "approved", "rejected", "suspended"],
       complaint_reason: ["high_bill", "wrong_reading", "wrong_tariff", "other"],
+      donor_gender: ["male", "female", "other"],
+      donor_status: ["pending", "approved", "rejected"],
       lead_status: ["new", "contacted", "closed"],
       listing_status: ["pending", "approved", "rejected"],
       profile_role: ["user", "business", "admin"],
