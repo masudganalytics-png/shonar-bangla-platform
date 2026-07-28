@@ -188,7 +188,7 @@ function BusinessDetail() {
         <Card className="mt-4"><CardContent className="p-5">
           <h2 className="mb-2 text-sm font-semibold">পণ্য ও সেবা</h2>
           <div className="flex flex-wrap gap-2">
-            {b.products.map((p, i) => <Badge key={i} variant="secondary">{p}</Badge>)}
+            {b.products.map((p: string, i: number) => <Badge key={i} variant="secondary">{p}</Badge>)}
           </div>
         </CardContent></Card>
       )}
