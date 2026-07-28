@@ -8,4 +8,7 @@ Disallow: /bills
 Disallow: /compare
 Disallow: /insights
 Disallow: /reports
+Disallow: /my-business
 Disallow: /api/
+
+Sitemap: https://khijirion.com/sitemap.xml

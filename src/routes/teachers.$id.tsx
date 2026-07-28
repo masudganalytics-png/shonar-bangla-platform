@@ -1,53 +1,70 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, BadgeCheck, MapPin, Phone, MessageCircle, GraduationCap, BookOpen, Award } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import type { TeacherRow, CategoryRow } from "@/lib/teachers-shared";
 import { TeacherPhoto } from "@/components/teachers/TeacherPhoto";
+import { ShareButtons } from "@/components/teachers/ShareButtons";
+import { buildProfileHead, isUuid, metaDescription, signMediaForOg, SITE_BRAND, SITE_URL } from "@/lib/seo";
+
+type TeacherWithSlug = TeacherRow & { slug: string | null };
 
 export const Route = createFileRoute("/teachers/$id")({
-  head: () => ({
-    meta: [
-      { title: "শিক্ষকের প্রোফাইল — উখিয়া বিদ্যুৎ বিল" },
-      { name: "description", content: "যাচাইকৃত শিক্ষকের বিস্তারিত প্রোফাইল, বিষয়, যোগ্যতা ও যোগাযোগের তথ্য।" },
-      { property: "og:title", content: "শিক্ষকের প্রোফাইল" },
-      { property: "og:description", content: "যাচাইকৃত শিক্ষকের প্রোফাইল।" },
-    ],
-  }),
+  loader: async ({ params }) => {
+    const key = params.id;
+    const base = supabase.from("teachers").select("*").eq("status", "approved");
+    const { data, error } = isUuid(key)
+      ? await base.eq("id", key).maybeSingle()
+      : await base.eq("slug", key).maybeSingle();
+    if (error) throw error;
+    if (!data) throw notFound();
+    const t = data as TeacherWithSlug;
+    const canonicalSlug = t.slug ?? t.id;
+    const url = `${SITE_URL}/teachers/${canonicalSlug}`;
+    const image = await signMediaForOg("teacher-images", t.photo_url);
+    return { teacher: t, url, image };
+  },
+  head: ({ loaderData }) => {
+    if (!loaderData) {
+      return { meta: [{ title: `শিক্ষক পাওয়া যায়নি — ${SITE_BRAND}` }, { name: "robots", content: "noindex" }] };
+    }
+    const { teacher: t, url, image } = loaderData;
+    const location = [t.area, t.upazila, t.district].filter(Boolean).join(", ");
+    const title = `${t.full_name} — শিক্ষক | ${SITE_BRAND}`;
+    const description = metaDescription(
+      t.description ||
+        `${t.full_name}${t.subjects ? " — বিষয়: " + t.subjects : ""}${t.qualification ? " | " + t.qualification : ""}। অবস্থান: ${location}।`,
+    );
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: t.full_name,
+      description,
+      url,
+      image,
+      telephone: t.phone,
+      jobTitle: "Teacher",
+      address: { "@type": "PostalAddress", addressLocality: t.upazila, addressRegion: t.district, addressCountry: "BD" },
+    };
+    const head = buildProfileHead({ title, description, url, image, type: "profile", imageAlt: t.full_name });
+    return { ...head, scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }] };
+  },
   component: TeacherDetails,
 });
 
 function TeacherDetails() {
-  const { id } = Route.useParams();
-
-  const q = useQuery({
-    queryKey: ["teacher", id],
+  const { teacher: t, url } = Route.useLoaderData();
+  const catQ = useQuery({
+    queryKey: ["teacher-cats"],
     queryFn: async () => {
-      const [tRes, cRes] = await Promise.all([
-        supabase.from("teachers").select("*").eq("id", id).eq("status", "approved").maybeSingle(),
-        supabase.from("teacher_categories").select("*"),
-      ]);
-      if (tRes.error) throw tRes.error;
-      return { teacher: tRes.data as TeacherRow | null, categories: (cRes.data ?? []) as CategoryRow[] };
+      const { data } = await supabase.from("teacher_categories").select("*");
+      return (data ?? []) as CategoryRow[];
     },
   });
-
-  if (q.isLoading) return <div className="mx-auto max-w-3xl p-6"><Skeleton className="h-96 w-full" /></div>;
-  if (!q.data?.teacher) {
-    return (
-      <div className="mx-auto max-w-lg px-4 py-16 text-center">
-        <h1 className="text-xl font-bold">প্রোফাইল পাওয়া যায়নি</h1>
-        <p className="mt-2 text-sm text-muted-foreground">এই প্রোফাইলটি হয়তো এখনো অনুমোদিত হয়নি বা মুছে ফেলা হয়েছে।</p>
-        <Button asChild className="mt-4" variant="outline"><Link to="/teachers"><ArrowLeft className="mr-2 h-4 w-4" /> ফিরে যান</Link></Button>
-      </div>
-    );
-  }
-  const t = q.data.teacher;
-  const cat = q.data.categories.find((c) => c.id === t.category_id);
+  const cat = catQ.data?.find((c) => c.id === t.category_id);
   const waNumber = (t.whatsapp || t.phone).replace(/\D/g, "");
 
   return (
@@ -79,21 +96,18 @@ function TeacherDetails() {
                   <Award className="h-4 w-4" /> অভিজ্ঞতা: {t.experience_years} বছর
                 </p>
               )}
-              {t.email && (
-                <p className="mt-1 text-sm text-muted-foreground">{t.email}</p>
-              )}
             </div>
           </div>
 
           {t.subjects && (
             <div className="mt-5">
-              <h2 className="text-sm font-semibold">পড়ানো বিষয়</h2>
+              <h2 className="flex items-center gap-1.5 text-sm font-semibold"><BookOpen className="h-4 w-4" /> পড়ানো বিষয়</h2>
               <p className="mt-1 text-sm text-muted-foreground whitespace-pre-wrap">{t.subjects}</p>
             </div>
           )}
           {t.qualification && (
             <div className="mt-4">
-              <h2 className="text-sm font-semibold">যোগ্যতা</h2>
+              <h2 className="flex items-center gap-1.5 text-sm font-semibold"><GraduationCap className="h-4 w-4" /> শিক্ষাগত যোগ্যতা</h2>
               <p className="mt-1 text-sm text-muted-foreground whitespace-pre-wrap">{t.qualification}</p>
             </div>
           )}
@@ -114,11 +128,15 @@ function TeacherDetails() {
               </a>
             </Button>
           </div>
+
+          <div className="mt-6 border-t pt-4">
+            <ShareButtons title={`${t.full_name} — ${SITE_BRAND}`} url={url} />
+          </div>
         </CardContent>
       </Card>
 
       <p className="mt-4 text-center text-xs text-muted-foreground">
-        এই প্ল্যাটফর্ম শুধুমাত্র একটি ডিরেক্টরি। কোনো লেনদেন সম্পর্কে আমরা দায়ী নই। ক্লাস শুরুর আগে যাচাই করে নিন।
+        এই প্ল্যাটফর্ম শুধুমাত্র একটি ডিরেক্টরি। যোগাযোগের আগে তথ্য যাচাই করে নিন।
       </p>
     </div>
   );

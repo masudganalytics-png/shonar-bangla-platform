@@ -1,13 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, BadgeCheck, MapPin, MessageCircle, Phone, Mail, Languages, Clock, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -15,19 +13,51 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { AdvocatePhoto } from "@/components/legal/AdvocatePhoto";
+import { ShareButtons } from "@/components/teachers/ShareButtons";
 import { PRACTICE_AREAS, practiceAreaLabel, buildWhatsAppUrl, type AdvocateRow } from "@/lib/legal-shared";
+import { buildProfileHead, isUuid, metaDescription, signMediaForOg, SITE_BRAND, SITE_URL } from "@/lib/seo";
+
+type AdvocateWithSlug = AdvocateRow & { slug: string | null };
 
 export const Route = createFileRoute("/legal/$id")({
-  head: () => ({
-    meta: [
-      { title: "অ্যাডভোকেট প্রোফাইল — উখিয়া সেবা" },
-      { name: "description", content: "যাচাইকৃত অ্যাডভোকেটের বিস্তারিত প্রোফাইল ও WhatsApp যোগাযোগ।" },
-      { property: "og:title", content: "অ্যাডভোকেট প্রোফাইল — উখিয়া সেবা" },
-      { property: "og:description", content: "যাচাইকৃত অ্যাডভোকেটের প্রোফাইল ও WhatsApp যোগাযোগ।" },
-      { property: "og:type", content: "profile" },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  loader: async ({ params }) => {
+    const key = params.id;
+    const base = supabase.from("advocates").select("*").eq("is_active", true);
+    const { data, error } = isUuid(key)
+      ? await base.eq("id", key).maybeSingle()
+      : await base.eq("slug", key).maybeSingle();
+    if (error) throw error;
+    if (!data) throw notFound();
+    const a = data as AdvocateWithSlug;
+    const canonicalSlug = a.slug ?? a.id;
+    const url = `${SITE_URL}/legal/${canonicalSlug}`;
+    const image = await signMediaForOg("advocate-images", a.photo_url);
+    return { advocate: a, url, image };
+  },
+  head: ({ loaderData }) => {
+    if (!loaderData) {
+      return { meta: [{ title: `অ্যাডভোকেট পাওয়া যায়নি — ${SITE_BRAND}` }, { name: "robots", content: "noindex" }] };
+    }
+    const { advocate: a, url, image } = loaderData;
+    const areas = (a.practice_areas ?? []).map(practiceAreaLabel).join(", ");
+    const title = `অ্যাডভোকেট ${a.full_name} — আইনি সহায়তা | ${SITE_BRAND}`;
+    const description = metaDescription(
+      a.bio || `অ্যাডভোকেট ${a.full_name}${areas ? " — " + areas : ""}${a.chamber_address ? " | " + a.chamber_address : ""}। ${SITE_BRAND} আইনি ডিরেক্টরি।`,
+    );
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "LegalService",
+      name: `অ্যাডভোকেট ${a.full_name}`,
+      description,
+      url,
+      image,
+      telephone: a.phone || a.whatsapp,
+      address: a.chamber_address ? { "@type": "PostalAddress", streetAddress: a.chamber_address, addressCountry: "BD" } : undefined,
+      areaServed: "Cox's Bazar",
+    };
+    const head = buildProfileHead({ title, description, url, image, type: "profile", imageAlt: a.full_name });
+    return { ...head, scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }] };
+  },
   component: AdvocateProfile,
 });
 
@@ -39,32 +69,10 @@ const leadSchema = z.object({
 });
 
 function AdvocateProfile() {
-  const { id } = Route.useParams();
+  const { advocate: a, url } = Route.useLoaderData();
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({ full_name: "", phone: "", category: "", description: "" });
-
-  const q = useQuery({
-    queryKey: ["advocate", id],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("advocates").select("*").eq("id", id).eq("is_active", true).maybeSingle();
-      if (error) throw error;
-      return data as AdvocateRow | null;
-    },
-  });
-
-  if (q.isLoading) return <div className="mx-auto max-w-3xl p-6"><Skeleton className="h-96 w-full" /></div>;
-  if (!q.data) {
-    return (
-      <div className="mx-auto max-w-lg px-4 py-16 text-center">
-        <h1 className="text-xl font-bold">প্রোফাইল পাওয়া যায়নি</h1>
-        <p className="mt-2 text-sm text-muted-foreground">এই প্রোফাইলটি বর্তমানে নিষ্ক্রিয় বা মুছে ফেলা হয়েছে।</p>
-        <Button asChild className="mt-4" variant="outline"><Link to="/legal"><ArrowLeft className="mr-2 h-4 w-4" /> ফিরে যান</Link></Button>
-      </div>
-    );
-  }
-
-  const a = q.data;
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -84,13 +92,13 @@ function AdvocateProfile() {
         description: parsed.data.description || null,
       });
       if (error) throw error;
-      const url = buildWhatsAppUrl(a.whatsapp, {
+      const waUrl = buildWhatsAppUrl(a.whatsapp, {
         name: parsed.data.full_name,
         phone: cleanedPhone,
         categoryLabel: practiceAreaLabel(parsed.data.category),
         description: parsed.data.description,
       });
-      window.open(url, "_blank", "noopener,noreferrer");
+      window.open(waUrl, "_blank", "noopener,noreferrer");
       setOpen(false);
       toast.success("WhatsApp-এ অ্যাডভোকেটের সাথে সংযুক্ত করা হচ্ছে");
       setForm({ full_name: "", phone: "", category: "", description: "" });
@@ -117,7 +125,7 @@ function AdvocateProfile() {
                 {a.is_verified && <Badge className="gap-1 bg-primary text-primary-foreground"><BadgeCheck className="h-3.5 w-3.5" /> যাচাইকৃত</Badge>}
               </div>
               <div className="mt-2 flex flex-wrap gap-1">
-                {(a.practice_areas ?? []).map((pa) => (
+                {(a.practice_areas ?? []).map((pa: string) => (
                   <Badge key={pa} variant="outline">{practiceAreaLabel(pa)}</Badge>
                 ))}
               </div>
@@ -163,6 +171,10 @@ function AdvocateProfile() {
                 <a href={`mailto:${a.email}`}><Mail className="mr-2 h-4 w-4" /> ইমেইল — {a.email}</a>
               </Button>
             )}
+          </div>
+
+          <div className="mt-6 border-t pt-4">
+            <ShareButtons title={`অ্যাডভোকেট ${a.full_name} — ${SITE_BRAND}`} url={url} />
           </div>
 
           <div className="mt-6 rounded-md border border-warning/30 bg-warning/5 p-3 text-xs text-muted-foreground">
