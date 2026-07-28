@@ -219,11 +219,8 @@ function ComplaintForm({ onDone }: { onDone: () => void }) {
 
       let image_url: string | null = null;
       if (file) {
-        const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
-        const path = `${user.id}/${Date.now()}.${ext}`;
-        const { error: upErr } = await supabase.storage.from("complaint-images").upload(path, file, { upsert: false, contentType: file.type });
-        if (upErr) throw upErr;
-        image_url = path; // store path; signed URL generated on read
+        const { uploadImageToCloudinary } = await import("@/lib/cloudinary");
+        image_url = await uploadImageToCloudinary(file, `ukhiya-seba/complaints/${user.id}`);
       }
 
       const { error } = await supabase.from("reports").insert({
