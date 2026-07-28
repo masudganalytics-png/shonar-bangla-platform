@@ -15,6 +15,7 @@ import { Route as TeachersRouteImport } from './routes/teachers'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as NoticesRouteImport } from './routes/notices'
+import { Route as LegalRouteImport } from './routes/legal'
 import { Route as IspRouteImport } from './routes/isp'
 import { Route as HelplineRouteImport } from './routes/helpline'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
@@ -102,6 +103,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const NoticesRoute = NoticesRouteImport.update({
   id: '/notices',
   path: '/notices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IspRoute = IspRouteImport.update({
@@ -417,6 +423,7 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
+  '/legal': typeof LegalRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
@@ -481,6 +488,7 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
+  '/legal': typeof LegalRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
@@ -542,6 +550,7 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
+  '/legal': typeof LegalRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
@@ -609,6 +618,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/helpline'
     | '/isp'
+    | '/legal'
     | '/notices'
     | '/reset-password'
     | '/stats'
@@ -673,6 +683,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/helpline'
     | '/isp'
+    | '/legal'
     | '/notices'
     | '/reset-password'
     | '/stats'
@@ -733,6 +744,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/helpline'
     | '/isp'
+    | '/legal'
     | '/notices'
     | '/reset-password'
     | '/stats'
@@ -800,6 +812,7 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   HelplineRoute: typeof HelplineRoute
   IspRoute: typeof IspRoute
+  LegalRoute: typeof LegalRoute
   NoticesRoute: typeof NoticesRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   StatsRoute: typeof StatsRoute
@@ -852,6 +865,13 @@ declare module '@tanstack/react-router' {
       path: '/notices'
       fullPath: '/notices'
       preLoaderRoute: typeof NoticesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/isp': {
@@ -1455,6 +1475,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   HelplineRoute: HelplineRoute,
   IspRoute: IspRoute,
+  LegalRoute: LegalRoute,
   NoticesRoute: NoticesRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   StatsRoute: StatsRoute,
