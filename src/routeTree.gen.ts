@@ -15,6 +15,7 @@ import { Route as TeachersRouteImport } from './routes/teachers'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as RequestBloodRouteImport } from './routes/request-blood'
 import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as IspRouteImport } from './routes/isp'
@@ -23,6 +24,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as CvBuilderRouteImport } from './routes/cv-builder'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as BusinessRouteImport } from './routes/business'
+import { Route as BloodDonorsRouteImport } from './routes/blood-donors'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -30,6 +32,7 @@ import { Route as WorkersIndexRouteImport } from './routes/workers.index'
 import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
 import { Route as LegalIndexRouteImport } from './routes/legal.index'
 import { Route as BusinessIndexRouteImport } from './routes/business.index'
+import { Route as BloodDonorsIndexRouteImport } from './routes/blood-donors.index'
 import { Route as WorkersRegisterRouteImport } from './routes/workers.register'
 import { Route as WorkersIdRouteImport } from './routes/workers.$id'
 import { Route as TeachersTuitionsRouteImport } from './routes/teachers.tuitions'
@@ -42,6 +45,7 @@ import { Route as LegalIdRouteImport } from './routes/legal.$id'
 import { Route as BusinessRegisterRouteImport } from './routes/business.register'
 import { Route as BusinessDirectoryRouteImport } from './routes/business.directory'
 import { Route as BusinessSlugRouteImport } from './routes/business.$slug'
+import { Route as BloodDonorsRegisterRouteImport } from './routes/blood-donors.register'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -74,6 +78,8 @@ import { Route as AuthenticatedAdminComplaintsRouteImport } from './routes/_auth
 import { Route as AuthenticatedAdminBusinessesRouteImport } from './routes/_authenticated/admin.businesses'
 import { Route as AuthenticatedAdminBusinessReviewsRouteImport } from './routes/_authenticated/admin.business-reviews'
 import { Route as AuthenticatedAdminBusinessCategoriesRouteImport } from './routes/_authenticated/admin.business-categories'
+import { Route as AuthenticatedAdminBloodRequestsRouteImport } from './routes/_authenticated/admin.blood-requests'
+import { Route as AuthenticatedAdminBloodDonorsRouteImport } from './routes/_authenticated/admin.blood-donors'
 import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authenticated/admin.bills'
 import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
 import { Route as AuthenticatedAdminAchievementsRouteImport } from './routes/_authenticated/admin.achievements'
@@ -107,6 +113,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RequestBloodRoute = RequestBloodRouteImport.update({
+  id: '/request-blood',
+  path: '/request-blood',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NoticesRoute = NoticesRouteImport.update({
@@ -149,6 +160,11 @@ const BusinessRoute = BusinessRouteImport.update({
   path: '/business',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BloodDonorsRoute = BloodDonorsRouteImport.update({
+  id: '/blood-donors',
+  path: '/blood-donors',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -182,6 +198,11 @@ const BusinessIndexRoute = BusinessIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => BusinessRoute,
+} as any)
+const BloodDonorsIndexRoute = BloodDonorsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BloodDonorsRoute,
 } as any)
 const WorkersRegisterRoute = WorkersRegisterRouteImport.update({
   id: '/register',
@@ -242,6 +263,11 @@ const BusinessSlugRoute = BusinessSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => BusinessRoute,
+} as any)
+const BloodDonorsRegisterRoute = BloodDonorsRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => BloodDonorsRoute,
 } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
@@ -414,6 +440,18 @@ const AuthenticatedAdminBusinessCategoriesRoute =
     path: '/business-categories',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminBloodRequestsRoute =
+  AuthenticatedAdminBloodRequestsRouteImport.update({
+    id: '/blood-requests',
+    path: '/blood-requests',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBloodDonorsRoute =
+  AuthenticatedAdminBloodDonorsRouteImport.update({
+    id: '/blood-donors',
+    path: '/blood-donors',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminBillsRoute = AuthenticatedAdminBillsRouteImport.update({
   id: '/bills',
   path: '/bills',
@@ -441,6 +479,7 @@ const AuthenticatedBillsIdEditRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/blood-donors': typeof BloodDonorsRouteWithChildren
   '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
   '/cv-builder': typeof CvBuilderRoute
@@ -449,6 +488,7 @@ export interface FileRoutesByFullPath {
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
+  '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
@@ -464,6 +504,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
   '/business/register': typeof BusinessRegisterRoute
@@ -476,6 +517,7 @@ export interface FileRoutesByFullPath {
   '/teachers/tuitions': typeof TeachersTuitionsRouteWithChildren
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
+  '/blood-donors/': typeof BloodDonorsIndexRoute
   '/business/': typeof BusinessIndexRoute
   '/legal/': typeof LegalIndexRoute
   '/teachers/': typeof TeachersIndexRoute
@@ -483,6 +525,8 @@ export interface FileRoutesByFullPath {
   '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/bills': typeof AuthenticatedAdminBillsRoute
+  '/admin/blood-donors': typeof AuthenticatedAdminBloodDonorsRoute
+  '/admin/blood-requests': typeof AuthenticatedAdminBloodRequestsRoute
   '/admin/business-categories': typeof AuthenticatedAdminBusinessCategoriesRoute
   '/admin/business-reviews': typeof AuthenticatedAdminBusinessReviewsRoute
   '/admin/businesses': typeof AuthenticatedAdminBusinessesRoute
@@ -517,6 +561,7 @@ export interface FileRoutesByTo {
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/notices': typeof NoticesRoute
+  '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
@@ -529,6 +574,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
   '/business/register': typeof BusinessRegisterRoute
@@ -538,6 +584,7 @@ export interface FileRoutesByTo {
   '/teachers/resources': typeof TeachersResourcesRoute
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
+  '/blood-donors': typeof BloodDonorsIndexRoute
   '/business': typeof BusinessIndexRoute
   '/legal': typeof LegalIndexRoute
   '/teachers': typeof TeachersIndexRoute
@@ -545,6 +592,8 @@ export interface FileRoutesByTo {
   '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/bills': typeof AuthenticatedAdminBillsRoute
+  '/admin/blood-donors': typeof AuthenticatedAdminBloodDonorsRoute
+  '/admin/blood-requests': typeof AuthenticatedAdminBloodRequestsRoute
   '/admin/business-categories': typeof AuthenticatedAdminBusinessCategoriesRoute
   '/admin/business-reviews': typeof AuthenticatedAdminBusinessReviewsRoute
   '/admin/businesses': typeof AuthenticatedAdminBusinessesRoute
@@ -575,6 +624,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/blood-donors': typeof BloodDonorsRouteWithChildren
   '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
   '/cv-builder': typeof CvBuilderRoute
@@ -583,6 +633,7 @@ export interface FileRoutesById {
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
+  '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
@@ -598,6 +649,7 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
   '/business/register': typeof BusinessRegisterRoute
@@ -610,6 +662,7 @@ export interface FileRoutesById {
   '/teachers/tuitions': typeof TeachersTuitionsRouteWithChildren
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
+  '/blood-donors/': typeof BloodDonorsIndexRoute
   '/business/': typeof BusinessIndexRoute
   '/legal/': typeof LegalIndexRoute
   '/teachers/': typeof TeachersIndexRoute
@@ -617,6 +670,8 @@ export interface FileRoutesById {
   '/_authenticated/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/_authenticated/admin/bills': typeof AuthenticatedAdminBillsRoute
+  '/_authenticated/admin/blood-donors': typeof AuthenticatedAdminBloodDonorsRoute
+  '/_authenticated/admin/blood-requests': typeof AuthenticatedAdminBloodRequestsRoute
   '/_authenticated/admin/business-categories': typeof AuthenticatedAdminBusinessCategoriesRoute
   '/_authenticated/admin/business-reviews': typeof AuthenticatedAdminBusinessReviewsRoute
   '/_authenticated/admin/businesses': typeof AuthenticatedAdminBusinessesRoute
@@ -647,6 +702,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/blood-donors'
     | '/business'
     | '/calculator'
     | '/cv-builder'
@@ -655,6 +711,7 @@ export interface FileRouteTypes {
     | '/isp'
     | '/legal'
     | '/notices'
+    | '/request-blood'
     | '/reset-password'
     | '/sitemap.xml'
     | '/stats'
@@ -670,6 +727,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
     | '/business/register'
@@ -682,6 +740,7 @@ export interface FileRouteTypes {
     | '/teachers/tuitions'
     | '/workers/$id'
     | '/workers/register'
+    | '/blood-donors/'
     | '/business/'
     | '/legal/'
     | '/teachers/'
@@ -689,6 +748,8 @@ export interface FileRouteTypes {
     | '/admin/achievements'
     | '/admin/announcements'
     | '/admin/bills'
+    | '/admin/blood-donors'
+    | '/admin/blood-requests'
     | '/admin/business-categories'
     | '/admin/business-reviews'
     | '/admin/businesses'
@@ -723,6 +784,7 @@ export interface FileRouteTypes {
     | '/helpline'
     | '/isp'
     | '/notices'
+    | '/request-blood'
     | '/reset-password'
     | '/sitemap.xml'
     | '/stats'
@@ -735,6 +797,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
     | '/business/register'
@@ -744,6 +807,7 @@ export interface FileRouteTypes {
     | '/teachers/resources'
     | '/workers/$id'
     | '/workers/register'
+    | '/blood-donors'
     | '/business'
     | '/legal'
     | '/teachers'
@@ -751,6 +815,8 @@ export interface FileRouteTypes {
     | '/admin/achievements'
     | '/admin/announcements'
     | '/admin/bills'
+    | '/admin/blood-donors'
+    | '/admin/blood-requests'
     | '/admin/business-categories'
     | '/admin/business-reviews'
     | '/admin/businesses'
@@ -780,6 +846,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/blood-donors'
     | '/business'
     | '/calculator'
     | '/cv-builder'
@@ -788,6 +855,7 @@ export interface FileRouteTypes {
     | '/isp'
     | '/legal'
     | '/notices'
+    | '/request-blood'
     | '/reset-password'
     | '/sitemap.xml'
     | '/stats'
@@ -803,6 +871,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
+    | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
     | '/business/register'
@@ -815,6 +884,7 @@ export interface FileRouteTypes {
     | '/teachers/tuitions'
     | '/workers/$id'
     | '/workers/register'
+    | '/blood-donors/'
     | '/business/'
     | '/legal/'
     | '/teachers/'
@@ -822,6 +892,8 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/achievements'
     | '/_authenticated/admin/announcements'
     | '/_authenticated/admin/bills'
+    | '/_authenticated/admin/blood-donors'
+    | '/_authenticated/admin/blood-requests'
     | '/_authenticated/admin/business-categories'
     | '/_authenticated/admin/business-reviews'
     | '/_authenticated/admin/businesses'
@@ -852,6 +924,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  BloodDonorsRoute: typeof BloodDonorsRouteWithChildren
   BusinessRoute: typeof BusinessRouteWithChildren
   CalculatorRoute: typeof CalculatorRoute
   CvBuilderRoute: typeof CvBuilderRoute
@@ -860,6 +933,7 @@ export interface RootRouteChildren {
   IspRoute: typeof IspRoute
   LegalRoute: typeof LegalRouteWithChildren
   NoticesRoute: typeof NoticesRoute
+  RequestBloodRoute: typeof RequestBloodRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StatsRoute: typeof StatsRoute
@@ -912,6 +986,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/request-blood': {
+      id: '/request-blood'
+      path: '/request-blood'
+      fullPath: '/request-blood'
+      preLoaderRoute: typeof RequestBloodRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/notices': {
@@ -970,6 +1051,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BusinessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blood-donors': {
+      id: '/blood-donors'
+      path: '/blood-donors'
+      fullPath: '/blood-donors'
+      preLoaderRoute: typeof BloodDonorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -1018,6 +1106,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/business/'
       preLoaderRoute: typeof BusinessIndexRouteImport
       parentRoute: typeof BusinessRoute
+    }
+    '/blood-donors/': {
+      id: '/blood-donors/'
+      path: '/'
+      fullPath: '/blood-donors/'
+      preLoaderRoute: typeof BloodDonorsIndexRouteImport
+      parentRoute: typeof BloodDonorsRoute
     }
     '/workers/register': {
       id: '/workers/register'
@@ -1102,6 +1197,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/business/$slug'
       preLoaderRoute: typeof BusinessSlugRouteImport
       parentRoute: typeof BusinessRoute
+    }
+    '/blood-donors/register': {
+      id: '/blood-donors/register'
+      path: '/register'
+      fullPath: '/blood-donors/register'
+      preLoaderRoute: typeof BloodDonorsRegisterRouteImport
+      parentRoute: typeof BloodDonorsRoute
     }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
@@ -1327,6 +1429,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminBusinessCategoriesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/blood-requests': {
+      id: '/_authenticated/admin/blood-requests'
+      path: '/blood-requests'
+      fullPath: '/admin/blood-requests'
+      preLoaderRoute: typeof AuthenticatedAdminBloodRequestsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/blood-donors': {
+      id: '/_authenticated/admin/blood-donors'
+      path: '/blood-donors'
+      fullPath: '/admin/blood-donors'
+      preLoaderRoute: typeof AuthenticatedAdminBloodDonorsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/bills': {
       id: '/_authenticated/admin/bills'
       path: '/bills'
@@ -1362,6 +1478,8 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAchievementsRoute: typeof AuthenticatedAdminAchievementsRoute
   AuthenticatedAdminAnnouncementsRoute: typeof AuthenticatedAdminAnnouncementsRoute
   AuthenticatedAdminBillsRoute: typeof AuthenticatedAdminBillsRoute
+  AuthenticatedAdminBloodDonorsRoute: typeof AuthenticatedAdminBloodDonorsRoute
+  AuthenticatedAdminBloodRequestsRoute: typeof AuthenticatedAdminBloodRequestsRoute
   AuthenticatedAdminBusinessCategoriesRoute: typeof AuthenticatedAdminBusinessCategoriesRoute
   AuthenticatedAdminBusinessReviewsRoute: typeof AuthenticatedAdminBusinessReviewsRoute
   AuthenticatedAdminBusinessesRoute: typeof AuthenticatedAdminBusinessesRoute
@@ -1381,6 +1499,8 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAchievementsRoute: AuthenticatedAdminAchievementsRoute,
   AuthenticatedAdminAnnouncementsRoute: AuthenticatedAdminAnnouncementsRoute,
   AuthenticatedAdminBillsRoute: AuthenticatedAdminBillsRoute,
+  AuthenticatedAdminBloodDonorsRoute: AuthenticatedAdminBloodDonorsRoute,
+  AuthenticatedAdminBloodRequestsRoute: AuthenticatedAdminBloodRequestsRoute,
   AuthenticatedAdminBusinessCategoriesRoute:
     AuthenticatedAdminBusinessCategoriesRoute,
   AuthenticatedAdminBusinessReviewsRoute:
@@ -1442,6 +1562,20 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
+interface BloodDonorsRouteChildren {
+  BloodDonorsRegisterRoute: typeof BloodDonorsRegisterRoute
+  BloodDonorsIndexRoute: typeof BloodDonorsIndexRoute
+}
+
+const BloodDonorsRouteChildren: BloodDonorsRouteChildren = {
+  BloodDonorsRegisterRoute: BloodDonorsRegisterRoute,
+  BloodDonorsIndexRoute: BloodDonorsIndexRoute,
+}
+
+const BloodDonorsRouteWithChildren = BloodDonorsRoute._addFileChildren(
+  BloodDonorsRouteChildren,
+)
 
 interface BusinessRouteChildren {
   BusinessSlugRoute: typeof BusinessSlugRoute
@@ -1558,6 +1692,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  BloodDonorsRoute: BloodDonorsRouteWithChildren,
   BusinessRoute: BusinessRouteWithChildren,
   CalculatorRoute: CalculatorRoute,
   CvBuilderRoute: CvBuilderRoute,
@@ -1566,6 +1701,7 @@ const rootRouteChildren: RootRouteChildren = {
   IspRoute: IspRoute,
   LegalRoute: LegalRouteWithChildren,
   NoticesRoute: NoticesRoute,
+  RequestBloodRoute: RequestBloodRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StatsRoute: StatsRoute,
