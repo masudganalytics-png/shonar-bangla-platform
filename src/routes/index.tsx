@@ -87,7 +87,7 @@ function HomePage() {
 
   return (
     <>
-      <section className="relative overflow-hidden">
+      <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10 opacity-95" style={{ background: "var(--gradient-hero)" }} aria-hidden />
         <div className="mx-auto max-w-3xl px-4 py-16 text-center text-white sm:px-6 sm:py-24">
           <img
