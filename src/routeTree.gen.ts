@@ -13,6 +13,7 @@ import { Route as WorkersRouteImport } from './routes/workers'
 import { Route as UtilitiesRouteImport } from './routes/utilities'
 import { Route as TeachersRouteImport } from './routes/teachers'
 import { Route as StatsRouteImport } from './routes/stats'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as LegalRouteImport } from './routes/legal'
@@ -96,6 +97,11 @@ const TeachersRoute = TeachersRouteImport.update({
 const StatsRoute = StatsRouteImport.update({
   id: '/stats',
   path: '/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -444,6 +450,7 @@ export interface FileRoutesByFullPath {
   '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/teachers': typeof TeachersRouteWithChildren
   '/utilities': typeof UtilitiesRoute
@@ -511,6 +518,7 @@ export interface FileRoutesByTo {
   '/isp': typeof IspRoute
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/utilities': typeof UtilitiesRoute
   '/bills': typeof AuthenticatedBillsRouteWithChildren
@@ -576,6 +584,7 @@ export interface FileRoutesById {
   '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/teachers': typeof TeachersRouteWithChildren
   '/utilities': typeof UtilitiesRoute
@@ -647,6 +656,7 @@ export interface FileRouteTypes {
     | '/legal'
     | '/notices'
     | '/reset-password'
+    | '/sitemap.xml'
     | '/stats'
     | '/teachers'
     | '/utilities'
@@ -714,6 +724,7 @@ export interface FileRouteTypes {
     | '/isp'
     | '/notices'
     | '/reset-password'
+    | '/sitemap.xml'
     | '/stats'
     | '/utilities'
     | '/bills'
@@ -778,6 +789,7 @@ export interface FileRouteTypes {
     | '/legal'
     | '/notices'
     | '/reset-password'
+    | '/sitemap.xml'
     | '/stats'
     | '/teachers'
     | '/utilities'
@@ -849,6 +861,7 @@ export interface RootRouteChildren {
   LegalRoute: typeof LegalRouteWithChildren
   NoticesRoute: typeof NoticesRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StatsRoute: typeof StatsRoute
   TeachersRoute: typeof TeachersRouteWithChildren
   UtilitiesRoute: typeof UtilitiesRoute
@@ -885,6 +898,13 @@ declare module '@tanstack/react-router' {
       path: '/stats'
       fullPath: '/stats'
       preLoaderRoute: typeof StatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -1547,6 +1567,7 @@ const rootRouteChildren: RootRouteChildren = {
   LegalRoute: LegalRouteWithChildren,
   NoticesRoute: NoticesRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   StatsRoute: StatsRoute,
   TeachersRoute: TeachersRouteWithChildren,
   UtilitiesRoute: UtilitiesRoute,
