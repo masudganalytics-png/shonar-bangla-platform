@@ -125,6 +125,11 @@ function ReportItem({ row, onDelete }: { row: ReportRow; onDelete: () => void })
   const [signedUrl, setSignedUrl] = useState<string | null>(null);
   useEffect(() => {
     if (!row.image_url) return;
+    // Newer uploads store a full Cloudinary HTTPS URL — use it directly.
+    if (/^https?:\/\//i.test(row.image_url) && !row.image_url.includes("/complaint-images/")) {
+      setSignedUrl(row.image_url);
+      return;
+    }
     const path = extractPath(row.image_url);
     if (!path) return;
     supabase.storage.from("complaint-images").createSignedUrl(path, 3600).then(({ data }) => {
