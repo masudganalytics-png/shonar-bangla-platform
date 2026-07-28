@@ -30,6 +30,7 @@ export type Database = {
           phone: string | null
           photo_url: string | null
           practice_areas: string[]
+          slug: string | null
           sort_order: number
           updated_at: string
           whatsapp: string
@@ -49,6 +50,7 @@ export type Database = {
           phone?: string | null
           photo_url?: string | null
           practice_areas?: string[]
+          slug?: string | null
           sort_order?: number
           updated_at?: string
           whatsapp: string
@@ -68,6 +70,7 @@ export type Database = {
           phone?: string | null
           photo_url?: string | null
           practice_areas?: string[]
+          slug?: string | null
           sort_order?: number
           updated_at?: string
           whatsapp?: string
@@ -846,6 +849,7 @@ export type Database = {
           phone: string
           photo_url: string | null
           qualification: string | null
+          slug: string | null
           status: Database["public"]["Enums"]["teacher_status"]
           student_class: string | null
           subjects: string | null
@@ -871,6 +875,7 @@ export type Database = {
           phone: string
           photo_url?: string | null
           qualification?: string | null
+          slug?: string | null
           status?: Database["public"]["Enums"]["teacher_status"]
           student_class?: string | null
           subjects?: string | null
@@ -896,6 +901,7 @@ export type Database = {
           phone?: string
           photo_url?: string | null
           qualification?: string | null
+          slug?: string | null
           status?: Database["public"]["Enums"]["teacher_status"]
           student_class?: string | null
           subjects?: string | null
@@ -1141,6 +1147,7 @@ export type Database = {
           phone: string
           photo_url: string | null
           skills: string | null
+          slug: string | null
           status: Database["public"]["Enums"]["worker_status"]
           submitted_by: string | null
           upazila: string
@@ -1161,6 +1168,7 @@ export type Database = {
           phone: string
           photo_url?: string | null
           skills?: string | null
+          slug?: string | null
           status?: Database["public"]["Enums"]["worker_status"]
           submitted_by?: string | null
           upazila?: string
@@ -1181,6 +1189,7 @@ export type Database = {
           phone?: string
           photo_url?: string | null
           skills?: string | null
+          slug?: string | null
           status?: Database["public"]["Enums"]["worker_status"]
           submitted_by?: string | null
           upazila?: string
@@ -1259,6 +1268,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      slugify_name: { Args: { input: string }; Returns: string }
     }
     Enums: {
       announcement_category: "notice" | "outage" | "tariff" | "general"
