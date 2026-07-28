@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, BadgeCheck, Sparkles, MapPin, Building2, Star, Loader2, Eye } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,82 +14,110 @@ import { BusinessLogo, BusinessImage } from "@/components/business/BusinessLogo"
 import { RatingStars } from "@/components/business/RatingStars";
 import { HoursDisplay } from "@/components/business/HoursDisplay";
 import { ContactButtons } from "@/components/business/ContactButtons";
+import { ShareButtons } from "@/components/teachers/ShareButtons";
 import { toBanglaDigits } from "@/lib/bangla";
 import { incrementBusinessView } from "@/lib/business.functions";
+import { buildProfileHead, isUuid, metaDescription, signMediaForOg, SITE_BRAND, SITE_URL } from "@/lib/seo";
 import type { BusinessRow, BusinessHoursRow, BusinessGalleryRow, BusinessReviewRow, BusinessCategory } from "@/lib/business-shared";
 
 export const Route = createFileRoute("/business/$slug")({
-  head: () => ({
-    meta: [
-      { title: "ব্যবসার প্রোফাইল — খিজিরিয়ন" },
-      { name: "description", content: "স্থানীয় ব্যবসার বিস্তারিত তথ্য, যোগাযোগ ও পর্যালোচনা।" },
-      { property: "og:type", content: "profile" },
-    ],
-  }),
+  loader: async ({ params }) => {
+    const { slug } = params;
+    const base = supabase.from("businesses").select("*").eq("status", "approved");
+    const { data, error } = isUuid(slug)
+      ? await base.eq("id", slug).maybeSingle()
+      : await base.eq("slug", slug).maybeSingle();
+    if (error) throw error;
+    if (!data) throw notFound();
+    const biz = data as BusinessRow;
+    const canonicalSlug = biz.slug ?? biz.id;
+    const url = `${SITE_URL}/business/${canonicalSlug}`;
+    const image = await signMediaForOg("business-media", biz.cover_url ?? biz.logo_url);
+    return { biz, url, image };
+  },
+  head: ({ loaderData }) => {
+    if (!loaderData) {
+      return { meta: [{ title: `ব্যবসা পাওয়া যায়নি — ${SITE_BRAND}` }, { name: "robots", content: "noindex" }] };
+    }
+    const { biz, url, image } = loaderData;
+    const title = `${biz.name} — ${SITE_BRAND}`;
+    const description = metaDescription(
+      biz.short_description ||
+        biz.full_description ||
+        `${biz.name} — ${[biz.area, biz.union_name, biz.upazila].filter(Boolean).join(", ")}। ${SITE_BRAND}-এ যাচাইকৃত স্থানীয় ব্যবসা।`,
+    );
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      name: biz.name,
+      description,
+      url,
+      image,
+      telephone: biz.phone || undefined,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: biz.address || undefined,
+        addressLocality: biz.upazila,
+        addressRegion: biz.district,
+        addressCountry: "BD",
+      },
+      geo: biz.lat && biz.lng ? { "@type": "GeoCoordinates", latitude: biz.lat, longitude: biz.lng } : undefined,
+      aggregateRating:
+        biz.review_count > 0
+          ? { "@type": "AggregateRating", ratingValue: Number(biz.avg_rating), reviewCount: biz.review_count }
+          : undefined,
+    };
+    const head = buildProfileHead({ title, description, url, image, type: "profile", imageAlt: biz.name });
+    return {
+      ...head,
+      scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],
+    };
+  },
   component: BusinessDetail,
 });
 
 function BusinessDetail() {
-  const { slug } = Route.useParams();
+  const { biz: b, url } = Route.useLoaderData();
   const { user, isAuthenticated } = useAuth();
-
-  const bizQ = useQuery({
-    queryKey: ["biz", slug],
-    queryFn: async (): Promise<BusinessRow | null> => {
-      let q = supabase.from("businesses").select("*").eq("status", "approved");
-      const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
-      const { data, error } = uuid ? await q.eq("id", slug).maybeSingle() : await q.eq("slug", slug).maybeSingle();
-      if (error) throw error;
-      return data as BusinessRow | null;
-    },
-  });
-
-  const b = bizQ.data;
 
   useEffect(() => {
     if (b?.id) void incrementBusinessView({ data: { id: b.id } }).catch(() => {});
   }, [b?.id]);
 
   const catQ = useQuery({
-    queryKey: ["biz-cat", b?.category_id],
-    enabled: !!b?.category_id,
+    queryKey: ["biz-cat", b.category_id],
+    enabled: !!b.category_id,
     queryFn: async () => {
-      const { data } = await supabase.from("business_categories").select("*").eq("id", b!.category_id!).maybeSingle();
+      const { data } = await supabase.from("business_categories").select("*").eq("id", b.category_id!).maybeSingle();
       return data as BusinessCategory | null;
     },
   });
 
   const hoursQ = useQuery({
-    queryKey: ["biz-hours", b?.id],
-    enabled: !!b?.id,
+    queryKey: ["biz-hours", b.id],
     queryFn: async () => {
-      const { data } = await supabase.from("business_hours").select("*").eq("business_id", b!.id).order("day");
+      const { data } = await supabase.from("business_hours").select("*").eq("business_id", b.id).order("day");
       return (data ?? []) as BusinessHoursRow[];
     },
   });
 
   const galleryQ = useQuery({
-    queryKey: ["biz-gallery", b?.id],
-    enabled: !!b?.id,
+    queryKey: ["biz-gallery", b.id],
     queryFn: async () => {
-      const { data } = await supabase.from("business_gallery").select("*").eq("business_id", b!.id).order("sort_order");
+      const { data } = await supabase.from("business_gallery").select("*").eq("business_id", b.id).order("sort_order");
       return (data ?? []) as BusinessGalleryRow[];
     },
   });
 
   const reviewsQ = useQuery({
-    queryKey: ["biz-reviews", b?.id],
-    enabled: !!b?.id,
+    queryKey: ["biz-reviews", b.id],
     queryFn: async () => {
       const { data } = await supabase.from("business_reviews").select("*")
-        .eq("business_id", b!.id).eq("is_hidden", false).order("created_at", { ascending: false }).limit(50);
+        .eq("business_id", b.id).eq("is_hidden", false).order("created_at", { ascending: false }).limit(50);
       return (data ?? []) as BusinessReviewRow[];
     },
   });
 
-  if (bizQ.isLoading) {
-    return <div className="mx-auto max-w-4xl px-4 py-8"><Skeleton className="h-96" /></div>;
-  }
   if (!b) {
     return (
       <div className="mx-auto max-w-lg px-4 py-16 text-center">
@@ -137,7 +165,6 @@ function BusinessDetail() {
         </div>
       </div>
 
-      {/* Description */}
       {(b.short_description || b.full_description) && (
         <Card className="mt-6"><CardContent className="prose prose-sm max-w-none whitespace-pre-line p-5 dark:prose-invert">
           {b.short_description && <p className="text-base font-medium">{b.short_description}</p>}
@@ -145,7 +172,6 @@ function BusinessDetail() {
         </CardContent></Card>
       )}
 
-      {/* Contact */}
       <Card className="mt-4"><CardContent className="p-5">
         <h2 className="mb-3 text-sm font-semibold">যোগাযোগ</h2>
         <ContactButtons
@@ -154,7 +180,10 @@ function BusinessDetail() {
         />
       </CardContent></Card>
 
-      {/* Products */}
+      <Card className="mt-4"><CardContent className="p-5">
+        <ShareButtons title={`${b.name} — ${SITE_BRAND}`} url={url} />
+      </CardContent></Card>
+
       {b.products && b.products.length > 0 && (
         <Card className="mt-4"><CardContent className="p-5">
           <h2 className="mb-2 text-sm font-semibold">পণ্য ও সেবা</h2>
@@ -164,7 +193,6 @@ function BusinessDetail() {
         </CardContent></Card>
       )}
 
-      {/* Gallery */}
       {(galleryQ.data ?? []).length > 0 && (
         <Card className="mt-4"><CardContent className="p-5">
           <h2 className="mb-3 text-sm font-semibold">গ্যালারি</h2>
@@ -176,12 +204,10 @@ function BusinessDetail() {
         </CardContent></Card>
       )}
 
-      {/* Hours */}
       {(hoursQ.data ?? []).length > 0 && (
         <Card className="mt-4"><CardContent className="p-5"><HoursDisplay hours={hoursQ.data ?? []} /></CardContent></Card>
       )}
 
-      {/* Reviews */}
       <Card className="mt-4" id="reviews">
         <CardContent className="p-5">
           <h2 className="mb-3 text-sm font-semibold">পর্যালোচনা</h2>
@@ -246,5 +272,3 @@ function ReviewForm({ businessId, disabled }: { businessId: string; disabled: bo
     </div>
   );
 }
-
-void notFound;

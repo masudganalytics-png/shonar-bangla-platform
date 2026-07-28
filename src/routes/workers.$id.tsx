@@ -1,53 +1,70 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, BadgeCheck, MapPin, Phone, MessageCircle, Briefcase } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import type { WorkerRow, CategoryRow } from "@/lib/workers-shared";
 import { WorkerPhoto } from "@/components/workers/WorkerPhoto";
+import { ShareButtons } from "@/components/teachers/ShareButtons";
+import { buildProfileHead, isUuid, metaDescription, signMediaForOg, SITE_BRAND, SITE_URL } from "@/lib/seo";
+
+type WorkerWithSlug = WorkerRow & { slug: string | null };
 
 export const Route = createFileRoute("/workers/$id")({
-  head: () => ({
-    meta: [
-      { title: "কাজের লোকের প্রোফাইল — উখিয়া বিদ্যুৎ বিল" },
-      { name: "description", content: "যাচাইকৃত কাজের লোকের বিস্তারিত প্রোফাইল ও যোগাযোগের তথ্য।" },
-      { property: "og:title", content: "কাজের লোকের প্রোফাইল" },
-      { property: "og:description", content: "যাচাইকৃত কাজের লোকের প্রোফাইল।" },
-    ],
-  }),
+  loader: async ({ params }) => {
+    const key = params.id;
+    const base = supabase.from("workers").select("*").eq("status", "approved");
+    const { data, error } = isUuid(key)
+      ? await base.eq("id", key).maybeSingle()
+      : await base.eq("slug", key).maybeSingle();
+    if (error) throw error;
+    if (!data) throw notFound();
+    const w = data as WorkerWithSlug;
+    const canonicalSlug = w.slug ?? w.id;
+    const url = `${SITE_URL}/workers/${canonicalSlug}`;
+    const image = await signMediaForOg("worker-images", w.photo_url);
+    return { worker: w, url, image };
+  },
+  head: ({ loaderData }) => {
+    if (!loaderData) {
+      return { meta: [{ title: `প্রোফাইল পাওয়া যায়নি — ${SITE_BRAND}` }, { name: "robots", content: "noindex" }] };
+    }
+    const { worker: w, url, image } = loaderData;
+    const location = [w.area, w.upazila, w.district].filter(Boolean).join(", ");
+    const title = `${w.full_name} — কাজের লোক | ${SITE_BRAND}`;
+    const description = metaDescription(
+      w.description ||
+        `${w.full_name}${w.skills ? " — " + w.skills : ""}। অবস্থান: ${location}। ${SITE_BRAND}-এ যাচাইকৃত সেবা প্রদানকারী।`,
+    );
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: w.full_name,
+      description,
+      url,
+      image,
+      telephone: w.phone,
+      address: { "@type": "PostalAddress", addressLocality: w.upazila, addressRegion: w.district, addressCountry: "BD" },
+      knowsAbout: w.skills || undefined,
+    };
+    const head = buildProfileHead({ title, description, url, image, type: "profile", imageAlt: w.full_name });
+    return { ...head, scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }] };
+  },
   component: WorkerDetails,
 });
 
 function WorkerDetails() {
-  const { id } = Route.useParams();
-
-  const q = useQuery({
-    queryKey: ["worker", id],
+  const { worker: w, url } = Route.useLoaderData();
+  const catQ = useQuery({
+    queryKey: ["worker-cats"],
     queryFn: async () => {
-      const [wRes, cRes] = await Promise.all([
-        supabase.from("workers").select("*").eq("id", id).eq("status", "approved").maybeSingle(),
-        supabase.from("worker_categories").select("*"),
-      ]);
-      if (wRes.error) throw wRes.error;
-      return { worker: wRes.data as WorkerRow | null, categories: (cRes.data ?? []) as CategoryRow[] };
+      const { data } = await supabase.from("worker_categories").select("*");
+      return (data ?? []) as CategoryRow[];
     },
   });
-
-  if (q.isLoading) return <div className="mx-auto max-w-3xl p-6"><Skeleton className="h-96 w-full" /></div>;
-  if (!q.data?.worker) {
-    return (
-      <div className="mx-auto max-w-lg px-4 py-16 text-center">
-        <h1 className="text-xl font-bold">প্রোফাইল পাওয়া যায়নি</h1>
-        <p className="mt-2 text-sm text-muted-foreground">এই প্রোফাইলটি হয়তো এখনো অনুমোদিত হয়নি বা মুছে ফেলা হয়েছে।</p>
-        <Button asChild className="mt-4" variant="outline"><Link to="/workers"><ArrowLeft className="mr-2 h-4 w-4" /> ফিরে যান</Link></Button>
-      </div>
-    );
-  }
-  const w = q.data.worker;
-  const cat = q.data.categories.find((c) => c.id === w.category_id);
+  const cat = catQ.data?.find((c) => c.id === w.category_id);
   const waNumber = (w.whatsapp || w.phone).replace(/\D/g, "");
 
   return (
@@ -104,6 +121,10 @@ function WorkerDetails() {
                 <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp
               </a>
             </Button>
+          </div>
+
+          <div className="mt-6 border-t pt-4">
+            <ShareButtons title={`${w.full_name} — ${SITE_BRAND}`} url={url} />
           </div>
         </CardContent>
       </Card>
