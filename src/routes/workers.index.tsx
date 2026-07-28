@@ -113,7 +113,7 @@ function WorkersDirectory() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((w) => (
-            <Link key={w.id} to="/workers/$id" params={{ id: w.id }} className="group">
+            <Link key={w.id} to="/workers/$id" params={{ id: (w as any).slug || w.id }} className="group">
               <Card className="h-full overflow-hidden transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)]">
                 <div className="flex gap-3 p-4">
                   <WorkerPhoto path={w.photo_url} alt={w.full_name} className="h-20 w-20 shrink-0 rounded-xl" />

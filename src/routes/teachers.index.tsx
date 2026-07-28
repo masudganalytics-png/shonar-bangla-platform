@@ -115,7 +115,7 @@ function TeachersDirectory() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((t) => (
-            <Link key={t.id} to="/teachers/$id" params={{ id: t.id }} className="group">
+            <Link key={t.id} to="/teachers/$id" params={{ id: (t as any).slug || t.id }} className="group">
               <Card className="h-full overflow-hidden transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)]">
                 <div className="flex gap-3 p-4">
                   <TeacherPhoto path={t.photo_url} alt={t.full_name} className="h-20 w-20 shrink-0 rounded-xl" />

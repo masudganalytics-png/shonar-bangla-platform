@@ -99,7 +99,7 @@ function LegalDirectory() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((a) => (
-            <Link key={a.id} to="/legal/$id" params={{ id: a.id }} className="group">
+            <Link key={a.id} to="/legal/$id" params={{ id: (a as any).slug || a.id }} className="group">
               <Card className="h-full overflow-hidden transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)]">
                 <div className="flex gap-3 p-4">
                   <AdvocatePhoto path={a.photo_url} alt={a.full_name} className="h-20 w-20 shrink-0 rounded-xl" />
