@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      advocates: {
+        Row: {
+          availability: string | null
+          bio: string | null
+          chamber_address: string | null
+          created_at: string
+          email: string | null
+          experience_years: number | null
+          full_name: string
+          id: string
+          is_active: boolean
+          is_verified: boolean
+          languages: string[]
+          phone: string | null
+          photo_url: string | null
+          practice_areas: string[]
+          sort_order: number
+          updated_at: string
+          whatsapp: string
+        }
+        Insert: {
+          availability?: string | null
+          bio?: string | null
+          chamber_address?: string | null
+          created_at?: string
+          email?: string | null
+          experience_years?: number | null
+          full_name: string
+          id?: string
+          is_active?: boolean
+          is_verified?: boolean
+          languages?: string[]
+          phone?: string | null
+          photo_url?: string | null
+          practice_areas?: string[]
+          sort_order?: number
+          updated_at?: string
+          whatsapp: string
+        }
+        Update: {
+          availability?: string | null
+          bio?: string | null
+          chamber_address?: string | null
+          created_at?: string
+          email?: string | null
+          experience_years?: number | null
+          full_name?: string
+          id?: string
+          is_active?: boolean
+          is_verified?: boolean
+          languages?: string[]
+          phone?: string | null
+          photo_url?: string | null
+          practice_areas?: string[]
+          sort_order?: number
+          updated_at?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
       announcements: {
         Row: {
           body: string
@@ -456,6 +516,53 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      legal_leads: {
+        Row: {
+          admin_note: string | null
+          advocate_id: string | null
+          category: string
+          created_at: string
+          description: string | null
+          full_name: string
+          id: string
+          phone: string
+          status: Database["public"]["Enums"]["lead_status"]
+          updated_at: string
+        }
+        Insert: {
+          admin_note?: string | null
+          advocate_id?: string | null
+          category: string
+          created_at?: string
+          description?: string | null
+          full_name: string
+          id?: string
+          phone: string
+          status?: Database["public"]["Enums"]["lead_status"]
+          updated_at?: string
+        }
+        Update: {
+          admin_note?: string | null
+          advocate_id?: string | null
+          category?: string
+          created_at?: string
+          description?: string | null
+          full_name?: string
+          id?: string
+          phone?: string
+          status?: Database["public"]["Enums"]["lead_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "legal_leads_advocate_id_fkey"
+            columns: ["advocate_id"]
+            isOneToOne: false
+            referencedRelation: "advocates"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       notifications: {
         Row: {
@@ -1161,6 +1268,7 @@ export type Database = {
       business_day: "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun"
       business_status: "pending" | "approved" | "rejected" | "suspended"
       complaint_reason: "high_bill" | "wrong_reading" | "wrong_tariff" | "other"
+      lead_status: "new" | "contacted" | "closed"
       report_category: "billing" | "outage" | "meter" | "connection" | "other"
       report_status: "open" | "in_progress" | "resolved" | "rejected"
       resource_type: "website" | "gdrive" | "youtube" | "pdf" | "link"
@@ -1310,6 +1418,7 @@ export const Constants = {
       business_day: ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
       business_status: ["pending", "approved", "rejected", "suspended"],
       complaint_reason: ["high_bill", "wrong_reading", "wrong_tariff", "other"],
+      lead_status: ["new", "contacted", "closed"],
       report_category: ["billing", "outage", "meter", "connection", "other"],
       report_status: ["open", "in_progress", "resolved", "rejected"],
       resource_type: ["website", "gdrive", "youtube", "pdf", "link"],
