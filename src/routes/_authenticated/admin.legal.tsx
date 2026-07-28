@@ -30,6 +30,8 @@ export const Route = createFileRoute("/_authenticated/admin/legal")({
   component: AdminLegal,
 });
 
+type AdvocateInput = ReturnType<typeof toEditable> | Omit<ReturnType<typeof toEditable>, "id">;
+
 function AdminLegal() {
   const qc = useQueryClient();
   const [tab, setTab] = useState<"advocates" | "leads">("advocates");
