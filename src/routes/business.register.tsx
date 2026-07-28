@@ -44,11 +44,8 @@ const schema = z.object({
 });
 
 async function uploadFile(userId: string, file: File, folder: string): Promise<string> {
-  const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  const path = `${userId}/${folder}/${crypto.randomUUID()}.${ext}`;
-  const { error } = await supabase.storage.from("business-media").upload(path, file, { contentType: file.type, upsert: false });
-  if (error) throw error;
-  return path;
+  const { uploadImageToCloudinary } = await import("@/lib/cloudinary");
+  return uploadImageToCloudinary(file, `ukhiya-seba/businesses/${userId}/${folder}`);
 }
 
 function BusinessRegister() {
