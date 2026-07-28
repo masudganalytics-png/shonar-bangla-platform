@@ -43,7 +43,7 @@ function AdminLegal() {
   const delLeadFn = useServerFn(deleteLead);
 
   const mUpsert = useMutation({
-    mutationFn: (v: Parameters<typeof upsertFn>[0]["data"]) => upsertFn({ data: v }),
+    mutationFn: (v: AdvocateInput) => upsertFn({ data: v }),
     onSuccess: () => { toast.success("সংরক্ষণ হয়েছে"); qc.invalidateQueries({ queryKey: ["admin", "advocates"] }); },
     onError: (e: Error) => toast.error(e.message),
   });
@@ -53,7 +53,7 @@ function AdminLegal() {
     onError: (e: Error) => toast.error(e.message),
   });
   const mUpdLead = useMutation({
-    mutationFn: (v: Parameters<typeof updLeadFn>[0]["data"]) => updLeadFn({ data: v }),
+    mutationFn: (v: { id: string; status?: "new" | "contacted" | "closed"; admin_note?: string | null }) => updLeadFn({ data: v }),
     onSuccess: () => { toast.success("আপডেট হয়েছে"); qc.invalidateQueries({ queryKey: ["admin", "legal-leads"] }); },
     onError: (e: Error) => toast.error(e.message),
   });
