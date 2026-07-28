@@ -15,6 +15,7 @@ import { Route as TeachersRouteImport } from './routes/teachers'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as NoticesRouteImport } from './routes/notices'
+import { Route as LegalRouteImport } from './routes/legal'
 import { Route as IspRouteImport } from './routes/isp'
 import { Route as HelplineRouteImport } from './routes/helpline'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
@@ -26,6 +27,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WorkersIndexRouteImport } from './routes/workers.index'
 import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
+import { Route as LegalIndexRouteImport } from './routes/legal.index'
 import { Route as BusinessIndexRouteImport } from './routes/business.index'
 import { Route as WorkersRegisterRouteImport } from './routes/workers.register'
 import { Route as WorkersIdRouteImport } from './routes/workers.$id'
@@ -35,6 +37,7 @@ import { Route as TeachersRegisterRouteImport } from './routes/teachers.register
 import { Route as TeachersNewsRouteImport } from './routes/teachers.news'
 import { Route as TeachersAchievementsRouteImport } from './routes/teachers.achievements'
 import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
+import { Route as LegalIdRouteImport } from './routes/legal.$id'
 import { Route as BusinessRegisterRouteImport } from './routes/business.register'
 import { Route as BusinessDirectoryRouteImport } from './routes/business.directory'
 import { Route as BusinessSlugRouteImport } from './routes/business.$slug'
@@ -64,6 +67,7 @@ import { Route as AuthenticatedAdminTuitionRequestsRouteImport } from './routes/
 import { Route as AuthenticatedAdminTuitionApplicationsRouteImport } from './routes/_authenticated/admin.tuition-applications'
 import { Route as AuthenticatedAdminTeachersRouteImport } from './routes/_authenticated/admin.teachers'
 import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_authenticated/admin.study-resources'
+import { Route as AuthenticatedAdminLegalRouteImport } from './routes/_authenticated/admin.legal'
 import { Route as AuthenticatedAdminEducationNewsRouteImport } from './routes/_authenticated/admin.education-news'
 import { Route as AuthenticatedAdminComplaintsRouteImport } from './routes/_authenticated/admin.complaints'
 import { Route as AuthenticatedAdminBusinessesRouteImport } from './routes/_authenticated/admin.businesses'
@@ -102,6 +106,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const NoticesRoute = NoticesRouteImport.update({
   id: '/notices',
   path: '/notices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IspRoute = IspRouteImport.update({
@@ -158,6 +167,11 @@ const TeachersIndexRoute = TeachersIndexRouteImport.update({
   path: '/',
   getParentRoute: () => TeachersRoute,
 } as any)
+const LegalIndexRoute = LegalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LegalRoute,
+} as any)
 const BusinessIndexRoute = BusinessIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -202,6 +216,11 @@ const TeachersIdRoute = TeachersIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => TeachersRoute,
+} as any)
+const LegalIdRoute = LegalIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => LegalRoute,
 } as any)
 const BusinessRegisterRoute = BusinessRegisterRouteImport.update({
   id: '/register',
@@ -354,6 +373,11 @@ const AuthenticatedAdminStudyResourcesRoute =
     path: '/study-resources',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminLegalRoute = AuthenticatedAdminLegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedAdminEducationNewsRoute =
   AuthenticatedAdminEducationNewsRouteImport.update({
     id: '/education-news',
@@ -417,6 +441,7 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
+  '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
@@ -435,6 +460,7 @@ export interface FileRoutesByFullPath {
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
   '/business/register': typeof BusinessRegisterRoute
+  '/legal/$id': typeof LegalIdRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -444,6 +470,7 @@ export interface FileRoutesByFullPath {
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
   '/business/': typeof BusinessIndexRoute
+  '/legal/': typeof LegalIndexRoute
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
   '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
@@ -454,6 +481,7 @@ export interface FileRoutesByFullPath {
   '/admin/businesses': typeof AuthenticatedAdminBusinessesRoute
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
+  '/admin/legal': typeof AuthenticatedAdminLegalRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -496,12 +524,14 @@ export interface FileRoutesByTo {
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
   '/business/register': typeof BusinessRegisterRoute
+  '/legal/$id': typeof LegalIdRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/register': typeof TeachersRegisterRoute
   '/teachers/resources': typeof TeachersResourcesRoute
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
   '/business': typeof BusinessIndexRoute
+  '/legal': typeof LegalIndexRoute
   '/teachers': typeof TeachersIndexRoute
   '/workers': typeof WorkersIndexRoute
   '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
@@ -512,6 +542,7 @@ export interface FileRoutesByTo {
   '/admin/businesses': typeof AuthenticatedAdminBusinessesRoute
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
+  '/admin/legal': typeof AuthenticatedAdminLegalRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -542,6 +573,7 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
+  '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/stats': typeof StatsRoute
@@ -560,6 +592,7 @@ export interface FileRoutesById {
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
   '/business/register': typeof BusinessRegisterRoute
+  '/legal/$id': typeof LegalIdRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -569,6 +602,7 @@ export interface FileRoutesById {
   '/workers/$id': typeof WorkersIdRoute
   '/workers/register': typeof WorkersRegisterRoute
   '/business/': typeof BusinessIndexRoute
+  '/legal/': typeof LegalIndexRoute
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
   '/_authenticated/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
@@ -579,6 +613,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/businesses': typeof AuthenticatedAdminBusinessesRoute
   '/_authenticated/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/_authenticated/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
+  '/_authenticated/admin/legal': typeof AuthenticatedAdminLegalRoute
   '/_authenticated/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/_authenticated/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/_authenticated/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -609,6 +644,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/helpline'
     | '/isp'
+    | '/legal'
     | '/notices'
     | '/reset-password'
     | '/stats'
@@ -627,6 +663,7 @@ export interface FileRouteTypes {
     | '/business/$slug'
     | '/business/directory'
     | '/business/register'
+    | '/legal/$id'
     | '/teachers/$id'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -636,6 +673,7 @@ export interface FileRouteTypes {
     | '/workers/$id'
     | '/workers/register'
     | '/business/'
+    | '/legal/'
     | '/teachers/'
     | '/workers/'
     | '/admin/achievements'
@@ -646,6 +684,7 @@ export interface FileRouteTypes {
     | '/admin/businesses'
     | '/admin/complaints'
     | '/admin/education-news'
+    | '/admin/legal'
     | '/admin/study-resources'
     | '/admin/teachers'
     | '/admin/tuition-applications'
@@ -688,12 +727,14 @@ export interface FileRouteTypes {
     | '/business/$slug'
     | '/business/directory'
     | '/business/register'
+    | '/legal/$id'
     | '/teachers/$id'
     | '/teachers/register'
     | '/teachers/resources'
     | '/workers/$id'
     | '/workers/register'
     | '/business'
+    | '/legal'
     | '/teachers'
     | '/workers'
     | '/admin/achievements'
@@ -704,6 +745,7 @@ export interface FileRouteTypes {
     | '/admin/businesses'
     | '/admin/complaints'
     | '/admin/education-news'
+    | '/admin/legal'
     | '/admin/study-resources'
     | '/admin/teachers'
     | '/admin/tuition-applications'
@@ -733,6 +775,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/helpline'
     | '/isp'
+    | '/legal'
     | '/notices'
     | '/reset-password'
     | '/stats'
@@ -751,6 +794,7 @@ export interface FileRouteTypes {
     | '/business/$slug'
     | '/business/directory'
     | '/business/register'
+    | '/legal/$id'
     | '/teachers/$id'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -760,6 +804,7 @@ export interface FileRouteTypes {
     | '/workers/$id'
     | '/workers/register'
     | '/business/'
+    | '/legal/'
     | '/teachers/'
     | '/workers/'
     | '/_authenticated/admin/achievements'
@@ -770,6 +815,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/businesses'
     | '/_authenticated/admin/complaints'
     | '/_authenticated/admin/education-news'
+    | '/_authenticated/admin/legal'
     | '/_authenticated/admin/study-resources'
     | '/_authenticated/admin/teachers'
     | '/_authenticated/admin/tuition-applications'
@@ -800,6 +846,7 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   HelplineRoute: typeof HelplineRoute
   IspRoute: typeof IspRoute
+  LegalRoute: typeof LegalRouteWithChildren
   NoticesRoute: typeof NoticesRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   StatsRoute: typeof StatsRoute
@@ -852,6 +899,13 @@ declare module '@tanstack/react-router' {
       path: '/notices'
       fullPath: '/notices'
       preLoaderRoute: typeof NoticesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/isp': {
@@ -931,6 +985,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeachersIndexRouteImport
       parentRoute: typeof TeachersRoute
     }
+    '/legal/': {
+      id: '/legal/'
+      path: '/'
+      fullPath: '/legal/'
+      preLoaderRoute: typeof LegalIndexRouteImport
+      parentRoute: typeof LegalRoute
+    }
     '/business/': {
       id: '/business/'
       path: '/'
@@ -993,6 +1054,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/teachers/$id'
       preLoaderRoute: typeof TeachersIdRouteImport
       parentRoute: typeof TeachersRoute
+    }
+    '/legal/$id': {
+      id: '/legal/$id'
+      path: '/$id'
+      fullPath: '/legal/$id'
+      preLoaderRoute: typeof LegalIdRouteImport
+      parentRoute: typeof LegalRoute
     }
     '/business/register': {
       id: '/business/register'
@@ -1197,6 +1265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminStudyResourcesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/legal': {
+      id: '/_authenticated/admin/legal'
+      path: '/legal'
+      fullPath: '/admin/legal'
+      preLoaderRoute: typeof AuthenticatedAdminLegalRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/education-news': {
       id: '/_authenticated/admin/education-news'
       path: '/education-news'
@@ -1272,6 +1347,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminBusinessesRoute: typeof AuthenticatedAdminBusinessesRoute
   AuthenticatedAdminComplaintsRoute: typeof AuthenticatedAdminComplaintsRoute
   AuthenticatedAdminEducationNewsRoute: typeof AuthenticatedAdminEducationNewsRoute
+  AuthenticatedAdminLegalRoute: typeof AuthenticatedAdminLegalRoute
   AuthenticatedAdminStudyResourcesRoute: typeof AuthenticatedAdminStudyResourcesRoute
   AuthenticatedAdminTeachersRoute: typeof AuthenticatedAdminTeachersRoute
   AuthenticatedAdminTuitionApplicationsRoute: typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -1292,6 +1368,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminBusinessesRoute: AuthenticatedAdminBusinessesRoute,
   AuthenticatedAdminComplaintsRoute: AuthenticatedAdminComplaintsRoute,
   AuthenticatedAdminEducationNewsRoute: AuthenticatedAdminEducationNewsRoute,
+  AuthenticatedAdminLegalRoute: AuthenticatedAdminLegalRoute,
   AuthenticatedAdminStudyResourcesRoute: AuthenticatedAdminStudyResourcesRoute,
   AuthenticatedAdminTeachersRoute: AuthenticatedAdminTeachersRoute,
   AuthenticatedAdminTuitionApplicationsRoute:
@@ -1363,6 +1440,18 @@ const BusinessRouteChildren: BusinessRouteChildren = {
 const BusinessRouteWithChildren = BusinessRoute._addFileChildren(
   BusinessRouteChildren,
 )
+
+interface LegalRouteChildren {
+  LegalIdRoute: typeof LegalIdRoute
+  LegalIndexRoute: typeof LegalIndexRoute
+}
+
+const LegalRouteChildren: LegalRouteChildren = {
+  LegalIdRoute: LegalIdRoute,
+  LegalIndexRoute: LegalIndexRoute,
+}
+
+const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
 
 interface TeachersAchievementsRouteChildren {
   TeachersAchievementsIdRoute: typeof TeachersAchievementsIdRoute
@@ -1455,6 +1544,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   HelplineRoute: HelplineRoute,
   IspRoute: IspRoute,
+  LegalRoute: LegalRouteWithChildren,
   NoticesRoute: NoticesRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   StatsRoute: StatsRoute,
