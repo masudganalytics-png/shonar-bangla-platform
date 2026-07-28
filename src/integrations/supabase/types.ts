@@ -475,6 +475,33 @@ export type Database = {
           },
         ]
       }
+      categories: {
+        Row: {
+          created_at: string
+          icon: string | null
+          id: string
+          name: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          name: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       education_news: {
         Row: {
           author_id: string | null
@@ -519,6 +546,32 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      favorites: {
+        Row: {
+          created_at: string
+          listing_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          listing_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          listing_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       legal_leads: {
         Row: {
@@ -567,6 +620,97 @@ export type Database = {
           },
         ]
       }
+      listing_images: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string
+          listing_id: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url: string
+          listing_id: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string
+          listing_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "listing_images_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      listings: {
+        Row: {
+          address: string | null
+          category_id: string | null
+          created_at: string
+          description: string | null
+          featured: boolean
+          id: string
+          latitude: number | null
+          longitude: number | null
+          owner_id: string
+          phone: string | null
+          status: Database["public"]["Enums"]["listing_status"]
+          title: string
+          updated_at: string
+          whatsapp: string | null
+        }
+        Insert: {
+          address?: string | null
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          featured?: boolean
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          owner_id: string
+          phone?: string | null
+          status?: Database["public"]["Enums"]["listing_status"]
+          title: string
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Update: {
+          address?: string | null
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          featured?: boolean
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          owner_id?: string
+          phone?: string | null
+          status?: Database["public"]["Enums"]["listing_status"]
+          title?: string
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "listings_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notifications: {
         Row: {
           body: string | null
@@ -606,6 +750,7 @@ export type Database = {
           id: string
           meter_no: string | null
           phone: string | null
+          role: Database["public"]["Enums"]["profile_role"]
           updated_at: string
         }
         Insert: {
@@ -616,6 +761,7 @@ export type Database = {
           id: string
           meter_no?: string | null
           phone?: string | null
+          role?: Database["public"]["Enums"]["profile_role"]
           updated_at?: string
         }
         Update: {
@@ -626,6 +772,7 @@ export type Database = {
           id?: string
           meter_no?: string | null
           phone?: string | null
+          role?: Database["public"]["Enums"]["profile_role"]
           updated_at?: string
         }
         Relationships: []
@@ -671,6 +818,44 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: string
+          listing_id: string
+          rating: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          listing_id: string
+          rating: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          listing_id?: string
+          rating?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       student_achievements: {
         Row: {
@@ -1279,6 +1464,8 @@ export type Database = {
       business_status: "pending" | "approved" | "rejected" | "suspended"
       complaint_reason: "high_bill" | "wrong_reading" | "wrong_tariff" | "other"
       lead_status: "new" | "contacted" | "closed"
+      listing_status: "pending" | "approved" | "rejected"
+      profile_role: "user" | "business" | "admin"
       report_category: "billing" | "outage" | "meter" | "connection" | "other"
       report_status: "open" | "in_progress" | "resolved" | "rejected"
       resource_type: "website" | "gdrive" | "youtube" | "pdf" | "link"
@@ -1429,6 +1616,8 @@ export const Constants = {
       business_status: ["pending", "approved", "rejected", "suspended"],
       complaint_reason: ["high_bill", "wrong_reading", "wrong_tariff", "other"],
       lead_status: ["new", "contacted", "closed"],
+      listing_status: ["pending", "approved", "rejected"],
+      profile_role: ["user", "business", "admin"],
       report_category: ["billing", "outage", "meter", "connection", "other"],
       report_status: ["open", "in_progress", "resolved", "rejected"],
       resource_type: ["website", "gdrive", "youtube", "pdf", "link"],
