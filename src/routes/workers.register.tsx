@@ -80,13 +80,8 @@ function WorkerRegister() {
           setSubmitting(false);
           return;
         }
-        const ext = photoFile.name.split(".").pop()?.toLowerCase() || "jpg";
-        const path = `submissions/${user.id}/${crypto.randomUUID()}.${ext}`;
-        const { error: upErr } = await supabase.storage.from("worker-images").upload(path, photoFile, {
-          contentType: photoFile.type, upsert: false,
-        });
-        if (upErr) throw upErr;
-        photo_url = `worker-images/${path}`;
+        const { uploadImageToCloudinary } = await import("@/lib/cloudinary");
+        photo_url = await uploadImageToCloudinary(photoFile, `ukhiya-seba/workers/${user.id}`);
       }
 
       const { error } = await supabase.from("workers").insert({

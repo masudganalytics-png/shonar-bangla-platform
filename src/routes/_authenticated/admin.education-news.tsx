@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import { listNewsAdmin, upsertNews, deleteNews, setNewsPublished } from "@/lib/education.functions";
 import { EducationImage } from "@/components/teachers/EducationImage";
 import type { EducationNewsRow } from "@/lib/education-shared";
@@ -23,11 +23,7 @@ export const Route = createFileRoute("/_authenticated/admin/education-news")({
 });
 
 async function uploadCover(file: File): Promise<string> {
-  const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  const path = `news/${crypto.randomUUID()}.${ext}`;
-  const { error } = await supabase.storage.from("education-media").upload(path, file, { contentType: file.type, upsert: false });
-  if (error) throw error;
-  return path;
+  return uploadImageToCloudinary(file, "ukhiya-seba/news");
 }
 
 function AdminNews() {
