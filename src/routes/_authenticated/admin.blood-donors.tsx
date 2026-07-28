@@ -45,8 +45,8 @@ function AdminBloodDonors() {
         .select("*")
         .order("created_at", { ascending: false })
         .limit(500);
-      if (status !== "all") query = query.eq("status", status);
-      if (group !== "all") query = query.eq("blood_group", group);
+      if (status !== "all") query = query.eq("status", status as never);
+      if (group !== "all") query = query.eq("blood_group", group as never);
       const { data, error } = await query;
       if (error) throw error;
       return (data ?? []) as DonorRow[];

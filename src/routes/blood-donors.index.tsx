@@ -54,7 +54,7 @@ function DonorDirectory() {
         .order("available", { ascending: false })
         .order("updated_at", { ascending: false })
         .limit(300);
-      if (group !== "all") query = query.eq("blood_group", group);
+      if (group !== "all") query = query.eq("blood_group", group as never);
       if (unionName !== "all") query = query.eq("union_name", unionName);
       if (availOnly) query = query.eq("available", true);
       const { data, error } = await query;
