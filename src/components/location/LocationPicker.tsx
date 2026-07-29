@@ -1,3 +1,4 @@
+/// <reference types="google.maps" />
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Loader2, MapPin, LocateFixed, Search, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
