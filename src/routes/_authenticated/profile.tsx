@@ -87,8 +87,6 @@ function ProfilePage() {
         latitude: loc.latitude,
         longitude: loc.longitude,
         address: loc.address,
-        place_id: loc.place_id,
-        plus_code: loc.plus_code,
         location_confirmed: true,
         updated_at: new Date().toISOString(),
       } as never)
