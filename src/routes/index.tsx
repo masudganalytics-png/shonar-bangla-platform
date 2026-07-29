@@ -5,6 +5,11 @@ import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
 import logoAsset from "@/assets/ukhiya-logo.png.asset.json";
 import { EmergencyBloodBanner } from "@/components/blood/EmergencyBloodBanner";
+import { UniversalSearch } from "@/components/home/UniversalSearch";
+import { ExploreServices } from "@/components/home/ExploreServices";
+import { LatestUpdates } from "@/components/home/LatestUpdates";
+import { FeaturedServices } from "@/components/home/FeaturedServices";
+import { TodaysHighlights } from "@/components/home/TodaysHighlights";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -163,6 +168,12 @@ function HomePage() {
           </div>
         </div>
       </section>
+
+      <UniversalSearch />
+      <ExploreServices />
+      <LatestUpdates />
+      <FeaturedServices />
+      <TodaysHighlights />
 
       <section className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
