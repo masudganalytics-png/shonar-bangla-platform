@@ -10,10 +10,30 @@ type BeforeInstallPromptEvent = Event & {
 
 const INSTALLED_KEY = "pwa:installed";
 
+// Capture the event as early as possible — it may fire before this component mounts.
+let deferredPrompt: BeforeInstallPromptEvent | null = null;
+const listeners = new Set<(e: BeforeInstallPromptEvent | null) => void>();
+
+if (typeof window !== "undefined") {
+  window.addEventListener("beforeinstallprompt", (e: Event) => {
+    e.preventDefault();
+    deferredPrompt = e as BeforeInstallPromptEvent;
+    listeners.forEach((l) => l(deferredPrompt));
+  });
+  window.addEventListener("appinstalled", () => {
+    try {
+      localStorage.setItem(INSTALLED_KEY, "1");
+    } catch {
+      /* ignore */
+    }
+    deferredPrompt = null;
+    listeners.forEach((l) => l(null));
+  });
+}
+
 function isStandalone(): boolean {
   if (typeof window === "undefined") return false;
   const displayMode = window.matchMedia?.("(display-mode: standalone)").matches;
-  // iOS Safari
   const iosStandalone = (window.navigator as unknown as { standalone?: boolean }).standalone === true;
   return Boolean(displayMode || iosStandalone);
 }
@@ -29,45 +49,29 @@ export function InstallAppButton({
   size?: React.ComponentProps<typeof Button>["size"];
   label?: string;
 }) {
-  const [prompt, setPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    // Already installed on this device — never show again.
+  const [prompt, setPrompt] = useState<BeforeInstallPromptEvent | null>(deferredPrompt);
+  const [hidden, setHidden] = useState<boolean>(() => {
+    if (typeof window === "undefined") return true;
     try {
-      if (localStorage.getItem(INSTALLED_KEY) === "1") return;
+      if (localStorage.getItem(INSTALLED_KEY) === "1") return true;
     } catch {
       /* ignore */
     }
-    if (isStandalone()) return;
+    return isStandalone();
+  });
 
-    const onBeforeInstall = (e: Event) => {
-      e.preventDefault();
-      setPrompt(e as BeforeInstallPromptEvent);
-      setVisible(true);
+  useEffect(() => {
+    const listener = (e: BeforeInstallPromptEvent | null) => {
+      setPrompt(e);
+      if (!e) setHidden(true);
     };
-
-    const onInstalled = () => {
-      try {
-        localStorage.setItem(INSTALLED_KEY, "1");
-      } catch {
-        /* ignore */
-      }
-      setVisible(false);
-      setPrompt(null);
-    };
-
-    window.addEventListener("beforeinstallprompt", onBeforeInstall);
-    window.addEventListener("appinstalled", onInstalled);
+    listeners.add(listener);
     return () => {
-      window.removeEventListener("beforeinstallprompt", onBeforeInstall);
-      window.removeEventListener("appinstalled", onInstalled);
+      listeners.delete(listener);
     };
   }, []);
 
-  if (!visible || !prompt) return null;
+  if (hidden || !prompt) return null;
 
   const handleClick = async () => {
     try {
@@ -81,8 +85,9 @@ export function InstallAppButton({
         }
       }
     } finally {
-      setVisible(false);
       setPrompt(null);
+      deferredPrompt = null;
+      setHidden(true);
     }
   };
 
