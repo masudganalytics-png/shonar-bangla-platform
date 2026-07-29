@@ -1,4 +1,3 @@
-/// <reference types="google.maps" />
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Loader2, MapPin, LocateFixed, Search, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
 /**
- * Non-breaking Google Maps location picker for profile.
+ * Free OpenStreetMap + Leaflet + Nominatim location picker.
  * Emits selection ONLY after the user confirms.
  */
 
@@ -25,38 +24,40 @@ type Props = {
   onConfirm: (loc: PickedLocation) => void;
 };
 
-// Ukhiya, Cox's Bazar
-const DEFAULT_CENTER = { lat: 21.2500, lng: 92.1167 };
+// Ukhiya, Cox's Bazar fallback
+const DEFAULT_CENTER: [number, number] = [21.25, 92.1167];
 
-let mapsLoader: Promise<typeof google> | null = null;
-function loadGoogleMaps(): Promise<typeof google> {
-  if (typeof window === "undefined") return Promise.reject(new Error("SSR"));
-  if ((window as any).google?.maps) return Promise.resolve((window as any).google);
-  if (mapsLoader) return mapsLoader;
-  const key = import.meta.env.VITE_LOVABLE_CONNECTOR_GOOGLE_MAPS_BROWSER_KEY;
-  const channel = import.meta.env.VITE_LOVABLE_CONNECTOR_GOOGLE_MAPS_TRACKING_ID;
-  if (!key) return Promise.reject(new Error("Google Maps key missing"));
-  mapsLoader = new Promise((resolve, reject) => {
-    (window as any).__lovableInitMap = () => resolve((window as any).google);
-    const s = document.createElement("script");
-    s.src = `https://maps.googleapis.com/maps/api/js?key=${key}&loading=async&libraries=places&callback=__lovableInitMap${channel ? `&channel=${channel}` : ""}`;
-    s.async = true;
-    s.onerror = () => reject(new Error("Failed to load Google Maps"));
-    document.head.appendChild(s);
-  });
-  return mapsLoader;
+const NOMINATIM = "https://nominatim.openstreetmap.org";
+
+async function reverseGeocodeApi(lat: number, lng: number): Promise<string> {
+  try {
+    const res = await fetch(
+      `${NOMINATIM}/reverse?format=jsonv2&lat=${lat}&lon=${lng}&accept-language=bn`,
+      { headers: { Accept: "application/json" } },
+    );
+    if (!res.ok) throw new Error("nominatim");
+    const data = await res.json();
+    return data.display_name || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+  } catch {
+    return `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+  }
 }
+
+type SearchResult = { display_name: string; lat: string; lon: string; place_id: number };
 
 export function LocationPicker({ initialLat, initialLng, initialAddress, onConfirm }: Props) {
   const mapDivRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<google.maps.Map | null>(null);
-  const markerRef = useRef<google.maps.Marker | null>(null);
-  const geocoderRef = useRef<google.maps.Geocoder | null>(null);
-  const searchInputRef = useRef<HTMLInputElement>(null);
+  const mapRef = useRef<any>(null);
+  const markerRef = useRef<any>(null);
+  const LRef = useRef<any>(null);
+
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [searching, setSearching] = useState(false);
   const [selected, setSelected] = useState<PickedLocation | null>(
-    initialLat && initialLng
+    initialLat != null && initialLng != null
       ? {
           latitude: initialLat,
           longitude: initialLng,
@@ -67,110 +68,104 @@ export function LocationPicker({ initialLat, initialLng, initialAddress, onConfi
       : null,
   );
 
-  const reverseGeocode = useCallback(async (lat: number, lng: number) => {
-    if (!geocoderRef.current) return;
+  const updateFromLatLng = useCallback(async (lat: number, lng: number) => {
     setBusy(true);
-    try {
-      const res = await geocoderRef.current.geocode({ location: { lat, lng } });
-      const top = res.results?.[0];
-      setSelected({
-        latitude: lat,
-        longitude: lng,
-        address: top?.formatted_address ?? `${lat.toFixed(6)}, ${lng.toFixed(6)}`,
-        place_id: top?.place_id ?? null,
-        plus_code: (res as any).plus_code?.global_code ?? null,
-      });
-    } catch {
-      setSelected({
-        latitude: lat,
-        longitude: lng,
-        address: `${lat.toFixed(6)}, ${lng.toFixed(6)}`,
-        place_id: null,
-        plus_code: null,
-      });
-    } finally {
-      setBusy(false);
-    }
+    const address = await reverseGeocodeApi(lat, lng);
+    setSelected({ latitude: lat, longitude: lng, address, place_id: null, plus_code: null });
+    setBusy(false);
   }, []);
 
-  const setPin = useCallback((lat: number, lng: number, pan = true) => {
-    if (!mapRef.current || !markerRef.current) return;
-    const pos = { lat, lng };
-    markerRef.current.setPosition(pos);
-    if (pan) mapRef.current.panTo(pos);
-    reverseGeocode(lat, lng);
-  }, [reverseGeocode]);
+  const setPin = useCallback(
+    (lat: number, lng: number, pan = true) => {
+      const L = LRef.current;
+      if (!mapRef.current || !markerRef.current || !L) return;
+      markerRef.current.setLatLng([lat, lng]);
+      if (pan) mapRef.current.panTo([lat, lng]);
+      void updateFromLatLng(lat, lng);
+    },
+    [updateFromLatLng],
+  );
 
+  // Init leaflet lazily (browser only)
   useEffect(() => {
     let cancelled = false;
-    loadGoogleMaps()
-      .then((google) => {
-        if (cancelled || !mapDivRef.current) return;
-        const start =
-          initialLat && initialLng ? { lat: initialLat, lng: initialLng } : DEFAULT_CENTER;
-        const map = new google.maps.Map(mapDivRef.current, {
-          center: start,
-          zoom: initialLat && initialLng ? 16 : 13,
-          streetViewControl: false,
-          mapTypeControl: false,
-          fullscreenControl: false,
-        });
-        const marker = new google.maps.Marker({
-          map,
-          position: start,
-          draggable: true,
-        });
-        mapRef.current = map;
-        markerRef.current = marker;
-        geocoderRef.current = new google.maps.Geocoder();
+    let cleanup: (() => void) | null = null;
 
-        map.addListener("click", (e: google.maps.MapMouseEvent) => {
-          if (!e.latLng) return;
-          setPin(e.latLng.lat(), e.latLng.lng(), false);
-        });
-        marker.addListener("dragend", () => {
-          const p = marker.getPosition();
-          if (p) reverseGeocode(p.lat(), p.lng());
-        });
+    (async () => {
+      const L = (await import("leaflet")).default;
+      await import("leaflet/dist/leaflet.css");
+      if (cancelled || !mapDivRef.current) return;
+      LRef.current = L;
 
-        // Places Autocomplete on the search field (legacy JS Autocomplete kept minimal)
-        if (searchInputRef.current && google.maps.places?.Autocomplete) {
-          const ac = new google.maps.places.Autocomplete(searchInputRef.current, {
-            fields: ["geometry", "formatted_address", "place_id", "plus_code"],
-          });
-          ac.bindTo("bounds", map);
-          ac.addListener("place_changed", () => {
-            const place = ac.getPlace();
-            if (!place.geometry?.location) return;
-            const lat = place.geometry.location.lat();
-            const lng = place.geometry.location.lng();
-            map.panTo({ lat, lng });
-            map.setZoom(17);
-            marker.setPosition({ lat, lng });
-            setSelected({
-              latitude: lat,
-              longitude: lng,
-              address: place.formatted_address ?? "",
-              place_id: place.place_id ?? null,
-              plus_code: (place as any).plus_code?.global_code ?? null,
-            });
-          });
-        }
+      // Fix default marker icons (bundler paths)
+      const iconRetinaUrl = (await import("leaflet/dist/images/marker-icon-2x.png")).default;
+      const iconUrl = (await import("leaflet/dist/images/marker-icon.png")).default;
+      const shadowUrl = (await import("leaflet/dist/images/marker-shadow.png")).default;
+      // @ts-expect-error internal
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({ iconRetinaUrl, iconUrl, shadowUrl });
 
-        if (!initialLat || !initialLng) {
-          // Show initial address for default center
-          reverseGeocode(start.lat, start.lng);
-        }
+      const start: [number, number] =
+        initialLat != null && initialLng != null
+          ? [initialLat, initialLng]
+          : DEFAULT_CENTER;
 
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error("গুগল ম্যাপ লোড করা যায়নি");
-        setLoading(false);
+      const map = L.map(mapDivRef.current, {
+        center: start,
+        zoom: initialLat != null && initialLng != null ? 16 : 13,
       });
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 19,
+      }).addTo(map);
+
+      const marker = L.marker(start, { draggable: true }).addTo(map);
+
+      map.on("click", (e: any) => setPin(e.latlng.lat, e.latlng.lng, false));
+      marker.on("dragend", () => {
+        const p = marker.getLatLng();
+        void updateFromLatLng(p.lat, p.lng);
+      });
+
+      mapRef.current = map;
+      markerRef.current = marker;
+      setLoading(false);
+
+      // Ask GPS on load if no initial coords
+      if (initialLat == null || initialLng == null) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              if (cancelled) return;
+              map.setView([pos.coords.latitude, pos.coords.longitude], 17);
+              marker.setLatLng([pos.coords.latitude, pos.coords.longitude]);
+              void updateFromLatLng(pos.coords.latitude, pos.coords.longitude);
+            },
+            () => {
+              void updateFromLatLng(start[0], start[1]);
+            },
+            { enableHighAccuracy: true, timeout: 10000 },
+          );
+        } else {
+          void updateFromLatLng(start[0], start[1]);
+        }
+      }
+
+      cleanup = () => {
+        map.remove();
+        mapRef.current = null;
+        markerRef.current = null;
+      };
+    })().catch((err) => {
+      console.error(err);
+      toast.error("ম্যাপ লোড করা যায়নি");
+      setLoading(false);
+    });
+
     return () => {
       cancelled = true;
+      cleanup?.();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -184,7 +179,7 @@ export function LocationPicker({ initialLat, initialLng, initialAddress, onConfi
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         setBusy(false);
-        if (mapRef.current) mapRef.current.setZoom(17);
+        if (mapRef.current) mapRef.current.setView([pos.coords.latitude, pos.coords.longitude], 17);
         setPin(pos.coords.latitude, pos.coords.longitude);
       },
       () => {
@@ -195,16 +190,74 @@ export function LocationPicker({ initialLat, initialLng, initialAddress, onConfi
     );
   };
 
+  // Debounced Nominatim search
+  useEffect(() => {
+    const q = query.trim();
+    if (q.length < 3) {
+      setResults([]);
+      return;
+    }
+    const t = setTimeout(async () => {
+      setSearching(true);
+      try {
+        const res = await fetch(
+          `${NOMINATIM}/search?format=jsonv2&q=${encodeURIComponent(q)}&limit=5&accept-language=bn&countrycodes=bd`,
+        );
+        const data: SearchResult[] = await res.json();
+        setResults(data || []);
+      } catch {
+        setResults([]);
+      } finally {
+        setSearching(false);
+      }
+    }, 400);
+    return () => clearTimeout(t);
+  }, [query]);
+
+  const chooseResult = (r: SearchResult) => {
+    const lat = parseFloat(r.lat);
+    const lng = parseFloat(r.lon);
+    if (mapRef.current) mapRef.current.setView([lat, lng], 17);
+    if (markerRef.current) markerRef.current.setLatLng([lat, lng]);
+    setSelected({
+      latitude: lat,
+      longitude: lng,
+      address: r.display_name,
+      place_id: String(r.place_id),
+      plus_code: null,
+    });
+    setResults([]);
+    setQuery("");
+  };
+
   return (
     <div className="space-y-3">
       <div className="flex gap-2">
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            ref={searchInputRef}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             placeholder="ঠিকানা খুঁজুন"
             className="pl-9"
           />
+          {(results.length > 0 || searching) && (
+            <div className="absolute z-[1000] mt-1 w-full overflow-hidden rounded-md border bg-popover shadow-lg">
+              {searching && (
+                <div className="px-3 py-2 text-sm text-muted-foreground">খোঁজা হচ্ছে...</div>
+              )}
+              {results.map((r) => (
+                <button
+                  key={r.place_id}
+                  type="button"
+                  onClick={() => chooseResult(r)}
+                  className="block w-full truncate px-3 py-2 text-left text-sm hover:bg-accent"
+                >
+                  {r.display_name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         <Button type="button" variant="outline" onClick={useMyLocation} disabled={busy}>
           <LocateFixed className="mr-1 h-4 w-4" /> আমার অবস্থান
@@ -231,7 +284,6 @@ export function LocationPicker({ initialLat, initialLng, initialAddress, onConfi
             {selected && (
               <p className="mt-1 text-xs text-muted-foreground">
                 অক্ষাংশ: {selected.latitude.toFixed(6)} · দ্রাঘিমাংশ: {selected.longitude.toFixed(6)}
-                {selected.plus_code ? ` · ${selected.plus_code}` : ""}
               </p>
             )}
           </div>
