@@ -871,8 +871,13 @@ export type Database = {
           created_at: string
           full_name: string | null
           id: string
+          latitude: number | null
+          location_confirmed: boolean
+          longitude: number | null
           meter_no: string | null
           phone: string | null
+          place_id: string | null
+          plus_code: string | null
           role: Database["public"]["Enums"]["profile_role"]
           updated_at: string
         }
@@ -882,8 +887,13 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id: string
+          latitude?: number | null
+          location_confirmed?: boolean
+          longitude?: number | null
           meter_no?: string | null
           phone?: string | null
+          place_id?: string | null
+          plus_code?: string | null
           role?: Database["public"]["Enums"]["profile_role"]
           updated_at?: string
         }
@@ -893,8 +903,13 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id?: string
+          latitude?: number | null
+          location_confirmed?: boolean
+          longitude?: number | null
           meter_no?: string | null
           phone?: string | null
+          place_id?: string | null
+          plus_code?: string | null
           role?: Database["public"]["Enums"]["profile_role"]
           updated_at?: string
         }
