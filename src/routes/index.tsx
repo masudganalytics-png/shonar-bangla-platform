@@ -169,6 +169,12 @@ function HomePage() {
         </div>
       </section>
 
+      <UniversalSearch />
+      <ExploreServices />
+      <LatestUpdates />
+      <FeaturedServices />
+      <TodaysHighlights />
+
       <section className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {QUICK_ACTIONS.map(({ to, icon: Icon, title, desc, primary }) => (
