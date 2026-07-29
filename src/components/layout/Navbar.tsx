@@ -180,6 +180,10 @@ export function Navbar() {
                 </Button>
               </div>
             )}
+            <div className="mt-2 border-t border-border/60 pt-3">
+              <InstallAppButton className="w-full" />
+            </div>
+
           </div>
         </div>
       )}
