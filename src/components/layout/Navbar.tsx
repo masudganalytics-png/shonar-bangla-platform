@@ -3,8 +3,10 @@ import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { Menu, X, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun, ShieldCheck, GraduationCap } from "lucide-react";
 import logoAsset from "@/assets/ukhiya-logo.png.asset.json";
 import { NotificationsBell } from "@/components/notifications/NotificationsBell";
+import { InstallAppButton } from "@/components/pwa/InstallAppButton";
 import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "@/hooks/use-theme";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -81,9 +83,11 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <InstallAppButton className="hidden sm:inline-flex" />
           <Button variant="ghost" size="icon" onClick={toggle} aria-label="থিম পরিবর্তন">
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
+
 
           {/* NotificationsBell hidden in MVP */}
 
@@ -176,6 +180,10 @@ export function Navbar() {
                 </Button>
               </div>
             )}
+            <div className="mt-2 border-t border-border/60 pt-3">
+              <InstallAppButton className="w-full" />
+            </div>
+
           </div>
         </div>
       )}

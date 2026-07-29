@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="bn">
+  <head>
+    <meta charset="utf-8" />
+    <title>অফলাইন — উখিয়া সেবা</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1565C0" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        font-family: 'Hind Siliguri', system-ui, -apple-system, sans-serif;
+        background: #0b1220; color: #e5e7eb;
+        display: grid; place-items: center; min-height: 100vh;
+        margin: 0; padding: 1.5rem; text-align: center;
+      }
+      .card { max-width: 28rem; }
+      .icon {
+        width: 72px; height: 72px; border-radius: 20px;
+        background: #1565C0; display: grid; place-items: center;
+        margin: 0 auto 1.25rem; font-size: 34px;
+      }
+      h1 { font-size: 1.375rem; margin: 0 0 .5rem; }
+      p { color: #94a3b8; margin: 0 0 1.5rem; line-height: 1.6; }
+      button {
+        background: #1565C0; color: #fff; border: 0;
+        padding: .625rem 1.25rem; border-radius: .5rem;
+        font: inherit; font-weight: 600; cursor: pointer;
+      }
+      button:hover { background: #0f4d99; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="icon">📶</div>
+      <h1>আপনি এখন অফলাইনে আছেন</h1>
+      <p>ইন্টারনেট সংযোগ পাওয়া যাচ্ছে না। সংযোগ ফিরে এলে আবার চেষ্টা করুন।</p>
+      <button onclick="location.reload()">আবার চেষ্টা করুন</button>
+    </div>
+  </body>
+</html>
