@@ -165,13 +165,14 @@ function BusinessDetail() {
           </div>
         </div>
         {(b.owner_name || b.owner_photo_url) && (
-          <div className="flex flex-col items-center gap-1 pt-2 sm:pb-1">
+          <div className="pt-2 sm:pb-2">
             <BusinessOwner
               name={b.owner_name}
               photo={b.owner_photo_url}
               designation={b.owner_designation}
               verified={b.owner_verified}
-              className="flex-col items-center gap-1.5 text-center [&_.h-9]:h-16 [&_.h-9]:w-16 sm:[&_.h-9]:h-16 sm:[&_.h-9]:w-16"
+              size="lg"
+              className="flex-col items-center gap-2 text-center"
             />
           </div>
         )}
