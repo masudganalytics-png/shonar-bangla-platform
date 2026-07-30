@@ -500,8 +500,11 @@ export type Database = {
           lng: number | null
           logo_url: string | null
           name: string
+          owner_designation: string | null
           owner_id: string | null
+          owner_name: string | null
           owner_photo_url: string | null
+          owner_verified: boolean
           phone: string
           products: string[]
           review_count: number
@@ -536,8 +539,11 @@ export type Database = {
           lng?: number | null
           logo_url?: string | null
           name: string
+          owner_designation?: string | null
           owner_id?: string | null
+          owner_name?: string | null
           owner_photo_url?: string | null
+          owner_verified?: boolean
           phone: string
           products?: string[]
           review_count?: number
@@ -572,8 +578,11 @@ export type Database = {
           lng?: number | null
           logo_url?: string | null
           name?: string
+          owner_designation?: string | null
           owner_id?: string | null
+          owner_name?: string | null
           owner_photo_url?: string | null
+          owner_verified?: boolean
           phone?: string
           products?: string[]
           review_count?: number
