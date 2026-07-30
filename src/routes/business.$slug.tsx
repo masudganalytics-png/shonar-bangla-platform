@@ -161,9 +161,20 @@ function BusinessDetail() {
             <span className="inline-flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> {[b.area, b.union_name, b.upazila].filter(Boolean).join(", ")}</span>
             {b.review_count > 0 && <RatingStars value={Number(b.avg_rating)} count={b.review_count} />}
             <span className="inline-flex items-center gap-1 text-xs"><Eye className="h-3.5 w-3.5" /> {toBanglaDigits(b.view_count)} ভিউ</span>
-          </div>
         </div>
+        {(b.owner_name || b.owner_photo_url) && (
+          <div className="flex flex-col items-center gap-1 pt-2 sm:pb-1">
+            <BusinessOwner
+              name={b.owner_name}
+              photo={b.owner_photo_url}
+              designation={b.owner_designation}
+              verified={b.owner_verified}
+              className="flex-col items-center gap-1.5 text-center [&_.h-9]:h-16 [&_.h-9]:w-16 sm:[&_.h-9]:h-16 sm:[&_.h-9]:w-16"
+            />
+          </div>
+        )}
       </div>
+
 
       {(b.short_description || b.full_description) && (
         <Card className="mt-6"><CardContent className="prose prose-sm max-w-none whitespace-pre-line p-5 dark:prose-invert">
