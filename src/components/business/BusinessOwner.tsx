@@ -31,7 +31,7 @@ export function BusinessOwner({
       <div className="relative shrink-0">
         <div className="h-9 w-9 overflow-hidden rounded-full border-2 border-background bg-muted shadow-sm sm:h-10 sm:w-10">
           {url ? (
-            <img src={url} alt={name} loading="lazy" className="h-full w-full object-cover" />
+            <img src={url} alt={label} loading="lazy" className="h-full w-full object-cover" />
           ) : (
             <div className="grid h-full w-full place-items-center text-muted-foreground">
               <User className="h-4 w-4 opacity-60" />
@@ -45,7 +45,7 @@ export function BusinessOwner({
         )}
       </div>
       <div className="min-w-0">
-        <p className="truncate text-xs font-medium leading-tight">{name}</p>
+        <p className="truncate text-xs font-medium leading-tight">{label}</p>
         {designation && <p className="truncate text-[11px] leading-tight text-muted-foreground">{designation}</p>}
       </div>
     </div>
