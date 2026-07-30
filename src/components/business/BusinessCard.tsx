@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BusinessLogo } from "./BusinessLogo";
 import { RatingStars } from "./RatingStars";
+import { BusinessOwner } from "./BusinessOwner";
 import type { BusinessRow } from "@/lib/business-shared";
 
 export function BusinessCard({ b, categoryName }: { b: BusinessRow; categoryName?: string }) {
