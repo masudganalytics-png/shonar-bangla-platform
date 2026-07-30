@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { BusinessLogo, BusinessImage } from "@/components/business/BusinessLogo";
-import { BusinessOwner } from "@/components/business/BusinessOwner";
+import { BusinessOwnerTile } from "@/components/business/BusinessOwner";
 import { RatingStars } from "@/components/business/RatingStars";
 import { HoursDisplay } from "@/components/business/HoursDisplay";
 import { ContactButtons } from "@/components/business/ContactButtons";
@@ -142,7 +142,17 @@ function BusinessDetail() {
 
       {/* Header */}
       <div className="-mt-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-6">
-        <BusinessLogo path={b.logo_url} name={b.name} className="h-24 w-24 border-4 border-background text-2xl sm:h-28 sm:w-28" />
+        <div className="flex items-end gap-4 sm:gap-6">
+          <BusinessLogo path={b.logo_url} name={b.name} className="h-24 w-24 border-4 border-background text-2xl sm:h-28 sm:w-28" />
+          {(b.owner_name || b.owner_photo_url) && (
+            <BusinessOwnerTile
+              name={b.owner_name}
+              photo={b.owner_photo_url}
+              designation={b.owner_designation}
+              verified={b.owner_verified}
+            />
+          )}
+        </div>
         <div className="flex-1 pt-2">
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="text-2xl font-bold sm:text-3xl">{b.name}</h1>
@@ -164,19 +174,8 @@ function BusinessDetail() {
             <span className="inline-flex items-center gap-1 text-xs"><Eye className="h-3.5 w-3.5" /> {toBanglaDigits(b.view_count)} ভিউ</span>
           </div>
         </div>
-        {(b.owner_name || b.owner_photo_url) && (
-          <div className="pt-2 sm:pb-2">
-            <BusinessOwner
-              name={b.owner_name}
-              photo={b.owner_photo_url}
-              designation={b.owner_designation}
-              verified={b.owner_verified}
-              size="lg"
-              className="flex-col items-center gap-2 text-center"
-            />
-          </div>
-        )}
       </div>
+
 
 
       {(b.short_description || b.full_description) && (
