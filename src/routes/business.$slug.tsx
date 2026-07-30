@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { BusinessLogo, BusinessImage } from "@/components/business/BusinessLogo";
+import { BusinessOwner } from "@/components/business/BusinessOwner";
 import { RatingStars } from "@/components/business/RatingStars";
 import { HoursDisplay } from "@/components/business/HoursDisplay";
 import { ContactButtons } from "@/components/business/ContactButtons";
