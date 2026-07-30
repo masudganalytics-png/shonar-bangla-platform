@@ -23,7 +23,8 @@ export function BusinessOwner({
     return () => { alive = false; };
   }, [photo]);
 
-  if (!name) return null;
+  if (!name && !photo) return null;
+  const label = name || "মালিক";
 
   return (
     <div className={cn("flex min-w-0 items-center gap-2.5", className)}>
