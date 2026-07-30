@@ -48,6 +48,9 @@ export type BusinessRow = {
   logo_url: string | null;
   cover_url: string | null;
   owner_photo_url: string | null;
+  owner_name: string | null;
+  owner_designation: string | null;
+  owner_verified: boolean;
   established_year: number | null;
   products: string[];
   status: BusinessStatus;
