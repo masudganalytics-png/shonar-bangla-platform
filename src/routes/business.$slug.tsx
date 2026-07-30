@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { BusinessLogo, BusinessImage } from "@/components/business/BusinessLogo";
+import { BusinessOwner } from "@/components/business/BusinessOwner";
 import { RatingStars } from "@/components/business/RatingStars";
 import { HoursDisplay } from "@/components/business/HoursDisplay";
 import { ContactButtons } from "@/components/business/ContactButtons";
@@ -163,7 +164,20 @@ function BusinessDetail() {
             <span className="inline-flex items-center gap-1 text-xs"><Eye className="h-3.5 w-3.5" /> {toBanglaDigits(b.view_count)} ভিউ</span>
           </div>
         </div>
+        {(b.owner_name || b.owner_photo_url) && (
+          <div className="pt-2 sm:pb-2">
+            <BusinessOwner
+              name={b.owner_name}
+              photo={b.owner_photo_url}
+              designation={b.owner_designation}
+              verified={b.owner_verified}
+              size="lg"
+              className="flex-col items-center gap-2 text-center"
+            />
+          </div>
+        )}
       </div>
+
 
       {(b.short_description || b.full_description) && (
         <Card className="mt-6"><CardContent className="prose prose-sm max-w-none whitespace-pre-line p-5 dark:prose-invert">
