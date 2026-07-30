@@ -33,6 +33,16 @@ export function BusinessCard({ b, categoryName }: { b: BusinessRow; categoryName
           <p className="mt-2 flex items-center gap-1 text-xs text-muted-foreground">
             <MapPin className="h-3 w-3" /> {[b.area, b.union_name, b.upazila].filter(Boolean).join(", ") || b.upazila}
           </p>
+          {b.owner_name && (
+            <div className="mt-3 border-t pt-3">
+              <BusinessOwner
+                name={b.owner_name}
+                photo={b.owner_photo_url}
+                designation={b.owner_designation}
+                verified={b.owner_verified}
+              />
+            </div>
+          )}
         </CardContent>
       </Card>
     </Link>
