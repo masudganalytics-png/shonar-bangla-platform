@@ -161,6 +161,7 @@ function BusinessDetail() {
             <span className="inline-flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> {[b.area, b.union_name, b.upazila].filter(Boolean).join(", ")}</span>
             {b.review_count > 0 && <RatingStars value={Number(b.avg_rating)} count={b.review_count} />}
             <span className="inline-flex items-center gap-1 text-xs"><Eye className="h-3.5 w-3.5" /> {toBanglaDigits(b.view_count)} ভিউ</span>
+          </div>
         </div>
         {(b.owner_name || b.owner_photo_url) && (
           <div className="flex flex-col items-center gap-1 pt-2 sm:pb-1">
