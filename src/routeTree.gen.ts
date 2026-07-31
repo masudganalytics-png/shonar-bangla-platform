@@ -70,7 +70,9 @@ import { Route as TeachersTuitionsNewRouteImport } from './routes/teachers.tuiti
 import { Route as TeachersTuitionsIdRouteImport } from './routes/teachers.tuitions.$id'
 import { Route as TeachersNewsIdRouteImport } from './routes/teachers.news.$id'
 import { Route as TeachersAchievementsIdRouteImport } from './routes/teachers.achievements.$id'
+import { Route as CommunityUUserIdRouteImport } from './routes/community.u.$userId'
 import { Route as CommunityEventsNewRouteImport } from './routes/community.events.new'
+import { Route as CommunityCSlugRouteImport } from './routes/community.c.$slug'
 import { Route as ApiPublicStatsRouteImport } from './routes/api/public/stats'
 import { Route as ApiPublicAnnouncementsRouteImport } from './routes/api/public/announcements'
 import { Route as AuthenticatedBillsNewRouteImport } from './routes/_authenticated/bills.new'
@@ -398,9 +400,19 @@ const TeachersAchievementsIdRoute = TeachersAchievementsIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => TeachersAchievementsRoute,
 } as any)
+const CommunityUUserIdRoute = CommunityUUserIdRouteImport.update({
+  id: '/u/$userId',
+  path: '/u/$userId',
+  getParentRoute: () => CommunityRoute,
+} as any)
 const CommunityEventsNewRoute = CommunityEventsNewRouteImport.update({
   id: '/events/new',
   path: '/events/new',
+  getParentRoute: () => CommunityRoute,
+} as any)
+const CommunityCSlugRoute = CommunityCSlugRouteImport.update({
+  id: '/c/$slug',
+  path: '/c/$slug',
   getParentRoute: () => CommunityRoute,
 } as any)
 const ApiPublicStatsRoute = ApiPublicStatsRouteImport.update({
@@ -596,7 +608,9 @@ export interface FileRoutesByFullPath {
   '/bills/new': typeof AuthenticatedBillsNewRoute
   '/api/public/announcements': typeof ApiPublicAnnouncementsRoute
   '/api/public/stats': typeof ApiPublicStatsRoute
+  '/community/c/$slug': typeof CommunityCSlugRoute
   '/community/events/new': typeof CommunityEventsNewRoute
+  '/community/u/$userId': typeof CommunityUUserIdRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
   '/teachers/tuitions/$id': typeof TeachersTuitionsIdRoute
@@ -670,7 +684,9 @@ export interface FileRoutesByTo {
   '/bills/new': typeof AuthenticatedBillsNewRoute
   '/api/public/announcements': typeof ApiPublicAnnouncementsRoute
   '/api/public/stats': typeof ApiPublicStatsRoute
+  '/community/c/$slug': typeof CommunityCSlugRoute
   '/community/events/new': typeof CommunityEventsNewRoute
+  '/community/u/$userId': typeof CommunityUUserIdRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
   '/teachers/tuitions/$id': typeof TeachersTuitionsIdRoute
@@ -756,7 +772,9 @@ export interface FileRoutesById {
   '/_authenticated/bills/new': typeof AuthenticatedBillsNewRoute
   '/api/public/announcements': typeof ApiPublicAnnouncementsRoute
   '/api/public/stats': typeof ApiPublicStatsRoute
+  '/community/c/$slug': typeof CommunityCSlugRoute
   '/community/events/new': typeof CommunityEventsNewRoute
+  '/community/u/$userId': typeof CommunityUUserIdRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
   '/teachers/tuitions/$id': typeof TeachersTuitionsIdRoute
@@ -842,7 +860,9 @@ export interface FileRouteTypes {
     | '/bills/new'
     | '/api/public/announcements'
     | '/api/public/stats'
+    | '/community/c/$slug'
     | '/community/events/new'
+    | '/community/u/$userId'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
     | '/teachers/tuitions/$id'
@@ -916,7 +936,9 @@ export interface FileRouteTypes {
     | '/bills/new'
     | '/api/public/announcements'
     | '/api/public/stats'
+    | '/community/c/$slug'
     | '/community/events/new'
+    | '/community/u/$userId'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
     | '/teachers/tuitions/$id'
@@ -1001,7 +1023,9 @@ export interface FileRouteTypes {
     | '/_authenticated/bills/new'
     | '/api/public/announcements'
     | '/api/public/stats'
+    | '/community/c/$slug'
     | '/community/events/new'
+    | '/community/u/$userId'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
     | '/teachers/tuitions/$id'
@@ -1468,11 +1492,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeachersAchievementsIdRouteImport
       parentRoute: typeof TeachersAchievementsRoute
     }
+    '/community/u/$userId': {
+      id: '/community/u/$userId'
+      path: '/u/$userId'
+      fullPath: '/community/u/$userId'
+      preLoaderRoute: typeof CommunityUUserIdRouteImport
+      parentRoute: typeof CommunityRoute
+    }
     '/community/events/new': {
       id: '/community/events/new'
       path: '/events/new'
       fullPath: '/community/events/new'
       preLoaderRoute: typeof CommunityEventsNewRouteImport
+      parentRoute: typeof CommunityRoute
+    }
+    '/community/c/$slug': {
+      id: '/community/c/$slug'
+      path: '/c/$slug'
+      fullPath: '/community/c/$slug'
+      preLoaderRoute: typeof CommunityCSlugRouteImport
       parentRoute: typeof CommunityRoute
     }
     '/api/public/stats': {
@@ -1752,7 +1790,9 @@ interface CommunityRouteChildren {
   CommunityGroupsRoute: typeof CommunityGroupsRoute
   CommunityNewRoute: typeof CommunityNewRoute
   CommunityIndexRoute: typeof CommunityIndexRoute
+  CommunityCSlugRoute: typeof CommunityCSlugRoute
   CommunityEventsNewRoute: typeof CommunityEventsNewRoute
+  CommunityUUserIdRoute: typeof CommunityUUserIdRoute
   CommunityEventsIndexRoute: typeof CommunityEventsIndexRoute
 }
 
@@ -1762,7 +1802,9 @@ const CommunityRouteChildren: CommunityRouteChildren = {
   CommunityGroupsRoute: CommunityGroupsRoute,
   CommunityNewRoute: CommunityNewRoute,
   CommunityIndexRoute: CommunityIndexRoute,
+  CommunityCSlugRoute: CommunityCSlugRoute,
   CommunityEventsNewRoute: CommunityEventsNewRoute,
+  CommunityUUserIdRoute: CommunityUUserIdRoute,
   CommunityEventsIndexRoute: CommunityEventsIndexRoute,
 }
 
