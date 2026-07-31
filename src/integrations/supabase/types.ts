@@ -634,6 +634,235 @@ export type Database = {
         }
         Relationships: []
       }
+      communities: {
+        Row: {
+          area: string | null
+          cover_url: string | null
+          created_at: string
+          created_by: string
+          description: string | null
+          group_type: Database["public"]["Enums"]["community_group_type"] | null
+          id: string
+          is_active: boolean
+          kind: Database["public"]["Enums"]["community_kind"]
+          logo_url: string | null
+          member_count: number
+          name: string
+          slug: string | null
+          updated_at: string
+        }
+        Insert: {
+          area?: string | null
+          cover_url?: string | null
+          created_at?: string
+          created_by: string
+          description?: string | null
+          group_type?:
+            | Database["public"]["Enums"]["community_group_type"]
+            | null
+          id?: string
+          is_active?: boolean
+          kind?: Database["public"]["Enums"]["community_kind"]
+          logo_url?: string | null
+          member_count?: number
+          name: string
+          slug?: string | null
+          updated_at?: string
+        }
+        Update: {
+          area?: string | null
+          cover_url?: string | null
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          group_type?:
+            | Database["public"]["Enums"]["community_group_type"]
+            | null
+          id?: string
+          is_active?: boolean
+          kind?: Database["public"]["Enums"]["community_kind"]
+          logo_url?: string | null
+          member_count?: number
+          name?: string
+          slug?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      community_events: {
+        Row: {
+          area: string | null
+          category: Database["public"]["Enums"]["community_event_category"]
+          community_id: string | null
+          cover_url: string | null
+          created_at: string
+          description: string | null
+          event_date: string
+          event_time: string | null
+          id: string
+          is_hidden: boolean
+          like_count: number
+          organizer_id: string
+          report_count: number
+          title: string
+          updated_at: string
+          visibility: Database["public"]["Enums"]["community_visibility"]
+        }
+        Insert: {
+          area?: string | null
+          category?: Database["public"]["Enums"]["community_event_category"]
+          community_id?: string | null
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          event_date: string
+          event_time?: string | null
+          id?: string
+          is_hidden?: boolean
+          like_count?: number
+          organizer_id: string
+          report_count?: number
+          title: string
+          updated_at?: string
+          visibility?: Database["public"]["Enums"]["community_visibility"]
+        }
+        Update: {
+          area?: string | null
+          category?: Database["public"]["Enums"]["community_event_category"]
+          community_id?: string | null
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          event_date?: string
+          event_time?: string | null
+          id?: string
+          is_hidden?: boolean
+          like_count?: number
+          organizer_id?: string
+          report_count?: number
+          title?: string
+          updated_at?: string
+          visibility?: Database["public"]["Enums"]["community_visibility"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_events_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_likes: {
+        Row: {
+          created_at: string
+          id: string
+          kind: Database["public"]["Enums"]["community_reaction_kind"]
+          reason: string | null
+          target_id: string
+          target_type: Database["public"]["Enums"]["community_target_type"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["community_reaction_kind"]
+          reason?: string | null
+          target_id: string
+          target_type: Database["public"]["Enums"]["community_target_type"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["community_reaction_kind"]
+          reason?: string | null
+          target_id?: string
+          target_type?: Database["public"]["Enums"]["community_target_type"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      community_members: {
+        Row: {
+          community_id: string
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["community_member_role"]
+          user_id: string
+        }
+        Insert: {
+          community_id: string
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["community_member_role"]
+          user_id: string
+        }
+        Update: {
+          community_id?: string
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["community_member_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_members_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_posts: {
+        Row: {
+          author_id: string
+          community_id: string | null
+          content: string
+          created_at: string
+          id: string
+          image_url: string | null
+          is_hidden: boolean
+          like_count: number
+          report_count: number
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          community_id?: string | null
+          content: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          is_hidden?: boolean
+          like_count?: number
+          report_count?: number
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          community_id?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          is_hidden?: boolean
+          like_count?: number
+          report_count?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_posts_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       education_news: {
         Row: {
           author_id: string | null
@@ -1593,11 +1822,23 @@ export type Database = {
       }
     }
     Functions: {
+      can_view_member_phone: {
+        Args: { _target: string; _viewer: string }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      is_community_manager: {
+        Args: { _community_id: string; _user_id: string }
+        Returns: boolean
+      }
+      is_community_member: {
+        Args: { _community_id: string; _user_id: string }
         Returns: boolean
       }
       slugify_name: { Args: { input: string }; Returns: string }
@@ -1616,6 +1857,28 @@ export type Database = {
         | "rejected"
       business_day: "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun"
       business_status: "pending" | "approved" | "rejected" | "suspended"
+      community_event_category:
+        | "walima"
+        | "akika"
+        | "milad"
+        | "iftar"
+        | "khela"
+        | "mela"
+        | "social"
+        | "other"
+      community_group_type:
+        | "school_batch"
+        | "college_batch"
+        | "university_batch"
+        | "friends"
+        | "sports_team"
+        | "neighborhood"
+        | "other"
+      community_kind: "community" | "club" | "group"
+      community_member_role: "owner" | "admin" | "member"
+      community_reaction_kind: "like" | "report"
+      community_target_type: "post" | "event"
+      community_visibility: "public" | "members"
       complaint_reason: "high_bill" | "wrong_reading" | "wrong_tariff" | "other"
       donor_gender: "male" | "female" | "other"
       donor_status: "pending" | "approved" | "rejected"
@@ -1778,6 +2041,30 @@ export const Constants = {
       ],
       business_day: ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
       business_status: ["pending", "approved", "rejected", "suspended"],
+      community_event_category: [
+        "walima",
+        "akika",
+        "milad",
+        "iftar",
+        "khela",
+        "mela",
+        "social",
+        "other",
+      ],
+      community_group_type: [
+        "school_batch",
+        "college_batch",
+        "university_batch",
+        "friends",
+        "sports_team",
+        "neighborhood",
+        "other",
+      ],
+      community_kind: ["community", "club", "group"],
+      community_member_role: ["owner", "admin", "member"],
+      community_reaction_kind: ["like", "report"],
+      community_target_type: ["post", "event"],
+      community_visibility: ["public", "members"],
       complaint_reason: ["high_bill", "wrong_reading", "wrong_tariff", "other"],
       donor_gender: ["male", "female", "other"],
       donor_status: ["pending", "approved", "rejected"],
