@@ -87,20 +87,83 @@ export const getMemberPhone = createServerFn({ method: "POST" })
 
 /* ------------------ Platform admin moderation ------------------ */
 
+export type AdminCommunityReport = {
+  target_type: "post" | "event";
+  target_id: string;
+  report_count: number;
+  reasons: string[];
+  last_reported_at: string;
+  is_hidden: boolean;
+  preview: string;
+  community_id: string | null;
+};
+
 export const adminListCommunityReports = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
+  .handler(async ({ context }): Promise<AdminCommunityReport[]> => {
     await ensurePlatformAdmin(context);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data, error } = await supabaseAdmin
       .from("community_likes")
-      .select("*")
+      .select("target_type, target_id, reason, created_at")
       .eq("kind", "report")
       .order("created_at", { ascending: false })
-      .limit(300);
+      .limit(500);
     if (error) throw new Error(error.message);
-    return data ?? [];
+
+    const rows = (data ?? []) as Array<{
+      target_type: "post" | "event";
+      target_id: string;
+      reason: string | null;
+      created_at: string;
+    }>;
+    if (rows.length === 0) return [];
+
+    const postIds = rows.filter((r) => r.target_type === "post").map((r) => r.target_id);
+    const eventIds = rows.filter((r) => r.target_type === "event").map((r) => r.target_id);
+
+    const [posts, events] = await Promise.all([
+      postIds.length
+        ? supabaseAdmin.from("community_posts").select("id, content, is_hidden, community_id").in("id", postIds)
+        : Promise.resolve({ data: [] as never[] }),
+      eventIds.length
+        ? supabaseAdmin.from("community_events").select("id, title, is_hidden, community_id").in("id", eventIds)
+        : Promise.resolve({ data: [] as never[] }),
+    ]);
+
+    const meta = new Map<string, { preview: string; is_hidden: boolean; community_id: string | null }>();
+    for (const p of (posts.data ?? []) as Array<{ id: string; content: string; is_hidden: boolean; community_id: string | null }>) {
+      meta.set(`post:${p.id}`, { preview: p.content.slice(0, 160), is_hidden: p.is_hidden, community_id: p.community_id });
+    }
+    for (const e of (events.data ?? []) as Array<{ id: string; title: string; is_hidden: boolean; community_id: string | null }>) {
+      meta.set(`event:${e.id}`, { preview: e.title, is_hidden: e.is_hidden, community_id: e.community_id });
+    }
+
+    const grouped = new Map<string, AdminCommunityReport>();
+    for (const r of rows) {
+      const key = `${r.target_type}:${r.target_id}`;
+      const m = meta.get(key);
+      if (!m) continue;
+      const existing = grouped.get(key);
+      if (existing) {
+        existing.report_count += 1;
+        if (r.reason) existing.reasons.push(r.reason);
+      } else {
+        grouped.set(key, {
+          target_type: r.target_type,
+          target_id: r.target_id,
+          report_count: 1,
+          reasons: r.reason ? [r.reason] : [],
+          last_reported_at: r.created_at,
+          is_hidden: m.is_hidden,
+          preview: m.preview,
+          community_id: m.community_id,
+        });
+      }
+    }
+    return Array.from(grouped.values()).sort((a, b) => b.report_count - a.report_count);
   });
+
 
 export const adminSetCommunityContentHidden = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
