@@ -18,6 +18,11 @@ const STATIC_ENTRIES: Entry[] = [
   { path: "/teachers/achievements", changefreq: "weekly", priority: "0.6" },
   { path: "/teachers/resources", changefreq: "weekly", priority: "0.6" },
   { path: "/legal", changefreq: "weekly", priority: "0.8" },
+  { path: "/community", changefreq: "daily", priority: "0.8" },
+  { path: "/community/feed", changefreq: "hourly", priority: "0.7" },
+  { path: "/community/events", changefreq: "daily", priority: "0.7" },
+  { path: "/community/clubs", changefreq: "weekly", priority: "0.6" },
+  { path: "/community/groups", changefreq: "weekly", priority: "0.6" },
   { path: "/cv-builder", changefreq: "monthly", priority: "0.6" },
   { path: "/calculator", changefreq: "monthly", priority: "0.6" },
   { path: "/isp", changefreq: "monthly", priority: "0.5" },
@@ -37,11 +42,12 @@ export const Route = createFileRoute("/sitemap.xml")({
       GET: async () => {
         const entries: Entry[] = [...STATIC_ENTRIES];
 
-        const [bizRes, workersRes, teachersRes, advocatesRes] = await Promise.all([
+        const [bizRes, workersRes, teachersRes, advocatesRes, communitiesRes] = await Promise.all([
           supabase.from("businesses").select("slug,id,updated_at").eq("status", "approved").limit(5000),
           supabase.from("workers").select("slug,id,updated_at").eq("status", "approved").limit(5000),
           supabase.from("teachers").select("slug,id,updated_at").eq("status", "approved").limit(5000),
           supabase.from("advocates").select("slug,id,updated_at").eq("is_active", true).limit(5000),
+          supabase.from("communities").select("slug,id,updated_at").eq("is_active", true).limit(5000),
         ]);
 
         for (const b of bizRes.data ?? []) {
@@ -55,6 +61,10 @@ export const Route = createFileRoute("/sitemap.xml")({
         }
         for (const a of advocatesRes.data ?? []) {
           entries.push({ path: `/legal/${a.slug ?? a.id}`, changefreq: "weekly", priority: "0.6" });
+        }
+
+        for (const c of communitiesRes.data ?? []) {
+          entries.push({ path: `/community/c/${c.slug ?? c.id}`, changefreq: "weekly", priority: "0.6" });
         }
 
         const urls = entries.map((e) => [

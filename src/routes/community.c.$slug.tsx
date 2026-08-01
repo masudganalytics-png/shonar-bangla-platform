@@ -1,12 +1,15 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { MapPin, Share2, Users } from "lucide-react";
+import { ImagePlus, Loader2, MapPin, Send, Share2, Users, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Textarea } from "@/components/ui/textarea";
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
+import { MemberRow } from "@/components/community/MemberRow";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
@@ -18,6 +21,7 @@ import {
   KIND_LABEL_BN,
   shareLink,
   type CommunityEventRow,
+  type CommunityMemberRole,
   type CommunityPostRow,
   type CommunityRow,
 } from "@/lib/community-shared";
@@ -41,6 +45,8 @@ function CommunityDetail() {
   const { user, isAuthenticated } = useAuth();
   const qc = useQueryClient();
   const [busy, setBusy] = useState(false);
+  const [content, setContent] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
   const cQ = useQuery({
     queryKey: ["community-detail", slug],
@@ -62,7 +68,7 @@ function CommunityDetail() {
       const [posts, events, members] = await Promise.all([
         supabase.from("community_posts").select("*").eq("community_id", community!.id).eq("is_hidden", false).order("created_at", { ascending: false }),
         supabase.from("community_events").select("*").eq("community_id", community!.id).eq("is_hidden", false).order("event_date", { ascending: true }),
-        supabase.from("community_members").select("user_id, role").eq("community_id", community!.id),
+        supabase.from("community_members").select("user_id, role").eq("community_id", community!.id).order("role", { ascending: true }),
       ]);
       return {
         posts: (posts.data ?? []) as CommunityPostRow[],
@@ -78,7 +84,59 @@ function CommunityDetail() {
     ...(contentQ.data?.members ?? []).map((m) => m.user_id),
   ]);
 
-  const isMember = (contentQ.data?.members ?? []).some((m) => m.user_id === user?.id);
+  const members = contentQ.data?.members ?? [];
+  const myMembership = members.find((m) => m.user_id === user?.id);
+  const isMember = !!myMembership;
+  const canManage = myMembership?.role === "owner" || myMembership?.role === "admin";
+
+  const createPost = useMutation({
+    mutationFn: async () => {
+      if (!user || !community) throw new Error("সাইন ইন করুন");
+      const text = content.trim();
+      if (text.length < 2) throw new Error("কিছু লিখুন");
+      if (text.length > 3000) throw new Error("পোস্ট অনেক বড় হয়ে গেছে");
+      let imageUrl: string | null = null;
+      if (file) imageUrl = await uploadImageToCloudinary(file, "community/posts");
+      const { error } = await supabase.from("community_posts").insert({
+        author_id: user.id,
+        community_id: community.id,
+        content: text,
+        image_url: imageUrl,
+      });
+      if (error) throw error;
+    },
+    onSuccess: async () => {
+      setContent("");
+      setFile(null);
+      toast.success("পোস্ট প্রকাশিত হয়েছে");
+      await qc.invalidateQueries({ queryKey: ["community-detail-content", community?.id] });
+    },
+    onError: (e: Error) => toast.error(e.message || "পোস্ট করা যায়নি"),
+  });
+
+  const changeRole = async (userId: string, role: CommunityMemberRole) => {
+    if (!community) return;
+    const { error } = await supabase
+      .from("community_members")
+      .update({ role })
+      .eq("community_id", community.id)
+      .eq("user_id", userId);
+    if (error) throw error;
+    await qc.invalidateQueries({ queryKey: ["community-detail-content", community.id] });
+    toast.success("ভূমিকা আপডেট হয়েছে");
+  };
+
+  const removeMember = async (userId: string) => {
+    if (!community) return;
+    const { error } = await supabase
+      .from("community_members")
+      .delete()
+      .eq("community_id", community.id)
+      .eq("user_id", userId);
+    if (error) throw error;
+    await qc.invalidateQueries({ queryKey: ["community-detail-content", community.id] });
+    toast.success("সদস্য সরানো হয়েছে");
+  };
 
   const toggleJoin = async () => {
     if (!isAuthenticated || !user) {
@@ -161,6 +219,48 @@ function CommunityDetail() {
         </TabsList>
 
         <TabsContent value="posts" className="mt-4 space-y-4">
+          {isMember ? (
+            <Card className="p-4">
+              <Textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="এই কমিউনিটিতে কিছু লিখুন…"
+                rows={3}
+                aria-label="নতুন পোস্ট"
+              />
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+                <label className="inline-flex cursor-pointer items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+                  <ImagePlus className="h-4 w-4" />
+                  {file ? file.name.slice(0, 20) : "ছবি যোগ করুন"}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                  />
+                </label>
+                <div className="flex gap-2">
+                  {file ? (
+                    <Button variant="ghost" size="sm" onClick={() => setFile(null)}>
+                      <X className="mr-1 h-4 w-4" /> ছবি বাদ
+                    </Button>
+                  ) : null}
+                  <Button size="sm" disabled={createPost.isPending} onClick={() => createPost.mutate()}>
+                    {createPost.isPending ? (
+                      <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
+                    ) : (
+                      <Send className="mr-1.5 h-4 w-4" />
+                    )}
+                    পোস্ট করুন
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          ) : (
+            <Card className="p-4 text-center text-sm text-muted-foreground">
+              পোস্ট করতে এই কমিউনিটিতে যোগ দিন।
+            </Card>
+          )}
           {(contentQ.data?.posts ?? []).length === 0 ? (
             <Card className="p-8 text-center text-sm text-muted-foreground">এখনো কোনো পোস্ট নেই।</Card>
           ) : (
@@ -177,17 +277,17 @@ function CommunityDetail() {
         </TabsContent>
 
         <TabsContent value="members" className="mt-4 grid gap-2 sm:grid-cols-2">
-          {(contentQ.data?.members ?? []).map((m) => {
-            const p = profiles.get(m.user_id);
-            return (
-              <Link key={m.user_id} to="/community/u/$userId" params={{ userId: m.user_id }}>
-                <Card className="flex items-center justify-between p-3 text-sm hover:border-primary">
-                  <span className="truncate">{p?.full_name || "ব্যবহারকারী"}</span>
-                  <Badge variant="outline" className="text-[10px]">{m.role}</Badge>
-                </Card>
-              </Link>
-            );
-          })}
+          {members.map((m) => (
+            <MemberRow
+              key={m.user_id}
+              userId={m.user_id}
+              role={m.role as CommunityMemberRole}
+              profile={profiles.get(m.user_id)}
+              canManage={!!canManage && m.user_id !== user?.id}
+              onChangeRole={changeRole}
+              onRemove={removeMember}
+            />
+          ))}
         </TabsContent>
       </Tabs>
     </div>
