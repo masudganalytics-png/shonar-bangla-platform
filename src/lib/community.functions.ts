@@ -195,3 +195,26 @@ export const adminSetCommunityActive = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
+
+export const adminListCommunities = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await ensurePlatformAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await supabaseAdmin
+      .from("communities")
+      .select("id, name, slug, kind, area, member_count, is_active, created_at")
+      .order("created_at", { ascending: false })
+      .limit(500);
+    if (error) throw new Error(error.message);
+    return (data ?? []) as Array<{
+      id: string;
+      name: string;
+      slug: string | null;
+      kind: "community" | "club" | "group";
+      area: string | null;
+      member_count: number;
+      is_active: boolean;
+      created_at: string;
+    }>;
+  });
