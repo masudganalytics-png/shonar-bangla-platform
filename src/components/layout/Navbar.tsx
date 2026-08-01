@@ -30,6 +30,7 @@ const NAV_ITEMS: readonly NavItem[] = [
   { to: "/helpline", label: "হেল্পলাইন" },
   { to: "/teachers", label: "শিক্ষক খুঁজুন" },
   { to: "/workers", label: "কাজের লোক" },
+  { to: "/community", label: "কমিউনিটি" },
 ];
 
 

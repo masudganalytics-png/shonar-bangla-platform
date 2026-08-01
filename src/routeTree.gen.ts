@@ -85,6 +85,7 @@ import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_
 import { Route as AuthenticatedAdminLegalRouteImport } from './routes/_authenticated/admin.legal'
 import { Route as AuthenticatedAdminEducationNewsRouteImport } from './routes/_authenticated/admin.education-news'
 import { Route as AuthenticatedAdminComplaintsRouteImport } from './routes/_authenticated/admin.complaints'
+import { Route as AuthenticatedAdminCommunityRouteImport } from './routes/_authenticated/admin.community'
 import { Route as AuthenticatedAdminBusinessesRouteImport } from './routes/_authenticated/admin.businesses'
 import { Route as AuthenticatedAdminBusinessReviewsRouteImport } from './routes/_authenticated/admin.business-reviews'
 import { Route as AuthenticatedAdminBusinessCategoriesRouteImport } from './routes/_authenticated/admin.business-categories'
@@ -482,6 +483,12 @@ const AuthenticatedAdminComplaintsRoute =
     path: '/complaints',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminCommunityRoute =
+  AuthenticatedAdminCommunityRouteImport.update({
+    id: '/community',
+    path: '/community',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminBusinessesRoute =
   AuthenticatedAdminBusinessesRouteImport.update({
     id: '/businesses',
@@ -596,6 +603,7 @@ export interface FileRoutesByFullPath {
   '/admin/business-categories': typeof AuthenticatedAdminBusinessCategoriesRoute
   '/admin/business-reviews': typeof AuthenticatedAdminBusinessReviewsRoute
   '/admin/businesses': typeof AuthenticatedAdminBusinessesRoute
+  '/admin/community': typeof AuthenticatedAdminCommunityRoute
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
@@ -672,6 +680,7 @@ export interface FileRoutesByTo {
   '/admin/business-categories': typeof AuthenticatedAdminBusinessCategoriesRoute
   '/admin/business-reviews': typeof AuthenticatedAdminBusinessReviewsRoute
   '/admin/businesses': typeof AuthenticatedAdminBusinessesRoute
+  '/admin/community': typeof AuthenticatedAdminCommunityRoute
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
@@ -760,6 +769,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/business-categories': typeof AuthenticatedAdminBusinessCategoriesRoute
   '/_authenticated/admin/business-reviews': typeof AuthenticatedAdminBusinessReviewsRoute
   '/_authenticated/admin/businesses': typeof AuthenticatedAdminBusinessesRoute
+  '/_authenticated/admin/community': typeof AuthenticatedAdminCommunityRoute
   '/_authenticated/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/_authenticated/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/_authenticated/admin/legal': typeof AuthenticatedAdminLegalRoute
@@ -848,6 +858,7 @@ export interface FileRouteTypes {
     | '/admin/business-categories'
     | '/admin/business-reviews'
     | '/admin/businesses'
+    | '/admin/community'
     | '/admin/complaints'
     | '/admin/education-news'
     | '/admin/legal'
@@ -924,6 +935,7 @@ export interface FileRouteTypes {
     | '/admin/business-categories'
     | '/admin/business-reviews'
     | '/admin/businesses'
+    | '/admin/community'
     | '/admin/complaints'
     | '/admin/education-news'
     | '/admin/legal'
@@ -1011,6 +1023,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/business-categories'
     | '/_authenticated/admin/business-reviews'
     | '/_authenticated/admin/businesses'
+    | '/_authenticated/admin/community'
     | '/_authenticated/admin/complaints'
     | '/_authenticated/admin/education-news'
     | '/_authenticated/admin/legal'
@@ -1597,6 +1610,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminComplaintsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/community': {
+      id: '/_authenticated/admin/community'
+      path: '/community'
+      fullPath: '/admin/community'
+      preLoaderRoute: typeof AuthenticatedAdminCommunityRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/businesses': {
       id: '/_authenticated/admin/businesses'
       path: '/businesses'
@@ -1672,6 +1692,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminBusinessCategoriesRoute: typeof AuthenticatedAdminBusinessCategoriesRoute
   AuthenticatedAdminBusinessReviewsRoute: typeof AuthenticatedAdminBusinessReviewsRoute
   AuthenticatedAdminBusinessesRoute: typeof AuthenticatedAdminBusinessesRoute
+  AuthenticatedAdminCommunityRoute: typeof AuthenticatedAdminCommunityRoute
   AuthenticatedAdminComplaintsRoute: typeof AuthenticatedAdminComplaintsRoute
   AuthenticatedAdminEducationNewsRoute: typeof AuthenticatedAdminEducationNewsRoute
   AuthenticatedAdminLegalRoute: typeof AuthenticatedAdminLegalRoute
@@ -1695,6 +1716,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminBusinessReviewsRoute:
     AuthenticatedAdminBusinessReviewsRoute,
   AuthenticatedAdminBusinessesRoute: AuthenticatedAdminBusinessesRoute,
+  AuthenticatedAdminCommunityRoute: AuthenticatedAdminCommunityRoute,
   AuthenticatedAdminComplaintsRoute: AuthenticatedAdminComplaintsRoute,
   AuthenticatedAdminEducationNewsRoute: AuthenticatedAdminEducationNewsRoute,
   AuthenticatedAdminLegalRoute: AuthenticatedAdminLegalRoute,
