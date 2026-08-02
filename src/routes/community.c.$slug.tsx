@@ -86,11 +86,12 @@ function CommunityDetail() {
   const phonesQ = useClubPhones(community?.id);
   const clubData = membersQ.data ?? { members: [], positions: [], badges: [] };
 
-  const profiles = useCommunityProfiles([
+  const profilesQ = useCommunityProfiles([
     ...(contentQ.data?.posts ?? []).map((p) => p.author_id),
     ...(contentQ.data?.events ?? []).map((e) => e.organizer_id),
     ...clubData.members.map((m) => m.user_id),
   ]);
+  const profiles = profilesQ.map;
 
   const myMembership = clubData.members.find((m) => m.user_id === user?.id);
   const isMember = !!myMembership;
