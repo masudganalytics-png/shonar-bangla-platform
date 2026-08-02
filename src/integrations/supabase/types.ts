@@ -784,31 +784,117 @@ export type Database = {
         }
         Relationships: []
       }
+      community_member_badges: {
+        Row: {
+          badge: Database["public"]["Enums"]["community_badge"]
+          community_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          badge: Database["public"]["Enums"]["community_badge"]
+          community_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          badge?: Database["public"]["Enums"]["community_badge"]
+          community_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_member_badges_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       community_members: {
         Row: {
           community_id: string
           created_at: string
+          custom_title: string | null
           id: string
+          phone_visibility: Database["public"]["Enums"]["community_phone_visibility"]
+          position_id: string | null
           role: Database["public"]["Enums"]["community_member_role"]
+          status: Database["public"]["Enums"]["community_member_status"]
           user_id: string
         }
         Insert: {
           community_id: string
           created_at?: string
+          custom_title?: string | null
           id?: string
+          phone_visibility?: Database["public"]["Enums"]["community_phone_visibility"]
+          position_id?: string | null
           role?: Database["public"]["Enums"]["community_member_role"]
+          status?: Database["public"]["Enums"]["community_member_status"]
           user_id: string
         }
         Update: {
           community_id?: string
           created_at?: string
+          custom_title?: string | null
           id?: string
+          phone_visibility?: Database["public"]["Enums"]["community_phone_visibility"]
+          position_id?: string | null
           role?: Database["public"]["Enums"]["community_member_role"]
+          status?: Database["public"]["Enums"]["community_member_status"]
           user_id?: string
         }
         Relationships: [
           {
             foreignKeyName: "community_members_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "community_members_position_id_fkey"
+            columns: ["position_id"]
+            isOneToOne: false
+            referencedRelation: "community_positions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_positions: {
+        Row: {
+          community_id: string
+          created_at: string
+          id: string
+          name_bn: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          community_id: string
+          created_at?: string
+          id?: string
+          name_bn: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          community_id?: string
+          created_at?: string
+          id?: string
+          name_bn?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_positions_community_id_fkey"
             columns: ["community_id"]
             isOneToOne: false
             referencedRelation: "communities"
@@ -1857,6 +1943,12 @@ export type Database = {
         | "rejected"
       business_day: "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun"
       business_status: "pending" | "approved" | "rejected" | "suspended"
+      community_badge:
+        | "founder"
+        | "lifetime"
+        | "executive"
+        | "advisor"
+        | "volunteer"
       community_event_category:
         | "walima"
         | "akika"
@@ -1876,6 +1968,8 @@ export type Database = {
         | "other"
       community_kind: "community" | "club" | "group"
       community_member_role: "owner" | "admin" | "member"
+      community_member_status: "active" | "inactive"
+      community_phone_visibility: "public" | "members" | "managers" | "hidden"
       community_reaction_kind: "like" | "report"
       community_target_type: "post" | "event"
       community_visibility: "public" | "members"
@@ -2041,6 +2135,13 @@ export const Constants = {
       ],
       business_day: ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
       business_status: ["pending", "approved", "rejected", "suspended"],
+      community_badge: [
+        "founder",
+        "lifetime",
+        "executive",
+        "advisor",
+        "volunteer",
+      ],
       community_event_category: [
         "walima",
         "akika",
@@ -2062,6 +2163,8 @@ export const Constants = {
       ],
       community_kind: ["community", "club", "group"],
       community_member_role: ["owner", "admin", "member"],
+      community_member_status: ["active", "inactive"],
+      community_phone_visibility: ["public", "members", "managers", "hidden"],
       community_reaction_kind: ["like", "report"],
       community_target_type: ["post", "event"],
       community_visibility: ["public", "members"],
