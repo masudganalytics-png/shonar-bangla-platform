@@ -200,3 +200,84 @@ export async function shareLink(title: string, path: string): Promise<"shared" |
   await navigator.clipboard.writeText(url);
   return "copied";
 }
+
+/* ---------------- Club committee, badges & privacy ---------------- */
+
+export const COMMUNITY_BADGES = ["founder", "lifetime", "executive", "advisor", "volunteer"] as const;
+export type CommunityBadge = (typeof COMMUNITY_BADGES)[number];
+
+export const BADGE_LABEL_BN: Record<CommunityBadge, string> = {
+  founder: "প্রতিষ্ঠাতা",
+  lifetime: "আজীবন সদস্য",
+  executive: "কার্যকরী সদস্য",
+  advisor: "উপদেষ্টা",
+  volunteer: "স্বেচ্ছাসেবক",
+};
+
+export const BADGE_ICON: Record<CommunityBadge, string> = {
+  founder: "⭐",
+  lifetime: "🏅",
+  executive: "✔️",
+  advisor: "🎖️",
+  volunteer: "🎯",
+};
+
+export type CommunityPhoneVisibility = "public" | "members" | "managers" | "hidden";
+
+export const PHONE_VISIBILITY_LABEL_BN: Record<CommunityPhoneVisibility, string> = {
+  public: "🌍 সবার জন্য",
+  members: "👥 শুধু সদস্যদের জন্য",
+  managers: "👑 শুধু অ্যাডমিন ও মালিক",
+  hidden: "🔒 কেউ দেখবে না",
+};
+
+export type CommunityMemberStatus = "active" | "inactive";
+
+export const MEMBER_STATUS_LABEL_BN: Record<CommunityMemberStatus, string> = {
+  active: "সক্রিয়",
+  inactive: "নিষ্ক্রিয়",
+};
+
+export const DEFAULT_COMMITTEE_POSITIONS = [
+  "সভাপতি",
+  "সহ-সভাপতি",
+  "সাধারণ সম্পাদক",
+  "যুগ্ম সাধারণ সম্পাদক",
+  "সাংগঠনিক সম্পাদক",
+  "সহ-সাংগঠনিক সম্পাদক",
+  "কোষাধ্যক্ষ",
+  "দপ্তর সম্পাদক",
+  "প্রচার সম্পাদক",
+  "ক্রীড়া সম্পাদক",
+  "সাংস্কৃতিক সম্পাদক",
+  "ধর্ম বিষয়ক সম্পাদক",
+  "সমাজকল্যাণ সম্পাদক",
+  "সদস্য",
+] as const;
+
+export type CommunityPositionRow = {
+  id: string;
+  community_id: string;
+  name_bn: string;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CommunityMemberDetail = {
+  user_id: string;
+  role: CommunityMemberRole;
+  position_id: string | null;
+  custom_title: string | null;
+  status: CommunityMemberStatus;
+  phone_visibility: CommunityPhoneVisibility;
+  created_at: string;
+};
+
+export function formatDateBn(iso: string): string {
+  try {
+    return new Date(iso).toLocaleDateString("bn-BD", { year: "numeric", month: "long", day: "numeric" });
+  } catch {
+    return iso.slice(0, 10);
+  }
+}
