@@ -67,7 +67,15 @@ export function MemberManageDialog({
     await qc.invalidateQueries({ queryKey: ["club-phones", communityId] });
   };
 
-  const patch = async (values: Record<string, unknown>, ok: string) => {
+  type MemberPatch = {
+    position_id?: string | null;
+    custom_title?: string | null;
+    status?: CommunityMemberStatus;
+    phone_visibility?: CommunityPhoneVisibility;
+    role?: "owner" | "admin" | "member";
+  };
+
+  const patch = async (values: MemberPatch, ok: string) => {
     setBusy(true);
     try {
       const { error } = await supabase
