@@ -218,3 +218,72 @@ export const adminListCommunities = createServerFn({ method: "GET" })
       created_at: string;
     }>;
   });
+
+/* ------------------ Club committee: phone privacy ------------------ */
+
+type PhoneMap = Record<string, string>;
+
+async function collectPhones(
+  communityId: string,
+  allowed: Array<"public" | "members" | "managers" | "hidden">,
+  all: boolean,
+): Promise<PhoneMap> {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data: members, error } = await supabaseAdmin
+    .from("community_members")
+    .select("user_id, phone_visibility")
+    .eq("community_id", communityId);
+  if (error) throw new Error(error.message);
+  const ids = (members ?? [])
+    .filter((m) => all || allowed.includes(m.phone_visibility as "public"))
+    .map((m) => m.user_id);
+  if (ids.length === 0) return {};
+  const { data: rows } = await supabaseAdmin.from("profiles").select("id, phone").in("id", ids);
+  const map: PhoneMap = {};
+  for (const r of rows ?? []) if (r.phone) map[r.id] = r.phone;
+  return map;
+}
+
+/** Guests / signed-out visitors: only members who chose "public". */
+export const getCommunityPublicPhones = createServerFn({ method: "POST" })
+  .inputValidator((d: unknown) => z.object({ communityId: z.string().uuid() }).parse(d))
+  .handler(async ({ data }): Promise<PhoneMap> => collectPhones(data.communityId, ["public"], false));
+
+/** Signed-in: members see public + members-only; managers/platform admins see all. */
+export const getCommunityPhones = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) => z.object({ communityId: z.string().uuid() }).parse(d))
+  .handler(async ({ data, context }): Promise<PhoneMap> => {
+    const sb = context.supabase as unknown as RpcClient;
+    const [mgr, adm, mem] = await Promise.all([
+      sb.rpc("is_community_manager", { _community_id: data.communityId, _user_id: context.userId }),
+      sb.rpc("has_role", { _user_id: context.userId, _role: "admin" }),
+      sb.rpc("is_community_member", { _community_id: data.communityId, _user_id: context.userId }),
+    ]);
+    if (mgr.data || adm.data) return collectPhones(data.communityId, [], true);
+    if (mem.data) return collectPhones(data.communityId, ["public", "members"], false);
+    return collectPhones(data.communityId, ["public"], false);
+  });
+
+/** Manager-only: find platform users by name to add them to the club. */
+export const searchCommunityCandidates = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) =>
+    z.object({ communityId: z.string().uuid(), q: z.string().trim().min(2).max(60) }).parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const sb = context.supabase as unknown as RpcClient;
+    const [mgr, adm] = await Promise.all([
+      sb.rpc("is_community_manager", { _community_id: data.communityId, _user_id: context.userId }),
+      sb.rpc("has_role", { _user_id: context.userId, _role: "admin" }),
+    ]);
+    if (!mgr.data && !adm.data) throw new Error("Forbidden");
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: rows, error } = await supabaseAdmin
+      .from("profiles")
+      .select("id, full_name, avatar_url")
+      .ilike("full_name", `%${data.q}%`)
+      .limit(20);
+    if (error) throw new Error(error.message);
+    return (rows ?? []) as Array<{ id: string; full_name: string | null; avatar_url: string | null }>;
+  });
