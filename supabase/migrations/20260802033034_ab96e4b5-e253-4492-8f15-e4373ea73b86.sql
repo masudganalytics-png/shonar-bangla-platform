@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.seed_default_community_positions() FROM PUBLIC, anon, authenticated;
