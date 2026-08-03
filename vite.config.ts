@@ -63,6 +63,16 @@ export default defineConfig({
               },
             },
             {
+              // Country flag SVGs (FlagCDN) — cache long-term, never re-download
+              urlPattern: /^https:\/\/flagcdn\.com\//,
+              handler: "CacheFirst",
+              options: {
+                cacheName: "country-flags",
+                expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 365 },
+                cacheableResponse: { statuses: [0, 200] },
+              },
+            },
+            {
               // Images
               urlPattern: ({ request }) => request.destination === "image",
               handler: "CacheFirst",

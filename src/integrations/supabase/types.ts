@@ -1030,6 +1030,7 @@ export type Database = {
           currency_name: string
           exchange_rate_to_bdt: number
           flag_emoji: string
+          flag_url: string | null
           id: string
           last_updated: string
           previous_rate: number
@@ -1044,6 +1045,7 @@ export type Database = {
           currency_name: string
           exchange_rate_to_bdt?: number
           flag_emoji?: string
+          flag_url?: string | null
           id?: string
           last_updated?: string
           previous_rate?: number
@@ -1058,6 +1060,7 @@ export type Database = {
           currency_name?: string
           exchange_rate_to_bdt?: number
           flag_emoji?: string
+          flag_url?: string | null
           id?: string
           last_updated?: string
           previous_rate?: number
