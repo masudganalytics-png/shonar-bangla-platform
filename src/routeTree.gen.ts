@@ -94,6 +94,7 @@ import { Route as AuthenticatedAdminBloodDonorsRouteImport } from './routes/_aut
 import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authenticated/admin.bills'
 import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
 import { Route as AuthenticatedAdminAchievementsRouteImport } from './routes/_authenticated/admin.achievements'
+import { Route as ApiPublicHooksRefreshExchangeRatesRouteImport } from './routes/api/public/hooks/refresh-exchange-rates'
 import { Route as AuthenticatedBillsIdEditRouteImport } from './routes/_authenticated/bills.$id.edit'
 
 const WorkersRoute = WorkersRouteImport.update({
@@ -536,6 +537,12 @@ const AuthenticatedAdminAchievementsRoute =
     path: '/achievements',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const ApiPublicHooksRefreshExchangeRatesRoute =
+  ApiPublicHooksRefreshExchangeRatesRouteImport.update({
+    id: '/api/public/hooks/refresh-exchange-rates',
+    path: '/api/public/hooks/refresh-exchange-rates',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedBillsIdEditRoute =
   AuthenticatedBillsIdEditRouteImport.update({
     id: '/$id/edit',
@@ -629,6 +636,7 @@ export interface FileRoutesByFullPath {
   '/teachers/news/': typeof TeachersNewsIndexRoute
   '/teachers/tuitions/': typeof TeachersTuitionsIndexRoute
   '/bills/$id/edit': typeof AuthenticatedBillsIdEditRoute
+  '/api/public/hooks/refresh-exchange-rates': typeof ApiPublicHooksRefreshExchangeRatesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -706,6 +714,7 @@ export interface FileRoutesByTo {
   '/teachers/news': typeof TeachersNewsIndexRoute
   '/teachers/tuitions': typeof TeachersTuitionsIndexRoute
   '/bills/$id/edit': typeof AuthenticatedBillsIdEditRoute
+  '/api/public/hooks/refresh-exchange-rates': typeof ApiPublicHooksRefreshExchangeRatesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -795,6 +804,7 @@ export interface FileRoutesById {
   '/teachers/news/': typeof TeachersNewsIndexRoute
   '/teachers/tuitions/': typeof TeachersTuitionsIndexRoute
   '/_authenticated/bills/$id/edit': typeof AuthenticatedBillsIdEditRoute
+  '/api/public/hooks/refresh-exchange-rates': typeof ApiPublicHooksRefreshExchangeRatesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -884,6 +894,7 @@ export interface FileRouteTypes {
     | '/teachers/news/'
     | '/teachers/tuitions/'
     | '/bills/$id/edit'
+    | '/api/public/hooks/refresh-exchange-rates'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -961,6 +972,7 @@ export interface FileRouteTypes {
     | '/teachers/news'
     | '/teachers/tuitions'
     | '/bills/$id/edit'
+    | '/api/public/hooks/refresh-exchange-rates'
   id:
     | '__root__'
     | '/'
@@ -1049,6 +1061,7 @@ export interface FileRouteTypes {
     | '/teachers/news/'
     | '/teachers/tuitions/'
     | '/_authenticated/bills/$id/edit'
+    | '/api/public/hooks/refresh-exchange-rates'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1074,6 +1087,7 @@ export interface RootRouteChildren {
   WorkersRoute: typeof WorkersRouteWithChildren
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
   ApiPublicStatsRoute: typeof ApiPublicStatsRoute
+  ApiPublicHooksRefreshExchangeRatesRoute: typeof ApiPublicHooksRefreshExchangeRatesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1673,6 +1687,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAchievementsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/api/public/hooks/refresh-exchange-rates': {
+      id: '/api/public/hooks/refresh-exchange-rates'
+      path: '/api/public/hooks/refresh-exchange-rates'
+      fullPath: '/api/public/hooks/refresh-exchange-rates'
+      preLoaderRoute: typeof ApiPublicHooksRefreshExchangeRatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/bills/$id/edit': {
       id: '/_authenticated/bills/$id/edit'
       path: '/$id/edit'
@@ -1950,17 +1971,9 @@ const rootRouteChildren: RootRouteChildren = {
   WorkersRoute: WorkersRouteWithChildren,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
   ApiPublicStatsRoute: ApiPublicStatsRoute,
+  ApiPublicHooksRefreshExchangeRatesRoute:
+    ApiPublicHooksRefreshExchangeRatesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
