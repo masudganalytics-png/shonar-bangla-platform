@@ -13,10 +13,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
+import { CountryFlag } from "@/components/common/CountryFlag";
 import {
   RATE_STATUS_META,
   formatRate,
   formatUpdatedAt,
+  isoForRate,
   toBanglaDigits,
   type ExchangeRateRow,
 } from "@/lib/exchange-shared";
@@ -29,7 +31,7 @@ function useExchangeRates() {
       const { data, error } = await supabase
         .from("exchange_rates")
         .select(
-          "id, country_name, country_name_bn, flag_emoji, currency_name, currency_code, exchange_rate_to_bdt, previous_rate, rate_status, sort_order, last_updated",
+          "id, country_name, country_name_bn, flag_emoji, flag_url, currency_name, currency_code, exchange_rate_to_bdt, previous_rate, rate_status, sort_order, last_updated",
         )
         .order("sort_order", { ascending: true });
       if (error) throw error;
@@ -43,19 +45,20 @@ function RateCard({ r }: { r: ExchangeRateRow }) {
   return (
     <Card className="min-w-[13rem] shrink-0 snap-start border-white/40 bg-white/60 p-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-[var(--shadow-lg)] dark:border-white/10 dark:bg-white/5 sm:min-w-0">
       <div className="flex items-start justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl leading-none" aria-hidden>
-            {r.flag_emoji}
-          </span>
+        <div className="flex min-w-0 items-center gap-2">
+          <CountryFlag src={r.flag_url} iso={isoForRate(r)} countryName={r.country_name} />
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold">{r.country_name_bn}</p>
-            <p className="text-xs text-muted-foreground">{r.currency_code}</p>
+            <p className="truncate text-xs text-muted-foreground">
+              {r.currency_name} • {r.currency_code}
+            </p>
           </div>
         </div>
         <span className={`text-xs font-medium ${meta.className}`} title={meta.label}>
           {meta.dot}
         </span>
       </div>
+
 
       <p className="mt-3 text-2xl font-bold tracking-tight">
         ৳ {formatRate(Number(r.exchange_rate_to_bdt))}
