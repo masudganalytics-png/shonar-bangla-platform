@@ -102,7 +102,10 @@ function Calculator({ rates }: { rates: ExchangeRateRow[] }) {
             <SelectContent>
               {rates.map((r) => (
                 <SelectItem key={r.currency_code} value={r.currency_code}>
-                  {r.flag_emoji} {r.country_name_bn} — {r.currency_code}
+                  <span className="flex items-center gap-2">
+                    <CountryFlag src={r.flag_url} iso={isoForRate(r)} countryName={r.country_name} />
+                    {r.country_name_bn} — {r.currency_code}
+                  </span>
                 </SelectItem>
               ))}
             </SelectContent>
