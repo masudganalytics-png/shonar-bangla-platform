@@ -5,6 +5,7 @@ export type ExchangeRateRow = {
   country_name: string;
   country_name_bn: string;
   flag_emoji: string;
+  flag_url: string | null;
   currency_name: string;
   currency_code: string;
   exchange_rate_to_bdt: number;
