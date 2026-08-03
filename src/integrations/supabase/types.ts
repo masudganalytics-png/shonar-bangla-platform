@@ -994,6 +994,78 @@ export type Database = {
         }
         Relationships: []
       }
+      exchange_rate_logs: {
+        Row: {
+          created_at: string
+          id: string
+          message: string | null
+          provider: string | null
+          success: boolean
+          updated_count: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          provider?: string | null
+          success: boolean
+          updated_count?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          provider?: string | null
+          success?: boolean
+          updated_count?: number
+        }
+        Relationships: []
+      }
+      exchange_rates: {
+        Row: {
+          country_name: string
+          country_name_bn: string
+          created_at: string
+          currency_code: string
+          currency_name: string
+          exchange_rate_to_bdt: number
+          flag_emoji: string
+          id: string
+          last_updated: string
+          previous_rate: number
+          rate_status: Database["public"]["Enums"]["rate_status"]
+          sort_order: number
+        }
+        Insert: {
+          country_name: string
+          country_name_bn: string
+          created_at?: string
+          currency_code: string
+          currency_name: string
+          exchange_rate_to_bdt?: number
+          flag_emoji?: string
+          id?: string
+          last_updated?: string
+          previous_rate?: number
+          rate_status?: Database["public"]["Enums"]["rate_status"]
+          sort_order?: number
+        }
+        Update: {
+          country_name?: string
+          country_name_bn?: string
+          created_at?: string
+          currency_code?: string
+          currency_name?: string
+          exchange_rate_to_bdt?: number
+          flag_emoji?: string
+          id?: string
+          last_updated?: string
+          previous_rate?: number
+          rate_status?: Database["public"]["Enums"]["rate_status"]
+          sort_order?: number
+        }
+        Relationships: []
+      }
       favorites: {
         Row: {
           created_at: string
@@ -1979,6 +2051,7 @@ export type Database = {
       lead_status: "new" | "contacted" | "closed"
       listing_status: "pending" | "approved" | "rejected"
       profile_role: "user" | "business" | "admin"
+      rate_status: "increased" | "decreased" | "stable"
       report_category: "billing" | "outage" | "meter" | "connection" | "other"
       report_status: "open" | "in_progress" | "resolved" | "rejected"
       resource_type: "website" | "gdrive" | "youtube" | "pdf" | "link"
@@ -2174,6 +2247,7 @@ export const Constants = {
       lead_status: ["new", "contacted", "closed"],
       listing_status: ["pending", "approved", "rejected"],
       profile_role: ["user", "business", "admin"],
+      rate_status: ["increased", "decreased", "stable"],
       report_category: ["billing", "outage", "meter", "connection", "other"],
       report_status: ["open", "in_progress", "resolved", "rejected"],
       resource_type: ["website", "gdrive", "youtube", "pdf", "link"],
