@@ -39,3 +39,23 @@ export function formatUpdatedAt(iso: string): string {
   const time = d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false });
   return toBanglaDigits(`${date} • ${time}`);
 }
+
+/** Currency code -> ISO 3166-1 alpha-2 country code (for SVG flags). */
+export const CURRENCY_ISO: Record<string, string> = {
+  SAR: "SA",
+  AED: "AE",
+  QAR: "QA",
+  OMR: "OM",
+  KWD: "KW",
+  BHD: "BH",
+  MYR: "MY",
+  SGD: "SG",
+  USD: "US",
+  GBP: "GB",
+  EUR: "FR",
+};
+
+export function isoForRate(r: { currency_code: string; flag_url?: string | null }): string {
+  const fromUrl = r.flag_url?.match(/\/([a-z]{2})\.svg/i)?.[1];
+  return (fromUrl ?? CURRENCY_ISO[r.currency_code] ?? r.currency_code.slice(0, 2)).toUpperCase();
+}
