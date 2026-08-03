@@ -10,6 +10,7 @@ import { ExploreServices } from "@/components/home/ExploreServices";
 import { LatestUpdates } from "@/components/home/LatestUpdates";
 import { FeaturedServices } from "@/components/home/FeaturedServices";
 import { TodaysHighlights } from "@/components/home/TodaysHighlights";
+import { LiveExchangeRates } from "@/components/home/LiveExchangeRates";
 
 export const Route = createFileRoute("/")({
   head: () => ({
