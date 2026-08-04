@@ -1263,6 +1263,113 @@ export type Database = {
         }
         Relationships: []
       }
+      probashi_notification_log: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          profile_id: string
+          sent_on: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          profile_id: string
+          sent_on?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          profile_id?: string
+          sent_on?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "probashi_notification_log_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "probashi_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      probashi_profiles: {
+        Row: {
+          birth_date: string | null
+          city: string | null
+          community_message: string | null
+          country: string
+          country_code: string | null
+          created_at: string
+          expected_return_date: string | null
+          facebook_url: string | null
+          full_name: string
+          id: string
+          is_verified: boolean
+          moved_abroad_date: string | null
+          phone: string | null
+          photo_url: string | null
+          profession: string | null
+          show_contact: boolean
+          slug: string | null
+          status: Database["public"]["Enums"]["probashi_status"]
+          updated_at: string
+          user_id: string | null
+          village: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          birth_date?: string | null
+          city?: string | null
+          community_message?: string | null
+          country: string
+          country_code?: string | null
+          created_at?: string
+          expected_return_date?: string | null
+          facebook_url?: string | null
+          full_name: string
+          id?: string
+          is_verified?: boolean
+          moved_abroad_date?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          profession?: string | null
+          show_contact?: boolean
+          slug?: string | null
+          status?: Database["public"]["Enums"]["probashi_status"]
+          updated_at?: string
+          user_id?: string | null
+          village?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          birth_date?: string | null
+          city?: string | null
+          community_message?: string | null
+          country?: string
+          country_code?: string | null
+          created_at?: string
+          expected_return_date?: string | null
+          facebook_url?: string | null
+          full_name?: string
+          id?: string
+          is_verified?: boolean
+          moved_abroad_date?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          profession?: string | null
+          show_contact?: boolean
+          slug?: string | null
+          status?: Database["public"]["Enums"]["probashi_status"]
+          updated_at?: string
+          user_id?: string | null
+          village?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           address: string | null
@@ -2053,6 +2160,7 @@ export type Database = {
       donor_status: "pending" | "approved" | "rejected"
       lead_status: "new" | "contacted" | "closed"
       listing_status: "pending" | "approved" | "rejected"
+      probashi_status: "pending" | "approved" | "rejected" | "suspended"
       profile_role: "user" | "business" | "admin"
       rate_status: "increased" | "decreased" | "stable"
       report_category: "billing" | "outage" | "meter" | "connection" | "other"
@@ -2249,6 +2357,7 @@ export const Constants = {
       donor_status: ["pending", "approved", "rejected"],
       lead_status: ["new", "contacted", "closed"],
       listing_status: ["pending", "approved", "rejected"],
+      probashi_status: ["pending", "approved", "rejected", "suspended"],
       profile_role: ["user", "business", "admin"],
       rate_status: ["increased", "decreased", "stable"],
       report_category: ["billing", "outage", "meter", "connection", "other"],
