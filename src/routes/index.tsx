@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Calculator, FileSignature, FileText, GraduationCap, HardHat, Scale, Store, Wifi, Scale as ScaleIcon, Droplet, Heart } from "lucide-react";
+import { ArrowRight, Calculator, FileSignature, FileText, GraduationCap, HardHat, Scale, Store, Wifi, Scale as ScaleIcon, Droplet, Heart, Globe2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
@@ -92,6 +92,12 @@ const QUICK_ACTIONS = [
     icon: Droplet,
     title: "❤️ রক্তদাতা খুঁজুন",
     desc: "উখিয়ার যাচাইকৃত রক্তদাতাদের সাথে সরাসরি যোগাযোগ করুন।",
+  },
+  {
+    to: "/probashi" as const,
+    icon: Globe2,
+    title: "🌍 প্রবাসী কর্নার",
+    desc: "উখিয়ার প্রবাসীদের তালিকা, বার্তা ও দেশে ফেরার তথ্য।",
   },
   {
     to: "/request-blood" as const,

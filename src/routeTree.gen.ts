@@ -86,6 +86,7 @@ import { Route as AuthenticatedAdminTuitionRequestsRouteImport } from './routes/
 import { Route as AuthenticatedAdminTuitionApplicationsRouteImport } from './routes/_authenticated/admin.tuition-applications'
 import { Route as AuthenticatedAdminTeachersRouteImport } from './routes/_authenticated/admin.teachers'
 import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_authenticated/admin.study-resources'
+import { Route as AuthenticatedAdminProbashiRouteImport } from './routes/_authenticated/admin.probashi'
 import { Route as AuthenticatedAdminLegalRouteImport } from './routes/_authenticated/admin.legal'
 import { Route as AuthenticatedAdminEducationNewsRouteImport } from './routes/_authenticated/admin.education-news'
 import { Route as AuthenticatedAdminComplaintsRouteImport } from './routes/_authenticated/admin.complaints'
@@ -491,6 +492,12 @@ const AuthenticatedAdminStudyResourcesRoute =
     path: '/study-resources',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminProbashiRoute =
+  AuthenticatedAdminProbashiRouteImport.update({
+    id: '/probashi',
+    path: '/probashi',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminLegalRoute = AuthenticatedAdminLegalRouteImport.update({
   id: '/legal',
   path: '/legal',
@@ -642,6 +649,7 @@ export interface FileRoutesByFullPath {
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -723,6 +731,7 @@ export interface FileRoutesByTo {
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -817,6 +826,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/_authenticated/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/_authenticated/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/_authenticated/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/_authenticated/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/_authenticated/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/_authenticated/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -911,6 +921,7 @@ export interface FileRouteTypes {
     | '/admin/complaints'
     | '/admin/education-news'
     | '/admin/legal'
+    | '/admin/probashi'
     | '/admin/study-resources'
     | '/admin/teachers'
     | '/admin/tuition-applications'
@@ -992,6 +1003,7 @@ export interface FileRouteTypes {
     | '/admin/complaints'
     | '/admin/education-news'
     | '/admin/legal'
+    | '/admin/probashi'
     | '/admin/study-resources'
     | '/admin/teachers'
     | '/admin/tuition-applications'
@@ -1085,6 +1097,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/complaints'
     | '/_authenticated/admin/education-news'
     | '/_authenticated/admin/legal'
+    | '/_authenticated/admin/probashi'
     | '/_authenticated/admin/study-resources'
     | '/_authenticated/admin/teachers'
     | '/_authenticated/admin/tuition-applications'
@@ -1678,6 +1691,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminStudyResourcesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/probashi': {
+      id: '/_authenticated/admin/probashi'
+      path: '/probashi'
+      fullPath: '/admin/probashi'
+      preLoaderRoute: typeof AuthenticatedAdminProbashiRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/legal': {
       id: '/_authenticated/admin/legal'
       path: '/legal'
@@ -1792,6 +1812,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminComplaintsRoute: typeof AuthenticatedAdminComplaintsRoute
   AuthenticatedAdminEducationNewsRoute: typeof AuthenticatedAdminEducationNewsRoute
   AuthenticatedAdminLegalRoute: typeof AuthenticatedAdminLegalRoute
+  AuthenticatedAdminProbashiRoute: typeof AuthenticatedAdminProbashiRoute
   AuthenticatedAdminStudyResourcesRoute: typeof AuthenticatedAdminStudyResourcesRoute
   AuthenticatedAdminTeachersRoute: typeof AuthenticatedAdminTeachersRoute
   AuthenticatedAdminTuitionApplicationsRoute: typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -1816,6 +1837,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminComplaintsRoute: AuthenticatedAdminComplaintsRoute,
   AuthenticatedAdminEducationNewsRoute: AuthenticatedAdminEducationNewsRoute,
   AuthenticatedAdminLegalRoute: AuthenticatedAdminLegalRoute,
+  AuthenticatedAdminProbashiRoute: AuthenticatedAdminProbashiRoute,
   AuthenticatedAdminStudyResourcesRoute: AuthenticatedAdminStudyResourcesRoute,
   AuthenticatedAdminTeachersRoute: AuthenticatedAdminTeachersRoute,
   AuthenticatedAdminTuitionApplicationsRoute:
