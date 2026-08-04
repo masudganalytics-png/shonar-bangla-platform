@@ -46,6 +46,7 @@ import { Route as TeachersNewsRouteImport } from './routes/teachers.news'
 import { Route as TeachersAchievementsRouteImport } from './routes/teachers.achievements'
 import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
 import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register'
+import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
 import { Route as LegalIdRouteImport } from './routes/legal.$id'
 import { Route as CommunityNewRouteImport } from './routes/community.new'
 import { Route as CommunityGroupsRouteImport } from './routes/community.groups'
@@ -282,6 +283,11 @@ const TeachersIdRoute = TeachersIdRouteImport.update({
 const ProbashiRegisterRoute = ProbashiRegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => ProbashiRoute,
+} as any)
+const ProbashiSlugRoute = ProbashiSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
   getParentRoute: () => ProbashiRoute,
 } as any)
 const LegalIdRoute = LegalIdRouteImport.update({
@@ -607,6 +613,7 @@ export interface FileRoutesByFullPath {
   '/community/groups': typeof CommunityGroupsRoute
   '/community/new': typeof CommunityNewRoute
   '/legal/$id': typeof LegalIdRoute
+  '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
@@ -690,6 +697,7 @@ export interface FileRoutesByTo {
   '/community/groups': typeof CommunityGroupsRoute
   '/community/new': typeof CommunityNewRoute
   '/legal/$id': typeof LegalIdRoute
+  '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/register': typeof TeachersRegisterRoute
@@ -780,6 +788,7 @@ export interface FileRoutesById {
   '/community/groups': typeof CommunityGroupsRoute
   '/community/new': typeof CommunityNewRoute
   '/legal/$id': typeof LegalIdRoute
+  '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
@@ -873,6 +882,7 @@ export interface FileRouteTypes {
     | '/community/groups'
     | '/community/new'
     | '/legal/$id'
+    | '/probashi/$slug'
     | '/probashi/register'
     | '/teachers/$id'
     | '/teachers/achievements'
@@ -956,6 +966,7 @@ export interface FileRouteTypes {
     | '/community/groups'
     | '/community/new'
     | '/legal/$id'
+    | '/probashi/$slug'
     | '/probashi/register'
     | '/teachers/$id'
     | '/teachers/register'
@@ -1045,6 +1056,7 @@ export interface FileRouteTypes {
     | '/community/groups'
     | '/community/new'
     | '/legal/$id'
+    | '/probashi/$slug'
     | '/probashi/register'
     | '/teachers/$id'
     | '/teachers/achievements'
@@ -1384,6 +1396,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/probashi/register'
       preLoaderRoute: typeof ProbashiRegisterRouteImport
+      parentRoute: typeof ProbashiRoute
+    }
+    '/probashi/$slug': {
+      id: '/probashi/$slug'
+      path: '/$slug'
+      fullPath: '/probashi/$slug'
+      preLoaderRoute: typeof ProbashiSlugRouteImport
       parentRoute: typeof ProbashiRoute
     }
     '/legal/$id': {
@@ -1924,11 +1943,13 @@ const LegalRouteChildren: LegalRouteChildren = {
 const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
 
 interface ProbashiRouteChildren {
+  ProbashiSlugRoute: typeof ProbashiSlugRoute
   ProbashiRegisterRoute: typeof ProbashiRegisterRoute
   ProbashiIndexRoute: typeof ProbashiIndexRoute
 }
 
 const ProbashiRouteChildren: ProbashiRouteChildren = {
+  ProbashiSlugRoute: ProbashiSlugRoute,
   ProbashiRegisterRoute: ProbashiRegisterRoute,
   ProbashiIndexRoute: ProbashiIndexRoute,
 }
