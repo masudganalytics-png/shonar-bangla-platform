@@ -32,6 +32,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WorkersIndexRouteImport } from './routes/workers.index'
 import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
+import { Route as ProbashiIndexRouteImport } from './routes/probashi.index'
 import { Route as LegalIndexRouteImport } from './routes/legal.index'
 import { Route as CommunityIndexRouteImport } from './routes/community.index'
 import { Route as BusinessIndexRouteImport } from './routes/business.index'
@@ -211,6 +212,11 @@ const TeachersIndexRoute = TeachersIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => TeachersRoute,
+} as any)
+const ProbashiIndexRoute = ProbashiIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProbashiRoute,
 } as any)
 const LegalIndexRoute = LegalIndexRouteImport.update({
   id: '/',
@@ -569,7 +575,7 @@ export interface FileRoutesByFullPath {
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
-  '/probashi': typeof ProbashiRoute
+  '/probashi': typeof ProbashiRouteWithChildren
   '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -607,6 +613,7 @@ export interface FileRoutesByFullPath {
   '/business/': typeof BusinessIndexRoute
   '/community/': typeof CommunityIndexRoute
   '/legal/': typeof LegalIndexRoute
+  '/probashi/': typeof ProbashiIndexRoute
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
   '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
@@ -654,7 +661,6 @@ export interface FileRoutesByTo {
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/notices': typeof NoticesRoute
-  '/probashi': typeof ProbashiRoute
   '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -686,6 +692,7 @@ export interface FileRoutesByTo {
   '/business': typeof BusinessIndexRoute
   '/community': typeof CommunityIndexRoute
   '/legal': typeof LegalIndexRoute
+  '/probashi': typeof ProbashiIndexRoute
   '/teachers': typeof TeachersIndexRoute
   '/workers': typeof WorkersIndexRoute
   '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
@@ -739,7 +746,7 @@ export interface FileRoutesById {
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
-  '/probashi': typeof ProbashiRoute
+  '/probashi': typeof ProbashiRouteWithChildren
   '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -777,6 +784,7 @@ export interface FileRoutesById {
   '/business/': typeof BusinessIndexRoute
   '/community/': typeof CommunityIndexRoute
   '/legal/': typeof LegalIndexRoute
+  '/probashi/': typeof ProbashiIndexRoute
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
   '/_authenticated/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
@@ -868,6 +876,7 @@ export interface FileRouteTypes {
     | '/business/'
     | '/community/'
     | '/legal/'
+    | '/probashi/'
     | '/teachers/'
     | '/workers/'
     | '/admin/achievements'
@@ -915,7 +924,6 @@ export interface FileRouteTypes {
     | '/helpline'
     | '/isp'
     | '/notices'
-    | '/probashi'
     | '/request-blood'
     | '/reset-password'
     | '/sitemap.xml'
@@ -947,6 +955,7 @@ export interface FileRouteTypes {
     | '/business'
     | '/community'
     | '/legal'
+    | '/probashi'
     | '/teachers'
     | '/workers'
     | '/admin/achievements'
@@ -1037,6 +1046,7 @@ export interface FileRouteTypes {
     | '/business/'
     | '/community/'
     | '/legal/'
+    | '/probashi/'
     | '/teachers/'
     | '/workers/'
     | '/_authenticated/admin/achievements'
@@ -1090,7 +1100,7 @@ export interface RootRouteChildren {
   IspRoute: typeof IspRoute
   LegalRoute: typeof LegalRouteWithChildren
   NoticesRoute: typeof NoticesRoute
-  ProbashiRoute: typeof ProbashiRoute
+  ProbashiRoute: typeof ProbashiRouteWithChildren
   RequestBloodRoute: typeof RequestBloodRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -1265,6 +1275,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/teachers/'
       preLoaderRoute: typeof TeachersIndexRouteImport
       parentRoute: typeof TeachersRoute
+    }
+    '/probashi/': {
+      id: '/probashi/'
+      path: '/'
+      fullPath: '/probashi/'
+      preLoaderRoute: typeof ProbashiIndexRouteImport
+      parentRoute: typeof ProbashiRoute
     }
     '/legal/': {
       id: '/legal/'
@@ -1887,6 +1904,18 @@ const LegalRouteChildren: LegalRouteChildren = {
 
 const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
 
+interface ProbashiRouteChildren {
+  ProbashiIndexRoute: typeof ProbashiIndexRoute
+}
+
+const ProbashiRouteChildren: ProbashiRouteChildren = {
+  ProbashiIndexRoute: ProbashiIndexRoute,
+}
+
+const ProbashiRouteWithChildren = ProbashiRoute._addFileChildren(
+  ProbashiRouteChildren,
+)
+
 interface TeachersAchievementsRouteChildren {
   TeachersAchievementsIdRoute: typeof TeachersAchievementsIdRoute
   TeachersAchievementsIndexRoute: typeof TeachersAchievementsIndexRoute
@@ -1982,7 +2011,7 @@ const rootRouteChildren: RootRouteChildren = {
   IspRoute: IspRoute,
   LegalRoute: LegalRouteWithChildren,
   NoticesRoute: NoticesRoute,
-  ProbashiRoute: ProbashiRoute,
+  ProbashiRoute: ProbashiRouteWithChildren,
   RequestBloodRoute: RequestBloodRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
