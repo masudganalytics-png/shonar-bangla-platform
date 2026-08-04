@@ -16,6 +16,7 @@ import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RequestBloodRouteImport } from './routes/request-blood'
+import { Route as ProbashiRouteImport } from './routes/probashi'
 import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as IspRouteImport } from './routes/isp'
@@ -31,6 +32,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WorkersIndexRouteImport } from './routes/workers.index'
 import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
+import { Route as ProbashiIndexRouteImport } from './routes/probashi.index'
 import { Route as LegalIndexRouteImport } from './routes/legal.index'
 import { Route as CommunityIndexRouteImport } from './routes/community.index'
 import { Route as BusinessIndexRouteImport } from './routes/business.index'
@@ -43,6 +45,8 @@ import { Route as TeachersRegisterRouteImport } from './routes/teachers.register
 import { Route as TeachersNewsRouteImport } from './routes/teachers.news'
 import { Route as TeachersAchievementsRouteImport } from './routes/teachers.achievements'
 import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
+import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register'
+import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
 import { Route as LegalIdRouteImport } from './routes/legal.$id'
 import { Route as CommunityNewRouteImport } from './routes/community.new'
 import { Route as CommunityGroupsRouteImport } from './routes/community.groups'
@@ -82,6 +86,7 @@ import { Route as AuthenticatedAdminTuitionRequestsRouteImport } from './routes/
 import { Route as AuthenticatedAdminTuitionApplicationsRouteImport } from './routes/_authenticated/admin.tuition-applications'
 import { Route as AuthenticatedAdminTeachersRouteImport } from './routes/_authenticated/admin.teachers'
 import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_authenticated/admin.study-resources'
+import { Route as AuthenticatedAdminProbashiRouteImport } from './routes/_authenticated/admin.probashi'
 import { Route as AuthenticatedAdminLegalRouteImport } from './routes/_authenticated/admin.legal'
 import { Route as AuthenticatedAdminEducationNewsRouteImport } from './routes/_authenticated/admin.education-news'
 import { Route as AuthenticatedAdminComplaintsRouteImport } from './routes/_authenticated/admin.complaints'
@@ -130,6 +135,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const RequestBloodRoute = RequestBloodRouteImport.update({
   id: '/request-blood',
   path: '/request-blood',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProbashiRoute = ProbashiRouteImport.update({
+  id: '/probashi',
+  path: '/probashi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NoticesRoute = NoticesRouteImport.update({
@@ -206,6 +216,11 @@ const TeachersIndexRoute = TeachersIndexRouteImport.update({
   path: '/',
   getParentRoute: () => TeachersRoute,
 } as any)
+const ProbashiIndexRoute = ProbashiIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProbashiRoute,
+} as any)
 const LegalIndexRoute = LegalIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -265,6 +280,16 @@ const TeachersIdRoute = TeachersIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => TeachersRoute,
+} as any)
+const ProbashiRegisterRoute = ProbashiRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => ProbashiRoute,
+} as any)
+const ProbashiSlugRoute = ProbashiSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ProbashiRoute,
 } as any)
 const LegalIdRoute = LegalIdRouteImport.update({
   id: '/$id',
@@ -467,6 +492,12 @@ const AuthenticatedAdminStudyResourcesRoute =
     path: '/study-resources',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminProbashiRoute =
+  AuthenticatedAdminProbashiRouteImport.update({
+    id: '/probashi',
+    path: '/probashi',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminLegalRoute = AuthenticatedAdminLegalRouteImport.update({
   id: '/legal',
   path: '/legal',
@@ -563,6 +594,7 @@ export interface FileRoutesByFullPath {
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
+  '/probashi': typeof ProbashiRouteWithChildren
   '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -588,6 +620,8 @@ export interface FileRoutesByFullPath {
   '/community/groups': typeof CommunityGroupsRoute
   '/community/new': typeof CommunityNewRoute
   '/legal/$id': typeof LegalIdRoute
+  '/probashi/$slug': typeof ProbashiSlugRoute
+  '/probashi/register': typeof ProbashiRegisterRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -600,6 +634,7 @@ export interface FileRoutesByFullPath {
   '/business/': typeof BusinessIndexRoute
   '/community/': typeof CommunityIndexRoute
   '/legal/': typeof LegalIndexRoute
+  '/probashi/': typeof ProbashiIndexRoute
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
   '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
@@ -614,6 +649,7 @@ export interface FileRoutesByFullPath {
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -669,6 +705,8 @@ export interface FileRoutesByTo {
   '/community/groups': typeof CommunityGroupsRoute
   '/community/new': typeof CommunityNewRoute
   '/legal/$id': typeof LegalIdRoute
+  '/probashi/$slug': typeof ProbashiSlugRoute
+  '/probashi/register': typeof ProbashiRegisterRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/register': typeof TeachersRegisterRoute
   '/teachers/resources': typeof TeachersResourcesRoute
@@ -678,6 +716,7 @@ export interface FileRoutesByTo {
   '/business': typeof BusinessIndexRoute
   '/community': typeof CommunityIndexRoute
   '/legal': typeof LegalIndexRoute
+  '/probashi': typeof ProbashiIndexRoute
   '/teachers': typeof TeachersIndexRoute
   '/workers': typeof WorkersIndexRoute
   '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
@@ -692,6 +731,7 @@ export interface FileRoutesByTo {
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -731,6 +771,7 @@ export interface FileRoutesById {
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
+  '/probashi': typeof ProbashiRouteWithChildren
   '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -756,6 +797,8 @@ export interface FileRoutesById {
   '/community/groups': typeof CommunityGroupsRoute
   '/community/new': typeof CommunityNewRoute
   '/legal/$id': typeof LegalIdRoute
+  '/probashi/$slug': typeof ProbashiSlugRoute
+  '/probashi/register': typeof ProbashiRegisterRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -768,6 +811,7 @@ export interface FileRoutesById {
   '/business/': typeof BusinessIndexRoute
   '/community/': typeof CommunityIndexRoute
   '/legal/': typeof LegalIndexRoute
+  '/probashi/': typeof ProbashiIndexRoute
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
   '/_authenticated/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
@@ -782,6 +826,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/_authenticated/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/_authenticated/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/_authenticated/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/_authenticated/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/_authenticated/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/_authenticated/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -821,6 +866,7 @@ export interface FileRouteTypes {
     | '/isp'
     | '/legal'
     | '/notices'
+    | '/probashi'
     | '/request-blood'
     | '/reset-password'
     | '/sitemap.xml'
@@ -846,6 +892,8 @@ export interface FileRouteTypes {
     | '/community/groups'
     | '/community/new'
     | '/legal/$id'
+    | '/probashi/$slug'
+    | '/probashi/register'
     | '/teachers/$id'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -858,6 +906,7 @@ export interface FileRouteTypes {
     | '/business/'
     | '/community/'
     | '/legal/'
+    | '/probashi/'
     | '/teachers/'
     | '/workers/'
     | '/admin/achievements'
@@ -872,6 +921,7 @@ export interface FileRouteTypes {
     | '/admin/complaints'
     | '/admin/education-news'
     | '/admin/legal'
+    | '/admin/probashi'
     | '/admin/study-resources'
     | '/admin/teachers'
     | '/admin/tuition-applications'
@@ -927,6 +977,8 @@ export interface FileRouteTypes {
     | '/community/groups'
     | '/community/new'
     | '/legal/$id'
+    | '/probashi/$slug'
+    | '/probashi/register'
     | '/teachers/$id'
     | '/teachers/register'
     | '/teachers/resources'
@@ -936,6 +988,7 @@ export interface FileRouteTypes {
     | '/business'
     | '/community'
     | '/legal'
+    | '/probashi'
     | '/teachers'
     | '/workers'
     | '/admin/achievements'
@@ -950,6 +1003,7 @@ export interface FileRouteTypes {
     | '/admin/complaints'
     | '/admin/education-news'
     | '/admin/legal'
+    | '/admin/probashi'
     | '/admin/study-resources'
     | '/admin/teachers'
     | '/admin/tuition-applications'
@@ -988,6 +1042,7 @@ export interface FileRouteTypes {
     | '/isp'
     | '/legal'
     | '/notices'
+    | '/probashi'
     | '/request-blood'
     | '/reset-password'
     | '/sitemap.xml'
@@ -1013,6 +1068,8 @@ export interface FileRouteTypes {
     | '/community/groups'
     | '/community/new'
     | '/legal/$id'
+    | '/probashi/$slug'
+    | '/probashi/register'
     | '/teachers/$id'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -1025,6 +1082,7 @@ export interface FileRouteTypes {
     | '/business/'
     | '/community/'
     | '/legal/'
+    | '/probashi/'
     | '/teachers/'
     | '/workers/'
     | '/_authenticated/admin/achievements'
@@ -1039,6 +1097,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/complaints'
     | '/_authenticated/admin/education-news'
     | '/_authenticated/admin/legal'
+    | '/_authenticated/admin/probashi'
     | '/_authenticated/admin/study-resources'
     | '/_authenticated/admin/teachers'
     | '/_authenticated/admin/tuition-applications'
@@ -1078,6 +1137,7 @@ export interface RootRouteChildren {
   IspRoute: typeof IspRoute
   LegalRoute: typeof LegalRouteWithChildren
   NoticesRoute: typeof NoticesRoute
+  ProbashiRoute: typeof ProbashiRouteWithChildren
   RequestBloodRoute: typeof RequestBloodRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -1139,6 +1199,13 @@ declare module '@tanstack/react-router' {
       path: '/request-blood'
       fullPath: '/request-blood'
       preLoaderRoute: typeof RequestBloodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/probashi': {
+      id: '/probashi'
+      path: '/probashi'
+      fullPath: '/probashi'
+      preLoaderRoute: typeof ProbashiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/notices': {
@@ -1246,6 +1313,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeachersIndexRouteImport
       parentRoute: typeof TeachersRoute
     }
+    '/probashi/': {
+      id: '/probashi/'
+      path: '/'
+      fullPath: '/probashi/'
+      preLoaderRoute: typeof ProbashiIndexRouteImport
+      parentRoute: typeof ProbashiRoute
+    }
     '/legal/': {
       id: '/legal/'
       path: '/'
@@ -1329,6 +1403,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/teachers/$id'
       preLoaderRoute: typeof TeachersIdRouteImport
       parentRoute: typeof TeachersRoute
+    }
+    '/probashi/register': {
+      id: '/probashi/register'
+      path: '/register'
+      fullPath: '/probashi/register'
+      preLoaderRoute: typeof ProbashiRegisterRouteImport
+      parentRoute: typeof ProbashiRoute
+    }
+    '/probashi/$slug': {
+      id: '/probashi/$slug'
+      path: '/$slug'
+      fullPath: '/probashi/$slug'
+      preLoaderRoute: typeof ProbashiSlugRouteImport
+      parentRoute: typeof ProbashiRoute
     }
     '/legal/$id': {
       id: '/legal/$id'
@@ -1603,6 +1691,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminStudyResourcesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/probashi': {
+      id: '/_authenticated/admin/probashi'
+      path: '/probashi'
+      fullPath: '/admin/probashi'
+      preLoaderRoute: typeof AuthenticatedAdminProbashiRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/legal': {
       id: '/_authenticated/admin/legal'
       path: '/legal'
@@ -1717,6 +1812,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminComplaintsRoute: typeof AuthenticatedAdminComplaintsRoute
   AuthenticatedAdminEducationNewsRoute: typeof AuthenticatedAdminEducationNewsRoute
   AuthenticatedAdminLegalRoute: typeof AuthenticatedAdminLegalRoute
+  AuthenticatedAdminProbashiRoute: typeof AuthenticatedAdminProbashiRoute
   AuthenticatedAdminStudyResourcesRoute: typeof AuthenticatedAdminStudyResourcesRoute
   AuthenticatedAdminTeachersRoute: typeof AuthenticatedAdminTeachersRoute
   AuthenticatedAdminTuitionApplicationsRoute: typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -1741,6 +1837,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminComplaintsRoute: AuthenticatedAdminComplaintsRoute,
   AuthenticatedAdminEducationNewsRoute: AuthenticatedAdminEducationNewsRoute,
   AuthenticatedAdminLegalRoute: AuthenticatedAdminLegalRoute,
+  AuthenticatedAdminProbashiRoute: AuthenticatedAdminProbashiRoute,
   AuthenticatedAdminStudyResourcesRoute: AuthenticatedAdminStudyResourcesRoute,
   AuthenticatedAdminTeachersRoute: AuthenticatedAdminTeachersRoute,
   AuthenticatedAdminTuitionApplicationsRoute:
@@ -1867,6 +1964,22 @@ const LegalRouteChildren: LegalRouteChildren = {
 
 const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
 
+interface ProbashiRouteChildren {
+  ProbashiSlugRoute: typeof ProbashiSlugRoute
+  ProbashiRegisterRoute: typeof ProbashiRegisterRoute
+  ProbashiIndexRoute: typeof ProbashiIndexRoute
+}
+
+const ProbashiRouteChildren: ProbashiRouteChildren = {
+  ProbashiSlugRoute: ProbashiSlugRoute,
+  ProbashiRegisterRoute: ProbashiRegisterRoute,
+  ProbashiIndexRoute: ProbashiIndexRoute,
+}
+
+const ProbashiRouteWithChildren = ProbashiRoute._addFileChildren(
+  ProbashiRouteChildren,
+)
+
 interface TeachersAchievementsRouteChildren {
   TeachersAchievementsIdRoute: typeof TeachersAchievementsIdRoute
   TeachersAchievementsIndexRoute: typeof TeachersAchievementsIndexRoute
@@ -1962,6 +2075,7 @@ const rootRouteChildren: RootRouteChildren = {
   IspRoute: IspRoute,
   LegalRoute: LegalRouteWithChildren,
   NoticesRoute: NoticesRoute,
+  ProbashiRoute: ProbashiRouteWithChildren,
   RequestBloodRoute: RequestBloodRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

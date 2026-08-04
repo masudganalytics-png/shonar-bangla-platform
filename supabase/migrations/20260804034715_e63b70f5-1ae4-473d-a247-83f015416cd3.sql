@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.probashi_guard_moderation() FROM PUBLIC, anon, authenticated;
