@@ -29,10 +29,10 @@ const ICON: Record<Item["kind"], typeof Megaphone> = {
 };
 const TONE: Record<Item["kind"], string> = {
   notice: "bg-primary/10 text-primary",
-  blood: "bg-red-500/10 text-red-600",
-  tuition: "bg-blue-500/10 text-blue-600",
-  business: "bg-emerald-500/10 text-emerald-600",
-  legal: "bg-indigo-500/10 text-indigo-600",
+  blood: "bg-primary/10 text-primary",
+  tuition: "bg-primary/10 text-primary",
+  business: "bg-primary/10 text-primary",
+  legal: "bg-primary/10 text-primary",
 };
 
 export function LatestUpdates() {
@@ -64,15 +64,17 @@ export function LatestUpdates() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6" aria-label="সর্বশেষ আপডেট">
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
-        <h2 className="text-2xl font-bold sm:text-3xl">সর্বশেষ আপডেট</h2>
+      <div className="mb-5">
+        <div className="hairline-gold" aria-hidden />
+        <h2 className="mt-4 text-2xl font-bold sm:text-3xl">সর্বশেষ আপডেট</h2>
+        <p className="mt-1.5 text-sm text-muted-foreground">সাম্প্রতিক কার্যক্রমের সময়রেখা</p>
       </div>
       <div className="mb-5 flex flex-wrap gap-2">
         {CHIPS.map((c) => (
           <button
             key={c.key}
             onClick={() => setFilter(c.key)}
-            className={`rounded-full border px-3 py-1 text-xs transition-colors ${filter === c.key ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-primary"}`}
+            className={`rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all ${filter === c.key ? "border-primary/60 bg-primary text-primary-foreground shadow-[var(--shadow-glow)]" : "border-border/70 bg-card/70 text-muted-foreground backdrop-blur hover:border-primary/50 hover:text-primary"}`}
           >
             {c.label}
           </button>
@@ -92,8 +94,8 @@ export function LatestUpdates() {
           {filtered.map((it) => {
             const Icon = ICON[it.kind];
             const inner = (
-              <Card className="flex h-full items-start gap-3 rounded-2xl p-4 transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]">
-                <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${TONE[it.kind]}`}>
+              <Card className="gold-hover flex h-full items-start gap-3 rounded-2xl p-4">
+                <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl ring-1 ring-inset ring-border/60 ${TONE[it.kind]}`}>
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="min-w-0 flex-1">

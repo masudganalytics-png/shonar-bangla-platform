@@ -75,9 +75,9 @@ export function UniversalSearch() {
   };
 
   return (
-    <section className="mx-auto -mt-8 max-w-3xl px-4 sm:px-6" aria-label="সার্বজনীন অনুসন্ধান">
+    <section className="mx-auto -mt-10 max-w-3xl px-4 sm:px-6" aria-label="সার্বজনীন অনুসন্ধান">
       <div ref={ref} className="relative">
-        <div className="flex items-center gap-2 rounded-2xl border bg-card p-2 shadow-[var(--shadow-lg)] focus-within:ring-2 focus-within:ring-ring">
+        <div className="flex items-center gap-2 rounded-full border border-border/70 bg-card/90 p-2 shadow-[var(--shadow-lg)] backdrop-blur-xl transition-shadow focus-within:border-primary/50 focus-within:shadow-[var(--shadow-glow)]">
           <Search className="ml-2 h-5 w-5 shrink-0 text-muted-foreground" />
           <input
             type="search"
@@ -85,7 +85,7 @@ export function UniversalSearch() {
             onChange={(e) => { setQ(e.target.value); setOpen(true); }}
             onFocus={() => setOpen(true)}
             placeholder="রক্ত, চাকরি, টিউশন, ব্যবসা খুঁজুন..."
-            className="min-w-0 flex-1 bg-transparent px-1 py-2 text-base outline-none placeholder:text-muted-foreground"
+            className="min-w-0 flex-1 bg-transparent px-1 py-2.5 text-base outline-none placeholder:text-muted-foreground"
             aria-label="সার্বজনীন অনুসন্ধান"
           />
           {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin text-muted-foreground" />}
@@ -125,7 +125,7 @@ export function UniversalSearch() {
 
         <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
           {QUICK_LINKS.map((l) => (
-            <Link key={l.to} to={l.to} className="rounded-full border bg-card px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-primary hover:text-primary">
+            <Link key={l.to} to={l.to} className="rounded-full border border-border/70 bg-card/70 px-3.5 py-1.5 text-xs text-muted-foreground backdrop-blur transition-colors hover:border-primary/60 hover:text-primary">
               {l.label}
             </Link>
           ))}
