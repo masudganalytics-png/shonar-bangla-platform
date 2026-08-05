@@ -44,11 +44,10 @@ export function FeaturedServices() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6" aria-label="ফিচার্ড সেবা">
-      <div className="mb-5 flex items-end justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-bold sm:text-3xl">ফিচার্ড সেবা</h2>
-          <p className="mt-1 text-sm text-muted-foreground">প্রশাসক নির্বাচিত জনপ্রিয় সেবা</p>
-        </div>
+      <div className="mb-7">
+        <div className="hairline-gold" aria-hidden />
+        <h2 className="mt-4 text-2xl font-bold sm:text-3xl">ফিচার্ড সেবা</h2>
+        <p className="mt-1.5 text-sm text-muted-foreground">প্রশাসক নির্বাচিত জনপ্রিয় সেবা</p>
       </div>
 
       {items === null ? (
@@ -60,14 +59,14 @@ export function FeaturedServices() {
           {items.map((it) => {
             const Icon = KIND_ICON[it.kind];
             return (
-              <Card key={it.id} className="group flex h-full flex-col overflow-hidden rounded-2xl transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)]">
+              <Card key={it.id} className="gold-hover group flex h-full flex-col overflow-hidden rounded-2xl">
                 <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted">
                   {it.image ? (
                     <img src={it.image} alt={it.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                   ) : (
                     <div className="grid h-full w-full place-items-center text-muted-foreground"><Icon className="h-10 w-10 opacity-40" /></div>
                   )}
-                  <Badge className="absolute left-3 top-3 bg-white/90 text-foreground shadow-sm hover:bg-white">{KIND_LABEL[it.kind]}</Badge>
+                  <Badge className="absolute left-3 top-3 border-border/60 bg-card/85 text-foreground shadow-sm backdrop-blur hover:bg-card">{KIND_LABEL[it.kind]}</Badge>
                 </div>
                 <div className="flex flex-1 flex-col p-4">
                   <h3 className="truncate text-base font-semibold">{it.title}</h3>
@@ -75,11 +74,11 @@ export function FeaturedServices() {
                   {it.desc && <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{it.desc}</p>}
                   <div className="mt-auto flex items-center gap-2 pt-4">
                     {it.phone && (
-                      <a href={`tel:${it.phone}`} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:opacity-90">
+                      <a href={`tel:${it.phone}`} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90">
                         <Phone className="h-3.5 w-3.5" /> কল করুন
                       </a>
                     )}
-                    <Link to={it.href} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium hover:border-primary hover:text-primary">
+                    <Link to={it.href} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full border px-3 py-2 text-xs font-medium transition-colors hover:border-primary hover:text-primary">
                       বিস্তারিত <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                   </div>
