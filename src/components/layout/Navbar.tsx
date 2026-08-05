@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { Menu, X, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun, ShieldCheck, GraduationCap } from "lucide-react";
-import logoAsset from "@/assets/ukhiya-logo.png.asset.json";
+import logoAsset from "@/assets/khijirion-logo.png.asset.json";
 import { NotificationsBell } from "@/components/notifications/NotificationsBell";
 import { InstallAppButton } from "@/components/pwa/InstallAppButton";
 import { useAuth } from "@/hooks/use-auth";
@@ -41,6 +41,14 @@ export function Navbar() {
   const { theme, toggle } = useTheme();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleSignOut = async () => {
     await signOut();
@@ -53,13 +61,29 @@ export function Navbar() {
     .toUpperCase();
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/70">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+    <header
+      className={cn(
+        "sticky top-0 z-40 w-full border-b transition-all duration-300",
+        scrolled
+          ? "border-border/70 bg-background/75 shadow-[var(--shadow-md)] backdrop-blur-xl"
+          : "border-transparent bg-background/50 backdrop-blur-md",
+      )}
+    >
+      <div
+        className={cn(
+          "mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 transition-all duration-300 sm:px-6 lg:px-8",
+          scrolled ? "h-14" : "h-[4.5rem]",
+        )}
+      >
         <Link to="/" className="flex min-w-0 items-center gap-2.5">
-          <img src={logoAsset.url} alt="উখিয়া সেবা" className="h-9 w-auto shrink-0 rounded-md object-contain" />
+          <img
+            src={logoAsset.url}
+            alt="KHIJIRION"
+            className={cn("w-auto shrink-0 object-contain transition-all duration-300", scrolled ? "h-9" : "h-11")}
+          />
           <div className="min-w-0 leading-tight">
-            <div className="truncate text-sm font-bold text-foreground sm:text-base">উখিয়া সেবা</div>
-            <div className="hidden text-[10px] text-muted-foreground sm:block">উখিয়ার সকল ডিজিটাল সেবা, এক জায়গায়</div>
+            <div className="truncate text-sm font-bold tracking-[0.18em] text-gradient-gold sm:text-base">KHIJIRION</div>
+            <div className="hidden text-[10px] tracking-wide text-muted-foreground sm:block">Everything Local, One Place.</div>
           </div>
         </Link>
 
@@ -72,9 +96,9 @@ export function Navbar() {
                 key={item.to}
                 to={item.to}
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  "relative rounded-full px-3 py-2 text-sm font-medium transition-colors",
                   active
-                    ? "bg-accent text-accent-foreground"
+                    ? "bg-primary/12 text-primary after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-[var(--gradient-gold)]"
                     : "text-muted-foreground hover:bg-accent/60 hover:text-foreground",
                 )}
               >
@@ -96,7 +120,7 @@ export function Navbar() {
           {isAuthenticated ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-1 py-1 pr-3 transition-colors hover:bg-accent">
+                <button className="flex items-center gap-2 rounded-full border border-primary/30 bg-card/60 px-1 py-1 pr-3 transition-colors hover:border-primary/60 hover:bg-accent">
                   <Avatar className="h-7 w-7">
                     <AvatarFallback className="bg-primary text-xs text-primary-foreground">{initials}</AvatarFallback>
                   </Avatar>
