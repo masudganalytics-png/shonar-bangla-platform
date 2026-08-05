@@ -3,7 +3,7 @@ import { ArrowRight, Calculator, FileSignature, FileText, GraduationCap, HardHat
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
-import logoAsset from "@/assets/ukhiya-logo.png.asset.json";
+import logoAsset from "@/assets/khijirion-logo.png.asset.json";
 import { EmergencyBloodBanner } from "@/components/blood/EmergencyBloodBanner";
 import { UniversalSearch } from "@/components/home/UniversalSearch";
 import { ExploreServices } from "@/components/home/ExploreServices";
@@ -105,6 +105,21 @@ const QUICK_ACTIONS = [
     title: "🩸 রক্তের অনুরোধ",
     desc: "রোগীর জন্য জরুরি রক্তের অনুরোধ পাঠান।",
   },
+];
+
+const HERO_LINKS = [
+  { to: "/isp" as const, icon: Wifi, label: "ওয়াইফাই সেবা" },
+  { to: "/workers" as const, icon: HardHat, label: "কাজের লোক" },
+  { to: "/cv-builder" as const, icon: FileSignature, label: "সিভি তৈরি" },
+  { to: "/teachers" as const, icon: GraduationCap, label: "শিক্ষক খুঁজুন" },
+  { to: "/business" as const, icon: Store, label: "স্থানীয় ব্যবসা" },
+  { to: "/legal" as const, icon: ScaleIcon, label: "আইনি সহায়তা" },
+];
+
+const HERO_PILLARS = [
+  { icon: Droplet, label: "রক্তসেবা" },
+  { icon: Store, label: "ব্যবসা" },
+  { icon: Globe2, label: "প্রবাসী" },
 ];
 
 function HomePage() {
