@@ -17,6 +17,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RequestBloodRouteImport } from './routes/request-blood'
 import { Route as ProbashiRouteImport } from './routes/probashi'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as IspRouteImport } from './routes/isp'
@@ -142,6 +143,11 @@ const RequestBloodRoute = RequestBloodRouteImport.update({
 const ProbashiRoute = ProbashiRouteImport.update({
   id: '/probashi',
   path: '/probashi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NoticesRoute = NoticesRouteImport.update({
@@ -608,6 +614,7 @@ export interface FileRoutesByFullPath {
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
+  '/privacy': typeof PrivacyRoute
   '/probashi': typeof ProbashiRouteWithChildren
   '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -699,6 +706,7 @@ export interface FileRoutesByTo {
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/notices': typeof NoticesRoute
+  '/privacy': typeof PrivacyRoute
   '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -789,6 +797,7 @@ export interface FileRoutesById {
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
+  '/privacy': typeof PrivacyRoute
   '/probashi': typeof ProbashiRouteWithChildren
   '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -886,6 +895,7 @@ export interface FileRouteTypes {
     | '/isp'
     | '/legal'
     | '/notices'
+    | '/privacy'
     | '/probashi'
     | '/request-blood'
     | '/reset-password'
@@ -977,6 +987,7 @@ export interface FileRouteTypes {
     | '/helpline'
     | '/isp'
     | '/notices'
+    | '/privacy'
     | '/request-blood'
     | '/reset-password'
     | '/sitemap.xml'
@@ -1066,6 +1077,7 @@ export interface FileRouteTypes {
     | '/isp'
     | '/legal'
     | '/notices'
+    | '/privacy'
     | '/probashi'
     | '/request-blood'
     | '/reset-password'
@@ -1163,6 +1175,7 @@ export interface RootRouteChildren {
   IspRoute: typeof IspRoute
   LegalRoute: typeof LegalRouteWithChildren
   NoticesRoute: typeof NoticesRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProbashiRoute: typeof ProbashiRouteWithChildren
   RequestBloodRoute: typeof RequestBloodRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -1232,6 +1245,13 @@ declare module '@tanstack/react-router' {
       path: '/probashi'
       fullPath: '/probashi'
       preLoaderRoute: typeof ProbashiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/notices': {
@@ -2117,6 +2137,7 @@ const rootRouteChildren: RootRouteChildren = {
   IspRoute: IspRoute,
   LegalRoute: LegalRouteWithChildren,
   NoticesRoute: NoticesRoute,
+  PrivacyRoute: PrivacyRoute,
   ProbashiRoute: ProbashiRouteWithChildren,
   RequestBloodRoute: RequestBloodRoute,
   ResetPasswordRoute: ResetPasswordRoute,
