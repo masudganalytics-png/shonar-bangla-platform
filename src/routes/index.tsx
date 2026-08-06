@@ -6,9 +6,14 @@ import { useAuth } from "@/hooks/use-auth";
 import logoAsset from "@/assets/khijirion-logo.png.asset.json";
 import { EmergencyBloodBanner } from "@/components/blood/EmergencyBloodBanner";
 import { UniversalSearch } from "@/components/home/UniversalSearch";
+import { CoreServices } from "@/components/home/CoreServices";
 import { ExploreServices } from "@/components/home/ExploreServices";
 import { LatestUpdates } from "@/components/home/LatestUpdates";
 import { FeaturedServices } from "@/components/home/FeaturedServices";
+import { FeaturedTeachers } from "@/components/home/FeaturedTeachers";
+import { InternetProviders } from "@/components/home/InternetProviders";
+import { ProbashiServices } from "@/components/home/ProbashiServices";
+import { CommunityUpdates } from "@/components/home/CommunityUpdates";
 import { TodaysHighlights } from "@/components/home/TodaysHighlights";
 import { LiveExchangeRates } from "@/components/home/LiveExchangeRates";
 
