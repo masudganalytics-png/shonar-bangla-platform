@@ -23,6 +23,7 @@ import { Route as IspRouteImport } from './routes/isp'
 import { Route as HelplineRouteImport } from './routes/helpline'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as CvBuilderRouteImport } from './routes/cv-builder'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CommunityRouteImport } from './routes/community'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as BusinessRouteImport } from './routes/business'
@@ -171,6 +172,11 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
 const CvBuilderRoute = CvBuilderRouteImport.update({
   id: '/cv-builder',
   path: '/cv-builder',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CommunityRoute = CommunityRouteImport.update({
@@ -595,6 +601,7 @@ export interface FileRoutesByFullPath {
   '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
   '/community': typeof CommunityRouteWithChildren
+  '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
@@ -686,6 +693,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/calculator': typeof CalculatorRoute
+  '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
@@ -774,6 +782,7 @@ export interface FileRoutesById {
   '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
   '/community': typeof CommunityRouteWithChildren
+  '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
@@ -870,6 +879,7 @@ export interface FileRouteTypes {
     | '/business'
     | '/calculator'
     | '/community'
+    | '/contact'
     | '/cv-builder'
     | '/forgot-password'
     | '/helpline'
@@ -961,6 +971,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/calculator'
+    | '/contact'
     | '/cv-builder'
     | '/forgot-password'
     | '/helpline'
@@ -1048,6 +1059,7 @@ export interface FileRouteTypes {
     | '/business'
     | '/calculator'
     | '/community'
+    | '/contact'
     | '/cv-builder'
     | '/forgot-password'
     | '/helpline'
@@ -1144,6 +1156,7 @@ export interface RootRouteChildren {
   BusinessRoute: typeof BusinessRouteWithChildren
   CalculatorRoute: typeof CalculatorRoute
   CommunityRoute: typeof CommunityRouteWithChildren
+  ContactRoute: typeof ContactRoute
   CvBuilderRoute: typeof CvBuilderRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   HelplineRoute: typeof HelplineRoute
@@ -1261,6 +1274,13 @@ declare module '@tanstack/react-router' {
       path: '/cv-builder'
       fullPath: '/cv-builder'
       preLoaderRoute: typeof CvBuilderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/community': {
@@ -2090,6 +2110,7 @@ const rootRouteChildren: RootRouteChildren = {
   BusinessRoute: BusinessRouteWithChildren,
   CalculatorRoute: CalculatorRoute,
   CommunityRoute: CommunityRouteWithChildren,
+  ContactRoute: ContactRoute,
   CvBuilderRoute: CvBuilderRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   HelplineRoute: HelplineRoute,
