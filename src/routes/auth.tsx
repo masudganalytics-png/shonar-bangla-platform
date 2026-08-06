@@ -13,6 +13,7 @@ import { Card } from "@/components/ui/card";
 
 const searchSchema = z.object({
   redirect: z.string().optional(),
+  mode: z.enum(["login", "register"]).optional(),
 });
 
 export const Route = createFileRoute("/auth")({

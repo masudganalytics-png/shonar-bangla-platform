@@ -11,23 +11,27 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkersRouteImport } from './routes/workers'
 import { Route as UtilitiesRouteImport } from './routes/utilities'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TeachersRouteImport } from './routes/teachers'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RequestBloodRouteImport } from './routes/request-blood'
 import { Route as ProbashiRouteImport } from './routes/probashi'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as IspRouteImport } from './routes/isp'
 import { Route as HelplineRouteImport } from './routes/helpline'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as CvBuilderRouteImport } from './routes/cv-builder'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CommunityRouteImport } from './routes/community'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as BusinessRouteImport } from './routes/business'
 import { Route as BloodDonorsRouteImport } from './routes/blood-donors'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WorkersIndexRouteImport } from './routes/workers.index'
@@ -112,6 +116,11 @@ const UtilitiesRoute = UtilitiesRouteImport.update({
   path: '/utilities',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeachersRoute = TeachersRouteImport.update({
   id: '/teachers',
   path: '/teachers',
@@ -140,6 +149,11 @@ const RequestBloodRoute = RequestBloodRouteImport.update({
 const ProbashiRoute = ProbashiRouteImport.update({
   id: '/probashi',
   path: '/probashi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NoticesRoute = NoticesRouteImport.update({
@@ -172,6 +186,11 @@ const CvBuilderRoute = CvBuilderRouteImport.update({
   path: '/cv-builder',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CommunityRoute = CommunityRouteImport.update({
   id: '/community',
   path: '/community',
@@ -195,6 +214,11 @@ const BloodDonorsRoute = BloodDonorsRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -583,23 +607,27 @@ const AuthenticatedBillsIdEditRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/blood-donors': typeof BloodDonorsRouteWithChildren
   '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
   '/community': typeof CommunityRouteWithChildren
+  '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
+  '/privacy': typeof PrivacyRoute
   '/probashi': typeof ProbashiRouteWithChildren
   '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/teachers': typeof TeachersRouteWithChildren
+  '/terms': typeof TermsRoute
   '/utilities': typeof UtilitiesRoute
   '/workers': typeof WorkersRouteWithChildren
   '/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -676,17 +704,21 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/calculator': typeof CalculatorRoute
+  '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/notices': typeof NoticesRoute
+  '/privacy': typeof PrivacyRoute
   '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
+  '/terms': typeof TermsRoute
   '/utilities': typeof UtilitiesRoute
   '/bills': typeof AuthenticatedBillsRouteWithChildren
   '/compare': typeof AuthenticatedCompareRoute
@@ -760,23 +792,27 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/blood-donors': typeof BloodDonorsRouteWithChildren
   '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
   '/community': typeof CommunityRouteWithChildren
+  '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
   '/notices': typeof NoticesRoute
+  '/privacy': typeof PrivacyRoute
   '/probashi': typeof ProbashiRouteWithChildren
   '/request-blood': typeof RequestBloodRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stats': typeof StatsRoute
   '/teachers': typeof TeachersRouteWithChildren
+  '/terms': typeof TermsRoute
   '/utilities': typeof UtilitiesRoute
   '/workers': typeof WorkersRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -855,23 +891,27 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/auth'
     | '/blood-donors'
     | '/business'
     | '/calculator'
     | '/community'
+    | '/contact'
     | '/cv-builder'
     | '/forgot-password'
     | '/helpline'
     | '/isp'
     | '/legal'
     | '/notices'
+    | '/privacy'
     | '/probashi'
     | '/request-blood'
     | '/reset-password'
     | '/sitemap.xml'
     | '/stats'
     | '/teachers'
+    | '/terms'
     | '/utilities'
     | '/workers'
     | '/admin'
@@ -948,17 +988,21 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/auth'
     | '/calculator'
+    | '/contact'
     | '/cv-builder'
     | '/forgot-password'
     | '/helpline'
     | '/isp'
     | '/notices'
+    | '/privacy'
     | '/request-blood'
     | '/reset-password'
     | '/sitemap.xml'
     | '/stats'
+    | '/terms'
     | '/utilities'
     | '/bills'
     | '/compare'
@@ -1031,23 +1075,27 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/about'
     | '/auth'
     | '/blood-donors'
     | '/business'
     | '/calculator'
     | '/community'
+    | '/contact'
     | '/cv-builder'
     | '/forgot-password'
     | '/helpline'
     | '/isp'
     | '/legal'
     | '/notices'
+    | '/privacy'
     | '/probashi'
     | '/request-blood'
     | '/reset-password'
     | '/sitemap.xml'
     | '/stats'
     | '/teachers'
+    | '/terms'
     | '/utilities'
     | '/workers'
     | '/_authenticated/admin'
@@ -1126,23 +1174,27 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   BloodDonorsRoute: typeof BloodDonorsRouteWithChildren
   BusinessRoute: typeof BusinessRouteWithChildren
   CalculatorRoute: typeof CalculatorRoute
   CommunityRoute: typeof CommunityRouteWithChildren
+  ContactRoute: typeof ContactRoute
   CvBuilderRoute: typeof CvBuilderRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   HelplineRoute: typeof HelplineRoute
   IspRoute: typeof IspRoute
   LegalRoute: typeof LegalRouteWithChildren
   NoticesRoute: typeof NoticesRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProbashiRoute: typeof ProbashiRouteWithChildren
   RequestBloodRoute: typeof RequestBloodRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StatsRoute: typeof StatsRoute
   TeachersRoute: typeof TeachersRouteWithChildren
+  TermsRoute: typeof TermsRoute
   UtilitiesRoute: typeof UtilitiesRoute
   WorkersRoute: typeof WorkersRouteWithChildren
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
@@ -1164,6 +1216,13 @@ declare module '@tanstack/react-router' {
       path: '/utilities'
       fullPath: '/utilities'
       preLoaderRoute: typeof UtilitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/teachers': {
@@ -1208,6 +1267,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProbashiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/notices': {
       id: '/notices'
       path: '/notices'
@@ -1250,6 +1316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CvBuilderRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/community': {
       id: '/community'
       path: '/community'
@@ -1283,6 +1356,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -2064,23 +2144,27 @@ const WorkersRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   BloodDonorsRoute: BloodDonorsRouteWithChildren,
   BusinessRoute: BusinessRouteWithChildren,
   CalculatorRoute: CalculatorRoute,
   CommunityRoute: CommunityRouteWithChildren,
+  ContactRoute: ContactRoute,
   CvBuilderRoute: CvBuilderRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   HelplineRoute: HelplineRoute,
   IspRoute: IspRoute,
   LegalRoute: LegalRouteWithChildren,
   NoticesRoute: NoticesRoute,
+  PrivacyRoute: PrivacyRoute,
   ProbashiRoute: ProbashiRouteWithChildren,
   RequestBloodRoute: RequestBloodRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StatsRoute: StatsRoute,
   TeachersRoute: TeachersRouteWithChildren,
+  TermsRoute: TermsRoute,
   UtilitiesRoute: UtilitiesRoute,
   WorkersRoute: WorkersRouteWithChildren,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
