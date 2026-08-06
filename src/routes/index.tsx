@@ -215,10 +215,15 @@ function HomePage() {
       </section>
 
       <UniversalSearch />
-      <ExploreServices />
-      <LatestUpdates />
+      <CoreServices />
       <FeaturedServices />
+      <FeaturedTeachers />
+      <InternetProviders />
+      <ProbashiServices />
+      <CommunityUpdates />
+      <LatestUpdates />
       <TodaysHighlights />
+      <ExploreServices />
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="mb-7">
