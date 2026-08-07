@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useRouterState, redirect } from "@tanstack/react-router";
-import { Users, FileText, MessageSquare, LayoutDashboard, ShieldAlert, Megaphone, HardHat, GraduationCap, Store, Scale, Droplet, HeartPulse, Handshake, Plane } from "lucide-react";
+import { Users, FileText, MessageSquare, LayoutDashboard, ShieldAlert, Megaphone, HardHat, GraduationCap, Store, Scale, Droplet, HeartPulse, Handshake, Plane, FileSignature } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 
