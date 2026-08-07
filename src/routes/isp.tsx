@@ -67,6 +67,12 @@ const ISP_BY_AREA: Record<string, Isp[]> = {
       phones: ["01835-401111"],
       note: "লোকাল ISP",
     },
+    {
+      name: "STAR NET Internet & Service",
+      phones: ["01817-969696", "01846-868686"],
+      note: "BTRC অনুমোদিত",
+      approved: true,
+    },
   ],
   kutupalong: [
     {

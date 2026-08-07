@@ -6,7 +6,7 @@ const PREVIEW = [
   { area: "কক্সবাজার", name: "Hello IT", phone: "+8801719-322533", note: "লোকাল ISP" },
   { area: "কোর্টবাজার", name: "Orange Communication", phone: "01817-648888", note: "ন্যাশনওয়াইড ISP" },
   { area: "উখিয়া", name: "Mim Online", phone: "01835-401111", note: "লোকাল ISP" },
-  { area: "কুতুপালং", name: "STAR NET Internet", phone: "01817-969696", note: "BTRC অনুমোদিত", approved: true },
+  { area: "উখিয়া ও কুতুপালং", name: "STAR NET Internet", phone: "01817-969696", note: "BTRC অনুমোদিত", approved: true },
 ];
 
 export function InternetProviders() {
