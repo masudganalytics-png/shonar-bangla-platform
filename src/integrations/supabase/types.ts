@@ -949,6 +949,72 @@ export type Database = {
           },
         ]
       }
+      cv_submissions: {
+        Row: {
+          admin_notes: string | null
+          client_cv_id: string
+          completion: number
+          created_at: string
+          cv_name: string
+          data: Json
+          edit_token: string
+          email: string
+          full_name: string
+          id: string
+          ip_address: string | null
+          job_title: string
+          language: string
+          phone: string
+          reviewed_at: string | null
+          status: string
+          template: string
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          client_cv_id: string
+          completion?: number
+          created_at?: string
+          cv_name?: string
+          data?: Json
+          edit_token: string
+          email?: string
+          full_name?: string
+          id?: string
+          ip_address?: string | null
+          job_title?: string
+          language?: string
+          phone?: string
+          reviewed_at?: string | null
+          status?: string
+          template?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          client_cv_id?: string
+          completion?: number
+          created_at?: string
+          cv_name?: string
+          data?: Json
+          edit_token?: string
+          email?: string
+          full_name?: string
+          id?: string
+          ip_address?: string | null
+          job_title?: string
+          language?: string
+          phone?: string
+          reviewed_at?: string | null
+          status?: string
+          template?: string
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       education_news: {
         Row: {
           author_id: string | null
