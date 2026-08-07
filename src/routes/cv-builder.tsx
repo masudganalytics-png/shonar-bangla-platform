@@ -26,6 +26,7 @@ import {
 } from "@/components/cv-builder/steps";
 import { CVPreview } from "@/components/cv-builder/preview";
 import { emptyCV } from "@/lib/cv-builder/types";
+import { syncCVSubmission } from "@/lib/cv-builder/sync";
 
 export const Route = createFileRoute("/cv-builder")({
   head: () => ({
@@ -71,6 +72,7 @@ function CVBuilderPage() {
       upsertCV(data);
       setSavedAt(Date.now());
       setDirty(false);
+      void syncCVSubmission(data);
     }, 700);
     return () => clearTimeout(t);
   }, [data, dirty]);
@@ -104,7 +106,7 @@ function CVBuilderPage() {
 
   const StepComp = STEPS[step].Comp;
 
-  const handleSaveNow = () => { upsertCV(data); setSavedAt(Date.now()); setDirty(false); toast.success("Saved locally"); };
+  const handleSaveNow = () => { upsertCV(data); setSavedAt(Date.now()); setDirty(false); void syncCVSubmission(data, { force: true }); toast.success("Saved locally"); };
 
   const handleNew = () => {
     if (dirty) upsertCV(data);
@@ -157,6 +159,7 @@ function CVBuilderPage() {
 
   const handleDownloadPDF = async () => {
     if (dirty) upsertCV(data);
+    void syncCVSubmission(data, { force: true });
     setExporting(true);
     try {
       await new Promise((r) => setTimeout(r, 60));
