@@ -65,7 +65,7 @@ function ProbashiProfilePage() {
   const { data, isLoading } = useProbashiProfile(slug);
   const { isAuthenticated } = useAuth();
   const fetchContact = useServerFn(getProbashiContact);
-  const [contact, setContact] = useState<{ phone: string | null; whatsapp: string | null } | null>(null);
+  const [contact, setContact] = useState<{ phone: string | null; whatsapp: string | null; facebook_url: string | null } | null>(null);
   const [loadingContact, setLoadingContact] = useState(false);
 
   if (isLoading) {
