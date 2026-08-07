@@ -1,4 +1,5 @@
-import { createServerFn, getRequestHeader } from "@tanstack/react-start";
+import { createServerFn } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 
@@ -14,7 +15,7 @@ export interface CVSubmissionRow {
   language: string;
   status: string;
   completion: number;
-  data: unknown;
+  data: Record<string, unknown> | null;
   ip_address: string | null;
   user_agent: string | null;
   admin_notes: string | null;
@@ -65,12 +66,13 @@ export const saveCVSubmission = createServerFn({ method: "POST" })
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
+    const h = getRequest().headers;
     const ip =
-      (getRequestHeader("cf-connecting-ip") ||
-        getRequestHeader("x-forwarded-for")?.split(",")[0]?.trim() ||
-        getRequestHeader("x-real-ip") ||
+      (h.get("cf-connecting-ip") ||
+        h.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+        h.get("x-real-ip") ||
         "") || null;
-    const ua = getRequestHeader("user-agent")?.slice(0, 400) ?? null;
+    const ua = h.get("user-agent")?.slice(0, 400) ?? null;
 
     const existing = await supabaseAdmin
       .from("cv_submissions")
@@ -156,9 +158,9 @@ export const updateCVSubmissionAdmin = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await ensureAdmin(context);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const patch: Record<string, unknown> = {};
-    if (data.admin_notes !== undefined) patch['admin_notes'] = data.admin_notes;
-    if (data.reviewed !== undefined) patch['reviewed_at'] = data.reviewed ? new Date().toISOString() : null;
+    const patch: { admin_notes?: string; reviewed_at?: string | null } = {};
+    if (data.admin_notes !== undefined) patch.admin_notes = data.admin_notes;
+    if (data.reviewed !== undefined) patch.reviewed_at = data.reviewed ? new Date().toISOString() : null;
     if (Object.keys(patch).length === 0) return { ok: true };
     const { error } = await supabaseAdmin.from("cv_submissions").update(patch).eq("id", data.id);
     if (error) throw new Error(error.message);
