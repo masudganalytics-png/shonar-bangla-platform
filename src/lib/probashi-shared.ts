@@ -28,9 +28,10 @@ export type ProbashiProfile = {
   updated_at: string;
 };
 
-/** Columns readable by anonymous visitors (phone/whatsapp are intentionally excluded). */
+/** Columns readable by visitors — phone/whatsapp/facebook_url are contact fields
+ *  released only through `getProbashiContact`, which honours `show_contact`. */
 export const PROBASHI_PUBLIC_COLUMNS =
-  "id, slug, full_name, photo_url, birth_date, country, country_code, city, village, profession, moved_abroad_date, expected_return_date, facebook_url, community_message, show_contact, is_verified, status, created_at, updated_at";
+  "id, slug, full_name, photo_url, birth_date, country, country_code, city, village, profession, moved_abroad_date, expected_return_date, community_message, show_contact, is_verified, status, created_at, updated_at";
 
 export const PROBASHI_COUNTRIES: ReadonlyArray<{ name: string; bn: string; iso: string }> = [
   { name: "Saudi Arabia", bn: "সৌদি আরব", iso: "SA" },
