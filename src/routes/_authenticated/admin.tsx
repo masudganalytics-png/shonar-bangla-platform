@@ -17,6 +17,8 @@ const TABS: ReadonlyArray<{ to: string; label: string; icon: typeof Users; exact
   { to: "/admin/blood-requests", label: "রক্তের অনুরোধ", icon: HeartPulse },
   { to: "/admin/community", label: "কমিউনিটি", icon: Handshake },
   { to: "/admin/probashi", label: "প্রবাসী কর্নার", icon: Plane },
+  { to: "/admin/cv-submissions", label: "সিভি বিল্ডার", icon: FileSignature },
+
 ];
 
 export const Route = createFileRoute("/_authenticated/admin")({
