@@ -46,6 +46,10 @@ export function useMyProbashiProfile(userId: string | undefined) {
   return useQuery({
     queryKey: ["probashi", "mine", userId],
     enabled: Boolean(userId),
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: "always",
+    refetchOnWindowFocus: true,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("probashi_profiles")
