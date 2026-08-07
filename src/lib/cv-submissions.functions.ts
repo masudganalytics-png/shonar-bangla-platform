@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { getRequest } from "@tanstack/react-start/server";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
+import type { CVData } from "@/lib/cv-builder/types";
 
 export interface CVSubmissionRow {
   id: string;
@@ -15,7 +16,7 @@ export interface CVSubmissionRow {
   language: string;
   status: string;
   completion: number;
-  data: Record<string, unknown> | null;
+  data: CVData | null;
   ip_address: string | null;
   user_agent: string | null;
   admin_notes: string | null;
