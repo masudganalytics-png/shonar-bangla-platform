@@ -65,7 +65,7 @@ function ProbashiProfilePage() {
   const { data, isLoading } = useProbashiProfile(slug);
   const { isAuthenticated } = useAuth();
   const fetchContact = useServerFn(getProbashiContact);
-  const [contact, setContact] = useState<{ phone: string | null; whatsapp: string | null } | null>(null);
+  const [contact, setContact] = useState<{ phone: string | null; whatsapp: string | null; facebook_url: string | null } | null>(null);
   const [loadingContact, setLoadingContact] = useState(false);
 
   if (isLoading) {
@@ -198,9 +198,9 @@ function ProbashiProfilePage() {
               </Button>
             )}
 
-            {data.facebook_url && (
+            {contact?.facebook_url && (
               <Button asChild variant="ghost" size="sm">
-                <a href={data.facebook_url} target="_blank" rel="noopener noreferrer">
+                <a href={contact.facebook_url} target="_blank" rel="noopener noreferrer">
                   <Facebook className="mr-1.5 h-4 w-4" /> ফেসবুক প্রোফাইল
                 </a>
               </Button>

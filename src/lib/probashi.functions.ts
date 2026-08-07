@@ -18,25 +18,40 @@ async function ensureAdmin(ctx: { supabase: unknown; userId: string }) {
 /* ------------------------------------------------------------ contact */
 
 /**
- * Contact details are never exposed through the Data API (anon has no column
- * grant on phone/whatsapp). They are only released here, for approved profiles
- * that opted in, to signed-in members.
+ * Contact details are never exposed through the Data API (anon/authenticated
+ * have no column grant on phone/whatsapp/facebook_url). They are only released
+ * here, for approved profiles that opted in, to signed-in members.
  */
 export const getProbashiContact = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: unknown) => z.object({ id: z.string().uuid() }).parse(d))
-  .handler(async ({ data, context }): Promise<{ phone: string | null; whatsapp: string | null }> => {
-    const { data: row, error } = await context.supabase
+  .handler(async ({ data }): Promise<{ phone: string | null; whatsapp: string | null; facebook_url: string | null }> => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: row, error } = await supabaseAdmin
       .from("probashi_profiles")
-      .select("phone, whatsapp, show_contact, status")
+      .select("phone, whatsapp, facebook_url, show_contact, status")
       .eq("id", data.id)
       .maybeSingle();
     if (error) throw new Error(error.message);
     if (!row) throw new Error("প্রোফাইল পাওয়া যায়নি");
     if (row.status !== "approved" || !row.show_contact) {
-      return { phone: null, whatsapp: null };
+      return { phone: null, whatsapp: null, facebook_url: null };
     }
-    return { phone: row.phone ?? null, whatsapp: row.whatsapp ?? null };
+    return { phone: row.phone ?? null, whatsapp: row.whatsapp ?? null, facebook_url: row.facebook_url ?? null };
+  });
+
+/** The signed-in member's own profile, including their own contact fields. */
+export const getMyProbashiProfile = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await supabaseAdmin
+      .from("probashi_profiles")
+      .select("*")
+      .eq("user_id", context.userId)
+      .maybeSingle();
+    if (error) throw new Error(error.message);
+    return (data ?? null) as (ProbashiProfile & { phone: string | null; whatsapp: string | null; facebook_url: string | null }) | null;
   });
 
 /* --------------------------------------------------------------- admin */

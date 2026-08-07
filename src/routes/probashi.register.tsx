@@ -184,7 +184,7 @@ function ProbashiRegister() {
     }
   }
 
-  const statusMeta = mine ? PROBASHI_STATUS_META[mine.status] : null;
+  const statusMeta = mine ? PROBASHI_STATUS_META[mine.status as keyof typeof PROBASHI_STATUS_META] : null;
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6">

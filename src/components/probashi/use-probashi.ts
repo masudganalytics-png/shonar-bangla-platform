@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { getMyProbashiProfile } from "@/lib/probashi.functions";
 import {
   PROBASHI_PUBLIC_COLUMNS,
   dhakaDayKey,
@@ -50,14 +51,6 @@ export function useMyProbashiProfile(userId: string | undefined) {
     gcTime: 0,
     refetchOnMount: "always",
     refetchOnWindowFocus: true,
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("probashi_profiles")
-        .select("*")
-        .eq("user_id", userId!)
-        .maybeSingle();
-      if (error) throw new Error(error.message);
-      return data as (ProbashiProfile & { phone: string | null; whatsapp: string | null }) | null;
-    },
+    queryFn: async () => await getMyProbashiProfile(),
   });
 }
