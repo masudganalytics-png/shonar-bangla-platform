@@ -27,7 +27,7 @@ import type {
 
 type LooseTable = {
   update: (v: Record<string, unknown>) => { eq: (c: string, v: unknown) => any };
-  insert: (v: Record<string, unknown>) => any;
+  insert: (v: unknown) => any;
 };
 
 type RpcClient = {
