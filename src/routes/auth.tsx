@@ -77,8 +77,9 @@ function AuthPage() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!acknowledged) return toast.error("আগে ডিসক্লেইমার-এ সম্মতি দিন");
-    const normalized = normalizeBdPhone(phoneInput);
-    if (!normalized) return toast.error("সঠিক বাংলাদেশি মোবাইল নম্বর দিন (যেমন ০১৭xxxxxxxx)");
+    const normalized = normalizePhone(phoneInput, country);
+    if (!normalized) return toast.error("সঠিক মোবাইল নম্বর দিন (নির্বাচিত দেশ অনুযায়ী)");
+
 
     setSubmitting(true);
     const { email, password } = phoneCredentials(normalized);
