@@ -10,6 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
+import { parsePhoneNumberFromString, getCountryCallingCode, type CountryCode } from "libphonenumber-js";
+import { PhoneField, DEFAULT_COUNTRY } from "@/components/auth/PhoneField";
+
 
 const searchSchema = z.object({
   redirect: z.string().optional(),
@@ -30,11 +33,17 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-// Normalise BD numbers: accepts 01XXXXXXXXX, 8801XXXXXXXXX, +8801XXXXXXXXX
-function normalizeBdPhone(input: string): string | null {
-  const digits = input.replace(/\D/g, "");
-  if (/^01[3-9]\d{8}$/.test(digits)) return `88${digits}`;
-  if (/^8801[3-9]\d{8}$/.test(digits)) return digits;
+// Normalise any international number to E.164 digits (no "+"), e.g. 8801712345678.
+// Accepts national format for the selected country (01XXXXXXXXX), +8801712345678 and 8801712345678.
+function normalizePhone(input: string, country: CountryCode): string | null {
+  const trimmed = input.trim();
+  if (!trimmed) return null;
+  const digits = trimmed.replace(/\D/g, "");
+  if (!digits) return null;
+  for (const candidate of [trimmed, `+${digits}`]) {
+    const parsed = parsePhoneNumberFromString(candidate, country);
+    if (parsed?.isValid()) return parsed.number.replace("+", "");
+  }
   return null;
 }
 
@@ -46,6 +55,7 @@ function phoneCredentials(normalizedDigits: string) {
   };
 }
 
+
 function AuthPage() {
   const search = Route.useSearch();
   const navigate = useNavigate();
@@ -53,6 +63,8 @@ function AuthPage() {
   const [acknowledged, setAcknowledged] = useState(false);
 
   const [phoneInput, setPhoneInput] = useState("");
+  const [country, setCountry] = useState<CountryCode>(DEFAULT_COUNTRY);
+
   const [fullName, setFullName] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -65,8 +77,9 @@ function AuthPage() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!acknowledged) return toast.error("আগে ডিসক্লেইমার-এ সম্মতি দিন");
-    const normalized = normalizeBdPhone(phoneInput);
-    if (!normalized) return toast.error("সঠিক বাংলাদেশি মোবাইল নম্বর দিন (যেমন ০১৭xxxxxxxx)");
+    const normalized = normalizePhone(phoneInput, country);
+    if (!normalized) return toast.error("সঠিক মোবাইল নম্বর দিন (নির্বাচিত দেশ অনুযায়ী)");
+
 
     setSubmitting(true);
     const { email, password } = phoneCredentials(normalized);
@@ -196,18 +209,19 @@ function AuthPage() {
 
           <div className="space-y-2">
             <Label htmlFor="phone">মোবাইল নম্বর</Label>
-            <Input
+            <PhoneField
               id="phone"
-              type="tel"
-              inputMode="numeric"
+              country={country}
+              onCountryChange={setCountry}
               value={phoneInput}
-              onChange={(e) => setPhoneInput(e.target.value)}
-              placeholder="01XXXXXXXXX"
-              autoComplete="tel"
-              required
-              className="text-lg"
+              onValueChange={setPhoneInput}
             />
-            <p className="text-xs text-muted-foreground">উদাহরণ: 01712345678</p>
+            <p className="text-xs text-muted-foreground">
+              {country === "BD"
+                ? "উদাহরণ: 01712345678"
+                : `উদাহরণ: +${getCountryCallingCode(country)} XXXXXXXXX`}
+            </p>
+
           </div>
 
           <Button type="submit" className="w-full" size="lg" disabled={submitting || !acknowledged}>
