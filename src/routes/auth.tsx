@@ -63,6 +63,8 @@ function AuthPage() {
   const [acknowledged, setAcknowledged] = useState(false);
 
   const [phoneInput, setPhoneInput] = useState("");
+  const [country, setCountry] = useState<CountryCode>(DEFAULT_COUNTRY);
+
   const [fullName, setFullName] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
