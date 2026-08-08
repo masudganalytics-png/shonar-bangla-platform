@@ -689,6 +689,62 @@ export type Database = {
         }
         Relationships: []
       }
+      community_activities: {
+        Row: {
+          activity_date: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_hidden: boolean
+          location: string | null
+          mosque_id: string
+          name: string
+          organizer: string | null
+          photos: string[]
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          activity_date?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_hidden?: boolean
+          location?: string | null
+          mosque_id: string
+          name: string
+          organizer?: string | null
+          photos?: string[]
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          activity_date?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_hidden?: boolean
+          location?: string | null
+          mosque_id?: string
+          name?: string
+          organizer?: string | null
+          photos?: string[]
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_activities_mosque_id_fkey"
+            columns: ["mosque_id"]
+            isOneToOne: false
+            referencedRelation: "mosques"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       community_events: {
         Row: {
           area: string | null
@@ -867,6 +923,62 @@ export type Database = {
           },
         ]
       }
+      community_notices: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          is_hidden: boolean
+          mosque_id: string
+          notice_date: string
+          priority: Database["public"]["Enums"]["mosque_notice_priority"]
+          published_by: string | null
+          title: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_hidden?: boolean
+          mosque_id: string
+          notice_date?: string
+          priority?: Database["public"]["Enums"]["mosque_notice_priority"]
+          published_by?: string | null
+          title: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_hidden?: boolean
+          mosque_id?: string
+          notice_date?: string
+          priority?: Database["public"]["Enums"]["mosque_notice_priority"]
+          published_by?: string | null
+          title?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_notices_mosque_id_fkey"
+            columns: ["mosque_id"]
+            isOneToOne: false
+            referencedRelation: "mosques"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       community_positions: {
         Row: {
           community_id: string
@@ -1015,6 +1127,71 @@ export type Database = {
         }
         Relationships: []
       }
+      development_projects: {
+        Row: {
+          collected_amount: number
+          created_at: string
+          created_by: string | null
+          description: string | null
+          expected_completion_date: string | null
+          id: string
+          mosque_id: string
+          name: string
+          photos: string[]
+          spent_amount: number
+          start_date: string | null
+          status: Database["public"]["Enums"]["mosque_project_status"]
+          target_amount: number
+          updated_at: string
+          updated_by: string | null
+          updates: string | null
+        }
+        Insert: {
+          collected_amount?: number
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          expected_completion_date?: string | null
+          id?: string
+          mosque_id: string
+          name: string
+          photos?: string[]
+          spent_amount?: number
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["mosque_project_status"]
+          target_amount?: number
+          updated_at?: string
+          updated_by?: string | null
+          updates?: string | null
+        }
+        Update: {
+          collected_amount?: number
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          expected_completion_date?: string | null
+          id?: string
+          mosque_id?: string
+          name?: string
+          photos?: string[]
+          spent_amount?: number
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["mosque_project_status"]
+          target_amount?: number
+          updated_at?: string
+          updated_by?: string | null
+          updates?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "development_projects_mosque_id_fkey"
+            columns: ["mosque_id"]
+            isOneToOne: false
+            referencedRelation: "mosques"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       education_news: {
         Row: {
           author_id: string | null
@@ -1161,6 +1338,66 @@ export type Database = {
           },
         ]
       }
+      financial_transactions: {
+        Row: {
+          amount: number
+          category: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          mosque_id: string
+          project_id: string | null
+          txn_date: string
+          txn_type: Database["public"]["Enums"]["mosque_txn_type"]
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          amount: number
+          category: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          mosque_id: string
+          project_id?: string | null
+          txn_date?: string
+          txn_type: Database["public"]["Enums"]["mosque_txn_type"]
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          amount?: number
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          mosque_id?: string
+          project_id?: string | null
+          txn_date?: string
+          txn_type?: Database["public"]["Enums"]["mosque_txn_type"]
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "financial_transactions_mosque_id_fkey"
+            columns: ["mosque_id"]
+            isOneToOne: false
+            referencedRelation: "mosques"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "financial_transactions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "development_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       legal_leads: {
         Row: {
           admin_note: string | null
@@ -1298,6 +1535,294 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      mosque_committee_members: {
+        Row: {
+          bio: string | null
+          created_at: string
+          created_by: string | null
+          custom_title: string | null
+          full_name: string
+          id: string
+          mosque_id: string
+          phone: string | null
+          phone_visibility: Database["public"]["Enums"]["mosque_visibility"]
+          photo_url: string | null
+          position: Database["public"]["Enums"]["mosque_committee_position"]
+          sort_order: number
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          created_by?: string | null
+          custom_title?: string | null
+          full_name: string
+          id?: string
+          mosque_id: string
+          phone?: string | null
+          phone_visibility?: Database["public"]["Enums"]["mosque_visibility"]
+          photo_url?: string | null
+          position?: Database["public"]["Enums"]["mosque_committee_position"]
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          created_by?: string | null
+          custom_title?: string | null
+          full_name?: string
+          id?: string
+          mosque_id?: string
+          phone?: string | null
+          phone_visibility?: Database["public"]["Enums"]["mosque_visibility"]
+          photo_url?: string | null
+          position?: Database["public"]["Enums"]["mosque_committee_position"]
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mosque_committee_members_mosque_id_fkey"
+            columns: ["mosque_id"]
+            isOneToOne: false
+            referencedRelation: "mosques"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mosque_donors: {
+        Row: {
+          amount: number | null
+          amount_visibility: Database["public"]["Enums"]["mosque_visibility"]
+          created_at: string
+          created_by: string | null
+          donated_on: string | null
+          full_name: string
+          id: string
+          is_anonymous: boolean
+          location: string | null
+          mosque_id: string
+          photo_url: string | null
+          project_id: string | null
+          purpose: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          amount?: number | null
+          amount_visibility?: Database["public"]["Enums"]["mosque_visibility"]
+          created_at?: string
+          created_by?: string | null
+          donated_on?: string | null
+          full_name: string
+          id?: string
+          is_anonymous?: boolean
+          location?: string | null
+          mosque_id: string
+          photo_url?: string | null
+          project_id?: string | null
+          purpose?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          amount?: number | null
+          amount_visibility?: Database["public"]["Enums"]["mosque_visibility"]
+          created_at?: string
+          created_by?: string | null
+          donated_on?: string | null
+          full_name?: string
+          id?: string
+          is_anonymous?: boolean
+          location?: string | null
+          mosque_id?: string
+          photo_url?: string | null
+          project_id?: string | null
+          purpose?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mosque_donors_mosque_id_fkey"
+            columns: ["mosque_id"]
+            isOneToOne: false
+            referencedRelation: "mosques"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mosque_donors_project_fk"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "development_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mosque_managers: {
+        Row: {
+          created_at: string
+          id: string
+          mosque_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mosque_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mosque_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mosque_managers_mosque_id_fkey"
+            columns: ["mosque_id"]
+            isOneToOne: false
+            referencedRelation: "mosques"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mosque_reports: {
+        Row: {
+          contact: string | null
+          created_at: string
+          id: string
+          mosque_id: string
+          reason: string
+          reporter_id: string | null
+          status: string
+          target_id: string | null
+          target_kind: string
+          updated_at: string
+        }
+        Insert: {
+          contact?: string | null
+          created_at?: string
+          id?: string
+          mosque_id: string
+          reason: string
+          reporter_id?: string | null
+          status?: string
+          target_id?: string | null
+          target_kind?: string
+          updated_at?: string
+        }
+        Update: {
+          contact?: string | null
+          created_at?: string
+          id?: string
+          mosque_id?: string
+          reason?: string
+          reporter_id?: string | null
+          status?: string
+          target_id?: string | null
+          target_kind?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mosque_reports_mosque_id_fkey"
+            columns: ["mosque_id"]
+            isOneToOne: false
+            referencedRelation: "mosques"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mosques: {
+        Row: {
+          area: string | null
+          created_at: string
+          created_by: string
+          description: string | null
+          district: string
+          established_year: number | null
+          finance_public: boolean
+          id: string
+          imam_name: string | null
+          map_url: string | null
+          muazzin_name: string | null
+          name: string
+          phone: string | null
+          phone_visibility: Database["public"]["Enums"]["mosque_visibility"]
+          photo_url: string | null
+          rejection_reason: string | null
+          slug: string | null
+          status: Database["public"]["Enums"]["mosque_verification_status"]
+          union_name: string | null
+          upazila: string
+          updated_at: string
+          updated_by: string | null
+          verified_at: string | null
+          verified_by: string | null
+          ward: string | null
+        }
+        Insert: {
+          area?: string | null
+          created_at?: string
+          created_by: string
+          description?: string | null
+          district: string
+          established_year?: number | null
+          finance_public?: boolean
+          id?: string
+          imam_name?: string | null
+          map_url?: string | null
+          muazzin_name?: string | null
+          name: string
+          phone?: string | null
+          phone_visibility?: Database["public"]["Enums"]["mosque_visibility"]
+          photo_url?: string | null
+          rejection_reason?: string | null
+          slug?: string | null
+          status?: Database["public"]["Enums"]["mosque_verification_status"]
+          union_name?: string | null
+          upazila: string
+          updated_at?: string
+          updated_by?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+          ward?: string | null
+        }
+        Update: {
+          area?: string | null
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          district?: string
+          established_year?: number | null
+          finance_public?: boolean
+          id?: string
+          imam_name?: string | null
+          map_url?: string | null
+          muazzin_name?: string | null
+          name?: string
+          phone?: string | null
+          phone_visibility?: Database["public"]["Enums"]["mosque_visibility"]
+          photo_url?: string | null
+          rejection_reason?: string | null
+          slug?: string | null
+          status?: Database["public"]["Enums"]["mosque_verification_status"]
+          union_name?: string | null
+          upazila?: string
+          updated_at?: string
+          updated_by?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+          ward?: string | null
+        }
+        Relationships: []
       }
       notifications: {
         Row: {
@@ -1563,6 +2088,118 @@ export type Database = {
             columns: ["listing_id"]
             isOneToOne: false
             referencedRelation: "listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      society_leaders: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          full_name: string
+          id: string
+          mosque_id: string
+          phone: string | null
+          phone_visibility: Database["public"]["Enums"]["mosque_visibility"]
+          photo_url: string | null
+          role_title: string | null
+          sort_order: number
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          full_name: string
+          id?: string
+          mosque_id: string
+          phone?: string | null
+          phone_visibility?: Database["public"]["Enums"]["mosque_visibility"]
+          photo_url?: string | null
+          role_title?: string | null
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          full_name?: string
+          id?: string
+          mosque_id?: string
+          phone?: string | null
+          phone_visibility?: Database["public"]["Enums"]["mosque_visibility"]
+          photo_url?: string | null
+          role_title?: string | null
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "society_leaders_mosque_id_fkey"
+            columns: ["mosque_id"]
+            isOneToOne: false
+            referencedRelation: "mosques"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      society_members: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          family_name: string | null
+          full_name: string
+          id: string
+          mosque_id: string
+          phone: string | null
+          phone_visibility: Database["public"]["Enums"]["mosque_visibility"]
+          photo_url: string | null
+          sort_order: number
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          family_name?: string | null
+          full_name: string
+          id?: string
+          mosque_id: string
+          phone?: string | null
+          phone_visibility?: Database["public"]["Enums"]["mosque_visibility"]
+          photo_url?: string | null
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          family_name?: string | null
+          full_name?: string
+          id?: string
+          mosque_id?: string
+          phone?: string | null
+          phone_visibility?: Database["public"]["Enums"]["mosque_visibility"]
+          photo_url?: string | null
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "society_members_mosque_id_fkey"
+            columns: ["mosque_id"]
+            isOneToOne: false
+            referencedRelation: "mosques"
             referencedColumns: ["id"]
           },
         ]
@@ -1965,6 +2602,41 @@ export type Database = {
         }
         Relationships: []
       }
+      verification_records: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          id: string
+          mosque_id: string
+          note: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          mosque_id: string
+          note?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          mosque_id?: string
+          note?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "verification_records_mosque_id_fkey"
+            columns: ["mosque_id"]
+            isOneToOne: false
+            referencedRelation: "mosques"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       worker_categories: {
         Row: {
           created_at: string
@@ -2175,6 +2847,10 @@ export type Database = {
         Args: { _community_id: string; _user_id: string }
         Returns: boolean
       }
+      is_mosque_manager: {
+        Args: { _mosque_id: string; _user_id: string }
+        Returns: boolean
+      }
       is_public_community: { Args: { _community_id: string }; Returns: boolean }
       slugify_name: { Args: { input: string }; Returns: string }
     }
@@ -2227,6 +2903,17 @@ export type Database = {
       donor_status: "pending" | "approved" | "rejected"
       lead_status: "new" | "contacted" | "closed"
       listing_status: "pending" | "approved" | "rejected"
+      mosque_committee_position:
+        | "president"
+        | "vice_president"
+        | "secretary"
+        | "treasurer"
+        | "member"
+      mosque_notice_priority: "normal" | "important" | "urgent"
+      mosque_project_status: "planned" | "ongoing" | "completed" | "paused"
+      mosque_txn_type: "income" | "expense"
+      mosque_verification_status: "pending" | "verified" | "rejected"
+      mosque_visibility: "public" | "private"
       probashi_status: "pending" | "approved" | "rejected" | "suspended"
       profile_role: "user" | "business" | "admin"
       rate_status: "increased" | "decreased" | "stable"
@@ -2424,6 +3111,18 @@ export const Constants = {
       donor_status: ["pending", "approved", "rejected"],
       lead_status: ["new", "contacted", "closed"],
       listing_status: ["pending", "approved", "rejected"],
+      mosque_committee_position: [
+        "president",
+        "vice_president",
+        "secretary",
+        "treasurer",
+        "member",
+      ],
+      mosque_notice_priority: ["normal", "important", "urgent"],
+      mosque_project_status: ["planned", "ongoing", "completed", "paused"],
+      mosque_txn_type: ["income", "expense"],
+      mosque_verification_status: ["pending", "verified", "rejected"],
+      mosque_visibility: ["public", "private"],
       probashi_status: ["pending", "approved", "rejected", "suspended"],
       profile_role: ["user", "business", "admin"],
       rate_status: ["increased", "decreased", "stable"],
