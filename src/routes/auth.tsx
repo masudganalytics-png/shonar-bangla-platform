@@ -209,18 +209,19 @@ function AuthPage() {
 
           <div className="space-y-2">
             <Label htmlFor="phone">মোবাইল নম্বর</Label>
-            <Input
+            <PhoneField
               id="phone"
-              type="tel"
-              inputMode="numeric"
+              country={country}
+              onCountryChange={setCountry}
               value={phoneInput}
-              onChange={(e) => setPhoneInput(e.target.value)}
-              placeholder="01XXXXXXXXX"
-              autoComplete="tel"
-              required
-              className="text-lg"
+              onValueChange={setPhoneInput}
             />
-            <p className="text-xs text-muted-foreground">উদাহরণ: 01712345678</p>
+            <p className="text-xs text-muted-foreground">
+              {country === "BD"
+                ? "উদাহরণ: 01712345678"
+                : `উদাহরণ: +${getCountryCallingCode(country)} XXXXXXXXX`}
+            </p>
+
           </div>
 
           <Button type="submit" className="w-full" size="lg" disabled={submitting || !acknowledged}>
