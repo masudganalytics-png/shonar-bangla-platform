@@ -30,11 +30,17 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-// Normalise BD numbers: accepts 01XXXXXXXXX, 8801XXXXXXXXX, +8801XXXXXXXXX
-function normalizeBdPhone(input: string): string | null {
-  const digits = input.replace(/\D/g, "");
-  if (/^01[3-9]\d{8}$/.test(digits)) return `88${digits}`;
-  if (/^8801[3-9]\d{8}$/.test(digits)) return digits;
+// Normalise any international number to E.164 digits (no "+"), e.g. 8801712345678.
+// Accepts national format for the selected country (01XXXXXXXXX), +8801712345678 and 8801712345678.
+function normalizePhone(input: string, country: CountryCode): string | null {
+  const trimmed = input.trim();
+  if (!trimmed) return null;
+  const digits = trimmed.replace(/\D/g, "");
+  if (!digits) return null;
+  for (const candidate of [trimmed, `+${digits}`]) {
+    const parsed = parsePhoneNumberFromString(candidate, country);
+    if (parsed?.isValid()) return parsed.number.replace("+", "");
+  }
   return null;
 }
 
@@ -45,6 +51,7 @@ function phoneCredentials(normalizedDigits: string) {
     password: `ukhiya_${normalizedDigits}_v1`,
   };
 }
+
 
 function AuthPage() {
   const search = Route.useSearch();
