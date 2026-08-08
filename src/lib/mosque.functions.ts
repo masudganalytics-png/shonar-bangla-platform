@@ -454,7 +454,7 @@ export const updateMosqueInfo = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const patch: Record<string, unknown> = { ...data.values, updated_by: context.userId };
     if (data.finance_public !== undefined) patch['finance_public'] = data.finance_public;
-    const { error } = await supabaseAdmin.from("mosques").update(patch).eq("id", data.id);
+    const { error } = await (supabaseAdmin.from("mosques") as unknown as LooseTable).update(patch).eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
