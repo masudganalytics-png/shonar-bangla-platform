@@ -25,6 +25,11 @@ import type {
  * through `public.is_mosque_manager`.
  */
 
+type LooseTable = {
+  update: (v: Record<string, unknown>) => { eq: (c: string, v: unknown) => any };
+  insert: (v: Record<string, unknown>) => any;
+};
+
 type RpcClient = {
   rpc: (
     fn: string,
@@ -423,15 +428,15 @@ export const submitMosque = createServerFn({ method: "POST" })
     const stamp = { mosque_id: id, created_by: context.userId, updated_by: context.userId };
     const inserts: Array<Promise<unknown>> = [];
     if (data.committee.length)
-      inserts.push(Promise.resolve(supabaseAdmin.from("mosque_committee_members").insert(data.committee.map((r) => ({ ...r, ...stamp })))));
+      inserts.push(Promise.resolve((supabaseAdmin.from("mosque_committee_members") as unknown as LooseTable).insert(data.committee.map((r) => ({ ...r, ...stamp })))));
     if (data.leaders.length)
-      inserts.push(Promise.resolve(supabaseAdmin.from("society_leaders").insert(data.leaders.map((r) => ({ ...r, ...stamp })))));
+      inserts.push(Promise.resolve((supabaseAdmin.from("society_leaders") as unknown as LooseTable).insert(data.leaders.map((r) => ({ ...r, ...stamp })))));
     if (data.members.length)
-      inserts.push(Promise.resolve(supabaseAdmin.from("society_members").insert(data.members.map((r) => ({ ...r, ...stamp })))));
+      inserts.push(Promise.resolve((supabaseAdmin.from("society_members") as unknown as LooseTable).insert(data.members.map((r) => ({ ...r, ...stamp })))));
     if (data.donors.length)
-      inserts.push(Promise.resolve(supabaseAdmin.from("mosque_donors").insert(data.donors.map((r) => ({ ...r, ...stamp })))));
+      inserts.push(Promise.resolve((supabaseAdmin.from("mosque_donors") as unknown as LooseTable).insert(data.donors.map((r) => ({ ...r, ...stamp })))));
     if (data.projects.length)
-      inserts.push(Promise.resolve(supabaseAdmin.from("development_projects").insert(data.projects.map((r) => ({ ...r, ...stamp })))));
+      inserts.push(Promise.resolve((supabaseAdmin.from("development_projects") as unknown as LooseTable).insert(data.projects.map((r) => ({ ...r, ...stamp })))));
     await Promise.all(inserts);
 
     await supabaseAdmin.from("verification_records").insert({
@@ -487,16 +492,14 @@ export const saveMosqueChild = createServerFn({ method: "POST" })
     const values = schema.parse(data.values) as Record<string, unknown>;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     if (data.id) {
-      const { error } = await supabaseAdmin
-        .from(data.table)
+      const { error } = await (supabaseAdmin.from(data.table) as unknown as LooseTable)
         .update({ ...values, updated_by: context.userId })
         .eq("id", data.id)
         .eq("mosque_id", data.mosqueId);
       if (error) throw new Error(error.message);
       return { ok: true, id: data.id };
     }
-    const { data: row, error } = await supabaseAdmin
-      .from(data.table)
+    const { data: row, error } = await (supabaseAdmin.from(data.table) as unknown as LooseTable)
       .insert({ ...values, mosque_id: data.mosqueId, created_by: context.userId, updated_by: context.userId })
       .select("id")
       .single();
