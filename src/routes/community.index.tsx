@@ -54,6 +54,13 @@ const TILES = [
     desc: "ব্যাচ, বন্ধু ও এলাকার গ্রুপ",
   },
   {
+    to: "/community/mosques" as const,
+    icon: Building2,
+    emoji: "🕌",
+    title: "মসজিদ ও সমাজ",
+    desc: "মসজিদ কমিটি, সমাজপতি, সদস্য ও দাতাদের তথ্য",
+  },
+  {
     to: "/community/feed" as const,
     icon: Newspaper,
     emoji: "📰",
@@ -174,7 +181,7 @@ function CommunityHome() {
       ) : null}
 
       {/* Four tiles */}
-      <section className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {TILES.map((t) => (
           <Link key={t.to} to={t.to}>
             <Card className="group h-full p-5 transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md">

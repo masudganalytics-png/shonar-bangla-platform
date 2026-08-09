@@ -95,6 +95,7 @@ import { Route as AuthenticatedAdminTuitionApplicationsRouteImport } from './rou
 import { Route as AuthenticatedAdminTeachersRouteImport } from './routes/_authenticated/admin.teachers'
 import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_authenticated/admin.study-resources'
 import { Route as AuthenticatedAdminProbashiRouteImport } from './routes/_authenticated/admin.probashi'
+import { Route as AuthenticatedAdminMosquesRouteImport } from './routes/_authenticated/admin.mosques'
 import { Route as AuthenticatedAdminLegalRouteImport } from './routes/_authenticated/admin.legal'
 import { Route as AuthenticatedAdminEducationNewsRouteImport } from './routes/_authenticated/admin.education-news'
 import { Route as AuthenticatedAdminCvSubmissionsRouteImport } from './routes/_authenticated/admin.cv-submissions'
@@ -547,6 +548,12 @@ const AuthenticatedAdminProbashiRoute =
     path: '/probashi',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminMosquesRoute =
+  AuthenticatedAdminMosquesRouteImport.update({
+    id: '/mosques',
+    path: '/mosques',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminLegalRoute = AuthenticatedAdminLegalRouteImport.update({
   id: '/legal',
   path: '/legal',
@@ -710,6 +717,7 @@ export interface FileRoutesByFullPath {
   '/admin/cv-submissions': typeof AuthenticatedAdminCvSubmissionsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
@@ -800,6 +808,7 @@ export interface FileRoutesByTo {
   '/admin/cv-submissions': typeof AuthenticatedAdminCvSubmissionsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
@@ -904,6 +913,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/cv-submissions': typeof AuthenticatedAdminCvSubmissionsRoute
   '/_authenticated/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/_authenticated/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/_authenticated/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/_authenticated/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/_authenticated/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/_authenticated/admin/teachers': typeof AuthenticatedAdminTeachersRoute
@@ -1008,6 +1018,7 @@ export interface FileRouteTypes {
     | '/admin/cv-submissions'
     | '/admin/education-news'
     | '/admin/legal'
+    | '/admin/mosques'
     | '/admin/probashi'
     | '/admin/study-resources'
     | '/admin/teachers'
@@ -1098,6 +1109,7 @@ export interface FileRouteTypes {
     | '/admin/cv-submissions'
     | '/admin/education-news'
     | '/admin/legal'
+    | '/admin/mosques'
     | '/admin/probashi'
     | '/admin/study-resources'
     | '/admin/teachers'
@@ -1201,6 +1213,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/cv-submissions'
     | '/_authenticated/admin/education-news'
     | '/_authenticated/admin/legal'
+    | '/_authenticated/admin/mosques'
     | '/_authenticated/admin/probashi'
     | '/_authenticated/admin/study-resources'
     | '/_authenticated/admin/teachers'
@@ -1865,6 +1878,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminProbashiRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/mosques': {
+      id: '/_authenticated/admin/mosques'
+      path: '/mosques'
+      fullPath: '/admin/mosques'
+      preLoaderRoute: typeof AuthenticatedAdminMosquesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/legal': {
       id: '/_authenticated/admin/legal'
       path: '/legal'
@@ -1987,6 +2007,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminCvSubmissionsRoute: typeof AuthenticatedAdminCvSubmissionsRoute
   AuthenticatedAdminEducationNewsRoute: typeof AuthenticatedAdminEducationNewsRoute
   AuthenticatedAdminLegalRoute: typeof AuthenticatedAdminLegalRoute
+  AuthenticatedAdminMosquesRoute: typeof AuthenticatedAdminMosquesRoute
   AuthenticatedAdminProbashiRoute: typeof AuthenticatedAdminProbashiRoute
   AuthenticatedAdminStudyResourcesRoute: typeof AuthenticatedAdminStudyResourcesRoute
   AuthenticatedAdminTeachersRoute: typeof AuthenticatedAdminTeachersRoute
@@ -2013,6 +2034,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminCvSubmissionsRoute: AuthenticatedAdminCvSubmissionsRoute,
   AuthenticatedAdminEducationNewsRoute: AuthenticatedAdminEducationNewsRoute,
   AuthenticatedAdminLegalRoute: AuthenticatedAdminLegalRoute,
+  AuthenticatedAdminMosquesRoute: AuthenticatedAdminMosquesRoute,
   AuthenticatedAdminProbashiRoute: AuthenticatedAdminProbashiRoute,
   AuthenticatedAdminStudyResourcesRoute: AuthenticatedAdminStudyResourcesRoute,
   AuthenticatedAdminTeachersRoute: AuthenticatedAdminTeachersRoute,
