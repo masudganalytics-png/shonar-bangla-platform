@@ -173,13 +173,7 @@ function MosqueListPage() {
 }
 
 function MosqueCard({ m }: { m: MosqueListItem }) {
-  const detailQ = useQuery({
-    queryKey: ["mosque-card-people", m.id],
-    queryFn: async () => null,
-    enabled: false,
-    initialData: null,
-  });
-  void detailQ;
+
 
   const location = [m.area, m.union_name ? `${m.union_name} ইউনিয়ন` : null, m.upazila, m.district]
     .filter(Boolean)
@@ -210,10 +204,10 @@ function MosqueCard({ m }: { m: MosqueListItem }) {
         </p>
         <div className="mt-3 space-y-1 text-xs text-muted-foreground">
           <p className="flex items-center gap-1">
-            <User2 className="h-3.5 w-3.5" /> ইমাম ও মুয়াজ্জিনের তথ্য বিস্তারিত পাতায়
+            <User2 className="h-3.5 w-3.5 shrink-0" /> ইমাম: {m.imam_name || "যোগ করা হয়নি"}
           </p>
           <p className="flex items-center gap-1">
-            <Volume2 className="h-3.5 w-3.5" /> কমিটি, সমাজ ও আয়-ব্যয়ের হিসাব দেখুন
+            <Volume2 className="h-3.5 w-3.5 shrink-0" /> মুয়াজ্জিন: {m.muazzin_name || "যোগ করা হয়নি"}
           </p>
         </div>
         <Button asChild variant="outline" size="sm" className="mt-4 w-full">
