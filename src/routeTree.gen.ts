@@ -81,6 +81,7 @@ import { Route as TeachersTuitionsIdRouteImport } from './routes/teachers.tuitio
 import { Route as TeachersNewsIdRouteImport } from './routes/teachers.news.$id'
 import { Route as TeachersAchievementsIdRouteImport } from './routes/teachers.achievements.$id'
 import { Route as CommunityUUserIdRouteImport } from './routes/community.u.$userId'
+import { Route as CommunityMosquesNewRouteImport } from './routes/community.mosques.new'
 import { Route as CommunityMosquesSlugRouteImport } from './routes/community.mosques.$slug'
 import { Route as CommunityEventsNewRouteImport } from './routes/community.events.new'
 import { Route as CommunityCSlugRouteImport } from './routes/community.c.$slug'
@@ -470,6 +471,11 @@ const CommunityUUserIdRoute = CommunityUUserIdRouteImport.update({
   path: '/u/$userId',
   getParentRoute: () => CommunityRoute,
 } as any)
+const CommunityMosquesNewRoute = CommunityMosquesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => CommunityMosquesRoute,
+} as any)
 const CommunityMosquesSlugRoute = CommunityMosquesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -717,6 +723,7 @@ export interface FileRoutesByFullPath {
   '/community/c/$slug': typeof CommunityCSlugRoute
   '/community/events/new': typeof CommunityEventsNewRoute
   '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
+  '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
@@ -806,6 +813,7 @@ export interface FileRoutesByTo {
   '/community/c/$slug': typeof CommunityCSlugRoute
   '/community/events/new': typeof CommunityEventsNewRoute
   '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
+  '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
@@ -909,6 +917,7 @@ export interface FileRoutesById {
   '/community/c/$slug': typeof CommunityCSlugRoute
   '/community/events/new': typeof CommunityEventsNewRoute
   '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
+  '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
@@ -1012,6 +1021,7 @@ export interface FileRouteTypes {
     | '/community/c/$slug'
     | '/community/events/new'
     | '/community/mosques/$slug'
+    | '/community/mosques/new'
     | '/community/u/$userId'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
@@ -1101,6 +1111,7 @@ export interface FileRouteTypes {
     | '/community/c/$slug'
     | '/community/events/new'
     | '/community/mosques/$slug'
+    | '/community/mosques/new'
     | '/community/u/$userId'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
@@ -1203,6 +1214,7 @@ export interface FileRouteTypes {
     | '/community/c/$slug'
     | '/community/events/new'
     | '/community/mosques/$slug'
+    | '/community/mosques/new'
     | '/community/u/$userId'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
@@ -1755,6 +1767,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommunityUUserIdRouteImport
       parentRoute: typeof CommunityRoute
     }
+    '/community/mosques/new': {
+      id: '/community/mosques/new'
+      path: '/new'
+      fullPath: '/community/mosques/new'
+      preLoaderRoute: typeof CommunityMosquesNewRouteImport
+      parentRoute: typeof CommunityMosquesRoute
+    }
     '/community/mosques/$slug': {
       id: '/community/mosques/$slug'
       path: '/$slug'
@@ -2083,11 +2102,13 @@ const BusinessRouteWithChildren = BusinessRoute._addFileChildren(
 
 interface CommunityMosquesRouteChildren {
   CommunityMosquesSlugRoute: typeof CommunityMosquesSlugRoute
+  CommunityMosquesNewRoute: typeof CommunityMosquesNewRoute
   CommunityMosquesIndexRoute: typeof CommunityMosquesIndexRoute
 }
 
 const CommunityMosquesRouteChildren: CommunityMosquesRouteChildren = {
   CommunityMosquesSlugRoute: CommunityMosquesSlugRoute,
+  CommunityMosquesNewRoute: CommunityMosquesNewRoute,
   CommunityMosquesIndexRoute: CommunityMosquesIndexRoute,
 }
 
