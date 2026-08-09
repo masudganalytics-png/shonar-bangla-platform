@@ -95,7 +95,7 @@ export type MosqueRow = {
 /** Public list card shape — never carries a private phone. */
 export type MosqueListItem = Pick<
   MosqueRow,
-  "id" | "slug" | "name" | "area" | "union_name" | "upazila" | "district" | "photo_url" | "status" | "created_at"
+  "id" | "slug" | "name" | "area" | "union_name" | "upazila" | "district" | "photo_url" | "status" | "created_at" | "imam_name" | "muazzin_name"
 >;
 
 export type CommitteeMember = {

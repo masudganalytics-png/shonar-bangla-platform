@@ -14,6 +14,7 @@ import { FeaturedTeachers } from "@/components/home/FeaturedTeachers";
 import { InternetProviders } from "@/components/home/InternetProviders";
 import { ProbashiServices } from "@/components/home/ProbashiServices";
 import { CommunityUpdates } from "@/components/home/CommunityUpdates";
+import { MosqueSociety } from "@/components/home/MosqueSociety";
 import { TodaysHighlights } from "@/components/home/TodaysHighlights";
 import { LiveExchangeRates } from "@/components/home/LiveExchangeRates";
 
@@ -221,6 +222,7 @@ function HomePage() {
       <InternetProviders />
       <ProbashiServices />
       <CommunityUpdates />
+      <MosqueSociety />
       <LatestUpdates />
       <TodaysHighlights />
       <ExploreServices />

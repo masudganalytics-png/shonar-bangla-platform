@@ -53,6 +53,7 @@ import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register
 import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
 import { Route as LegalIdRouteImport } from './routes/legal.$id'
 import { Route as CommunityNewRouteImport } from './routes/community.new'
+import { Route as CommunityMosquesRouteImport } from './routes/community.mosques'
 import { Route as CommunityGroupsRouteImport } from './routes/community.groups'
 import { Route as CommunityFeedRouteImport } from './routes/community.feed'
 import { Route as CommunityClubsRouteImport } from './routes/community.clubs'
@@ -72,6 +73,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as TeachersTuitionsIndexRouteImport } from './routes/teachers.tuitions.index'
 import { Route as TeachersNewsIndexRouteImport } from './routes/teachers.news.index'
 import { Route as TeachersAchievementsIndexRouteImport } from './routes/teachers.achievements.index'
+import { Route as CommunityMosquesIndexRouteImport } from './routes/community.mosques.index'
 import { Route as CommunityEventsIndexRouteImport } from './routes/community.events.index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as TeachersTuitionsNewRouteImport } from './routes/teachers.tuitions.new'
@@ -79,6 +81,8 @@ import { Route as TeachersTuitionsIdRouteImport } from './routes/teachers.tuitio
 import { Route as TeachersNewsIdRouteImport } from './routes/teachers.news.$id'
 import { Route as TeachersAchievementsIdRouteImport } from './routes/teachers.achievements.$id'
 import { Route as CommunityUUserIdRouteImport } from './routes/community.u.$userId'
+import { Route as CommunityMosquesNewRouteImport } from './routes/community.mosques.new'
+import { Route as CommunityMosquesSlugRouteImport } from './routes/community.mosques.$slug'
 import { Route as CommunityEventsNewRouteImport } from './routes/community.events.new'
 import { Route as CommunityCSlugRouteImport } from './routes/community.c.$slug'
 import { Route as ApiPublicStatsRouteImport } from './routes/api/public/stats'
@@ -91,6 +95,7 @@ import { Route as AuthenticatedAdminTuitionApplicationsRouteImport } from './rou
 import { Route as AuthenticatedAdminTeachersRouteImport } from './routes/_authenticated/admin.teachers'
 import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_authenticated/admin.study-resources'
 import { Route as AuthenticatedAdminProbashiRouteImport } from './routes/_authenticated/admin.probashi'
+import { Route as AuthenticatedAdminMosquesRouteImport } from './routes/_authenticated/admin.mosques'
 import { Route as AuthenticatedAdminLegalRouteImport } from './routes/_authenticated/admin.legal'
 import { Route as AuthenticatedAdminEducationNewsRouteImport } from './routes/_authenticated/admin.education-news'
 import { Route as AuthenticatedAdminCvSubmissionsRouteImport } from './routes/_authenticated/admin.cv-submissions'
@@ -326,6 +331,11 @@ const CommunityNewRoute = CommunityNewRouteImport.update({
   path: '/new',
   getParentRoute: () => CommunityRoute,
 } as any)
+const CommunityMosquesRoute = CommunityMosquesRouteImport.update({
+  id: '/mosques',
+  path: '/mosques',
+  getParentRoute: () => CommunityRoute,
+} as any)
 const CommunityGroupsRoute = CommunityGroupsRouteImport.update({
   id: '/groups',
   path: '/groups',
@@ -422,6 +432,11 @@ const TeachersAchievementsIndexRoute =
     path: '/',
     getParentRoute: () => TeachersAchievementsRoute,
   } as any)
+const CommunityMosquesIndexRoute = CommunityMosquesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CommunityMosquesRoute,
+} as any)
 const CommunityEventsIndexRoute = CommunityEventsIndexRouteImport.update({
   id: '/events/',
   path: '/events/',
@@ -456,6 +471,16 @@ const CommunityUUserIdRoute = CommunityUUserIdRouteImport.update({
   id: '/u/$userId',
   path: '/u/$userId',
   getParentRoute: () => CommunityRoute,
+} as any)
+const CommunityMosquesNewRoute = CommunityMosquesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => CommunityMosquesRoute,
+} as any)
+const CommunityMosquesSlugRoute = CommunityMosquesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => CommunityMosquesRoute,
 } as any)
 const CommunityEventsNewRoute = CommunityEventsNewRouteImport.update({
   id: '/events/new',
@@ -521,6 +546,12 @@ const AuthenticatedAdminProbashiRoute =
   AuthenticatedAdminProbashiRouteImport.update({
     id: '/probashi',
     path: '/probashi',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminMosquesRoute =
+  AuthenticatedAdminMosquesRouteImport.update({
+    id: '/mosques',
+    path: '/mosques',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminLegalRoute = AuthenticatedAdminLegalRouteImport.update({
@@ -653,6 +684,7 @@ export interface FileRoutesByFullPath {
   '/community/clubs': typeof CommunityClubsRoute
   '/community/feed': typeof CommunityFeedRoute
   '/community/groups': typeof CommunityGroupsRoute
+  '/community/mosques': typeof CommunityMosquesRouteWithChildren
   '/community/new': typeof CommunityNewRoute
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
@@ -685,6 +717,7 @@ export interface FileRoutesByFullPath {
   '/admin/cv-submissions': typeof AuthenticatedAdminCvSubmissionsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
@@ -697,6 +730,8 @@ export interface FileRoutesByFullPath {
   '/api/public/stats': typeof ApiPublicStatsRoute
   '/community/c/$slug': typeof CommunityCSlugRoute
   '/community/events/new': typeof CommunityEventsNewRoute
+  '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
+  '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
@@ -704,6 +739,7 @@ export interface FileRoutesByFullPath {
   '/teachers/tuitions/new': typeof TeachersTuitionsNewRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/community/events/': typeof CommunityEventsIndexRoute
+  '/community/mosques/': typeof CommunityMosquesIndexRoute
   '/teachers/achievements/': typeof TeachersAchievementsIndexRoute
   '/teachers/news/': typeof TeachersNewsIndexRoute
   '/teachers/tuitions/': typeof TeachersTuitionsIndexRoute
@@ -772,6 +808,7 @@ export interface FileRoutesByTo {
   '/admin/cv-submissions': typeof AuthenticatedAdminCvSubmissionsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
@@ -784,6 +821,8 @@ export interface FileRoutesByTo {
   '/api/public/stats': typeof ApiPublicStatsRoute
   '/community/c/$slug': typeof CommunityCSlugRoute
   '/community/events/new': typeof CommunityEventsNewRoute
+  '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
+  '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
@@ -791,6 +830,7 @@ export interface FileRoutesByTo {
   '/teachers/tuitions/new': typeof TeachersTuitionsNewRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/community/events': typeof CommunityEventsIndexRoute
+  '/community/mosques': typeof CommunityMosquesIndexRoute
   '/teachers/achievements': typeof TeachersAchievementsIndexRoute
   '/teachers/news': typeof TeachersNewsIndexRoute
   '/teachers/tuitions': typeof TeachersTuitionsIndexRoute
@@ -840,6 +880,7 @@ export interface FileRoutesById {
   '/community/clubs': typeof CommunityClubsRoute
   '/community/feed': typeof CommunityFeedRoute
   '/community/groups': typeof CommunityGroupsRoute
+  '/community/mosques': typeof CommunityMosquesRouteWithChildren
   '/community/new': typeof CommunityNewRoute
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
@@ -872,6 +913,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/cv-submissions': typeof AuthenticatedAdminCvSubmissionsRoute
   '/_authenticated/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
   '/_authenticated/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/_authenticated/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/_authenticated/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/_authenticated/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/_authenticated/admin/teachers': typeof AuthenticatedAdminTeachersRoute
@@ -884,6 +926,8 @@ export interface FileRoutesById {
   '/api/public/stats': typeof ApiPublicStatsRoute
   '/community/c/$slug': typeof CommunityCSlugRoute
   '/community/events/new': typeof CommunityEventsNewRoute
+  '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
+  '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
@@ -891,6 +935,7 @@ export interface FileRoutesById {
   '/teachers/tuitions/new': typeof TeachersTuitionsNewRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/community/events/': typeof CommunityEventsIndexRoute
+  '/community/mosques/': typeof CommunityMosquesIndexRoute
   '/teachers/achievements/': typeof TeachersAchievementsIndexRoute
   '/teachers/news/': typeof TeachersNewsIndexRoute
   '/teachers/tuitions/': typeof TeachersTuitionsIndexRoute
@@ -940,6 +985,7 @@ export interface FileRouteTypes {
     | '/community/clubs'
     | '/community/feed'
     | '/community/groups'
+    | '/community/mosques'
     | '/community/new'
     | '/legal/$id'
     | '/probashi/$slug'
@@ -972,6 +1018,7 @@ export interface FileRouteTypes {
     | '/admin/cv-submissions'
     | '/admin/education-news'
     | '/admin/legal'
+    | '/admin/mosques'
     | '/admin/probashi'
     | '/admin/study-resources'
     | '/admin/teachers'
@@ -984,6 +1031,8 @@ export interface FileRouteTypes {
     | '/api/public/stats'
     | '/community/c/$slug'
     | '/community/events/new'
+    | '/community/mosques/$slug'
+    | '/community/mosques/new'
     | '/community/u/$userId'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
@@ -991,6 +1040,7 @@ export interface FileRouteTypes {
     | '/teachers/tuitions/new'
     | '/admin/'
     | '/community/events/'
+    | '/community/mosques/'
     | '/teachers/achievements/'
     | '/teachers/news/'
     | '/teachers/tuitions/'
@@ -1059,6 +1109,7 @@ export interface FileRouteTypes {
     | '/admin/cv-submissions'
     | '/admin/education-news'
     | '/admin/legal'
+    | '/admin/mosques'
     | '/admin/probashi'
     | '/admin/study-resources'
     | '/admin/teachers'
@@ -1071,6 +1122,8 @@ export interface FileRouteTypes {
     | '/api/public/stats'
     | '/community/c/$slug'
     | '/community/events/new'
+    | '/community/mosques/$slug'
+    | '/community/mosques/new'
     | '/community/u/$userId'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
@@ -1078,6 +1131,7 @@ export interface FileRouteTypes {
     | '/teachers/tuitions/new'
     | '/admin'
     | '/community/events'
+    | '/community/mosques'
     | '/teachers/achievements'
     | '/teachers/news'
     | '/teachers/tuitions'
@@ -1126,6 +1180,7 @@ export interface FileRouteTypes {
     | '/community/clubs'
     | '/community/feed'
     | '/community/groups'
+    | '/community/mosques'
     | '/community/new'
     | '/legal/$id'
     | '/probashi/$slug'
@@ -1158,6 +1213,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/cv-submissions'
     | '/_authenticated/admin/education-news'
     | '/_authenticated/admin/legal'
+    | '/_authenticated/admin/mosques'
     | '/_authenticated/admin/probashi'
     | '/_authenticated/admin/study-resources'
     | '/_authenticated/admin/teachers'
@@ -1170,6 +1226,8 @@ export interface FileRouteTypes {
     | '/api/public/stats'
     | '/community/c/$slug'
     | '/community/events/new'
+    | '/community/mosques/$slug'
+    | '/community/mosques/new'
     | '/community/u/$userId'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
@@ -1177,6 +1235,7 @@ export interface FileRouteTypes {
     | '/teachers/tuitions/new'
     | '/_authenticated/admin/'
     | '/community/events/'
+    | '/community/mosques/'
     | '/teachers/achievements/'
     | '/teachers/news/'
     | '/teachers/tuitions/'
@@ -1525,6 +1584,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommunityNewRouteImport
       parentRoute: typeof CommunityRoute
     }
+    '/community/mosques': {
+      id: '/community/mosques'
+      path: '/mosques'
+      fullPath: '/community/mosques'
+      preLoaderRoute: typeof CommunityMosquesRouteImport
+      parentRoute: typeof CommunityRoute
+    }
     '/community/groups': {
       id: '/community/groups'
       path: '/groups'
@@ -1658,6 +1724,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeachersAchievementsIndexRouteImport
       parentRoute: typeof TeachersAchievementsRoute
     }
+    '/community/mosques/': {
+      id: '/community/mosques/'
+      path: '/'
+      fullPath: '/community/mosques/'
+      preLoaderRoute: typeof CommunityMosquesIndexRouteImport
+      parentRoute: typeof CommunityMosquesRoute
+    }
     '/community/events/': {
       id: '/community/events/'
       path: '/events'
@@ -1706,6 +1779,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/community/u/$userId'
       preLoaderRoute: typeof CommunityUUserIdRouteImport
       parentRoute: typeof CommunityRoute
+    }
+    '/community/mosques/new': {
+      id: '/community/mosques/new'
+      path: '/new'
+      fullPath: '/community/mosques/new'
+      preLoaderRoute: typeof CommunityMosquesNewRouteImport
+      parentRoute: typeof CommunityMosquesRoute
+    }
+    '/community/mosques/$slug': {
+      id: '/community/mosques/$slug'
+      path: '/$slug'
+      fullPath: '/community/mosques/$slug'
+      preLoaderRoute: typeof CommunityMosquesSlugRouteImport
+      parentRoute: typeof CommunityMosquesRoute
     }
     '/community/events/new': {
       id: '/community/events/new'
@@ -1789,6 +1876,13 @@ declare module '@tanstack/react-router' {
       path: '/probashi'
       fullPath: '/admin/probashi'
       preLoaderRoute: typeof AuthenticatedAdminProbashiRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/mosques': {
+      id: '/_authenticated/admin/mosques'
+      path: '/mosques'
+      fullPath: '/admin/mosques'
+      preLoaderRoute: typeof AuthenticatedAdminMosquesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/legal': {
@@ -1913,6 +2007,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminCvSubmissionsRoute: typeof AuthenticatedAdminCvSubmissionsRoute
   AuthenticatedAdminEducationNewsRoute: typeof AuthenticatedAdminEducationNewsRoute
   AuthenticatedAdminLegalRoute: typeof AuthenticatedAdminLegalRoute
+  AuthenticatedAdminMosquesRoute: typeof AuthenticatedAdminMosquesRoute
   AuthenticatedAdminProbashiRoute: typeof AuthenticatedAdminProbashiRoute
   AuthenticatedAdminStudyResourcesRoute: typeof AuthenticatedAdminStudyResourcesRoute
   AuthenticatedAdminTeachersRoute: typeof AuthenticatedAdminTeachersRoute
@@ -1939,6 +2034,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminCvSubmissionsRoute: AuthenticatedAdminCvSubmissionsRoute,
   AuthenticatedAdminEducationNewsRoute: AuthenticatedAdminEducationNewsRoute,
   AuthenticatedAdminLegalRoute: AuthenticatedAdminLegalRoute,
+  AuthenticatedAdminMosquesRoute: AuthenticatedAdminMosquesRoute,
   AuthenticatedAdminProbashiRoute: AuthenticatedAdminProbashiRoute,
   AuthenticatedAdminStudyResourcesRoute: AuthenticatedAdminStudyResourcesRoute,
   AuthenticatedAdminTeachersRoute: AuthenticatedAdminTeachersRoute,
@@ -2026,10 +2122,26 @@ const BusinessRouteWithChildren = BusinessRoute._addFileChildren(
   BusinessRouteChildren,
 )
 
+interface CommunityMosquesRouteChildren {
+  CommunityMosquesSlugRoute: typeof CommunityMosquesSlugRoute
+  CommunityMosquesNewRoute: typeof CommunityMosquesNewRoute
+  CommunityMosquesIndexRoute: typeof CommunityMosquesIndexRoute
+}
+
+const CommunityMosquesRouteChildren: CommunityMosquesRouteChildren = {
+  CommunityMosquesSlugRoute: CommunityMosquesSlugRoute,
+  CommunityMosquesNewRoute: CommunityMosquesNewRoute,
+  CommunityMosquesIndexRoute: CommunityMosquesIndexRoute,
+}
+
+const CommunityMosquesRouteWithChildren =
+  CommunityMosquesRoute._addFileChildren(CommunityMosquesRouteChildren)
+
 interface CommunityRouteChildren {
   CommunityClubsRoute: typeof CommunityClubsRoute
   CommunityFeedRoute: typeof CommunityFeedRoute
   CommunityGroupsRoute: typeof CommunityGroupsRoute
+  CommunityMosquesRoute: typeof CommunityMosquesRouteWithChildren
   CommunityNewRoute: typeof CommunityNewRoute
   CommunityIndexRoute: typeof CommunityIndexRoute
   CommunityCSlugRoute: typeof CommunityCSlugRoute
@@ -2042,6 +2154,7 @@ const CommunityRouteChildren: CommunityRouteChildren = {
   CommunityClubsRoute: CommunityClubsRoute,
   CommunityFeedRoute: CommunityFeedRoute,
   CommunityGroupsRoute: CommunityGroupsRoute,
+  CommunityMosquesRoute: CommunityMosquesRouteWithChildren,
   CommunityNewRoute: CommunityNewRoute,
   CommunityIndexRoute: CommunityIndexRoute,
   CommunityCSlugRoute: CommunityCSlugRoute,

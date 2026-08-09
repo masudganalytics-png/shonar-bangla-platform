@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useRouterState, redirect } from "@tanstack/react-router";
-import { Users, FileText, MessageSquare, LayoutDashboard, ShieldAlert, Megaphone, HardHat, GraduationCap, Store, Scale, Droplet, HeartPulse, Handshake, Plane, FileSignature } from "lucide-react";
+import { Users, FileText, MessageSquare, LayoutDashboard, ShieldAlert, Megaphone, HardHat, GraduationCap, Store, Scale, Droplet, HeartPulse, Handshake, Plane, FileSignature, Landmark } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 
@@ -16,6 +16,7 @@ const TABS: ReadonlyArray<{ to: string; label: string; icon: typeof Users; exact
   { to: "/admin/blood-donors", label: "রক্তদাতা", icon: Droplet },
   { to: "/admin/blood-requests", label: "রক্তের অনুরোধ", icon: HeartPulse },
   { to: "/admin/community", label: "কমিউনিটি", icon: Handshake },
+  { to: "/admin/mosques", label: "মসজিদ ও সমাজ", icon: Landmark },
   { to: "/admin/probashi", label: "প্রবাসী কর্নার", icon: Plane },
   { to: "/admin/cv-submissions", label: "সিভি বিল্ডার", icon: FileSignature },
 

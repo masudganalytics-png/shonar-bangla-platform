@@ -93,7 +93,7 @@ export const listMosques = createServerFn({ method: "POST" })
 
     let query = supabaseAdmin
       .from("mosques")
-      .select("id, slug, name, area, union_name, upazila, district, photo_url, status, created_at")
+      .select("id, slug, name, area, union_name, upazila, district, photo_url, status, created_at, imam_name, muazzin_name")
       .eq("status", "verified")
       .order("created_at", { ascending: false })
       .limit(data.limit ?? 40);
@@ -207,7 +207,7 @@ export const listRecentMosques = createServerFn({ method: "GET" }).handler(async
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const { data } = await supabaseAdmin
     .from("mosques")
-    .select("id, slug, name, area, union_name, upazila, district, photo_url, status, created_at")
+    .select("id, slug, name, area, union_name, upazila, district, photo_url, status, created_at, imam_name, muazzin_name")
     .eq("status", "verified")
     .order("verified_at", { ascending: false, nullsFirst: false })
     .limit(3);
@@ -275,7 +275,7 @@ export const listMyMosques = createServerFn({ method: "GET" })
     const filter = ids.length > 0 ? `created_by.eq.${context.userId},id.in.(${ids.join(",")})` : `created_by.eq.${context.userId}`;
     const { data } = await supabaseAdmin
       .from("mosques")
-      .select("id, slug, name, area, union_name, upazila, district, photo_url, status, created_at")
+      .select("id, slug, name, area, union_name, upazila, district, photo_url, status, created_at, imam_name, muazzin_name")
       .or(filter)
       .order("created_at", { ascending: false });
     return (data ?? []) as MosqueListItem[];
