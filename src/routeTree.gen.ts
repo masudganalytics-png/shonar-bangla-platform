@@ -53,6 +53,7 @@ import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register
 import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
 import { Route as LegalIdRouteImport } from './routes/legal.$id'
 import { Route as CommunityNewRouteImport } from './routes/community.new'
+import { Route as CommunityMosquesRouteImport } from './routes/community.mosques'
 import { Route as CommunityGroupsRouteImport } from './routes/community.groups'
 import { Route as CommunityFeedRouteImport } from './routes/community.feed'
 import { Route as CommunityClubsRouteImport } from './routes/community.clubs'
@@ -72,6 +73,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as TeachersTuitionsIndexRouteImport } from './routes/teachers.tuitions.index'
 import { Route as TeachersNewsIndexRouteImport } from './routes/teachers.news.index'
 import { Route as TeachersAchievementsIndexRouteImport } from './routes/teachers.achievements.index'
+import { Route as CommunityMosquesIndexRouteImport } from './routes/community.mosques.index'
 import { Route as CommunityEventsIndexRouteImport } from './routes/community.events.index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as TeachersTuitionsNewRouteImport } from './routes/teachers.tuitions.new'
@@ -326,6 +328,11 @@ const CommunityNewRoute = CommunityNewRouteImport.update({
   path: '/new',
   getParentRoute: () => CommunityRoute,
 } as any)
+const CommunityMosquesRoute = CommunityMosquesRouteImport.update({
+  id: '/mosques',
+  path: '/mosques',
+  getParentRoute: () => CommunityRoute,
+} as any)
 const CommunityGroupsRoute = CommunityGroupsRouteImport.update({
   id: '/groups',
   path: '/groups',
@@ -422,6 +429,11 @@ const TeachersAchievementsIndexRoute =
     path: '/',
     getParentRoute: () => TeachersAchievementsRoute,
   } as any)
+const CommunityMosquesIndexRoute = CommunityMosquesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CommunityMosquesRoute,
+} as any)
 const CommunityEventsIndexRoute = CommunityEventsIndexRouteImport.update({
   id: '/events/',
   path: '/events/',
@@ -653,6 +665,7 @@ export interface FileRoutesByFullPath {
   '/community/clubs': typeof CommunityClubsRoute
   '/community/feed': typeof CommunityFeedRoute
   '/community/groups': typeof CommunityGroupsRoute
+  '/community/mosques': typeof CommunityMosquesRouteWithChildren
   '/community/new': typeof CommunityNewRoute
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
@@ -704,6 +717,7 @@ export interface FileRoutesByFullPath {
   '/teachers/tuitions/new': typeof TeachersTuitionsNewRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/community/events/': typeof CommunityEventsIndexRoute
+  '/community/mosques/': typeof CommunityMosquesIndexRoute
   '/teachers/achievements/': typeof TeachersAchievementsIndexRoute
   '/teachers/news/': typeof TeachersNewsIndexRoute
   '/teachers/tuitions/': typeof TeachersTuitionsIndexRoute
@@ -791,6 +805,7 @@ export interface FileRoutesByTo {
   '/teachers/tuitions/new': typeof TeachersTuitionsNewRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/community/events': typeof CommunityEventsIndexRoute
+  '/community/mosques': typeof CommunityMosquesIndexRoute
   '/teachers/achievements': typeof TeachersAchievementsIndexRoute
   '/teachers/news': typeof TeachersNewsIndexRoute
   '/teachers/tuitions': typeof TeachersTuitionsIndexRoute
@@ -840,6 +855,7 @@ export interface FileRoutesById {
   '/community/clubs': typeof CommunityClubsRoute
   '/community/feed': typeof CommunityFeedRoute
   '/community/groups': typeof CommunityGroupsRoute
+  '/community/mosques': typeof CommunityMosquesRouteWithChildren
   '/community/new': typeof CommunityNewRoute
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
@@ -891,6 +907,7 @@ export interface FileRoutesById {
   '/teachers/tuitions/new': typeof TeachersTuitionsNewRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/community/events/': typeof CommunityEventsIndexRoute
+  '/community/mosques/': typeof CommunityMosquesIndexRoute
   '/teachers/achievements/': typeof TeachersAchievementsIndexRoute
   '/teachers/news/': typeof TeachersNewsIndexRoute
   '/teachers/tuitions/': typeof TeachersTuitionsIndexRoute
@@ -940,6 +957,7 @@ export interface FileRouteTypes {
     | '/community/clubs'
     | '/community/feed'
     | '/community/groups'
+    | '/community/mosques'
     | '/community/new'
     | '/legal/$id'
     | '/probashi/$slug'
@@ -991,6 +1009,7 @@ export interface FileRouteTypes {
     | '/teachers/tuitions/new'
     | '/admin/'
     | '/community/events/'
+    | '/community/mosques/'
     | '/teachers/achievements/'
     | '/teachers/news/'
     | '/teachers/tuitions/'
@@ -1078,6 +1097,7 @@ export interface FileRouteTypes {
     | '/teachers/tuitions/new'
     | '/admin'
     | '/community/events'
+    | '/community/mosques'
     | '/teachers/achievements'
     | '/teachers/news'
     | '/teachers/tuitions'
@@ -1126,6 +1146,7 @@ export interface FileRouteTypes {
     | '/community/clubs'
     | '/community/feed'
     | '/community/groups'
+    | '/community/mosques'
     | '/community/new'
     | '/legal/$id'
     | '/probashi/$slug'
@@ -1177,6 +1198,7 @@ export interface FileRouteTypes {
     | '/teachers/tuitions/new'
     | '/_authenticated/admin/'
     | '/community/events/'
+    | '/community/mosques/'
     | '/teachers/achievements/'
     | '/teachers/news/'
     | '/teachers/tuitions/'
@@ -1525,6 +1547,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommunityNewRouteImport
       parentRoute: typeof CommunityRoute
     }
+    '/community/mosques': {
+      id: '/community/mosques'
+      path: '/mosques'
+      fullPath: '/community/mosques'
+      preLoaderRoute: typeof CommunityMosquesRouteImport
+      parentRoute: typeof CommunityRoute
+    }
     '/community/groups': {
       id: '/community/groups'
       path: '/groups'
@@ -1657,6 +1686,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/teachers/achievements/'
       preLoaderRoute: typeof TeachersAchievementsIndexRouteImport
       parentRoute: typeof TeachersAchievementsRoute
+    }
+    '/community/mosques/': {
+      id: '/community/mosques/'
+      path: '/'
+      fullPath: '/community/mosques/'
+      preLoaderRoute: typeof CommunityMosquesIndexRouteImport
+      parentRoute: typeof CommunityMosquesRoute
     }
     '/community/events/': {
       id: '/community/events/'
@@ -2026,10 +2062,22 @@ const BusinessRouteWithChildren = BusinessRoute._addFileChildren(
   BusinessRouteChildren,
 )
 
+interface CommunityMosquesRouteChildren {
+  CommunityMosquesIndexRoute: typeof CommunityMosquesIndexRoute
+}
+
+const CommunityMosquesRouteChildren: CommunityMosquesRouteChildren = {
+  CommunityMosquesIndexRoute: CommunityMosquesIndexRoute,
+}
+
+const CommunityMosquesRouteWithChildren =
+  CommunityMosquesRoute._addFileChildren(CommunityMosquesRouteChildren)
+
 interface CommunityRouteChildren {
   CommunityClubsRoute: typeof CommunityClubsRoute
   CommunityFeedRoute: typeof CommunityFeedRoute
   CommunityGroupsRoute: typeof CommunityGroupsRoute
+  CommunityMosquesRoute: typeof CommunityMosquesRouteWithChildren
   CommunityNewRoute: typeof CommunityNewRoute
   CommunityIndexRoute: typeof CommunityIndexRoute
   CommunityCSlugRoute: typeof CommunityCSlugRoute
@@ -2042,6 +2090,7 @@ const CommunityRouteChildren: CommunityRouteChildren = {
   CommunityClubsRoute: CommunityClubsRoute,
   CommunityFeedRoute: CommunityFeedRoute,
   CommunityGroupsRoute: CommunityGroupsRoute,
+  CommunityMosquesRoute: CommunityMosquesRouteWithChildren,
   CommunityNewRoute: CommunityNewRoute,
   CommunityIndexRoute: CommunityIndexRoute,
   CommunityCSlugRoute: CommunityCSlugRoute,
