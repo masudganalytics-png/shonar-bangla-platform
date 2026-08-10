@@ -27,10 +27,11 @@ export const Route = createFileRoute("/auth")({
   validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "সাইন ইন — উখিয়া বিদ্যুৎ বিল" },
-      { name: "description", content: "মোবাইল নম্বর দিয়ে সরাসরি সাইন ইন করুন।" },
-      { property: "og:title", content: "সাইন ইন — উখিয়া বিদ্যুৎ বিল" },
-      { property: "og:description", content: "মোবাইল নম্বর দিয়ে সরাসরি সাইন ইন।" },
+      { title: "সাইন ইন — KHIJIRION" },
+      { name: "description", content: "মোবাইল নম্বর বা Google দিয়ে KHIJIRION-এ সাইন ইন করুন।" },
+      { property: "og:title", content: "সাইন ইন — KHIJIRION" },
+      { property: "og:description", content: "মোবাইল নম্বর বা Google দিয়ে KHIJIRION-এ সাইন ইন।" },
+
       { name: "robots", content: "noindex" },
     ],
   }),
