@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { toast } from "sonner";
-import { Loader2, Zap, Phone } from "lucide-react";
+import { Loader2, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/hooks/use-auth";
@@ -12,6 +12,10 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { parsePhoneNumberFromString, getCountryCallingCode, type CountryCode } from "libphonenumber-js";
 import { PhoneField, DEFAULT_COUNTRY } from "@/components/auth/PhoneField";
+import { AuthBrandSplash } from "@/components/auth/AuthBrandSplash";
+import { authRedirectUrl } from "@/lib/auth-redirect";
+import logoAsset from "@/assets/khijirion-logo.png.asset.json";
+
 
 
 const searchSchema = z.object({

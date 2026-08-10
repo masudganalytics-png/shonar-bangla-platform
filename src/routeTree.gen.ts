@@ -30,6 +30,7 @@ import { Route as CommunityRouteImport } from './routes/community'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as BusinessRouteImport } from './routes/business'
 import { Route as BloodDonorsRouteImport } from './routes/blood-donors'
+import { Route as AuthCallbackRouteImport } from './routes/auth-callback'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -61,7 +62,6 @@ import { Route as BusinessRegisterRouteImport } from './routes/business.register
 import { Route as BusinessDirectoryRouteImport } from './routes/business.directory'
 import { Route as BusinessSlugRouteImport } from './routes/business.$slug'
 import { Route as BloodDonorsRegisterRouteImport } from './routes/blood-donors.register'
-import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -218,6 +218,11 @@ const BloodDonorsRoute = BloodDonorsRouteImport.update({
   path: '/blood-donors',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth-callback',
+  path: '/auth-callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -371,11 +376,6 @@ const BloodDonorsRegisterRoute = BloodDonorsRegisterRouteImport.update({
   id: '/register',
   path: '/register',
   getParentRoute: () => BloodDonorsRoute,
-} as any)
-const AuthCallbackRoute = AuthCallbackRouteImport.update({
-  id: '/callback',
-  path: '/callback',
-  getParentRoute: () => AuthRoute,
 } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
@@ -652,7 +652,8 @@ const AuthenticatedBillsIdEditRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auth': typeof AuthRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/auth-callback': typeof AuthCallbackRoute
   '/blood-donors': typeof BloodDonorsRouteWithChildren
   '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
@@ -683,7 +684,6 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
-  '/auth/callback': typeof AuthCallbackRoute
   '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
@@ -756,7 +756,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auth': typeof AuthRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/auth-callback': typeof AuthCallbackRoute
   '/calculator': typeof CalculatorRoute
   '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
@@ -779,7 +780,6 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
-  '/auth/callback': typeof AuthCallbackRoute
   '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
@@ -850,7 +850,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
-  '/auth': typeof AuthRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/auth-callback': typeof AuthCallbackRoute
   '/blood-donors': typeof BloodDonorsRouteWithChildren
   '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
@@ -881,7 +882,6 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
-  '/auth/callback': typeof AuthCallbackRoute
   '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
@@ -957,6 +957,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/auth-callback'
     | '/blood-donors'
     | '/business'
     | '/calculator'
@@ -987,7 +988,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
-    | '/auth/callback'
     | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
@@ -1061,6 +1061,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/auth-callback'
     | '/calculator'
     | '/contact'
     | '/cv-builder'
@@ -1083,7 +1084,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
-    | '/auth/callback'
     | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
@@ -1154,6 +1154,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/auth'
+    | '/auth-callback'
     | '/blood-donors'
     | '/business'
     | '/calculator'
@@ -1184,7 +1185,6 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
-    | '/auth/callback'
     | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
@@ -1259,7 +1259,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
-  AuthRoute: typeof AuthRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  AuthCallbackRoute: typeof AuthCallbackRoute
   BloodDonorsRoute: typeof BloodDonorsRouteWithChildren
   BusinessRoute: typeof BusinessRouteWithChildren
   CalculatorRoute: typeof CalculatorRoute
@@ -1433,6 +1434,13 @@ declare module '@tanstack/react-router' {
       path: '/blood-donors'
       fullPath: '/blood-donors'
       preLoaderRoute: typeof BloodDonorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth-callback': {
+      id: '/auth-callback'
+      path: '/auth-callback'
+      fullPath: '/auth-callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -1651,13 +1659,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/blood-donors/register'
       preLoaderRoute: typeof BloodDonorsRegisterRouteImport
       parentRoute: typeof BloodDonorsRoute
-    }
-    '/auth/callback': {
-      id: '/auth/callback'
-      path: '/callback'
-      fullPath: '/auth/callback'
-      preLoaderRoute: typeof AuthCallbackRouteImport
-      parentRoute: typeof AuthRoute
     }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
@@ -2109,16 +2110,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-interface AuthRouteChildren {
-  AuthCallbackRoute: typeof AuthCallbackRoute
-}
-
-const AuthRouteChildren: AuthRouteChildren = {
-  AuthCallbackRoute: AuthCallbackRoute,
-}
-
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
-
 interface BloodDonorsRouteChildren {
   BloodDonorsRegisterRoute: typeof BloodDonorsRegisterRoute
   BloodDonorsIndexRoute: typeof BloodDonorsIndexRoute
@@ -2309,7 +2300,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
-  AuthRoute: AuthRouteWithChildren,
+  AuthRoute: AuthRoute,
+  AuthCallbackRoute: AuthCallbackRoute,
   BloodDonorsRoute: BloodDonorsRouteWithChildren,
   BusinessRoute: BusinessRouteWithChildren,
   CalculatorRoute: CalculatorRoute,
