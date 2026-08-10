@@ -10,7 +10,7 @@ const searchSchema = z.object({
   error_description: z.string().optional(),
 });
 
-export const Route = createFileRoute("/auth/callback")({
+export const Route = createFileRoute("/auth-callback")({
   ssr: false,
   validateSearch: searchSchema,
   head: () => ({

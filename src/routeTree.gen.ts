@@ -61,6 +61,7 @@ import { Route as BusinessRegisterRouteImport } from './routes/business.register
 import { Route as BusinessDirectoryRouteImport } from './routes/business.directory'
 import { Route as BusinessSlugRouteImport } from './routes/business.$slug'
 import { Route as BloodDonorsRegisterRouteImport } from './routes/blood-donors.register'
+import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -371,6 +372,11 @@ const BloodDonorsRegisterRoute = BloodDonorsRegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => BloodDonorsRoute,
 } as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/callback',
+  path: '/callback',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -646,7 +652,7 @@ const AuthenticatedBillsIdEditRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
   '/blood-donors': typeof BloodDonorsRouteWithChildren
   '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
@@ -677,6 +683,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
@@ -749,7 +756,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
   '/calculator': typeof CalculatorRoute
   '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
@@ -772,6 +779,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
@@ -842,7 +850,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
   '/blood-donors': typeof BloodDonorsRouteWithChildren
   '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
@@ -873,6 +881,7 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
@@ -978,6 +987,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/auth/callback'
     | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
@@ -1073,6 +1083,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/auth/callback'
     | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
@@ -1173,6 +1184,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
+    | '/auth/callback'
     | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
@@ -1247,7 +1259,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
-  AuthRoute: typeof AuthRoute
+  AuthRoute: typeof AuthRouteWithChildren
   BloodDonorsRoute: typeof BloodDonorsRouteWithChildren
   BusinessRoute: typeof BusinessRouteWithChildren
   CalculatorRoute: typeof CalculatorRoute
@@ -1639,6 +1651,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/blood-donors/register'
       preLoaderRoute: typeof BloodDonorsRegisterRouteImport
       parentRoute: typeof BloodDonorsRoute
+    }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof AuthRoute
     }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
@@ -2090,6 +2109,16 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface AuthRouteChildren {
+  AuthCallbackRoute: typeof AuthCallbackRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthCallbackRoute: AuthCallbackRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 interface BloodDonorsRouteChildren {
   BloodDonorsRegisterRoute: typeof BloodDonorsRegisterRoute
   BloodDonorsIndexRoute: typeof BloodDonorsIndexRoute
@@ -2280,7 +2309,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
-  AuthRoute: AuthRoute,
+  AuthRoute: AuthRouteWithChildren,
   BloodDonorsRoute: BloodDonorsRouteWithChildren,
   BusinessRoute: BusinessRouteWithChildren,
   CalculatorRoute: CalculatorRoute,
@@ -2310,13 +2339,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
