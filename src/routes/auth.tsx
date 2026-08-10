@@ -130,12 +130,17 @@ function AuthPage() {
   return (
     <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center px-4 py-10 sm:px-6">
       <div className="mb-6 text-center">
-        <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-primary to-primary-glow text-primary-foreground shadow-[var(--shadow-glow)]">
-          <Zap className="h-7 w-7" strokeWidth={2.5} />
-        </div>
-        <h1 className="mt-4 text-2xl font-bold">উখিয়া বিদ্যুৎ বিল</h1>
-        <p className="mt-1 text-sm text-muted-foreground">স্বচ্ছ বিল, সচেতন গ্রাহক।</p>
+        <img
+          src={logoAsset.url}
+          alt="KHIJIRION"
+          className="mx-auto h-20 w-20 object-contain"
+          width={80}
+          height={80}
+        />
+        <h1 className="mt-4 text-2xl font-bold">KHIJIRION</h1>
+        <p className="mt-1 text-sm text-muted-foreground">উখিয়ার সব প্রয়োজনীয় সেবা, এক জায়গায়।</p>
       </div>
+
 
       <div className="mb-4 rounded-lg border border-warning/40 bg-warning/5 p-4 text-sm">
         <p className="font-semibold text-warning">গুরুত্বপূর্ণ তথ্য</p>
