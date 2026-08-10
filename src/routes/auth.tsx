@@ -108,7 +108,7 @@ function AuthPage() {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/`,
+          emailRedirectTo: authRedirectUrl("/auth-callback"),
           data: {
             full_name: fullName.trim() || `+${normalized}`,
             phone: `+${normalized}`,
@@ -185,7 +185,7 @@ function AuthPage() {
             onClick={async () => {
               if (!acknowledged) return toast.error("আগে ডিসক্লেইমার-এ সম্মতি দিন");
               const res = await lovable.auth.signInWithOAuth("google", {
-                redirect_uri: `${window.location.origin}/`,
+                redirect_uri: authRedirectUrl("/auth-callback"),
               });
               if (res.error) toast.error(res.error.message || "Google সাইন ইন ব্যর্থ");
             }}
