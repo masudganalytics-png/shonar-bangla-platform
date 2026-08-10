@@ -3,6 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { Loader2, MailCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { authRedirectUrl } from "@/lib/auth-redirect";
+import logoAsset from "@/assets/khijirion-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,8 +13,8 @@ import { Card } from "@/components/ui/card";
 export const Route = createFileRoute("/forgot-password")({
   head: () => ({
     meta: [
-      { title: "পাসওয়ার্ড রিসেট — উখিয়া বিদ্যুৎ বিল" },
-      { name: "description", content: "আপনার পাসওয়ার্ড পুনরুদ্ধার করতে ইমেইল ঠিকানা দিন।" },
+      { title: "পাসওয়ার্ড রিসেট — KHIJIRION" },
+      { name: "description", content: "আপনার KHIJIRION অ্যাকাউন্টের পাসওয়ার্ড পুনরুদ্ধার করুন।" },
       { property: "og:title", content: "পাসওয়ার্ড রিসেট" },
       { property: "og:description", content: "ইমেইলের মাধ্যমে পাসওয়ার্ড রিসেট লিংক পান।" },
       { name: "robots", content: "noindex" },
@@ -30,7 +32,7 @@ function ForgotPasswordPage() {
     e.preventDefault();
     setLoading(true);
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
+      redirectTo: authRedirectUrl("/reset-password"),
     });
     setLoading(false);
     if (error) return toast.error(error.message);
@@ -41,6 +43,13 @@ function ForgotPasswordPage() {
   return (
     <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center px-4 py-10 sm:px-6">
       <Card className="p-6">
+        <img
+          src={logoAsset.url}
+          alt="KHIJIRION"
+          className="mx-auto mb-6 h-16 w-16 object-contain"
+          width={64}
+          height={64}
+        />
         <h1 className="text-2xl font-bold">পাসওয়ার্ড ভুলে গেছেন?</h1>
         <p className="mt-1 text-sm text-muted-foreground">আপনার ইমেইলে রিসেট লিংক পাঠাব।</p>
 

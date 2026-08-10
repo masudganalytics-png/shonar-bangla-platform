@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { toast } from "sonner";
-import { Loader2, Zap, Phone } from "lucide-react";
+import { Loader2, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/hooks/use-auth";
@@ -12,6 +12,10 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { parsePhoneNumberFromString, getCountryCallingCode, type CountryCode } from "libphonenumber-js";
 import { PhoneField, DEFAULT_COUNTRY } from "@/components/auth/PhoneField";
+import { AuthBrandSplash } from "@/components/auth/AuthBrandSplash";
+import { authRedirectUrl } from "@/lib/auth-redirect";
+import logoAsset from "@/assets/khijirion-logo.png.asset.json";
+
 
 
 const searchSchema = z.object({
@@ -23,10 +27,11 @@ export const Route = createFileRoute("/auth")({
   validateSearch: searchSchema,
   head: () => ({
     meta: [
-      { title: "সাইন ইন — উখিয়া বিদ্যুৎ বিল" },
-      { name: "description", content: "মোবাইল নম্বর দিয়ে সরাসরি সাইন ইন করুন।" },
-      { property: "og:title", content: "সাইন ইন — উখিয়া বিদ্যুৎ বিল" },
-      { property: "og:description", content: "মোবাইল নম্বর দিয়ে সরাসরি সাইন ইন।" },
+      { title: "সাইন ইন — KHIJIRION" },
+      { name: "description", content: "মোবাইল নম্বর বা Google দিয়ে KHIJIRION-এ সাইন ইন করুন।" },
+      { property: "og:title", content: "সাইন ইন — KHIJIRION" },
+      { property: "og:description", content: "মোবাইল নম্বর বা Google দিয়ে KHIJIRION-এ সাইন ইন।" },
+
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -74,6 +79,16 @@ function AuthPage() {
     }
   }, [isAuthenticated, loading, navigate, search.redirect]);
 
+  if (loading || isAuthenticated) {
+    return (
+      <AuthBrandSplash
+        message={isAuthenticated ? "সাইন ইন সম্পন্ন হচ্ছে…" : "লোড হচ্ছে…"}
+        hint="একটু অপেক্ষা করুন।"
+      />
+    );
+  }
+
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!acknowledged) return toast.error("আগে ডিসক্লেইমার-এ সম্মতি দিন");
@@ -93,7 +108,7 @@ function AuthPage() {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/`,
+          emailRedirectTo: authRedirectUrl("/auth-callback"),
           data: {
             full_name: fullName.trim() || `+${normalized}`,
             phone: `+${normalized}`,
@@ -126,12 +141,17 @@ function AuthPage() {
   return (
     <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center px-4 py-10 sm:px-6">
       <div className="mb-6 text-center">
-        <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-primary to-primary-glow text-primary-foreground shadow-[var(--shadow-glow)]">
-          <Zap className="h-7 w-7" strokeWidth={2.5} />
-        </div>
-        <h1 className="mt-4 text-2xl font-bold">উখিয়া বিদ্যুৎ বিল</h1>
-        <p className="mt-1 text-sm text-muted-foreground">স্বচ্ছ বিল, সচেতন গ্রাহক।</p>
+        <img
+          src={logoAsset.url}
+          alt="KHIJIRION"
+          className="mx-auto h-20 w-20 object-contain"
+          width={80}
+          height={80}
+        />
+        <h1 className="mt-4 text-2xl font-bold">KHIJIRION</h1>
+        <p className="mt-1 text-sm text-muted-foreground">উখিয়ার সব প্রয়োজনীয় সেবা, এক জায়গায়।</p>
       </div>
+
 
       <div className="mb-4 rounded-lg border border-warning/40 bg-warning/5 p-4 text-sm">
         <p className="font-semibold text-warning">গুরুত্বপূর্ণ তথ্য</p>
@@ -165,7 +185,7 @@ function AuthPage() {
             onClick={async () => {
               if (!acknowledged) return toast.error("আগে ডিসক্লেইমার-এ সম্মতি দিন");
               const res = await lovable.auth.signInWithOAuth("google", {
-                redirect_uri: `${window.location.origin}/`,
+                redirect_uri: authRedirectUrl("/auth-callback"),
               });
               if (res.error) toast.error(res.error.message || "Google সাইন ইন ব্যর্থ");
             }}

@@ -30,6 +30,7 @@ import { Route as CommunityRouteImport } from './routes/community'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as BusinessRouteImport } from './routes/business'
 import { Route as BloodDonorsRouteImport } from './routes/blood-donors'
+import { Route as AuthCallbackRouteImport } from './routes/auth-callback'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -215,6 +216,11 @@ const BusinessRoute = BusinessRouteImport.update({
 const BloodDonorsRoute = BloodDonorsRouteImport.update({
   id: '/blood-donors',
   path: '/blood-donors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth-callback',
+  path: '/auth-callback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -647,6 +653,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/auth-callback': typeof AuthCallbackRoute
   '/blood-donors': typeof BloodDonorsRouteWithChildren
   '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
@@ -750,6 +757,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/auth-callback': typeof AuthCallbackRoute
   '/calculator': typeof CalculatorRoute
   '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
@@ -843,6 +851,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/auth-callback': typeof AuthCallbackRoute
   '/blood-donors': typeof BloodDonorsRouteWithChildren
   '/business': typeof BusinessRouteWithChildren
   '/calculator': typeof CalculatorRoute
@@ -948,6 +957,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/auth-callback'
     | '/blood-donors'
     | '/business'
     | '/calculator'
@@ -1051,6 +1061,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/auth-callback'
     | '/calculator'
     | '/contact'
     | '/cv-builder'
@@ -1143,6 +1154,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/auth'
+    | '/auth-callback'
     | '/blood-donors'
     | '/business'
     | '/calculator'
@@ -1248,6 +1260,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
+  AuthCallbackRoute: typeof AuthCallbackRoute
   BloodDonorsRoute: typeof BloodDonorsRouteWithChildren
   BusinessRoute: typeof BusinessRouteWithChildren
   CalculatorRoute: typeof CalculatorRoute
@@ -1421,6 +1434,13 @@ declare module '@tanstack/react-router' {
       path: '/blood-donors'
       fullPath: '/blood-donors'
       preLoaderRoute: typeof BloodDonorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth-callback': {
+      id: '/auth-callback'
+      path: '/auth-callback'
+      fullPath: '/auth-callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -2281,6 +2301,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
+  AuthCallbackRoute: AuthCallbackRoute,
   BloodDonorsRoute: BloodDonorsRouteWithChildren,
   BusinessRoute: BusinessRouteWithChildren,
   CalculatorRoute: CalculatorRoute,

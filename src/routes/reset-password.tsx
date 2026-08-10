@@ -3,6 +3,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import logoAsset from "@/assets/khijirion-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,8 +12,8 @@ import { Card } from "@/components/ui/card";
 export const Route = createFileRoute("/reset-password")({
   head: () => ({
     meta: [
-      { title: "নতুন পাসওয়ার্ড সেট করুন — উখিয়া বিদ্যুৎ বিল" },
-      { name: "description", content: "আপনার অ্যাকাউন্টের নতুন পাসওয়ার্ড সেট করুন।" },
+      { title: "নতুন পাসওয়ার্ড সেট করুন — KHIJIRION" },
+      { name: "description", content: "আপনার KHIJIRION অ্যাকাউন্টের নতুন পাসওয়ার্ড সেট করুন।" },
       { property: "og:title", content: "নতুন পাসওয়ার্ড সেট" },
       { property: "og:description", content: "নিরাপদভাবে নতুন পাসওয়ার্ড সেট করুন।" },
       { name: "robots", content: "noindex" },
@@ -42,6 +43,13 @@ function ResetPasswordPage() {
   return (
     <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md flex-col justify-center px-4 py-10 sm:px-6">
       <Card className="p-6">
+        <img
+          src={logoAsset.url}
+          alt="KHIJIRION"
+          className="mx-auto mb-6 h-16 w-16 object-contain"
+          width={64}
+          height={64}
+        />
         <h1 className="text-2xl font-bold">নতুন পাসওয়ার্ড সেট করুন</h1>
         <p className="mt-1 text-sm text-muted-foreground">সুরক্ষিত ও মনে রাখার মতো পাসওয়ার্ড বেছে নিন।</p>
         <form onSubmit={onSubmit} className="mt-6 space-y-4">
