@@ -79,6 +79,16 @@ function AuthPage() {
     }
   }, [isAuthenticated, loading, navigate, search.redirect]);
 
+  if (loading || isAuthenticated) {
+    return (
+      <AuthBrandSplash
+        message={isAuthenticated ? "সাইন ইন সম্পন্ন হচ্ছে…" : "লোড হচ্ছে…"}
+        hint="একটু অপেক্ষা করুন।"
+      />
+    );
+  }
+
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!acknowledged) return toast.error("আগে ডিসক্লেইমার-এ সম্মতি দিন");
