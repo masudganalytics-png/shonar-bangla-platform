@@ -42,6 +42,9 @@ export const Route = createFileRoute("/_authenticated/admin/community")({
 
 function AdminCommunity() {
   const qc = useQueryClient();
+  const [pendingDelete, setPendingDelete] = useState<{ id: string; name: string } | null>(null);
+
+
 
   const reportsQ = useQuery({
     queryKey: ["admin", "community-reports"],
