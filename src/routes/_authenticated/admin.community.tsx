@@ -75,6 +75,19 @@ function AdminCommunity() {
     onError: (e: Error) => toast.error(e.message || "আপডেট করা যায়নি"),
   });
 
+  const deleteM = useMutation({
+    mutationFn: (v: { id: string }) => adminDeleteCommunity({ data: v }),
+    onSuccess: async () => {
+      setPendingDelete(null);
+      toast.success("কমিউনিটিটি সফলভাবে স্থায়ীভাবে মুছে ফেলা হয়েছে।");
+      await qc.invalidateQueries({ queryKey: ["admin", "communities"] });
+      await qc.invalidateQueries({ queryKey: ["admin", "community-reports"] });
+    },
+    onError: (e: Error) => toast.error(e.message || "মুছে ফেলা যায়নি — কোনো পরিবর্তন হয়নি।"),
+  });
+
+
+
   return (
     <div>
       <h2 className="mb-4 text-lg font-semibold">🤝 কমিউনিটি ব্যবস্থাপনা</h2>
