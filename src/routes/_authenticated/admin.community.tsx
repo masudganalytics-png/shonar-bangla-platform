@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Eye, EyeOff, Flag, Power } from "lucide-react";
+import { Eye, EyeOff, Flag, Power, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +9,17 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
+  adminDeleteCommunity,
   adminListCommunities,
   adminListCommunityReports,
   adminSetCommunityActive,
@@ -15,6 +27,7 @@ import {
 } from "@/lib/community.functions";
 import { KIND_LABEL_BN } from "@/lib/community-shared";
 import { toBanglaDigits } from "@/lib/bangla";
+
 
 export const Route = createFileRoute("/_authenticated/admin/community")({
   head: () => ({
