@@ -195,6 +195,36 @@ function AdminCommunity() {
           )}
         </TabsContent>
       </Tabs>
+
+      <AlertDialog open={!!pendingDelete} onOpenChange={(o) => !o && setPendingDelete(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>আপনি কি এই কমিউনিটি/ক্লাবটি স্থায়ীভাবে মুছে ফেলতে চান?</AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-2 text-left">
+                <p className="font-semibold text-foreground">{pendingDelete?.name}</p>
+                <p>
+                  এই কাজটি স্থায়ী। কমিউনিটির সদস্য, পদ, পোস্ট, অনুষ্ঠান ও রিপোর্টসহ সব তথ্য মুছে যাবে এবং পরে
+                  পুনরুদ্ধার করা যাবে না।
+                </p>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleteM.isPending}>বাতিল</AlertDialogCancel>
+            <AlertDialogAction
+              disabled={deleteM.isPending}
+              onClick={(e) => {
+                e.preventDefault();
+                if (pendingDelete) deleteM.mutate({ id: pendingDelete.id });
+              }}
+            >
+              {deleteM.isPending ? "মুছে ফেলা হচ্ছে…" : "স্থায়ীভাবে মুছে ফেলুন"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
+
   );
 }
