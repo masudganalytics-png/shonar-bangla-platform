@@ -1,69 +1,29 @@
 import * as React from 'react'
 
-import {
-  Body,
-  Button,
-  Container,
-  Head,
-  Heading,
-  Html,
-  Preview,
-  Text,
-} from '@react-email/components'
+import { Button, Heading, Text } from '@react-email/components'
+
+import { EmailLayout, button, heading, text } from './brand'
 
 interface RecoveryEmailProps {
   siteName: string
   confirmationUrl: string
 }
 
-export const RecoveryEmail = ({
-  siteName,
-  confirmationUrl,
-}: RecoveryEmailProps) => (
-  <Html lang="en" dir="ltr">
-    <Head />
-    <Preview>Reset your password for {siteName}</Preview>
-    <Body style={main}>
-      <Container style={container}>
-        <Heading style={h1}>Reset your password</Heading>
-        <Text style={text}>
-          We received a request to reset your password for {siteName}. Click
-          the button below to choose a new password.
-        </Text>
-        <Button style={button} href={confirmationUrl}>
-          Reset Password
-        </Button>
-        <Text style={footer}>
-          If you didn't request a password reset, you can safely ignore this
-          email. Your password will not be changed.
-        </Text>
-      </Container>
-    </Body>
-  </Html>
+export const RecoveryEmail = ({ confirmationUrl }: RecoveryEmailProps) => (
+  <EmailLayout preview="KHIJIRION — পাসওয়ার্ড রিসেট করুন">
+    <Heading style={heading}>পাসওয়ার্ড রিসেট</Heading>
+    <Text style={text}>
+      আপনার KHIJIRION অ্যাকাউন্টের পাসওয়ার্ড রিসেট করার অনুরোধ পাওয়া গেছে। নিচের বাটনে
+      ক্লিক করে নতুন পাসওয়ার্ড সেট করুন।
+    </Text>
+    <Button style={button} href={confirmationUrl}>
+      নতুন পাসওয়ার্ড সেট করুন
+    </Button>
+    <Text style={{ ...text, margin: '24px 0 0' }}>
+      আপনি যদি এই অনুরোধ না করে থাকেন, তাহলে কোনো পদক্ষেপ নেওয়ার প্রয়োজন নেই — আপনার
+      পাসওয়ার্ড অপরিবর্তিত থাকবে।
+    </Text>
+  </EmailLayout>
 )
 
 export default RecoveryEmail
-
-const main = { backgroundColor: '#ffffff', fontFamily: 'Arial, sans-serif' }
-const container = { padding: '20px 25px' }
-const h1 = {
-  fontSize: '22px',
-  fontWeight: 'bold' as const,
-  color: '#000000',
-  margin: '0 0 20px',
-}
-const text = {
-  fontSize: '14px',
-  color: '#55575d',
-  lineHeight: '1.5',
-  margin: '0 0 25px',
-}
-const button = {
-  backgroundColor: '#000000',
-  color: '#ffffff',
-  fontSize: '14px',
-  borderRadius: '8px',
-  padding: '12px 20px',
-  textDecoration: 'none',
-}
-const footer = { fontSize: '12px', color: '#999999', margin: '30px 0 0' }
