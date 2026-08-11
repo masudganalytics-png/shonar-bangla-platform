@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Eye, EyeOff, Flag, Power } from "lucide-react";
+import { Eye, EyeOff, Flag, Power, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +9,17 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
+  adminDeleteCommunity,
   adminListCommunities,
   adminListCommunityReports,
   adminSetCommunityActive,
@@ -15,6 +27,7 @@ import {
 } from "@/lib/community.functions";
 import { KIND_LABEL_BN } from "@/lib/community-shared";
 import { toBanglaDigits } from "@/lib/bangla";
+
 
 export const Route = createFileRoute("/_authenticated/admin/community")({
   head: () => ({
@@ -29,6 +42,9 @@ export const Route = createFileRoute("/_authenticated/admin/community")({
 
 function AdminCommunity() {
   const qc = useQueryClient();
+  const [pendingDelete, setPendingDelete] = useState<{ id: string; name: string } | null>(null);
+
+
 
   const reportsQ = useQuery({
     queryKey: ["admin", "community-reports"],
@@ -58,6 +74,19 @@ function AdminCommunity() {
     },
     onError: (e: Error) => toast.error(e.message || "আপডেট করা যায়নি"),
   });
+
+  const deleteM = useMutation({
+    mutationFn: (v: { id: string }) => adminDeleteCommunity({ data: v }),
+    onSuccess: async () => {
+      setPendingDelete(null);
+      toast.success("কমিউনিটিটি সফলভাবে স্থায়ীভাবে মুছে ফেলা হয়েছে।");
+      await qc.invalidateQueries({ queryKey: ["admin", "communities"] });
+      await qc.invalidateQueries({ queryKey: ["admin", "community-reports"] });
+    },
+    onError: (e: Error) => toast.error(e.message || "মুছে ফেলা যায়নি — কোনো পরিবর্তন হয়নি।"),
+  });
+
+
 
   return (
     <div>
@@ -142,19 +171,60 @@ function AdminCommunity() {
                     {toBanglaDigits(c.member_count)} সদস্য
                   </p>
                 </div>
-                <Button
-                  size="sm"
-                  variant={c.is_active ? "destructive" : "outline"}
-                  disabled={activeM.isPending}
-                  onClick={() => activeM.mutate({ id: c.id, isActive: !c.is_active })}
-                >
-                  <Power className="mr-1.5 h-4 w-4" /> {c.is_active ? "নিষ্ক্রিয় করুন" : "সক্রিয় করুন"}
-                </Button>
+                <div className="flex flex-wrap items-center gap-2">
+                  <Button
+                    size="sm"
+                    variant={c.is_active ? "destructive" : "outline"}
+                    disabled={activeM.isPending}
+                    onClick={() => activeM.mutate({ id: c.id, isActive: !c.is_active })}
+                  >
+                    <Power className="mr-1.5 h-4 w-4" /> {c.is_active ? "নিষ্ক্রিয় করুন" : "সক্রিয় করুন"}
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    disabled={deleteM.isPending}
+                    onClick={() => setPendingDelete({ id: c.id, name: c.name })}
+                  >
+                    <Trash2 className="mr-1.5 h-4 w-4" /> মুছে ফেলুন
+                  </Button>
+                </div>
               </Card>
+
             ))
           )}
         </TabsContent>
       </Tabs>
+
+      <AlertDialog open={!!pendingDelete} onOpenChange={(o) => !o && setPendingDelete(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>আপনি কি এই কমিউনিটি/ক্লাবটি স্থায়ীভাবে মুছে ফেলতে চান?</AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-2 text-left">
+                <p className="font-semibold text-foreground">{pendingDelete?.name}</p>
+                <p>
+                  এই কাজটি স্থায়ী। কমিউনিটির সদস্য, পদ, পোস্ট, অনুষ্ঠান ও রিপোর্টসহ সব তথ্য মুছে যাবে এবং পরে
+                  পুনরুদ্ধার করা যাবে না।
+                </p>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleteM.isPending}>বাতিল</AlertDialogCancel>
+            <AlertDialogAction
+              disabled={deleteM.isPending}
+              onClick={(e) => {
+                e.preventDefault();
+                if (pendingDelete) deleteM.mutate({ id: pendingDelete.id });
+              }}
+            >
+              {deleteM.isPending ? "মুছে ফেলা হচ্ছে…" : "স্থায়ীভাবে মুছে ফেলুন"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
+
   );
 }

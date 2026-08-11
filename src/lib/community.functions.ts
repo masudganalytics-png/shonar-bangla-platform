@@ -196,7 +196,54 @@ export const adminSetCommunityActive = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
+/** Platform admin only: permanently delete a community/club and all dependent data. */
+export const adminDeleteCommunity = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) => z.object({ id: z.string().uuid() }).parse(d))
+  .handler(async ({ data, context }) => {
+    await ensurePlatformAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    // Collect post/event ids first — community_likes has no FK, so clean it up manually.
+    const [posts, events] = await Promise.all([
+      supabaseAdmin.from("community_posts").select("id").eq("community_id", data.id),
+      supabaseAdmin.from("community_events").select("id").eq("community_id", data.id),
+    ]);
+    if (posts.error) throw new Error(posts.error.message);
+    if (events.error) throw new Error(events.error.message);
+
+    const postIds = (posts.data ?? []).map((p) => p.id);
+    const eventIds = (events.data ?? []).map((e) => e.id);
+
+    if (postIds.length > 0) {
+      const { error } = await supabaseAdmin
+        .from("community_likes")
+        .delete()
+        .eq("target_type", "post")
+        .in("target_id", postIds);
+      if (error) throw new Error(error.message);
+    }
+    if (eventIds.length > 0) {
+      const { error } = await supabaseAdmin
+        .from("community_likes")
+        .delete()
+        .eq("target_type", "event")
+        .in("target_id", eventIds);
+      if (error) throw new Error(error.message);
+    }
+
+    // Members must go before positions (members.position_id is ON DELETE NO ACTION).
+    const { error: memErr } = await supabaseAdmin.from("community_members").delete().eq("community_id", data.id);
+    if (memErr) throw new Error(memErr.message);
+
+    // Remaining children (badges, positions, posts, events) cascade from communities.
+    const { error } = await supabaseAdmin.from("communities").delete().eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
 export const adminListCommunities = createServerFn({ method: "GET" })
+
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     await ensurePlatformAdmin(context);
