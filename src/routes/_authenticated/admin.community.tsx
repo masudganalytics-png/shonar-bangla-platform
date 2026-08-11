@@ -171,15 +171,26 @@ function AdminCommunity() {
                     {toBanglaDigits(c.member_count)} সদস্য
                   </p>
                 </div>
-                <Button
-                  size="sm"
-                  variant={c.is_active ? "destructive" : "outline"}
-                  disabled={activeM.isPending}
-                  onClick={() => activeM.mutate({ id: c.id, isActive: !c.is_active })}
-                >
-                  <Power className="mr-1.5 h-4 w-4" /> {c.is_active ? "নিষ্ক্রিয় করুন" : "সক্রিয় করুন"}
-                </Button>
+                <div className="flex flex-wrap items-center gap-2">
+                  <Button
+                    size="sm"
+                    variant={c.is_active ? "destructive" : "outline"}
+                    disabled={activeM.isPending}
+                    onClick={() => activeM.mutate({ id: c.id, isActive: !c.is_active })}
+                  >
+                    <Power className="mr-1.5 h-4 w-4" /> {c.is_active ? "নিষ্ক্রিয় করুন" : "সক্রিয় করুন"}
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    disabled={deleteM.isPending}
+                    onClick={() => setPendingDelete({ id: c.id, name: c.name })}
+                  >
+                    <Trash2 className="mr-1.5 h-4 w-4" /> মুছে ফেলুন
+                  </Button>
+                </div>
               </Card>
+
             ))
           )}
         </TabsContent>
