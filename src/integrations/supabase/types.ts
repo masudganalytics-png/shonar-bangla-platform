@@ -1398,6 +1398,134 @@ export type Database = {
           },
         ]
       }
+      govt_worker_reports: {
+        Row: {
+          created_at: string
+          details: string | null
+          id: string
+          reason: string
+          reporter_id: string | null
+          status: Database["public"]["Enums"]["govt_report_status"]
+          updated_at: string
+          worker_id: string
+        }
+        Insert: {
+          created_at?: string
+          details?: string | null
+          id?: string
+          reason: string
+          reporter_id?: string | null
+          status?: Database["public"]["Enums"]["govt_report_status"]
+          updated_at?: string
+          worker_id: string
+        }
+        Update: {
+          created_at?: string
+          details?: string | null
+          id?: string
+          reason?: string
+          reporter_id?: string | null
+          status?: Database["public"]["Enums"]["govt_report_status"]
+          updated_at?: string
+          worker_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "govt_worker_reports_worker_id_fkey"
+            columns: ["worker_id"]
+            isOneToOne: false
+            referencedRelation: "govt_workers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      govt_workers: {
+        Row: {
+          admin_note: string | null
+          bio: string | null
+          consent_given: boolean
+          created_at: string
+          current_district: string
+          current_upazila: string | null
+          current_workplace: string | null
+          department: string
+          designation: string
+          full_name: string
+          id: string
+          is_verified: boolean
+          job_category: string | null
+          joining_year: number | null
+          official_email: string | null
+          organization: string
+          phone: string | null
+          phone_visibility: Database["public"]["Enums"]["govt_phone_visibility"]
+          photo_url: string | null
+          status: Database["public"]["Enums"]["govt_worker_status"]
+          ukhiya_area: string
+          updated_at: string
+          user_id: string
+          verified_at: string | null
+          verified_by: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          admin_note?: string | null
+          bio?: string | null
+          consent_given?: boolean
+          created_at?: string
+          current_district: string
+          current_upazila?: string | null
+          current_workplace?: string | null
+          department: string
+          designation: string
+          full_name: string
+          id?: string
+          is_verified?: boolean
+          job_category?: string | null
+          joining_year?: number | null
+          official_email?: string | null
+          organization: string
+          phone?: string | null
+          phone_visibility?: Database["public"]["Enums"]["govt_phone_visibility"]
+          photo_url?: string | null
+          status?: Database["public"]["Enums"]["govt_worker_status"]
+          ukhiya_area: string
+          updated_at?: string
+          user_id: string
+          verified_at?: string | null
+          verified_by?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          admin_note?: string | null
+          bio?: string | null
+          consent_given?: boolean
+          created_at?: string
+          current_district?: string
+          current_upazila?: string | null
+          current_workplace?: string | null
+          department?: string
+          designation?: string
+          full_name?: string
+          id?: string
+          is_verified?: boolean
+          job_category?: string | null
+          joining_year?: number | null
+          official_email?: string | null
+          organization?: string
+          phone?: string | null
+          phone_visibility?: Database["public"]["Enums"]["govt_phone_visibility"]
+          photo_url?: string | null
+          status?: Database["public"]["Enums"]["govt_worker_status"]
+          ukhiya_area?: string
+          updated_at?: string
+          user_id?: string
+          verified_at?: string | null
+          verified_by?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
       legal_leads: {
         Row: {
           admin_note: string | null
@@ -2901,6 +3029,9 @@ export type Database = {
       complaint_reason: "high_bill" | "wrong_reading" | "wrong_tariff" | "other"
       donor_gender: "male" | "female" | "other"
       donor_status: "pending" | "approved" | "rejected"
+      govt_phone_visibility: "public" | "members" | "hidden"
+      govt_report_status: "open" | "reviewed" | "dismissed"
+      govt_worker_status: "pending" | "approved" | "rejected" | "hidden"
       lead_status: "new" | "contacted" | "closed"
       listing_status: "pending" | "approved" | "rejected"
       mosque_committee_position:
@@ -3109,6 +3240,9 @@ export const Constants = {
       complaint_reason: ["high_bill", "wrong_reading", "wrong_tariff", "other"],
       donor_gender: ["male", "female", "other"],
       donor_status: ["pending", "approved", "rejected"],
+      govt_phone_visibility: ["public", "members", "hidden"],
+      govt_report_status: ["open", "reviewed", "dismissed"],
+      govt_worker_status: ["pending", "approved", "rejected", "hidden"],
       lead_status: ["new", "contacted", "closed"],
       listing_status: ["pending", "approved", "rejected"],
       mosque_committee_position: [
