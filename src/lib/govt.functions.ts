@@ -124,14 +124,14 @@ export const updateGovtModeration = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { id, ...values } = data;
     if (Object.keys(values).length === 0) return { ok: true };
-    const patch: Record<string, unknown> = { ...values };
+    const patch: TablesUpdate<"govt_workers"> = { ...values };
     if (values.is_verified === true) {
-      patch['verified_at'] = new Date().toISOString();
-      patch['verified_by'] = context.userId;
+      patch.verified_at = new Date().toISOString();
+      patch.verified_by = context.userId;
     }
     if (values.is_verified === false) {
-      patch['verified_at'] = null;
-      patch['verified_by'] = null;
+      patch.verified_at = null;
+      patch.verified_by = null;
     }
     const { error } = await supabaseAdmin.from("govt_workers").update(patch).eq("id", id);
     if (error) throw new Error(error.message);
