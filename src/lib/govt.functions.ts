@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
+import type { TablesUpdate } from "@/integrations/supabase/types";
 import type {
   GovtWorker,
   GovtWorkerStatus,
@@ -124,14 +125,14 @@ export const updateGovtModeration = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { id, ...values } = data;
     if (Object.keys(values).length === 0) return { ok: true };
-    const patch: Record<string, unknown> = { ...values };
+    const patch: TablesUpdate<"govt_workers"> = { ...values };
     if (values.is_verified === true) {
-      patch['verified_at'] = new Date().toISOString();
-      patch['verified_by'] = context.userId;
+      patch.verified_at = new Date().toISOString();
+      patch.verified_by = context.userId;
     }
     if (values.is_verified === false) {
-      patch['verified_at'] = null;
-      patch['verified_by'] = null;
+      patch.verified_at = null;
+      patch.verified_by = null;
     }
     const { error } = await supabaseAdmin.from("govt_workers").update(patch).eq("id", id);
     if (error) throw new Error(error.message);
@@ -174,7 +175,8 @@ export const adminUpdateGovtWorker = createServerFn({ method: "POST" })
         current_upazila: z.string().trim().max(80).nullable(),
         ukhiya_area: z.string().trim().min(1).max(80),
         joining_year: z.number().int().min(1950).max(2100).nullable(),
-        bio: z.string().trim().max(600).nullable(),
+        bio: z.string().trim().max(800).nullable(),
+        tips_for_younger: z.string().trim().max(1200).nullable(),
         phone: z.string().trim().max(20).nullable(),
         whatsapp: z.string().trim().max(20).nullable(),
         official_email: z.string().trim().max(150).nullable(),

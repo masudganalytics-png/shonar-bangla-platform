@@ -23,6 +23,7 @@ export type GovtWorker = {
   ukhiya_area: string;
   joining_year: number | null;
   bio: string | null;
+  tips_for_younger: string | null;
   phone_visibility: GovtPhoneVisibility;
   consent_given: boolean;
   status: GovtWorkerStatus;
@@ -41,7 +42,7 @@ export type GovtWorkerWithContact = GovtWorker & {
 
 /** Columns granted to anon/authenticated. Contact columns have no grant at all. */
 export const GOVT_PUBLIC_COLUMNS =
-  "id, user_id, full_name, photo_url, designation, organization, department, job_category, current_workplace, current_district, current_upazila, ukhiya_area, joining_year, bio, phone_visibility, consent_given, status, is_verified, verified_at, created_at, updated_at";
+  "id, user_id, full_name, photo_url, designation, organization, department, job_category, current_workplace, current_district, current_upazila, ukhiya_area, joining_year, bio, tips_for_younger, phone_visibility, consent_given, status, is_verified, verified_at, created_at, updated_at";
 
 export const GOVT_DEPARTMENTS = [
   "প্রশাসন",
@@ -117,6 +118,10 @@ export const GOVT_DISCLAIMER =
   "এই ডিরেক্টরিটি Khijirion-এর একটি কমিউনিটি উদ্যোগ। এটি কোনো সরকারি প্রতিষ্ঠানের অফিসিয়াল ডিরেক্টরি নয়।";
 
 export const GOVT_PAGE_SIZE = 12;
+
+/** Character limits for the two optional public free-text fields. */
+export const GOVT_BIO_MAX = 800;
+export const GOVT_TIPS_MAX = 1200;
 
 /** Normalise a Bangladeshi/international mobile number to a dialable form. */
 export function normalizeGovtPhone(input: string): string {
