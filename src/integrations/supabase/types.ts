@@ -1461,6 +1461,7 @@ export type Database = {
           phone_visibility: Database["public"]["Enums"]["govt_phone_visibility"]
           photo_url: string | null
           status: Database["public"]["Enums"]["govt_worker_status"]
+          tips_for_younger: string | null
           ukhiya_area: string
           updated_at: string
           user_id: string
@@ -1489,6 +1490,7 @@ export type Database = {
           phone_visibility?: Database["public"]["Enums"]["govt_phone_visibility"]
           photo_url?: string | null
           status?: Database["public"]["Enums"]["govt_worker_status"]
+          tips_for_younger?: string | null
           ukhiya_area: string
           updated_at?: string
           user_id: string
@@ -1517,6 +1519,7 @@ export type Database = {
           phone_visibility?: Database["public"]["Enums"]["govt_phone_visibility"]
           photo_url?: string | null
           status?: Database["public"]["Enums"]["govt_worker_status"]
+          tips_for_younger?: string | null
           ukhiya_area?: string
           updated_at?: string
           user_id?: string
