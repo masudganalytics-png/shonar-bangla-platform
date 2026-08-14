@@ -23,6 +23,7 @@ import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as IspRouteImport } from './routes/isp'
 import { Route as HelplineRouteImport } from './routes/helpline'
+import { Route as GovtJobsRouteImport } from './routes/govt-jobs'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as CvBuilderRouteImport } from './routes/cv-builder'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -39,6 +40,7 @@ import { Route as WorkersIndexRouteImport } from './routes/workers.index'
 import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
 import { Route as ProbashiIndexRouteImport } from './routes/probashi.index'
 import { Route as LegalIndexRouteImport } from './routes/legal.index'
+import { Route as GovtJobsIndexRouteImport } from './routes/govt-jobs.index'
 import { Route as CommunityIndexRouteImport } from './routes/community.index'
 import { Route as BusinessIndexRouteImport } from './routes/business.index'
 import { Route as BloodDonorsIndexRouteImport } from './routes/blood-donors.index'
@@ -53,6 +55,7 @@ import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
 import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register'
 import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
 import { Route as LegalIdRouteImport } from './routes/legal.$id'
+import { Route as GovtJobsIdRouteImport } from './routes/govt-jobs.$id'
 import { Route as CommunityNewRouteImport } from './routes/community.new'
 import { Route as CommunityMosquesRouteImport } from './routes/community.mosques'
 import { Route as CommunityGroupsRouteImport } from './routes/community.groups'
@@ -185,6 +188,11 @@ const HelplineRoute = HelplineRouteImport.update({
   path: '/helpline',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GovtJobsRoute = GovtJobsRouteImport.update({
+  id: '/govt-jobs',
+  path: '/govt-jobs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
@@ -264,6 +272,11 @@ const LegalIndexRoute = LegalIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LegalRoute,
 } as any)
+const GovtJobsIndexRoute = GovtJobsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GovtJobsRoute,
+} as any)
 const CommunityIndexRoute = CommunityIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -333,6 +346,11 @@ const LegalIdRoute = LegalIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => LegalRoute,
+} as any)
+const GovtJobsIdRoute = GovtJobsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => GovtJobsRoute,
 } as any)
 const CommunityNewRoute = CommunityNewRouteImport.update({
   id: '/new',
@@ -673,6 +691,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/govt-jobs': typeof GovtJobsRouteWithChildren
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
@@ -705,6 +724,7 @@ export interface FileRoutesByFullPath {
   '/community/groups': typeof CommunityGroupsRoute
   '/community/mosques': typeof CommunityMosquesRouteWithChildren
   '/community/new': typeof CommunityNewRoute
+  '/govt-jobs/$id': typeof GovtJobsIdRoute
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
@@ -719,6 +739,7 @@ export interface FileRoutesByFullPath {
   '/blood-donors/': typeof BloodDonorsIndexRoute
   '/business/': typeof BusinessIndexRoute
   '/community/': typeof CommunityIndexRoute
+  '/govt-jobs/': typeof GovtJobsIndexRoute
   '/legal/': typeof LegalIndexRoute
   '/probashi/': typeof ProbashiIndexRoute
   '/teachers/': typeof TeachersIndexRoute
@@ -802,6 +823,7 @@ export interface FileRoutesByTo {
   '/community/feed': typeof CommunityFeedRoute
   '/community/groups': typeof CommunityGroupsRoute
   '/community/new': typeof CommunityNewRoute
+  '/govt-jobs/$id': typeof GovtJobsIdRoute
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
@@ -813,6 +835,7 @@ export interface FileRoutesByTo {
   '/blood-donors': typeof BloodDonorsIndexRoute
   '/business': typeof BusinessIndexRoute
   '/community': typeof CommunityIndexRoute
+  '/govt-jobs': typeof GovtJobsIndexRoute
   '/legal': typeof LegalIndexRoute
   '/probashi': typeof ProbashiIndexRoute
   '/teachers': typeof TeachersIndexRoute
@@ -875,6 +898,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/govt-jobs': typeof GovtJobsRouteWithChildren
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
@@ -907,6 +931,7 @@ export interface FileRoutesById {
   '/community/groups': typeof CommunityGroupsRoute
   '/community/mosques': typeof CommunityMosquesRouteWithChildren
   '/community/new': typeof CommunityNewRoute
+  '/govt-jobs/$id': typeof GovtJobsIdRoute
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
@@ -921,6 +946,7 @@ export interface FileRoutesById {
   '/blood-donors/': typeof BloodDonorsIndexRoute
   '/business/': typeof BusinessIndexRoute
   '/community/': typeof CommunityIndexRoute
+  '/govt-jobs/': typeof GovtJobsIndexRoute
   '/legal/': typeof LegalIndexRoute
   '/probashi/': typeof ProbashiIndexRoute
   '/teachers/': typeof TeachersIndexRoute
@@ -983,6 +1009,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/cv-builder'
     | '/forgot-password'
+    | '/govt-jobs'
     | '/helpline'
     | '/isp'
     | '/legal'
@@ -1015,6 +1042,7 @@ export interface FileRouteTypes {
     | '/community/groups'
     | '/community/mosques'
     | '/community/new'
+    | '/govt-jobs/$id'
     | '/legal/$id'
     | '/probashi/$slug'
     | '/probashi/register'
@@ -1029,6 +1057,7 @@ export interface FileRouteTypes {
     | '/blood-donors/'
     | '/business/'
     | '/community/'
+    | '/govt-jobs/'
     | '/legal/'
     | '/probashi/'
     | '/teachers/'
@@ -1112,6 +1141,7 @@ export interface FileRouteTypes {
     | '/community/feed'
     | '/community/groups'
     | '/community/new'
+    | '/govt-jobs/$id'
     | '/legal/$id'
     | '/probashi/$slug'
     | '/probashi/register'
@@ -1123,6 +1153,7 @@ export interface FileRouteTypes {
     | '/blood-donors'
     | '/business'
     | '/community'
+    | '/govt-jobs'
     | '/legal'
     | '/probashi'
     | '/teachers'
@@ -1184,6 +1215,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/cv-builder'
     | '/forgot-password'
+    | '/govt-jobs'
     | '/helpline'
     | '/isp'
     | '/legal'
@@ -1216,6 +1248,7 @@ export interface FileRouteTypes {
     | '/community/groups'
     | '/community/mosques'
     | '/community/new'
+    | '/govt-jobs/$id'
     | '/legal/$id'
     | '/probashi/$slug'
     | '/probashi/register'
@@ -1230,6 +1263,7 @@ export interface FileRouteTypes {
     | '/blood-donors/'
     | '/business/'
     | '/community/'
+    | '/govt-jobs/'
     | '/legal/'
     | '/probashi/'
     | '/teachers/'
@@ -1292,6 +1326,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CvBuilderRoute: typeof CvBuilderRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  GovtJobsRoute: typeof GovtJobsRouteWithChildren
   HelplineRoute: typeof HelplineRoute
   IspRoute: typeof IspRoute
   LegalRoute: typeof LegalRouteWithChildren
@@ -1413,6 +1448,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HelplineRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/govt-jobs': {
+      id: '/govt-jobs'
+      path: '/govt-jobs'
+      fullPath: '/govt-jobs'
+      preLoaderRoute: typeof GovtJobsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/forgot-password': {
       id: '/forgot-password'
       path: '/forgot-password'
@@ -1525,6 +1567,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalIndexRouteImport
       parentRoute: typeof LegalRoute
     }
+    '/govt-jobs/': {
+      id: '/govt-jobs/'
+      path: '/'
+      fullPath: '/govt-jobs/'
+      preLoaderRoute: typeof GovtJobsIndexRouteImport
+      parentRoute: typeof GovtJobsRoute
+    }
     '/community/': {
       id: '/community/'
       path: '/'
@@ -1622,6 +1671,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/legal/$id'
       preLoaderRoute: typeof LegalIdRouteImport
       parentRoute: typeof LegalRoute
+    }
+    '/govt-jobs/$id': {
+      id: '/govt-jobs/$id'
+      path: '/$id'
+      fullPath: '/govt-jobs/$id'
+      preLoaderRoute: typeof GovtJobsIdRouteImport
+      parentRoute: typeof GovtJobsRoute
     }
     '/community/new': {
       id: '/community/new'
@@ -2227,6 +2283,20 @@ const CommunityRouteWithChildren = CommunityRoute._addFileChildren(
   CommunityRouteChildren,
 )
 
+interface GovtJobsRouteChildren {
+  GovtJobsIdRoute: typeof GovtJobsIdRoute
+  GovtJobsIndexRoute: typeof GovtJobsIndexRoute
+}
+
+const GovtJobsRouteChildren: GovtJobsRouteChildren = {
+  GovtJobsIdRoute: GovtJobsIdRoute,
+  GovtJobsIndexRoute: GovtJobsIndexRoute,
+}
+
+const GovtJobsRouteWithChildren = GovtJobsRoute._addFileChildren(
+  GovtJobsRouteChildren,
+)
+
 interface LegalRouteChildren {
   LegalIdRoute: typeof LegalIdRoute
   LegalIndexRoute: typeof LegalIndexRoute
@@ -2349,6 +2419,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CvBuilderRoute: CvBuilderRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  GovtJobsRoute: GovtJobsRouteWithChildren,
   HelplineRoute: HelplineRoute,
   IspRoute: IspRoute,
   LegalRoute: LegalRouteWithChildren,
