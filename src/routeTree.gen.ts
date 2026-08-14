@@ -55,6 +55,7 @@ import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
 import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register'
 import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
 import { Route as LegalIdRouteImport } from './routes/legal.$id'
+import { Route as GovtJobsIdRouteImport } from './routes/govt-jobs.$id'
 import { Route as CommunityNewRouteImport } from './routes/community.new'
 import { Route as CommunityMosquesRouteImport } from './routes/community.mosques'
 import { Route as CommunityGroupsRouteImport } from './routes/community.groups'
@@ -345,6 +346,11 @@ const LegalIdRoute = LegalIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => LegalRoute,
+} as any)
+const GovtJobsIdRoute = GovtJobsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => GovtJobsRoute,
 } as any)
 const CommunityNewRoute = CommunityNewRouteImport.update({
   id: '/new',
@@ -718,6 +724,7 @@ export interface FileRoutesByFullPath {
   '/community/groups': typeof CommunityGroupsRoute
   '/community/mosques': typeof CommunityMosquesRouteWithChildren
   '/community/new': typeof CommunityNewRoute
+  '/govt-jobs/$id': typeof GovtJobsIdRoute
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
@@ -816,6 +823,7 @@ export interface FileRoutesByTo {
   '/community/feed': typeof CommunityFeedRoute
   '/community/groups': typeof CommunityGroupsRoute
   '/community/new': typeof CommunityNewRoute
+  '/govt-jobs/$id': typeof GovtJobsIdRoute
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
@@ -923,6 +931,7 @@ export interface FileRoutesById {
   '/community/groups': typeof CommunityGroupsRoute
   '/community/mosques': typeof CommunityMosquesRouteWithChildren
   '/community/new': typeof CommunityNewRoute
+  '/govt-jobs/$id': typeof GovtJobsIdRoute
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
@@ -1033,6 +1042,7 @@ export interface FileRouteTypes {
     | '/community/groups'
     | '/community/mosques'
     | '/community/new'
+    | '/govt-jobs/$id'
     | '/legal/$id'
     | '/probashi/$slug'
     | '/probashi/register'
@@ -1131,6 +1141,7 @@ export interface FileRouteTypes {
     | '/community/feed'
     | '/community/groups'
     | '/community/new'
+    | '/govt-jobs/$id'
     | '/legal/$id'
     | '/probashi/$slug'
     | '/probashi/register'
@@ -1237,6 +1248,7 @@ export interface FileRouteTypes {
     | '/community/groups'
     | '/community/mosques'
     | '/community/new'
+    | '/govt-jobs/$id'
     | '/legal/$id'
     | '/probashi/$slug'
     | '/probashi/register'
@@ -1659,6 +1671,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/legal/$id'
       preLoaderRoute: typeof LegalIdRouteImport
       parentRoute: typeof LegalRoute
+    }
+    '/govt-jobs/$id': {
+      id: '/govt-jobs/$id'
+      path: '/$id'
+      fullPath: '/govt-jobs/$id'
+      preLoaderRoute: typeof GovtJobsIdRouteImport
+      parentRoute: typeof GovtJobsRoute
     }
     '/community/new': {
       id: '/community/new'
@@ -2265,10 +2284,12 @@ const CommunityRouteWithChildren = CommunityRoute._addFileChildren(
 )
 
 interface GovtJobsRouteChildren {
+  GovtJobsIdRoute: typeof GovtJobsIdRoute
   GovtJobsIndexRoute: typeof GovtJobsIndexRoute
 }
 
 const GovtJobsRouteChildren: GovtJobsRouteChildren = {
+  GovtJobsIdRoute: GovtJobsIdRoute,
   GovtJobsIndexRoute: GovtJobsIndexRoute,
 }
 
