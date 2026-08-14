@@ -40,6 +40,7 @@ import { Route as WorkersIndexRouteImport } from './routes/workers.index'
 import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
 import { Route as ProbashiIndexRouteImport } from './routes/probashi.index'
 import { Route as LegalIndexRouteImport } from './routes/legal.index'
+import { Route as GovtJobsIndexRouteImport } from './routes/govt-jobs.index'
 import { Route as CommunityIndexRouteImport } from './routes/community.index'
 import { Route as BusinessIndexRouteImport } from './routes/business.index'
 import { Route as BloodDonorsIndexRouteImport } from './routes/blood-donors.index'
@@ -269,6 +270,11 @@ const LegalIndexRoute = LegalIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LegalRoute,
+} as any)
+const GovtJobsIndexRoute = GovtJobsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GovtJobsRoute,
 } as any)
 const CommunityIndexRoute = CommunityIndexRouteImport.update({
   id: '/',
@@ -679,7 +685,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/govt-jobs': typeof GovtJobsRoute
+  '/govt-jobs': typeof GovtJobsRouteWithChildren
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
@@ -726,6 +732,7 @@ export interface FileRoutesByFullPath {
   '/blood-donors/': typeof BloodDonorsIndexRoute
   '/business/': typeof BusinessIndexRoute
   '/community/': typeof CommunityIndexRoute
+  '/govt-jobs/': typeof GovtJobsIndexRoute
   '/legal/': typeof LegalIndexRoute
   '/probashi/': typeof ProbashiIndexRoute
   '/teachers/': typeof TeachersIndexRoute
@@ -783,7 +790,6 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/govt-jobs': typeof GovtJobsRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/notices': typeof NoticesRoute
@@ -821,6 +827,7 @@ export interface FileRoutesByTo {
   '/blood-donors': typeof BloodDonorsIndexRoute
   '/business': typeof BusinessIndexRoute
   '/community': typeof CommunityIndexRoute
+  '/govt-jobs': typeof GovtJobsIndexRoute
   '/legal': typeof LegalIndexRoute
   '/probashi': typeof ProbashiIndexRoute
   '/teachers': typeof TeachersIndexRoute
@@ -883,7 +890,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/govt-jobs': typeof GovtJobsRoute
+  '/govt-jobs': typeof GovtJobsRouteWithChildren
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
@@ -930,6 +937,7 @@ export interface FileRoutesById {
   '/blood-donors/': typeof BloodDonorsIndexRoute
   '/business/': typeof BusinessIndexRoute
   '/community/': typeof CommunityIndexRoute
+  '/govt-jobs/': typeof GovtJobsIndexRoute
   '/legal/': typeof LegalIndexRoute
   '/probashi/': typeof ProbashiIndexRoute
   '/teachers/': typeof TeachersIndexRoute
@@ -1039,6 +1047,7 @@ export interface FileRouteTypes {
     | '/blood-donors/'
     | '/business/'
     | '/community/'
+    | '/govt-jobs/'
     | '/legal/'
     | '/probashi/'
     | '/teachers/'
@@ -1096,7 +1105,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/cv-builder'
     | '/forgot-password'
-    | '/govt-jobs'
     | '/helpline'
     | '/isp'
     | '/notices'
@@ -1134,6 +1142,7 @@ export interface FileRouteTypes {
     | '/blood-donors'
     | '/business'
     | '/community'
+    | '/govt-jobs'
     | '/legal'
     | '/probashi'
     | '/teachers'
@@ -1242,6 +1251,7 @@ export interface FileRouteTypes {
     | '/blood-donors/'
     | '/business/'
     | '/community/'
+    | '/govt-jobs/'
     | '/legal/'
     | '/probashi/'
     | '/teachers/'
@@ -1304,7 +1314,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CvBuilderRoute: typeof CvBuilderRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
-  GovtJobsRoute: typeof GovtJobsRoute
+  GovtJobsRoute: typeof GovtJobsRouteWithChildren
   HelplineRoute: typeof HelplineRoute
   IspRoute: typeof IspRoute
   LegalRoute: typeof LegalRouteWithChildren
@@ -1544,6 +1554,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/legal/'
       preLoaderRoute: typeof LegalIndexRouteImport
       parentRoute: typeof LegalRoute
+    }
+    '/govt-jobs/': {
+      id: '/govt-jobs/'
+      path: '/'
+      fullPath: '/govt-jobs/'
+      preLoaderRoute: typeof GovtJobsIndexRouteImport
+      parentRoute: typeof GovtJobsRoute
     }
     '/community/': {
       id: '/community/'
@@ -2247,6 +2264,18 @@ const CommunityRouteWithChildren = CommunityRoute._addFileChildren(
   CommunityRouteChildren,
 )
 
+interface GovtJobsRouteChildren {
+  GovtJobsIndexRoute: typeof GovtJobsIndexRoute
+}
+
+const GovtJobsRouteChildren: GovtJobsRouteChildren = {
+  GovtJobsIndexRoute: GovtJobsIndexRoute,
+}
+
+const GovtJobsRouteWithChildren = GovtJobsRoute._addFileChildren(
+  GovtJobsRouteChildren,
+)
+
 interface LegalRouteChildren {
   LegalIdRoute: typeof LegalIdRoute
   LegalIndexRoute: typeof LegalIndexRoute
@@ -2369,7 +2398,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CvBuilderRoute: CvBuilderRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
-  GovtJobsRoute: GovtJobsRoute,
+  GovtJobsRoute: GovtJobsRouteWithChildren,
   HelplineRoute: HelplineRoute,
   IspRoute: IspRoute,
   LegalRoute: LegalRouteWithChildren,
