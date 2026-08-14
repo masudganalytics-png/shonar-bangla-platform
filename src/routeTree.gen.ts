@@ -23,6 +23,7 @@ import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as IspRouteImport } from './routes/isp'
 import { Route as HelplineRouteImport } from './routes/helpline'
+import { Route as GovtJobsRouteImport } from './routes/govt-jobs'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as CvBuilderRouteImport } from './routes/cv-builder'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -183,6 +184,11 @@ const IspRoute = IspRouteImport.update({
 const HelplineRoute = HelplineRouteImport.update({
   id: '/helpline',
   path: '/helpline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GovtJobsRoute = GovtJobsRouteImport.update({
+  id: '/govt-jobs',
+  path: '/govt-jobs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -673,6 +679,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/govt-jobs': typeof GovtJobsRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
@@ -776,6 +783,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/govt-jobs': typeof GovtJobsRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/notices': typeof NoticesRoute
@@ -875,6 +883,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/cv-builder': typeof CvBuilderRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/govt-jobs': typeof GovtJobsRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
@@ -983,6 +992,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/cv-builder'
     | '/forgot-password'
+    | '/govt-jobs'
     | '/helpline'
     | '/isp'
     | '/legal'
@@ -1086,6 +1096,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/cv-builder'
     | '/forgot-password'
+    | '/govt-jobs'
     | '/helpline'
     | '/isp'
     | '/notices'
@@ -1184,6 +1195,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/cv-builder'
     | '/forgot-password'
+    | '/govt-jobs'
     | '/helpline'
     | '/isp'
     | '/legal'
@@ -1292,6 +1304,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CvBuilderRoute: typeof CvBuilderRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  GovtJobsRoute: typeof GovtJobsRoute
   HelplineRoute: typeof HelplineRoute
   IspRoute: typeof IspRoute
   LegalRoute: typeof LegalRouteWithChildren
@@ -1411,6 +1424,13 @@ declare module '@tanstack/react-router' {
       path: '/helpline'
       fullPath: '/helpline'
       preLoaderRoute: typeof HelplineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/govt-jobs': {
+      id: '/govt-jobs'
+      path: '/govt-jobs'
+      fullPath: '/govt-jobs'
+      preLoaderRoute: typeof GovtJobsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -2349,6 +2369,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CvBuilderRoute: CvBuilderRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  GovtJobsRoute: GovtJobsRoute,
   HelplineRoute: HelplineRoute,
   IspRoute: IspRoute,
   LegalRoute: LegalRouteWithChildren,
