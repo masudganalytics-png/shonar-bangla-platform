@@ -257,3 +257,64 @@ export const updateGovtReportStatus = createServerFn({ method: "POST" })
   });
 
 export type { GovtWorker, GovtWorkerStatus };
+
+/* ------------------------------------------------- owner-scoped upsert */
+
+const profileSchema = z.object({
+  full_name: z.string().trim().min(2).max(100),
+  photo_url: z.string().trim().url().max(500).nullable(),
+  designation: z.string().trim().min(2).max(120),
+  organization: z.string().trim().min(2).max(150),
+  department: z.string().trim().min(1).max(80),
+  job_category: z.string().trim().max(80).nullable(),
+  current_workplace: z.string().trim().max(150).nullable(),
+  current_district: z.string().trim().min(1).max(80),
+  current_upazila: z.string().trim().max(80).nullable(),
+  ukhiya_area: z.string().trim().min(1).max(80),
+  joining_year: z.number().int().min(1950).max(2100).nullable(),
+  bio: z.string().trim().max(800).nullable(),
+  tips_for_younger: z.string().trim().max(1200).nullable(),
+  phone: z.string().trim().max(20).nullable(),
+  whatsapp: z.string().trim().max(20).nullable(),
+  official_email: z.string().trim().email().max(150).nullable().or(z.literal("").transform(() => null)),
+  phone_visibility: z.enum(["public", "members", "hidden"]),
+  consent_given: z.boolean(),
+});
+
+/**
+ * Create or update the caller's OWN profile only. Moderation columns
+ * (status, is_verified, verified_*, admin_note) are never accepted here —
+ * the `trg_govt_workers_guard` trigger still owns them.
+ */
+export const upsertMyGovtProfile = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) => profileSchema.parse(d))
+  .handler(async ({ data, context }): Promise<{ ok: true; id: string }> => {
+    if (!data.consent_given) throw new Error("সম্মতি ছাড়া প্রোফাইল সংরক্ষণ করা যাবে না");
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    const { data: existing, error: findErr } = await supabaseAdmin
+      .from("govt_workers")
+      .select("id")
+      .eq("user_id", context.userId)
+      .maybeSingle();
+    if (findErr) throw new Error(findErr.message);
+
+    if (existing) {
+      const { error } = await supabaseAdmin
+        .from("govt_workers")
+        .update(data)
+        .eq("id", existing.id)
+        .eq("user_id", context.userId);
+      if (error) throw new Error(error.message);
+      return { ok: true, id: existing.id };
+    }
+
+    const { data: inserted, error } = await supabaseAdmin
+      .from("govt_workers")
+      .insert({ ...data, user_id: context.userId })
+      .select("id")
+      .single();
+    if (error) throw new Error(error.message);
+    return { ok: true, id: inserted.id };
+  });
