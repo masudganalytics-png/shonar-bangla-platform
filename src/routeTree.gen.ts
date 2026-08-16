@@ -102,6 +102,7 @@ import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_
 import { Route as AuthenticatedAdminProbashiRouteImport } from './routes/_authenticated/admin.probashi'
 import { Route as AuthenticatedAdminMosquesRouteImport } from './routes/_authenticated/admin.mosques'
 import { Route as AuthenticatedAdminLegalRouteImport } from './routes/_authenticated/admin.legal'
+import { Route as AuthenticatedAdminGovtWorkersRouteImport } from './routes/_authenticated/admin.govt-workers'
 import { Route as AuthenticatedAdminEducationNewsRouteImport } from './routes/_authenticated/admin.education-news'
 import { Route as AuthenticatedAdminCvSubmissionsRouteImport } from './routes/_authenticated/admin.cv-submissions'
 import { Route as AuthenticatedAdminComplaintsRouteImport } from './routes/_authenticated/admin.complaints'
@@ -591,6 +592,12 @@ const AuthenticatedAdminLegalRoute = AuthenticatedAdminLegalRouteImport.update({
   path: '/legal',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminGovtWorkersRoute =
+  AuthenticatedAdminGovtWorkersRouteImport.update({
+    id: '/govt-workers',
+    path: '/govt-workers',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminEducationNewsRoute =
   AuthenticatedAdminEducationNewsRouteImport.update({
     id: '/education-news',
@@ -763,6 +770,7 @@ export interface FileRoutesByFullPath {
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/admin/cv-submissions': typeof AuthenticatedAdminCvSubmissionsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
+  '/admin/govt-workers': typeof AuthenticatedAdminGovtWorkersRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
   '/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
@@ -860,6 +868,7 @@ export interface FileRoutesByTo {
   '/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/admin/cv-submissions': typeof AuthenticatedAdminCvSubmissionsRoute
   '/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
+  '/admin/govt-workers': typeof AuthenticatedAdminGovtWorkersRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
   '/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
@@ -972,6 +981,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/complaints': typeof AuthenticatedAdminComplaintsRoute
   '/_authenticated/admin/cv-submissions': typeof AuthenticatedAdminCvSubmissionsRoute
   '/_authenticated/admin/education-news': typeof AuthenticatedAdminEducationNewsRoute
+  '/_authenticated/admin/govt-workers': typeof AuthenticatedAdminGovtWorkersRoute
   '/_authenticated/admin/legal': typeof AuthenticatedAdminLegalRoute
   '/_authenticated/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/_authenticated/admin/probashi': typeof AuthenticatedAdminProbashiRoute
@@ -1084,6 +1094,7 @@ export interface FileRouteTypes {
     | '/admin/complaints'
     | '/admin/cv-submissions'
     | '/admin/education-news'
+    | '/admin/govt-workers'
     | '/admin/legal'
     | '/admin/mosques'
     | '/admin/probashi'
@@ -1181,6 +1192,7 @@ export interface FileRouteTypes {
     | '/admin/complaints'
     | '/admin/cv-submissions'
     | '/admin/education-news'
+    | '/admin/govt-workers'
     | '/admin/legal'
     | '/admin/mosques'
     | '/admin/probashi'
@@ -1292,6 +1304,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/complaints'
     | '/_authenticated/admin/cv-submissions'
     | '/_authenticated/admin/education-news'
+    | '/_authenticated/admin/govt-workers'
     | '/_authenticated/admin/legal'
     | '/_authenticated/admin/mosques'
     | '/_authenticated/admin/probashi'
@@ -2013,6 +2026,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminLegalRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/govt-workers': {
+      id: '/_authenticated/admin/govt-workers'
+      path: '/govt-workers'
+      fullPath: '/admin/govt-workers'
+      preLoaderRoute: typeof AuthenticatedAdminGovtWorkersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/education-news': {
       id: '/_authenticated/admin/education-news'
       path: '/education-news'
@@ -2141,6 +2161,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminComplaintsRoute: typeof AuthenticatedAdminComplaintsRoute
   AuthenticatedAdminCvSubmissionsRoute: typeof AuthenticatedAdminCvSubmissionsRoute
   AuthenticatedAdminEducationNewsRoute: typeof AuthenticatedAdminEducationNewsRoute
+  AuthenticatedAdminGovtWorkersRoute: typeof AuthenticatedAdminGovtWorkersRoute
   AuthenticatedAdminLegalRoute: typeof AuthenticatedAdminLegalRoute
   AuthenticatedAdminMosquesRoute: typeof AuthenticatedAdminMosquesRoute
   AuthenticatedAdminProbashiRoute: typeof AuthenticatedAdminProbashiRoute
@@ -2168,6 +2189,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminComplaintsRoute: AuthenticatedAdminComplaintsRoute,
   AuthenticatedAdminCvSubmissionsRoute: AuthenticatedAdminCvSubmissionsRoute,
   AuthenticatedAdminEducationNewsRoute: AuthenticatedAdminEducationNewsRoute,
+  AuthenticatedAdminGovtWorkersRoute: AuthenticatedAdminGovtWorkersRoute,
   AuthenticatedAdminLegalRoute: AuthenticatedAdminLegalRoute,
   AuthenticatedAdminMosquesRoute: AuthenticatedAdminMosquesRoute,
   AuthenticatedAdminProbashiRoute: AuthenticatedAdminProbashiRoute,
