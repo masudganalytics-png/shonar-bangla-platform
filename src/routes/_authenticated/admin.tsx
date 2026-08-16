@@ -18,7 +18,9 @@ const TABS: ReadonlyArray<{ to: string; label: string; icon: typeof Users; exact
   { to: "/admin/community", label: "কমিউনিটি", icon: Handshake },
   { to: "/admin/mosques", label: "মসজিদ ও সমাজ", icon: Landmark },
   { to: "/admin/probashi", label: "প্রবাসী কর্নার", icon: Plane },
+  { to: "/admin/govt-workers", label: "সরকারি চাকরিজীবী", icon: Landmark },
   { to: "/admin/cv-submissions", label: "সিভি বিল্ডার", icon: FileSignature },
+
 
 ];
 
