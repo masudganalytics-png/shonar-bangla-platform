@@ -318,3 +318,44 @@ export const upsertMyGovtProfile = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true, id: inserted.id };
   });
+
+/* ------------------------------------------------ admin manual entry */
+
+/**
+ * Admin-only manual entry: creates a directory profile that is not linked to
+ * any user account (`user_id` stays NULL). Moderation fields are set here
+ * because the guard trigger defers to admins.
+ */
+export const adminCreateGovtWorker = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) =>
+    profileSchema
+      .omit({ consent_given: true })
+      .extend({
+        status: z.enum(["pending", "approved", "rejected", "hidden"]).default("approved"),
+        is_verified: z.boolean().default(true),
+        admin_note: z.string().trim().max(500).nullable().default(null),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data, context }): Promise<{ ok: true; id: string }> => {
+    await ensureAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { status, is_verified, admin_note, ...values } = data;
+    const { data: inserted, error } = await supabaseAdmin
+      .from("govt_workers")
+      .insert({
+        ...values,
+        user_id: null,
+        consent_given: true,
+        status,
+        is_verified,
+        admin_note,
+        verified_at: is_verified ? new Date().toISOString() : null,
+        verified_by: is_verified ? context.userId : null,
+      })
+      .select("id")
+      .single();
+    if (error) throw new Error(error.message);
+    return { ok: true, id: inserted.id };
+  });
