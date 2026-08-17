@@ -1464,7 +1464,7 @@ export type Database = {
           tips_for_younger: string | null
           ukhiya_area: string
           updated_at: string
-          user_id: string
+          user_id: string | null
           verified_at: string | null
           verified_by: string | null
           whatsapp: string | null
@@ -1493,7 +1493,7 @@ export type Database = {
           tips_for_younger?: string | null
           ukhiya_area: string
           updated_at?: string
-          user_id: string
+          user_id?: string | null
           verified_at?: string | null
           verified_by?: string | null
           whatsapp?: string | null
@@ -1522,7 +1522,7 @@ export type Database = {
           tips_for_younger?: string | null
           ukhiya_area?: string
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
           verified_at?: string | null
           verified_by?: string | null
           whatsapp?: string | null
