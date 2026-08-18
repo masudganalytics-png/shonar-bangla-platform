@@ -88,6 +88,11 @@ function GovtDirectory() {
             উখিয়ার সন্তানরা দেশের বিভিন্ন দপ্তরে যেসব দায়িত্বে আছেন — তাদের পরিচিতি ও নেটওয়ার্কিংয়ের
             একটি উন্মুক্ত প্ল্যাটফর্ম।
           </p>
+          <div className="mt-6">
+            <Button asChild size="lg" variant="secondary">
+              <Link to="/govt-jobs/register">নিবন্ধন করুন</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
