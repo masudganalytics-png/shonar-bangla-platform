@@ -1448,6 +1448,7 @@ export type Database = {
           current_district: string
           current_upazila: string | null
           current_workplace: string | null
+          date_of_birth: string | null
           department: string
           designation: string
           full_name: string
@@ -1477,6 +1478,7 @@ export type Database = {
           current_district: string
           current_upazila?: string | null
           current_workplace?: string | null
+          date_of_birth?: string | null
           department: string
           designation: string
           full_name: string
@@ -1506,6 +1508,7 @@ export type Database = {
           current_district?: string
           current_upazila?: string | null
           current_workplace?: string | null
+          date_of_birth?: string | null
           department?: string
           designation?: string
           full_name?: string
