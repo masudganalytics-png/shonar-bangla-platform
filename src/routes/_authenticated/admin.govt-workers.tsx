@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { GovtPhoto } from "@/components/govt/GovtPhoto";
+import { AdminGovtCreateDialog } from "@/components/govt/AdminGovtCreateDialog";
 import {
   approveAndVerifyGovtWorker,
   deleteGovtWorker,
@@ -132,6 +133,7 @@ function AdminGovtWorkers() {
         <span className="text-sm text-muted-foreground">
           মোট {rows.length} টি • অপেক্ষমাণ {pendingCount} টি
         </span>
+        <AdminGovtCreateDialog onCreated={invalidate} />
       </div>
 
       {isLoading ? (

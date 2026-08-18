@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Droplet, Briefcase, GraduationCap, Store, Scale, Wifi, FileText, Calculator } from "lucide-react";
+import { ArrowRight, Droplet, Briefcase, GraduationCap, Store, Scale, Wifi, FileText, Calculator, Landmark } from "lucide-react";
 
 const SERVICES = [
   { to: "/blood-donors" as const, icon: Droplet, title: "রক্তদাতা", desc: "যাচাইকৃত রক্তদাতাদের সাথে যোগাযোগ", tone: "text-destructive bg-destructive/10" },
@@ -9,6 +9,7 @@ const SERVICES = [
   { to: "/legal" as const, icon: Scale, title: "আইনি সহায়তা", desc: "যাচাইকৃত অ্যাডভোকেট পরামর্শ", tone: "text-primary bg-primary/10" },
   { to: "/isp" as const, icon: Wifi, title: "ওয়াইফাই সেবা", desc: "এরিয়াভিত্তিক ISP তালিকা", tone: "text-primary bg-primary/10" },
   { to: "/bills/new" as const, icon: FileText, title: "বিল সেবা", desc: "বিদ্যুৎ বিল যাচাই ও সংরক্ষণ", tone: "text-primary bg-primary/10" },
+  { to: "/govt-jobs" as const, icon: Landmark, title: "সরকারি চাকরিজীবী", desc: "উখিয়ার যাচাইকৃত সরকারি চাকরিজীবী ডিরেক্টরি", tone: "text-primary bg-primary/10" },
   { to: "/calculator" as const, icon: Calculator, title: "ক্যালকুলেটর", desc: "ইউনিট থেকে বিল হিসাব", tone: "text-primary bg-primary/10" },
 ];
 
