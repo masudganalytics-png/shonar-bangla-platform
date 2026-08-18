@@ -10,7 +10,7 @@ export type GovtReportStatus = "open" | "reviewed" | "dismissed";
 /** Publicly readable shape — contact columns are NOT part of it. */
 export type GovtWorker = {
   id: string;
-  user_id: string;
+  user_id: string | null;
   full_name: string;
   photo_url: string | null;
   designation: string;
