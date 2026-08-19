@@ -2715,6 +2715,371 @@ export type Database = {
           },
         ]
       }
+      ukhiya_go_bookings: {
+        Row: {
+          created_at: string
+          driver_id: string
+          id: string
+          note: string | null
+          passenger_id: string
+          passenger_name: string
+          passenger_phone: string
+          pickup_point: string | null
+          seats_booked: number
+          status: Database["public"]["Enums"]["ukhiya_go_booking_status"]
+          trip_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          driver_id: string
+          id?: string
+          note?: string | null
+          passenger_id: string
+          passenger_name: string
+          passenger_phone: string
+          pickup_point?: string | null
+          seats_booked?: number
+          status?: Database["public"]["Enums"]["ukhiya_go_booking_status"]
+          trip_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          driver_id?: string
+          id?: string
+          note?: string | null
+          passenger_id?: string
+          passenger_name?: string
+          passenger_phone?: string
+          pickup_point?: string | null
+          seats_booked?: number
+          status?: Database["public"]["Enums"]["ukhiya_go_booking_status"]
+          trip_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ukhiya_go_bookings_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "ukhiya_go_drivers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ukhiya_go_bookings_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "ukhiya_go_trips"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ukhiya_go_drivers: {
+        Row: {
+          address: string | null
+          admin_note: string | null
+          bio: string | null
+          created_at: string
+          experience_years: number | null
+          id: string
+          name: string
+          phone: string
+          profile_photo: string | null
+          updated_at: string
+          user_id: string | null
+          verification_status: Database["public"]["Enums"]["ukhiya_go_verification_status"]
+          verified_at: string | null
+          verified_by: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          address?: string | null
+          admin_note?: string | null
+          bio?: string | null
+          created_at?: string
+          experience_years?: number | null
+          id?: string
+          name: string
+          phone: string
+          profile_photo?: string | null
+          updated_at?: string
+          user_id?: string | null
+          verification_status?: Database["public"]["Enums"]["ukhiya_go_verification_status"]
+          verified_at?: string | null
+          verified_by?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          address?: string | null
+          admin_note?: string | null
+          bio?: string | null
+          created_at?: string
+          experience_years?: number | null
+          id?: string
+          name?: string
+          phone?: string
+          profile_photo?: string | null
+          updated_at?: string
+          user_id?: string | null
+          verification_status?: Database["public"]["Enums"]["ukhiya_go_verification_status"]
+          verified_at?: string | null
+          verified_by?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      ukhiya_go_reports: {
+        Row: {
+          booking_id: string | null
+          created_at: string
+          details: string | null
+          driver_id: string | null
+          id: string
+          reason: string
+          reporter_id: string | null
+          status: Database["public"]["Enums"]["ukhiya_go_report_status"]
+          trip_id: string | null
+          updated_at: string
+          vehicle_id: string | null
+        }
+        Insert: {
+          booking_id?: string | null
+          created_at?: string
+          details?: string | null
+          driver_id?: string | null
+          id?: string
+          reason: string
+          reporter_id?: string | null
+          status?: Database["public"]["Enums"]["ukhiya_go_report_status"]
+          trip_id?: string | null
+          updated_at?: string
+          vehicle_id?: string | null
+        }
+        Update: {
+          booking_id?: string | null
+          created_at?: string
+          details?: string | null
+          driver_id?: string | null
+          id?: string
+          reason?: string
+          reporter_id?: string | null
+          status?: Database["public"]["Enums"]["ukhiya_go_report_status"]
+          trip_id?: string | null
+          updated_at?: string
+          vehicle_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ukhiya_go_reports_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "ukhiya_go_bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ukhiya_go_reports_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "ukhiya_go_drivers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ukhiya_go_reports_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "ukhiya_go_trips"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ukhiya_go_reports_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "ukhiya_go_vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ukhiya_go_reviews: {
+        Row: {
+          booking_id: string | null
+          comment: string | null
+          created_at: string
+          driver_id: string
+          id: string
+          is_hidden: boolean
+          rating: number
+          trip_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          booking_id?: string | null
+          comment?: string | null
+          created_at?: string
+          driver_id: string
+          id?: string
+          is_hidden?: boolean
+          rating: number
+          trip_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          booking_id?: string | null
+          comment?: string | null
+          created_at?: string
+          driver_id?: string
+          id?: string
+          is_hidden?: boolean
+          rating?: number
+          trip_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ukhiya_go_reviews_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "ukhiya_go_bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ukhiya_go_reviews_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "ukhiya_go_drivers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ukhiya_go_reviews_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "ukhiya_go_trips"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ukhiya_go_trips: {
+        Row: {
+          available_seats: number
+          created_at: string
+          departure_time: string | null
+          driver_id: string
+          from_location: string
+          id: string
+          notes: string | null
+          price_per_person: number | null
+          status: Database["public"]["Enums"]["ukhiya_go_trip_status"]
+          to_location: string
+          trip_date: string
+          trip_type: Database["public"]["Enums"]["ukhiya_go_trip_type"]
+          updated_at: string
+          vehicle_id: string | null
+        }
+        Insert: {
+          available_seats?: number
+          created_at?: string
+          departure_time?: string | null
+          driver_id: string
+          from_location: string
+          id?: string
+          notes?: string | null
+          price_per_person?: number | null
+          status?: Database["public"]["Enums"]["ukhiya_go_trip_status"]
+          to_location: string
+          trip_date: string
+          trip_type?: Database["public"]["Enums"]["ukhiya_go_trip_type"]
+          updated_at?: string
+          vehicle_id?: string | null
+        }
+        Update: {
+          available_seats?: number
+          created_at?: string
+          departure_time?: string | null
+          driver_id?: string
+          from_location?: string
+          id?: string
+          notes?: string | null
+          price_per_person?: number | null
+          status?: Database["public"]["Enums"]["ukhiya_go_trip_status"]
+          to_location?: string
+          trip_date?: string
+          trip_type?: Database["public"]["Enums"]["ukhiya_go_trip_type"]
+          updated_at?: string
+          vehicle_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ukhiya_go_trips_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "ukhiya_go_drivers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ukhiya_go_trips_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "ukhiya_go_vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ukhiya_go_vehicles: {
+        Row: {
+          brand: string | null
+          created_at: string
+          driver_id: string
+          id: string
+          is_active: boolean
+          model: string | null
+          photos: string[]
+          registration_number: string | null
+          seating_capacity: number | null
+          updated_at: string
+          vehicle_type: Database["public"]["Enums"]["ukhiya_go_vehicle_type"]
+          verification_status: Database["public"]["Enums"]["ukhiya_go_verification_status"]
+        }
+        Insert: {
+          brand?: string | null
+          created_at?: string
+          driver_id: string
+          id?: string
+          is_active?: boolean
+          model?: string | null
+          photos?: string[]
+          registration_number?: string | null
+          seating_capacity?: number | null
+          updated_at?: string
+          vehicle_type: Database["public"]["Enums"]["ukhiya_go_vehicle_type"]
+          verification_status?: Database["public"]["Enums"]["ukhiya_go_verification_status"]
+        }
+        Update: {
+          brand?: string | null
+          created_at?: string
+          driver_id?: string
+          id?: string
+          is_active?: boolean
+          model?: string | null
+          photos?: string[]
+          registration_number?: string | null
+          seating_capacity?: number | null
+          updated_at?: string
+          vehicle_type?: Database["public"]["Enums"]["ukhiya_go_vehicle_type"]
+          verification_status?: Database["public"]["Enums"]["ukhiya_go_verification_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ukhiya_go_vehicles_driver_id_fkey"
+            columns: ["driver_id"]
+            isOneToOne: false
+            referencedRelation: "ukhiya_go_drivers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -2986,6 +3351,10 @@ export type Database = {
         Returns: boolean
       }
       is_public_community: { Args: { _community_id: string }; Returns: boolean }
+      is_ukhiya_go_driver_owner: {
+        Args: { _driver_id: string; _user_id: string }
+        Returns: boolean
+      }
       slugify_name: { Args: { input: string }; Returns: string }
     }
     Enums: {
@@ -3068,6 +3437,35 @@ export type Database = {
         | "filled"
         | "closed"
       tutor_gender: "male" | "female" | "any"
+      ukhiya_go_booking_status:
+        | "pending"
+        | "confirmed"
+        | "cancelled"
+        | "completed"
+        | "rejected"
+      ukhiya_go_report_status: "open" | "reviewed" | "dismissed"
+      ukhiya_go_trip_status:
+        | "draft"
+        | "published"
+        | "full"
+        | "completed"
+        | "cancelled"
+      ukhiya_go_trip_type: "regular" | "return_trip" | "rental" | "goods"
+      ukhiya_go_vehicle_type:
+        | "car"
+        | "microbus"
+        | "cng"
+        | "tomtom"
+        | "bike"
+        | "truck"
+        | "pickup"
+        | "ambulance"
+        | "other"
+      ukhiya_go_verification_status:
+        | "pending"
+        | "approved"
+        | "rejected"
+        | "suspended"
       worker_status: "pending" | "approved" | "rejected" | "inactive"
     }
     CompositeTypes: {
@@ -3281,6 +3679,39 @@ export const Constants = {
         "closed",
       ],
       tutor_gender: ["male", "female", "any"],
+      ukhiya_go_booking_status: [
+        "pending",
+        "confirmed",
+        "cancelled",
+        "completed",
+        "rejected",
+      ],
+      ukhiya_go_report_status: ["open", "reviewed", "dismissed"],
+      ukhiya_go_trip_status: [
+        "draft",
+        "published",
+        "full",
+        "completed",
+        "cancelled",
+      ],
+      ukhiya_go_trip_type: ["regular", "return_trip", "rental", "goods"],
+      ukhiya_go_vehicle_type: [
+        "car",
+        "microbus",
+        "cng",
+        "tomtom",
+        "bike",
+        "truck",
+        "pickup",
+        "ambulance",
+        "other",
+      ],
+      ukhiya_go_verification_status: [
+        "pending",
+        "approved",
+        "rejected",
+        "suspended",
+      ],
       worker_status: ["pending", "approved", "rejected", "inactive"],
     },
   },
