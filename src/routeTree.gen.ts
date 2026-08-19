@@ -52,6 +52,7 @@ import { Route as TeachersRegisterRouteImport } from './routes/teachers.register
 import { Route as TeachersNewsRouteImport } from './routes/teachers.news'
 import { Route as TeachersAchievementsRouteImport } from './routes/teachers.achievements'
 import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
+import { Route as ServicesUkhiyaGoRouteImport } from './routes/services.ukhiya-go'
 import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register'
 import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
 import { Route as LegalIdRouteImport } from './routes/legal.$id'
@@ -333,6 +334,11 @@ const TeachersIdRoute = TeachersIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => TeachersRoute,
+} as any)
+const ServicesUkhiyaGoRoute = ServicesUkhiyaGoRouteImport.update({
+  id: '/services/ukhiya-go',
+  path: '/services/ukhiya-go',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ProbashiRegisterRoute = ProbashiRegisterRouteImport.update({
   id: '/register',
@@ -742,6 +748,7 @@ export interface FileRoutesByFullPath {
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
+  '/services/ukhiya-go': typeof ServicesUkhiyaGoRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -843,6 +850,7 @@ export interface FileRoutesByTo {
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
+  '/services/ukhiya-go': typeof ServicesUkhiyaGoRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/register': typeof TeachersRegisterRoute
   '/teachers/resources': typeof TeachersResourcesRoute
@@ -953,6 +961,7 @@ export interface FileRoutesById {
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
+  '/services/ukhiya-go': typeof ServicesUkhiyaGoRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -1066,6 +1075,7 @@ export interface FileRouteTypes {
     | '/legal/$id'
     | '/probashi/$slug'
     | '/probashi/register'
+    | '/services/ukhiya-go'
     | '/teachers/$id'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -1167,6 +1177,7 @@ export interface FileRouteTypes {
     | '/legal/$id'
     | '/probashi/$slug'
     | '/probashi/register'
+    | '/services/ukhiya-go'
     | '/teachers/$id'
     | '/teachers/register'
     | '/teachers/resources'
@@ -1276,6 +1287,7 @@ export interface FileRouteTypes {
     | '/legal/$id'
     | '/probashi/$slug'
     | '/probashi/register'
+    | '/services/ukhiya-go'
     | '/teachers/$id'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -1366,6 +1378,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   UtilitiesRoute: typeof UtilitiesRoute
   WorkersRoute: typeof WorkersRouteWithChildren
+  ServicesUkhiyaGoRoute: typeof ServicesUkhiyaGoRoute
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
   ApiPublicStatsRoute: typeof ApiPublicStatsRoute
   ApiPublicHooksRefreshExchangeRatesRoute: typeof ApiPublicHooksRefreshExchangeRatesRoute
@@ -1675,6 +1688,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/teachers/$id'
       preLoaderRoute: typeof TeachersIdRouteImport
       parentRoute: typeof TeachersRoute
+    }
+    '/services/ukhiya-go': {
+      id: '/services/ukhiya-go'
+      path: '/services/ukhiya-go'
+      fullPath: '/services/ukhiya-go'
+      preLoaderRoute: typeof ServicesUkhiyaGoRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/probashi/register': {
       id: '/probashi/register'
@@ -2477,6 +2497,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   UtilitiesRoute: UtilitiesRoute,
   WorkersRoute: WorkersRouteWithChildren,
+  ServicesUkhiyaGoRoute: ServicesUkhiyaGoRoute,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
   ApiPublicStatsRoute: ApiPublicStatsRoute,
   ApiPublicHooksRefreshExchangeRatesRoute:
