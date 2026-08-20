@@ -116,6 +116,7 @@ import { Route as AuthenticatedAdminBloodDonorsRouteImport } from './routes/_aut
 import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authenticated/admin.bills'
 import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
 import { Route as AuthenticatedAdminAchievementsRouteImport } from './routes/_authenticated/admin.achievements'
+import { Route as ServicesUkhiyaGoDriverRegisterRouteImport } from './routes/services.ukhiya-go.driver.register'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as ApiPublicHooksRefreshExchangeRatesRouteImport } from './routes/api/public/hooks/refresh-exchange-rates'
@@ -675,6 +676,12 @@ const AuthenticatedAdminAchievementsRoute =
     path: '/achievements',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const ServicesUkhiyaGoDriverRegisterRoute =
+  ServicesUkhiyaGoDriverRegisterRouteImport.update({
+    id: '/services/ukhiya-go/driver/register',
+    path: '/services/ukhiya-go/driver/register',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
   id: '/lovable/email/auth/webhook',
   path: '/lovable/email/auth/webhook',
@@ -809,6 +816,7 @@ export interface FileRoutesByFullPath {
   '/api/public/hooks/refresh-exchange-rates': typeof ApiPublicHooksRefreshExchangeRatesRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/services/ukhiya-go/driver/register': typeof ServicesUkhiyaGoDriverRegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -908,6 +916,7 @@ export interface FileRoutesByTo {
   '/api/public/hooks/refresh-exchange-rates': typeof ApiPublicHooksRefreshExchangeRatesRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/services/ukhiya-go/driver/register': typeof ServicesUkhiyaGoDriverRegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -1022,6 +1031,7 @@ export interface FileRoutesById {
   '/api/public/hooks/refresh-exchange-rates': typeof ApiPublicHooksRefreshExchangeRatesRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/services/ukhiya-go/driver/register': typeof ServicesUkhiyaGoDriverRegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -1136,6 +1146,7 @@ export interface FileRouteTypes {
     | '/api/public/hooks/refresh-exchange-rates'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/services/ukhiya-go/driver/register'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -1235,6 +1246,7 @@ export interface FileRouteTypes {
     | '/api/public/hooks/refresh-exchange-rates'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/services/ukhiya-go/driver/register'
   id:
     | '__root__'
     | '/'
@@ -1348,6 +1360,7 @@ export interface FileRouteTypes {
     | '/api/public/hooks/refresh-exchange-rates'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/services/ukhiya-go/driver/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1384,6 +1397,7 @@ export interface RootRouteChildren {
   ApiPublicHooksRefreshExchangeRatesRoute: typeof ApiPublicHooksRefreshExchangeRatesRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
+  ServicesUkhiyaGoDriverRegisterRoute: typeof ServicesUkhiyaGoDriverRegisterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -2137,6 +2151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAchievementsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/services/ukhiya-go/driver/register': {
+      id: '/services/ukhiya-go/driver/register'
+      path: '/services/ukhiya-go/driver/register'
+      fullPath: '/services/ukhiya-go/driver/register'
+      preLoaderRoute: typeof ServicesUkhiyaGoDriverRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/auth/webhook': {
       id: '/lovable/email/auth/webhook'
       path: '/lovable/email/auth/webhook'
@@ -2504,6 +2525,7 @@ const rootRouteChildren: RootRouteChildren = {
     ApiPublicHooksRefreshExchangeRatesRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
+  ServicesUkhiyaGoDriverRegisterRoute: ServicesUkhiyaGoDriverRegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
