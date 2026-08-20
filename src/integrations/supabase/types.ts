@@ -2786,6 +2786,8 @@ export type Database = {
           name: string
           phone: string
           profile_photo: string | null
+          service_areas: string[]
+          services: string[]
           updated_at: string
           user_id: string | null
           verification_status: Database["public"]["Enums"]["ukhiya_go_verification_status"]
@@ -2803,6 +2805,8 @@ export type Database = {
           name: string
           phone: string
           profile_photo?: string | null
+          service_areas?: string[]
+          services?: string[]
           updated_at?: string
           user_id?: string | null
           verification_status?: Database["public"]["Enums"]["ukhiya_go_verification_status"]
@@ -2820,6 +2824,8 @@ export type Database = {
           name?: string
           phone?: string
           profile_photo?: string | null
+          service_areas?: string[]
+          services?: string[]
           updated_at?: string
           user_id?: string | null
           verification_status?: Database["public"]["Enums"]["ukhiya_go_verification_status"]
@@ -3461,6 +3467,9 @@ export type Database = {
         | "pickup"
         | "ambulance"
         | "other"
+        | "noah"
+        | "hiace"
+        | "rickshaw"
       ukhiya_go_verification_status:
         | "pending"
         | "approved"
@@ -3705,6 +3714,9 @@ export const Constants = {
         "pickup",
         "ambulance",
         "other",
+        "noah",
+        "hiace",
+        "rickshaw",
       ],
       ukhiya_go_verification_status: [
         "pending",

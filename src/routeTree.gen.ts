@@ -52,7 +52,6 @@ import { Route as TeachersRegisterRouteImport } from './routes/teachers.register
 import { Route as TeachersNewsRouteImport } from './routes/teachers.news'
 import { Route as TeachersAchievementsRouteImport } from './routes/teachers.achievements'
 import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
-import { Route as ServicesUkhiyaGoRouteImport } from './routes/services.ukhiya-go'
 import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register'
 import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
 import { Route as LegalIdRouteImport } from './routes/legal.$id'
@@ -79,6 +78,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as TeachersTuitionsIndexRouteImport } from './routes/teachers.tuitions.index'
 import { Route as TeachersNewsIndexRouteImport } from './routes/teachers.news.index'
 import { Route as TeachersAchievementsIndexRouteImport } from './routes/teachers.achievements.index'
+import { Route as ServicesUkhiyaGoIndexRouteImport } from './routes/services.ukhiya-go.index'
 import { Route as CommunityMosquesIndexRouteImport } from './routes/community.mosques.index'
 import { Route as CommunityEventsIndexRouteImport } from './routes/community.events.index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
@@ -116,6 +116,7 @@ import { Route as AuthenticatedAdminBloodDonorsRouteImport } from './routes/_aut
 import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authenticated/admin.bills'
 import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
 import { Route as AuthenticatedAdminAchievementsRouteImport } from './routes/_authenticated/admin.achievements'
+import { Route as ServicesUkhiyaGoDriverRegisterRouteImport } from './routes/services.ukhiya-go.driver.register'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as ApiPublicHooksRefreshExchangeRatesRouteImport } from './routes/api/public/hooks/refresh-exchange-rates'
@@ -335,11 +336,6 @@ const TeachersIdRoute = TeachersIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => TeachersRoute,
 } as any)
-const ServicesUkhiyaGoRoute = ServicesUkhiyaGoRouteImport.update({
-  id: '/services/ukhiya-go',
-  path: '/services/ukhiya-go',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProbashiRegisterRoute = ProbashiRegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -471,6 +467,11 @@ const TeachersAchievementsIndexRoute =
     path: '/',
     getParentRoute: () => TeachersAchievementsRoute,
   } as any)
+const ServicesUkhiyaGoIndexRoute = ServicesUkhiyaGoIndexRouteImport.update({
+  id: '/services/ukhiya-go/',
+  path: '/services/ukhiya-go/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CommunityMosquesIndexRoute = CommunityMosquesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -675,6 +676,12 @@ const AuthenticatedAdminAchievementsRoute =
     path: '/achievements',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const ServicesUkhiyaGoDriverRegisterRoute =
+  ServicesUkhiyaGoDriverRegisterRouteImport.update({
+    id: '/services/ukhiya-go/driver/register',
+    path: '/services/ukhiya-go/driver/register',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
   id: '/lovable/email/auth/webhook',
   path: '/lovable/email/auth/webhook',
@@ -748,7 +755,6 @@ export interface FileRoutesByFullPath {
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
-  '/services/ukhiya-go': typeof ServicesUkhiyaGoRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -802,6 +808,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/community/events/': typeof CommunityEventsIndexRoute
   '/community/mosques/': typeof CommunityMosquesIndexRoute
+  '/services/ukhiya-go/': typeof ServicesUkhiyaGoIndexRoute
   '/teachers/achievements/': typeof TeachersAchievementsIndexRoute
   '/teachers/news/': typeof TeachersNewsIndexRoute
   '/teachers/tuitions/': typeof TeachersTuitionsIndexRoute
@@ -809,6 +816,7 @@ export interface FileRoutesByFullPath {
   '/api/public/hooks/refresh-exchange-rates': typeof ApiPublicHooksRefreshExchangeRatesRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/services/ukhiya-go/driver/register': typeof ServicesUkhiyaGoDriverRegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -850,7 +858,6 @@ export interface FileRoutesByTo {
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
-  '/services/ukhiya-go': typeof ServicesUkhiyaGoRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/register': typeof TeachersRegisterRoute
   '/teachers/resources': typeof TeachersResourcesRoute
@@ -901,6 +908,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/community/events': typeof CommunityEventsIndexRoute
   '/community/mosques': typeof CommunityMosquesIndexRoute
+  '/services/ukhiya-go': typeof ServicesUkhiyaGoIndexRoute
   '/teachers/achievements': typeof TeachersAchievementsIndexRoute
   '/teachers/news': typeof TeachersNewsIndexRoute
   '/teachers/tuitions': typeof TeachersTuitionsIndexRoute
@@ -908,6 +916,7 @@ export interface FileRoutesByTo {
   '/api/public/hooks/refresh-exchange-rates': typeof ApiPublicHooksRefreshExchangeRatesRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/services/ukhiya-go/driver/register': typeof ServicesUkhiyaGoDriverRegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -961,7 +970,6 @@ export interface FileRoutesById {
   '/legal/$id': typeof LegalIdRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
-  '/services/ukhiya-go': typeof ServicesUkhiyaGoRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -1015,6 +1023,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/community/events/': typeof CommunityEventsIndexRoute
   '/community/mosques/': typeof CommunityMosquesIndexRoute
+  '/services/ukhiya-go/': typeof ServicesUkhiyaGoIndexRoute
   '/teachers/achievements/': typeof TeachersAchievementsIndexRoute
   '/teachers/news/': typeof TeachersNewsIndexRoute
   '/teachers/tuitions/': typeof TeachersTuitionsIndexRoute
@@ -1022,6 +1031,7 @@ export interface FileRoutesById {
   '/api/public/hooks/refresh-exchange-rates': typeof ApiPublicHooksRefreshExchangeRatesRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
+  '/services/ukhiya-go/driver/register': typeof ServicesUkhiyaGoDriverRegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -1075,7 +1085,6 @@ export interface FileRouteTypes {
     | '/legal/$id'
     | '/probashi/$slug'
     | '/probashi/register'
-    | '/services/ukhiya-go'
     | '/teachers/$id'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -1129,6 +1138,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/community/events/'
     | '/community/mosques/'
+    | '/services/ukhiya-go/'
     | '/teachers/achievements/'
     | '/teachers/news/'
     | '/teachers/tuitions/'
@@ -1136,6 +1146,7 @@ export interface FileRouteTypes {
     | '/api/public/hooks/refresh-exchange-rates'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/services/ukhiya-go/driver/register'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -1177,7 +1188,6 @@ export interface FileRouteTypes {
     | '/legal/$id'
     | '/probashi/$slug'
     | '/probashi/register'
-    | '/services/ukhiya-go'
     | '/teachers/$id'
     | '/teachers/register'
     | '/teachers/resources'
@@ -1228,6 +1238,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/community/events'
     | '/community/mosques'
+    | '/services/ukhiya-go'
     | '/teachers/achievements'
     | '/teachers/news'
     | '/teachers/tuitions'
@@ -1235,6 +1246,7 @@ export interface FileRouteTypes {
     | '/api/public/hooks/refresh-exchange-rates'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/services/ukhiya-go/driver/register'
   id:
     | '__root__'
     | '/'
@@ -1287,7 +1299,6 @@ export interface FileRouteTypes {
     | '/legal/$id'
     | '/probashi/$slug'
     | '/probashi/register'
-    | '/services/ukhiya-go'
     | '/teachers/$id'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -1341,6 +1352,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/'
     | '/community/events/'
     | '/community/mosques/'
+    | '/services/ukhiya-go/'
     | '/teachers/achievements/'
     | '/teachers/news/'
     | '/teachers/tuitions/'
@@ -1348,6 +1360,7 @@ export interface FileRouteTypes {
     | '/api/public/hooks/refresh-exchange-rates'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
+    | '/services/ukhiya-go/driver/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1378,12 +1391,13 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   UtilitiesRoute: typeof UtilitiesRoute
   WorkersRoute: typeof WorkersRouteWithChildren
-  ServicesUkhiyaGoRoute: typeof ServicesUkhiyaGoRoute
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
   ApiPublicStatsRoute: typeof ApiPublicStatsRoute
+  ServicesUkhiyaGoIndexRoute: typeof ServicesUkhiyaGoIndexRoute
   ApiPublicHooksRefreshExchangeRatesRoute: typeof ApiPublicHooksRefreshExchangeRatesRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
+  ServicesUkhiyaGoDriverRegisterRoute: typeof ServicesUkhiyaGoDriverRegisterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1689,13 +1703,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeachersIdRouteImport
       parentRoute: typeof TeachersRoute
     }
-    '/services/ukhiya-go': {
-      id: '/services/ukhiya-go'
-      path: '/services/ukhiya-go'
-      fullPath: '/services/ukhiya-go'
-      preLoaderRoute: typeof ServicesUkhiyaGoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/probashi/register': {
       id: '/probashi/register'
       path: '/register'
@@ -1877,6 +1884,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/teachers/achievements/'
       preLoaderRoute: typeof TeachersAchievementsIndexRouteImport
       parentRoute: typeof TeachersAchievementsRoute
+    }
+    '/services/ukhiya-go/': {
+      id: '/services/ukhiya-go/'
+      path: '/services/ukhiya-go'
+      fullPath: '/services/ukhiya-go/'
+      preLoaderRoute: typeof ServicesUkhiyaGoIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/community/mosques/': {
       id: '/community/mosques/'
@@ -2136,6 +2150,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/achievements'
       preLoaderRoute: typeof AuthenticatedAdminAchievementsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/services/ukhiya-go/driver/register': {
+      id: '/services/ukhiya-go/driver/register'
+      path: '/services/ukhiya-go/driver/register'
+      fullPath: '/services/ukhiya-go/driver/register'
+      preLoaderRoute: typeof ServicesUkhiyaGoDriverRegisterRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/lovable/email/auth/webhook': {
       id: '/lovable/email/auth/webhook'
@@ -2497,13 +2518,14 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   UtilitiesRoute: UtilitiesRoute,
   WorkersRoute: WorkersRouteWithChildren,
-  ServicesUkhiyaGoRoute: ServicesUkhiyaGoRoute,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
   ApiPublicStatsRoute: ApiPublicStatsRoute,
+  ServicesUkhiyaGoIndexRoute: ServicesUkhiyaGoIndexRoute,
   ApiPublicHooksRefreshExchangeRatesRoute:
     ApiPublicHooksRefreshExchangeRatesRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
+  ServicesUkhiyaGoDriverRegisterRoute: ServicesUkhiyaGoDriverRegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
