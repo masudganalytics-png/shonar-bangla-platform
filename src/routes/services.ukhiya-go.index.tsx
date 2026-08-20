@@ -3,7 +3,7 @@ import { Car, Bike, Package, Truck, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-export const Route = createFileRoute("/services/ukhiya-go")({
+export const Route = createFileRoute("/services/ukhiya-go/")({
   head: () => ({
     meta: [
       { title: "UkhiyaGo — গাড়ি, CNG, বাইক ও ফেরত ট্রিপ | KHIJIRION" },
