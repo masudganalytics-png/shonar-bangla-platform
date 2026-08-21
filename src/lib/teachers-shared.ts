@@ -6,9 +6,10 @@ export const UPAZILAS = ["Ukhiya", "Cox's Bazar Sadar", "Ramu", "Teknaf", "Chaka
 export type TeacherRow = {
   id: string;
   full_name: string;
-  phone: string;
-  whatsapp: string | null;
-  email: string | null;
+  /** Contact fields are only readable by signed-in viewers. */
+  phone?: string | null;
+  whatsapp?: string | null;
+  email?: string | null;
   category_id: string | null;
   subjects: string | null;
   qualification: string | null;
