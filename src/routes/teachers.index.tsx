@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { CONTACT_LOGIN_HINT, TEACHER_PUBLIC_COLUMNS, columnsFor } from "@/lib/public-columns";
 import { UPAZILAS, type TeacherRow, type CategoryRow } from "@/lib/teachers-shared";
 import { TeacherPhoto } from "@/components/teachers/TeacherPhoto";
 import { EducationSubNav } from "@/components/teachers/EducationSubNav";

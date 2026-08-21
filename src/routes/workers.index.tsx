@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { CONTACT_LOGIN_HINT, WORKER_PUBLIC_COLUMNS, columnsFor } from "@/lib/public-columns";
 import { UPAZILAS, type WorkerRow, type CategoryRow } from "@/lib/workers-shared";
 import { WorkerPhoto } from "@/components/workers/WorkerPhoto";
 
