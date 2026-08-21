@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { BLOOD_REQUEST_PUBLIC_COLUMNS, CONTACT_LOGIN_HINT, columnsFor } from "@/lib/public-columns";
 import {
   BLOOD_GROUPS,
   formatBanglaDate,
@@ -66,7 +67,7 @@ const schema = z.object({
 });
 
 function RequestBloodPage() {
-  const { user } = useAuth();
+  const { user, isAuthenticated, loading: authLoading } = useAuth();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [form, setForm] = useState({
@@ -87,16 +88,17 @@ function RequestBloodPage() {
     setForm((f) => ({ ...f, [k]: v }));
 
   const approvedQ = useQuery({
-    queryKey: ["blood-requests-approved"],
+    queryKey: ["blood-requests-approved", isAuthenticated],
+    enabled: !authLoading,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("blood_requests")
-        .select("*")
+        .select(columnsFor(BLOOD_REQUEST_PUBLIC_COLUMNS, isAuthenticated))
         .eq("status", "approved")
         .order("required_date", { ascending: true })
         .limit(20);
       if (error) throw error;
-      return (data ?? []) as BloodRequestRow[];
+      return (data ?? []) as unknown as BloodRequestRow[];
     },
   });
 
@@ -337,8 +339,8 @@ function RequestBloodPage() {
 }
 
 function RequestCard({ r }: { r: BloodRequestRow }) {
-  const phone = normalizePhone(r.phone);
-  const wa = normalizePhone(r.whatsapp || r.phone);
+  const phone = r.phone ? normalizePhone(r.phone) : null;
+  const wa = normalizePhone(r.whatsapp || r.phone || "");
   return (
     <Card className="border-red-200/70 dark:border-red-900/40">
       <CardContent className="p-3">
@@ -364,22 +366,32 @@ function RequestCard({ r }: { r: BloodRequestRow }) {
             </span>
           )}
         </div>
-        <div className="mt-2 flex gap-2">
-          <a
-            href={`tel:${phone}`}
-            className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-red-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-red-700"
+        {phone ? (
+          <div className="mt-2 flex gap-2">
+            <a
+              href={`tel:${phone}`}
+              className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-red-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-red-700"
+            >
+              <Phone className="h-3 w-3" /> কল
+            </a>
+            <a
+              href={`https://wa.me/${wa.replace(/^\+/, "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-emerald-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
+            >
+              <MessageCircle className="h-3 w-3" /> WhatsApp
+            </a>
+          </div>
+        ) : (
+          <Link
+            to="/auth"
+            search={{ redirect: "/request-blood" }}
+            className="mt-2 inline-flex w-full items-center justify-center gap-1 rounded-md border px-2 py-1.5 text-xs font-medium hover:bg-muted"
           >
-            <Phone className="h-3 w-3" /> কল
-          </a>
-          <a
-            href={`https://wa.me/${wa.replace(/^\+/, "")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-emerald-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
-          >
-            <MessageCircle className="h-3 w-3" /> WhatsApp
-          </a>
-        </div>
+            <Phone className="h-3 w-3" /> {CONTACT_LOGIN_HINT}
+          </Link>
+        )}
       </CardContent>
     </Card>
   );

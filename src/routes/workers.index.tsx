@@ -9,6 +9,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/use-auth";
+import { CONTACT_LOGIN_HINT, WORKER_PUBLIC_COLUMNS, columnsFor } from "@/lib/public-columns";
 import { UPAZILAS, type WorkerRow, type CategoryRow } from "@/lib/workers-shared";
 import { WorkerPhoto } from "@/components/workers/WorkerPhoto";
 
@@ -30,6 +32,7 @@ function WorkersDirectory() {
   const [q, setQ] = useState("");
   const [categoryId, setCategoryId] = useState<string>("all");
   const [upazila, setUpazila] = useState<string>("all");
+  const { isAuthenticated, loading: authLoading } = useAuth();
 
   const catsQ = useQuery({
     queryKey: ["worker-categories"],
@@ -41,11 +44,18 @@ function WorkersDirectory() {
   });
 
   const workersQ = useQuery({
-    queryKey: ["workers", "public"],
+    queryKey: ["workers", "public", isAuthenticated],
+    enabled: !authLoading,
     queryFn: async (): Promise<WorkerRow[]> => {
-      const { data, error } = await supabase.from("workers").select("*").eq("status", "approved").order("is_verified", { ascending: false }).order("created_at", { ascending: false }).limit(500);
+      const { data, error } = await supabase
+        .from("workers")
+        .select(columnsFor(WORKER_PUBLIC_COLUMNS, isAuthenticated))
+        .eq("status", "approved")
+        .order("is_verified", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(500);
       if (error) throw error;
-      return data as WorkerRow[];
+      return data as unknown as WorkerRow[];
     },
   });
 
@@ -139,7 +149,7 @@ function WorkersDirectory() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between border-t bg-muted/30 px-4 py-2 text-xs">
-                  <span className="flex items-center gap-1 text-muted-foreground"><Phone className="h-3 w-3" /> {w.phone}</span>
+                  <span className="flex items-center gap-1 text-muted-foreground"><Phone className="h-3 w-3" /> {w.phone || CONTACT_LOGIN_HINT}</span>
                   <span className="font-medium text-primary group-hover:underline">প্রোফাইল দেখুন →</span>
                 </div>
               </Card>

@@ -9,13 +9,15 @@ import type { TeacherRow, CategoryRow } from "@/lib/teachers-shared";
 import { TeacherPhoto } from "@/components/teachers/TeacherPhoto";
 import { ShareButtons } from "@/components/teachers/ShareButtons";
 import { buildProfileHead, isUuid, metaDescription, signMediaForOg, SITE_BRAND, SITE_URL } from "@/lib/seo";
+import { useAuth } from "@/hooks/use-auth";
+import { CONTACT_LOGIN_HINT, TEACHER_PUBLIC_COLUMNS } from "@/lib/public-columns";
 
 type TeacherWithSlug = TeacherRow & { slug: string | null };
 
 export const Route = createFileRoute("/teachers/$id")({
   loader: async ({ params }) => {
     const key = params.id;
-    const base = supabase.from("teachers").select("*").eq("status", "approved");
+    const base = supabase.from("teachers").select(TEACHER_PUBLIC_COLUMNS).eq("status", "approved");
     const { data, error } = isUuid(key)
       ? await base.eq("id", key).maybeSingle()
       : await base.eq("slug", key).maybeSingle();
@@ -45,7 +47,7 @@ export const Route = createFileRoute("/teachers/$id")({
       description,
       url,
       image,
-      telephone: t.phone,
+      
       jobTitle: "Teacher",
       address: { "@type": "PostalAddress", addressLocality: t.upazila, addressRegion: t.district, addressCountry: "BD" },
     };
@@ -65,7 +67,24 @@ function TeacherDetails() {
     },
   });
   const cat = catQ.data?.find((c) => c.id === t.category_id);
-  const waNumber = (t.whatsapp || t.phone).replace(/\D/g, "");
+
+  // Contact details are granted to signed-in database roles only.
+  const { isAuthenticated } = useAuth();
+  const contactQ = useQuery({
+    queryKey: ["teacher-contact", t.id, isAuthenticated],
+    enabled: isAuthenticated,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("teachers")
+        .select("phone, whatsapp")
+        .eq("id", t.id)
+        .maybeSingle();
+      if (error) throw error;
+      return data as { phone: string | null; whatsapp: string | null } | null;
+    },
+  });
+  const phone = contactQ.data?.phone ?? null;
+  const waNumber = (contactQ.data?.whatsapp || phone || "").replace(/\D/g, "");
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6">
@@ -118,16 +137,24 @@ function TeacherDetails() {
             </div>
           )}
 
-          <div className="mt-6 grid gap-2 sm:grid-cols-2">
-            <Button asChild size="lg" className="h-12">
-              <a href={`tel:${t.phone}`}><Phone className="mr-2 h-4 w-4" /> কল করুন — {t.phone}</a>
+          {phone ? (
+            <div className="mt-6 grid gap-2 sm:grid-cols-2">
+              <Button asChild size="lg" className="h-12">
+                <a href={`tel:${phone}`}><Phone className="mr-2 h-4 w-4" /> কল করুন — {phone}</a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="h-12 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground">
+                <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noreferrer">
+                  <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp
+                </a>
+              </Button>
+            </div>
+          ) : (
+            <Button asChild size="lg" variant="outline" className="mt-6 h-12 w-full">
+              <Link to="/auth" search={{ redirect: url }}>
+                <Phone className="mr-2 h-4 w-4" /> {CONTACT_LOGIN_HINT}
+              </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="h-12 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground">
-              <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noreferrer">
-                <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp
-              </a>
-            </Button>
-          </div>
+          )}
 
           <div className="mt-6 border-t pt-4">
             <ShareButtons title={`${t.full_name} — ${SITE_BRAND}`} url={url} />

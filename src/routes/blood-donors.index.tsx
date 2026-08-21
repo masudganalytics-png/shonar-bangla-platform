@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Droplet, Heart, MapPin, Phone, MessageCircle, UserPlus, Search } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/use-auth";
+import { BLOOD_DONOR_PUBLIC_COLUMNS, CONTACT_LOGIN_HINT, columnsFor } from "@/lib/public-columns";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -43,12 +45,15 @@ function DonorDirectory() {
   const [availOnly, setAvailOnly] = useState(false);
   const [q, setQ] = useState("");
 
+  const { isAuthenticated, loading: authLoading } = useAuth();
+
   const donorsQ = useQuery({
-    queryKey: ["blood-donors-public", group, unionName, availOnly],
+    queryKey: ["blood-donors-public", group, unionName, availOnly, isAuthenticated],
+    enabled: !authLoading,
     queryFn: async () => {
       let query = supabase
         .from("blood_donors")
-        .select("*")
+        .select(columnsFor(BLOOD_DONOR_PUBLIC_COLUMNS, isAuthenticated))
         .eq("status", "approved")
         .eq("is_active", true)
         .order("available", { ascending: false })
@@ -59,7 +64,7 @@ function DonorDirectory() {
       if (availOnly) query = query.eq("available", true);
       const { data, error } = await query;
       if (error) throw error;
-      return (data ?? []) as DonorRow[];
+      return (data ?? []) as unknown as DonorRow[];
     },
   });
 
@@ -167,8 +172,8 @@ function DonorDirectory() {
 }
 
 function DonorCard({ d }: { d: DonorRow }) {
-  const phone = normalizePhone(d.phone);
-  const wa = normalizePhone(d.whatsapp || d.phone);
+  const phone = d.phone ? normalizePhone(d.phone) : null;
+  const wa = normalizePhone(d.whatsapp || d.phone || "");
   return (
     <Card className="overflow-hidden">
       <CardContent className="flex gap-3 p-4">
@@ -209,22 +214,30 @@ function DonorCard({ d }: { d: DonorRow }) {
               </span>
             )}
           </div>
-          <div className="mt-2 flex gap-2">
-            <a
-              href={`tel:${phone}`}
-              className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-red-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-red-700"
-            >
-              <Phone className="h-3 w-3" /> কল
-            </a>
-            <a
-              href={`https://wa.me/${wa.replace(/^\+/, "")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-emerald-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
-            >
-              <MessageCircle className="h-3 w-3" /> WhatsApp
-            </a>
-          </div>
+          {phone ? (
+            <div className="mt-2 flex gap-2">
+              <a
+                href={`tel:${phone}`}
+                className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-red-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-red-700"
+              >
+                <Phone className="h-3 w-3" /> কল
+              </a>
+              <a
+                href={`https://wa.me/${wa.replace(/^\+/, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-emerald-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
+              >
+                <MessageCircle className="h-3 w-3" /> WhatsApp
+              </a>
+            </div>
+          ) : (
+            <Button asChild size="sm" variant="outline" className="mt-2 w-full text-xs">
+              <Link to="/auth" search={{ redirect: "/blood-donors" }}>
+                <Phone className="mr-1 h-3 w-3" /> {CONTACT_LOGIN_HINT}
+              </Link>
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>
