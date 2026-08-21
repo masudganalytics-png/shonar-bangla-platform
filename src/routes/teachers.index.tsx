@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/use-auth";
 import { UPAZILAS, type TeacherRow, type CategoryRow } from "@/lib/teachers-shared";
 import { TeacherPhoto } from "@/components/teachers/TeacherPhoto";
 import { EducationSubNav } from "@/components/teachers/EducationSubNav";
