@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { BLOOD_REQUEST_PUBLIC_COLUMNS, CONTACT_LOGIN_HINT, columnsFor } from "@/lib/public-columns";
 import {
   BLOOD_GROUPS,
   formatBanglaDate,
