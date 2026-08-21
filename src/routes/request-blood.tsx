@@ -337,8 +337,8 @@ function RequestBloodPage() {
 }
 
 function RequestCard({ r }: { r: BloodRequestRow }) {
-  const phone = normalizePhone(r.phone);
-  const wa = normalizePhone(r.whatsapp || r.phone);
+  const phone = r.phone ? normalizePhone(r.phone) : null;
+  const wa = normalizePhone(r.whatsapp || r.phone || "");
   return (
     <Card className="border-red-200/70 dark:border-red-900/40">
       <CardContent className="p-3">
