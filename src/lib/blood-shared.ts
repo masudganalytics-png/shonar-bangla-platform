@@ -49,8 +49,9 @@ export type BloodRequestRow = {
   required_date: string;
   required_time: string | null;
   contact_person: string;
-  phone: string;
-  whatsapp: string | null;
+  /** Only readable by signed-in viewers; null for anonymous visitors. */
+  phone?: string | null;
+  whatsapp?: string | null;
   notes: string | null;
   status: "pending" | "approved" | "fulfilled" | "closed" | "rejected";
   created_at: string;
