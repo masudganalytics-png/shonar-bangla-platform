@@ -67,7 +67,10 @@ function AdminBloodDonors() {
   }, [donorsQ.data, q]);
 
   async function updateOne(id: string, patch: Partial<DonorRow>) {
-    const { error } = await supabase.from("blood_donors").update(patch).eq("id", id);
+    const { error } = await supabase
+      .from("blood_donors")
+      .update({ ...patch, phone: patch.phone ?? undefined })
+      .eq("id", id);
     if (error) {
       toast.error(error.message);
       return;
