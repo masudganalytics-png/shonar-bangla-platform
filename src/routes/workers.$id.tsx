@@ -67,7 +67,24 @@ function WorkerDetails() {
     },
   });
   const cat = catQ.data?.find((c) => c.id === w.category_id);
-  const waNumber = (w.whatsapp || w.phone).replace(/\D/g, "");
+
+  // Contact details are granted to signed-in database roles only.
+  const { isAuthenticated } = useAuth();
+  const contactQ = useQuery({
+    queryKey: ["worker-contact", w.id, isAuthenticated],
+    enabled: isAuthenticated,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("workers")
+        .select("phone, whatsapp")
+        .eq("id", w.id)
+        .maybeSingle();
+      if (error) throw error;
+      return data as { phone: string | null; whatsapp: string | null } | null;
+    },
+  });
+  const phone = contactQ.data?.phone ?? null;
+  const waNumber = (contactQ.data?.whatsapp || phone || "").replace(/\D/g, "");
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6">
