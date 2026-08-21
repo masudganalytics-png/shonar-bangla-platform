@@ -88,16 +88,17 @@ function RequestBloodPage() {
     setForm((f) => ({ ...f, [k]: v }));
 
   const approvedQ = useQuery({
-    queryKey: ["blood-requests-approved"],
+    queryKey: ["blood-requests-approved", isAuthenticated],
+    enabled: !authLoading,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("blood_requests")
-        .select("*")
+        .select(columnsFor(BLOOD_REQUEST_PUBLIC_COLUMNS, isAuthenticated))
         .eq("status", "approved")
         .order("required_date", { ascending: true })
         .limit(20);
       if (error) throw error;
-      return (data ?? []) as BloodRequestRow[];
+      return (data ?? []) as unknown as BloodRequestRow[];
     },
   });
 
