@@ -1,7 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Car, Bike, Package, Truck, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+
 
 export const Route = createFileRoute("/services/ukhiya-go/")({
   head: () => ({
@@ -43,7 +45,19 @@ function UkhiyaGoPage() {
         <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground sm:text-base">
           উখিয়া ও চট্টগ্রাম-কক্সবাজার রুটে গাড়ি, CNG, বাইক, টমটম ও ফেরত ট্রিপ খুঁজুন এক জায়গায়।
         </p>
+        <div className="mt-6 flex flex-col items-center gap-2">
+          <Button asChild size="lg" className="rounded-full px-6 shadow-sm transition-all hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+            <Link to="/services/ukhiya-go/driver/register">
+              <Car className="mr-2 h-4 w-4" />
+              🚗 চালক হিসেবে নিবন্ধন করুন
+            </Link>
+          </Button>
+          <span className="text-xs text-muted-foreground">
+            গাড়ি আছে? আপনার প্রোফাইল যুক্ত করে আয় শুরু করুন।
+          </span>
+        </div>
       </header>
+
 
       <section className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {SERVICE_CARDS.map((c) => {
