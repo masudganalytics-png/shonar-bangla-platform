@@ -61,7 +61,7 @@ function AdminBloodDonors() {
     return rows.filter(
       (r) =>
         r.full_name.toLowerCase().includes(n) ||
-        r.phone.includes(n) ||
+        (r.phone ?? "").includes(n) ||
         (r.village ?? "").toLowerCase().includes(n),
     );
   }, [donorsQ.data, q]);
