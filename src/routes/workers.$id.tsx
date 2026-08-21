@@ -131,16 +131,24 @@ function WorkerDetails() {
             </div>
           )}
 
-          <div className="mt-6 grid gap-2 sm:grid-cols-2">
-            <Button asChild size="lg" className="h-12">
-              <a href={`tel:${w.phone}`}><Phone className="mr-2 h-4 w-4" /> কল করুন — {w.phone}</a>
+          {phone ? (
+            <div className="mt-6 grid gap-2 sm:grid-cols-2">
+              <Button asChild size="lg" className="h-12">
+                <a href={`tel:${phone}`}><Phone className="mr-2 h-4 w-4" /> কল করুন — {phone}</a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="h-12 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground">
+                <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noreferrer">
+                  <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp
+                </a>
+              </Button>
+            </div>
+          ) : (
+            <Button asChild size="lg" variant="outline" className="mt-6 h-12 w-full">
+              <Link to="/auth" search={{ redirect: url }}>
+                <Phone className="mr-2 h-4 w-4" /> {CONTACT_LOGIN_HINT}
+              </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="h-12 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground">
-              <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noreferrer">
-                <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp
-              </a>
-            </Button>
-          </div>
+          )}
 
           <div className="mt-6 border-t pt-4">
             <ShareButtons title={`${w.full_name} — ${SITE_BRAND}`} url={url} />
