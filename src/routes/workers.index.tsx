@@ -32,6 +32,7 @@ function WorkersDirectory() {
   const [q, setQ] = useState("");
   const [categoryId, setCategoryId] = useState<string>("all");
   const [upazila, setUpazila] = useState<string>("all");
+  const { isAuthenticated, loading: authLoading } = useAuth();
 
   const catsQ = useQuery({
     queryKey: ["worker-categories"],
@@ -43,11 +44,18 @@ function WorkersDirectory() {
   });
 
   const workersQ = useQuery({
-    queryKey: ["workers", "public"],
+    queryKey: ["workers", "public", isAuthenticated],
+    enabled: !authLoading,
     queryFn: async (): Promise<WorkerRow[]> => {
-      const { data, error } = await supabase.from("workers").select("*").eq("status", "approved").order("is_verified", { ascending: false }).order("created_at", { ascending: false }).limit(500);
+      const { data, error } = await supabase
+        .from("workers")
+        .select(columnsFor(WORKER_PUBLIC_COLUMNS, isAuthenticated))
+        .eq("status", "approved")
+        .order("is_verified", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(500);
       if (error) throw error;
-      return data as WorkerRow[];
+      return data as unknown as WorkerRow[];
     },
   });
 
