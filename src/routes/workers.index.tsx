@@ -149,7 +149,7 @@ function WorkersDirectory() {
                   </div>
                 </div>
                 <div className="flex items-center justify-between border-t bg-muted/30 px-4 py-2 text-xs">
-                  <span className="flex items-center gap-1 text-muted-foreground"><Phone className="h-3 w-3" /> {w.phone}</span>
+                  <span className="flex items-center gap-1 text-muted-foreground"><Phone className="h-3 w-3" /> {w.phone || CONTACT_LOGIN_HINT}</span>
                   <span className="font-medium text-primary group-hover:underline">প্রোফাইল দেখুন →</span>
                 </div>
               </Card>
