@@ -214,22 +214,30 @@ function DonorCard({ d }: { d: DonorRow }) {
               </span>
             )}
           </div>
-          <div className="mt-2 flex gap-2">
-            <a
-              href={`tel:${phone}`}
-              className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-red-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-red-700"
-            >
-              <Phone className="h-3 w-3" /> কল
-            </a>
-            <a
-              href={`https://wa.me/${wa.replace(/^\+/, "")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-emerald-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
-            >
-              <MessageCircle className="h-3 w-3" /> WhatsApp
-            </a>
-          </div>
+          {phone ? (
+            <div className="mt-2 flex gap-2">
+              <a
+                href={`tel:${phone}`}
+                className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-red-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-red-700"
+              >
+                <Phone className="h-3 w-3" /> কল
+              </a>
+              <a
+                href={`https://wa.me/${wa.replace(/^\+/, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-emerald-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
+              >
+                <MessageCircle className="h-3 w-3" /> WhatsApp
+              </a>
+            </div>
+          ) : (
+            <Button asChild size="sm" variant="outline" className="mt-2 w-full text-xs">
+              <Link to="/auth" search={{ redirect: "/blood-donors" }}>
+                <Phone className="mr-1 h-3 w-3" /> {CONTACT_LOGIN_HINT}
+              </Link>
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>
