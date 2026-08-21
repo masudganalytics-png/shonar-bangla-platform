@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Droplet, Heart, MapPin, Phone, MessageCircle, UserPlus, Search } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/use-auth";
+import { BLOOD_DONOR_PUBLIC_COLUMNS, CONTACT_LOGIN_HINT, columnsFor } from "@/lib/public-columns";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
