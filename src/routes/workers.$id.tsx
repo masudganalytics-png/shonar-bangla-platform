@@ -9,13 +9,15 @@ import type { WorkerRow, CategoryRow } from "@/lib/workers-shared";
 import { WorkerPhoto } from "@/components/workers/WorkerPhoto";
 import { ShareButtons } from "@/components/teachers/ShareButtons";
 import { buildProfileHead, isUuid, metaDescription, signMediaForOg, SITE_BRAND, SITE_URL } from "@/lib/seo";
+import { useAuth } from "@/hooks/use-auth";
+import { CONTACT_LOGIN_HINT, WORKER_PUBLIC_COLUMNS } from "@/lib/public-columns";
 
 type WorkerWithSlug = WorkerRow & { slug: string | null };
 
 export const Route = createFileRoute("/workers/$id")({
   loader: async ({ params }) => {
     const key = params.id;
-    const base = supabase.from("workers").select("*").eq("status", "approved");
+    const base = supabase.from("workers").select(WORKER_PUBLIC_COLUMNS).eq("status", "approved");
     const { data, error } = isUuid(key)
       ? await base.eq("id", key).maybeSingle()
       : await base.eq("slug", key).maybeSingle();
