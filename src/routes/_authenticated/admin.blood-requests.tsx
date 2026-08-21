@@ -60,12 +60,15 @@ function AdminBloodRequests() {
       (r) =>
         r.patient_name.toLowerCase().includes(n) ||
         r.hospital_name.toLowerCase().includes(n) ||
-        r.phone.includes(n),
+        (r.phone ?? "").includes(n),
     );
   }, [reqsQ.data, q]);
 
   async function updateOne(id: string, patch: Partial<BloodRequestRow>) {
-    const { error } = await supabase.from("blood_requests").update(patch).eq("id", id);
+    const { error } = await supabase
+      .from("blood_requests")
+      .update({ ...patch, phone: patch.phone ?? undefined })
+      .eq("id", id);
     if (error) return toast.error(error.message);
     toast.success("আপডেট হয়েছে");
     qc.invalidateQueries({ queryKey: ["admin-blood-requests"] });
