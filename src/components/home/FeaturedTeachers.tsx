@@ -14,7 +14,7 @@ export function FeaturedTeachers() {
     (async () => {
       const { data } = await supabase
         .from("teachers")
-        .select("id, full_name, subjects, phone, photo_url")
+        .select("id, full_name, subjects, photo_url")
         .eq("status", "approved")
         .order("created_at", { ascending: false })
         .limit(4);
