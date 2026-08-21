@@ -43,12 +43,15 @@ function DonorDirectory() {
   const [availOnly, setAvailOnly] = useState(false);
   const [q, setQ] = useState("");
 
+  const { isAuthenticated, loading: authLoading } = useAuth();
+
   const donorsQ = useQuery({
-    queryKey: ["blood-donors-public", group, unionName, availOnly],
+    queryKey: ["blood-donors-public", group, unionName, availOnly, isAuthenticated],
+    enabled: !authLoading,
     queryFn: async () => {
       let query = supabase
         .from("blood_donors")
-        .select("*")
+        .select(columnsFor(BLOOD_DONOR_PUBLIC_COLUMNS, isAuthenticated))
         .eq("status", "approved")
         .eq("is_active", true)
         .order("available", { ascending: false })
@@ -59,7 +62,7 @@ function DonorDirectory() {
       if (availOnly) query = query.eq("available", true);
       const { data, error } = await query;
       if (error) throw error;
-      return (data ?? []) as DonorRow[];
+      return (data ?? []) as unknown as DonorRow[];
     },
   });
 
