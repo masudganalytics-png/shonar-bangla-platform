@@ -9,13 +9,15 @@ import type { TeacherRow, CategoryRow } from "@/lib/teachers-shared";
 import { TeacherPhoto } from "@/components/teachers/TeacherPhoto";
 import { ShareButtons } from "@/components/teachers/ShareButtons";
 import { buildProfileHead, isUuid, metaDescription, signMediaForOg, SITE_BRAND, SITE_URL } from "@/lib/seo";
+import { useAuth } from "@/hooks/use-auth";
+import { CONTACT_LOGIN_HINT, TEACHER_PUBLIC_COLUMNS } from "@/lib/public-columns";
 
 type TeacherWithSlug = TeacherRow & { slug: string | null };
 
 export const Route = createFileRoute("/teachers/$id")({
   loader: async ({ params }) => {
     const key = params.id;
-    const base = supabase.from("teachers").select("*").eq("status", "approved");
+    const base = supabase.from("teachers").select(TEACHER_PUBLIC_COLUMNS).eq("status", "approved");
     const { data, error } = isUuid(key)
       ? await base.eq("id", key).maybeSingle()
       : await base.eq("slug", key).maybeSingle();
