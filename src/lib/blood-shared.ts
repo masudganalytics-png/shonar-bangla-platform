@@ -19,13 +19,14 @@ export type DonorRow = {
   id: string;
   full_name: string;
   blood_group: BloodGroup;
-  phone: string;
-  whatsapp: string | null;
+  /** Only readable by signed-in viewers; null for anonymous visitors. */
+  phone?: string | null;
+  whatsapp?: string | null;
   gender: "male" | "female" | "other" | null;
   age: number | null;
   union_name: string | null;
   village: string | null;
-  address: string | null;
+  address?: string | null;
   last_donation_date: string | null;
   available: boolean;
   photo_url: string | null;
