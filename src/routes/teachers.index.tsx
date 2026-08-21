@@ -31,6 +31,7 @@ function TeachersDirectory() {
   const [q, setQ] = useState("");
   const [categoryId, setCategoryId] = useState<string>("all");
   const [upazila, setUpazila] = useState<string>("all");
+  const { isAuthenticated, loading: authLoading } = useAuth();
 
   const catsQ = useQuery({
     queryKey: ["teacher-categories"],
@@ -42,11 +43,18 @@ function TeachersDirectory() {
   });
 
   const teachersQ = useQuery({
-    queryKey: ["teachers", "public"],
+    queryKey: ["teachers", "public", isAuthenticated],
+    enabled: !authLoading,
     queryFn: async (): Promise<TeacherRow[]> => {
-      const { data, error } = await supabase.from("teachers").select("*").eq("status", "approved").order("is_verified", { ascending: false }).order("created_at", { ascending: false }).limit(500);
+      const { data, error } = await supabase
+        .from("teachers")
+        .select(columnsFor(TEACHER_PUBLIC_COLUMNS, isAuthenticated))
+        .eq("status", "approved")
+        .order("is_verified", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(500);
       if (error) throw error;
-      return data as TeacherRow[];
+      return data as unknown as TeacherRow[];
     },
   });
 
