@@ -364,22 +364,32 @@ function RequestCard({ r }: { r: BloodRequestRow }) {
             </span>
           )}
         </div>
-        <div className="mt-2 flex gap-2">
-          <a
-            href={`tel:${phone}`}
-            className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-red-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-red-700"
+        {phone ? (
+          <div className="mt-2 flex gap-2">
+            <a
+              href={`tel:${phone}`}
+              className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-red-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-red-700"
+            >
+              <Phone className="h-3 w-3" /> কল
+            </a>
+            <a
+              href={`https://wa.me/${wa.replace(/^\+/, "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-emerald-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
+            >
+              <MessageCircle className="h-3 w-3" /> WhatsApp
+            </a>
+          </div>
+        ) : (
+          <Link
+            to="/auth"
+            search={{ redirect: "/request-blood" }}
+            className="mt-2 inline-flex w-full items-center justify-center gap-1 rounded-md border px-2 py-1.5 text-xs font-medium hover:bg-muted"
           >
-            <Phone className="h-3 w-3" /> কল
-          </a>
-          <a
-            href={`https://wa.me/${wa.replace(/^\+/, "")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-emerald-600 px-2 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
-          >
-            <MessageCircle className="h-3 w-3" /> WhatsApp
-          </a>
-        </div>
+            <Phone className="h-3 w-3" /> {CONTACT_LOGIN_HINT}
+          </Link>
+        )}
       </CardContent>
     </Card>
   );
