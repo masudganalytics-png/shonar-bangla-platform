@@ -172,8 +172,8 @@ function DonorDirectory() {
 }
 
 function DonorCard({ d }: { d: DonorRow }) {
-  const phone = normalizePhone(d.phone);
-  const wa = normalizePhone(d.whatsapp || d.phone);
+  const phone = d.phone ? normalizePhone(d.phone) : null;
+  const wa = normalizePhone(d.whatsapp || d.phone || "");
   return (
     <Card className="overflow-hidden">
       <CardContent className="flex gap-3 p-4">
