@@ -47,7 +47,7 @@ export const Route = createFileRoute("/workers/$id")({
       description,
       url,
       image,
-      telephone: w.phone,
+      
       address: { "@type": "PostalAddress", addressLocality: w.upazila, addressRegion: w.district, addressCountry: "BD" },
       knowsAbout: w.skills || undefined,
     };
