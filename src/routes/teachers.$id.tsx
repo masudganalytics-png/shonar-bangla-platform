@@ -67,7 +67,24 @@ function TeacherDetails() {
     },
   });
   const cat = catQ.data?.find((c) => c.id === t.category_id);
-  const waNumber = (t.whatsapp || t.phone).replace(/\D/g, "");
+
+  // Contact details are granted to signed-in database roles only.
+  const { isAuthenticated } = useAuth();
+  const contactQ = useQuery({
+    queryKey: ["teacher-contact", t.id, isAuthenticated],
+    enabled: isAuthenticated,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("teachers")
+        .select("phone, whatsapp")
+        .eq("id", t.id)
+        .maybeSingle();
+      if (error) throw error;
+      return data as { phone: string | null; whatsapp: string | null } | null;
+    },
+  });
+  const phone = contactQ.data?.phone ?? null;
+  const waNumber = (contactQ.data?.whatsapp || phone || "").replace(/\D/g, "");
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6">
