@@ -4,7 +4,7 @@ import { ArrowRight, GraduationCap, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 
-type Row = { id: string; full_name: string; subjects: string | null; phone: string | null; photo_url: string | null };
+type Row = { id: string; full_name: string; subjects: string | null; phone?: string | null; photo_url: string | null };
 
 export function FeaturedTeachers() {
   const [items, setItems] = useState<Row[] | null>(null);
