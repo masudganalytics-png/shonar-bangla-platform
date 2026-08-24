@@ -2719,6 +2719,7 @@ export type Database = {
         Row: {
           created_at: string
           driver_id: string
+          drop_point: string | null
           id: string
           note: string | null
           passenger_id: string
@@ -2733,6 +2734,7 @@ export type Database = {
         Insert: {
           created_at?: string
           driver_id: string
+          drop_point?: string | null
           id?: string
           note?: string | null
           passenger_id: string
@@ -2747,6 +2749,7 @@ export type Database = {
         Update: {
           created_at?: string
           driver_id?: string
+          drop_point?: string | null
           id?: string
           note?: string | null
           passenger_id?: string
@@ -2970,6 +2973,7 @@ export type Database = {
       ukhiya_go_trips: {
         Row: {
           available_seats: number
+          booked_seats: number
           created_at: string
           departure_time: string | null
           driver_id: string
@@ -2983,9 +2987,14 @@ export type Database = {
           trip_type: Database["public"]["Enums"]["ukhiya_go_trip_type"]
           updated_at: string
           vehicle_id: string | null
+          vehicle_label: string | null
+          vehicle_type:
+            | Database["public"]["Enums"]["ukhiya_go_vehicle_type"]
+            | null
         }
         Insert: {
           available_seats?: number
+          booked_seats?: number
           created_at?: string
           departure_time?: string | null
           driver_id: string
@@ -2999,9 +3008,14 @@ export type Database = {
           trip_type?: Database["public"]["Enums"]["ukhiya_go_trip_type"]
           updated_at?: string
           vehicle_id?: string | null
+          vehicle_label?: string | null
+          vehicle_type?:
+            | Database["public"]["Enums"]["ukhiya_go_vehicle_type"]
+            | null
         }
         Update: {
           available_seats?: number
+          booked_seats?: number
           created_at?: string
           departure_time?: string | null
           driver_id?: string
@@ -3015,6 +3029,10 @@ export type Database = {
           trip_type?: Database["public"]["Enums"]["ukhiya_go_trip_type"]
           updated_at?: string
           vehicle_id?: string | null
+          vehicle_label?: string | null
+          vehicle_type?:
+            | Database["public"]["Enums"]["ukhiya_go_vehicle_type"]
+            | null
         }
         Relationships: [
           {

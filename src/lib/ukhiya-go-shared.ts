@@ -83,3 +83,49 @@ export function normalizeUkhiyaGoPhone(raw: string): string {
 export function isValidBdPhone(value: string): boolean {
   return /^01[3-9]\d{8}$/.test(normalizeUkhiyaGoPhone(value));
 }
+
+export type UkhiyaGoTripType = "regular" | "return_trip" | "rental" | "goods";
+
+export const UKHIYA_GO_TRIP_TYPES: { value: UkhiyaGoTripType; label: string }[] = [
+  { value: "regular", label: "লোকাল ট্রিপ" },
+  { value: "return_trip", label: "ফেরত ট্রিপ" },
+  { value: "rental", label: "দূরপাল্লা / রিজার্ভ" },
+  { value: "goods", label: "মালামাল পরিবহন" },
+];
+
+export function ukhiyaGoTripTypeLabel(t: string | null | undefined): string {
+  return UKHIYA_GO_TRIP_TYPES.find((x) => x.value === t)?.label ?? "লোকাল ট্রিপ";
+}
+
+export type UkhiyaGoTripStatus = "draft" | "published" | "full" | "completed" | "cancelled";
+
+export const UKHIYA_GO_TRIP_STATUS_META: Record<UkhiyaGoTripStatus, { label: string }> = {
+  draft: { label: "খসড়া" },
+  published: { label: "প্রকাশিত" },
+  full: { label: "সব সিট বুকড" },
+  completed: { label: "সম্পন্ন" },
+  cancelled: { label: "বাতিল" },
+};
+
+export type UkhiyaGoBookingStatus = "pending" | "confirmed" | "cancelled" | "completed" | "rejected";
+
+export const UKHIYA_GO_BOOKING_STATUS_META: Record<
+  UkhiyaGoBookingStatus,
+  { label: string; description: string }
+> = {
+  pending: { label: "অপেক্ষমাণ", description: "চালক আপনার অনুরোধটি পর্যালোচনা করছেন।" },
+  confirmed: { label: "গৃহীত", description: "চালক আপনার বুকিং গ্রহণ করেছেন।" },
+  cancelled: { label: "বাতিল", description: "বুকিংটি বাতিল করা হয়েছে।" },
+  completed: { label: "সম্পন্ন", description: "ট্রিপটি সফলভাবে সম্পন্ন হয়েছে।" },
+  rejected: { label: "প্রত্যাখ্যাত", description: "চালক এই অনুরোধটি গ্রহণ করেননি।" },
+};
+
+/** Human-friendly Bangla label for a vehicle row. */
+export function ukhiyaGoVehicleLabel(
+  v: { vehicle_type: string; brand?: string | null; model?: string | null } | null | undefined,
+): string {
+  if (!v) return "";
+  const typeLabel = UKHIYA_GO_VEHICLE_TYPES.find((t) => t.value === v.vehicle_type)?.label ?? "";
+  const name = [v.brand, v.model].filter(Boolean).join(" ");
+  return name ? `${name} (${typeLabel})` : typeLabel;
+}
