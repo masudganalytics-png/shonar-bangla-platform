@@ -116,6 +116,7 @@ import { Route as AuthenticatedAdminBloodDonorsRouteImport } from './routes/_aut
 import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authenticated/admin.bills'
 import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
 import { Route as AuthenticatedAdminAchievementsRouteImport } from './routes/_authenticated/admin.achievements'
+import { Route as ServicesUkhiyaGoDriverIndexRouteImport } from './routes/services.ukhiya-go.driver.index'
 import { Route as ServicesUkhiyaGoDriverRegisterRouteImport } from './routes/services.ukhiya-go.driver.register'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
@@ -676,6 +677,12 @@ const AuthenticatedAdminAchievementsRoute =
     path: '/achievements',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const ServicesUkhiyaGoDriverIndexRoute =
+  ServicesUkhiyaGoDriverIndexRouteImport.update({
+    id: '/services/ukhiya-go/driver/',
+    path: '/services/ukhiya-go/driver/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ServicesUkhiyaGoDriverRegisterRoute =
   ServicesUkhiyaGoDriverRegisterRouteImport.update({
     id: '/services/ukhiya-go/driver/register',
@@ -817,6 +824,7 @@ export interface FileRoutesByFullPath {
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/services/ukhiya-go/driver/register': typeof ServicesUkhiyaGoDriverRegisterRoute
+  '/services/ukhiya-go/driver/': typeof ServicesUkhiyaGoDriverIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -917,6 +925,7 @@ export interface FileRoutesByTo {
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/services/ukhiya-go/driver/register': typeof ServicesUkhiyaGoDriverRegisterRoute
+  '/services/ukhiya-go/driver': typeof ServicesUkhiyaGoDriverIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -1032,6 +1041,7 @@ export interface FileRoutesById {
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/services/ukhiya-go/driver/register': typeof ServicesUkhiyaGoDriverRegisterRoute
+  '/services/ukhiya-go/driver/': typeof ServicesUkhiyaGoDriverIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -1147,6 +1157,7 @@ export interface FileRouteTypes {
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/services/ukhiya-go/driver/register'
+    | '/services/ukhiya-go/driver/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -1247,6 +1258,7 @@ export interface FileRouteTypes {
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/services/ukhiya-go/driver/register'
+    | '/services/ukhiya-go/driver'
   id:
     | '__root__'
     | '/'
@@ -1361,6 +1373,7 @@ export interface FileRouteTypes {
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/services/ukhiya-go/driver/register'
+    | '/services/ukhiya-go/driver/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1398,6 +1411,7 @@ export interface RootRouteChildren {
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   ServicesUkhiyaGoDriverRegisterRoute: typeof ServicesUkhiyaGoDriverRegisterRoute
+  ServicesUkhiyaGoDriverIndexRoute: typeof ServicesUkhiyaGoDriverIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -2151,6 +2165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAchievementsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/services/ukhiya-go/driver/': {
+      id: '/services/ukhiya-go/driver/'
+      path: '/services/ukhiya-go/driver'
+      fullPath: '/services/ukhiya-go/driver/'
+      preLoaderRoute: typeof ServicesUkhiyaGoDriverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services/ukhiya-go/driver/register': {
       id: '/services/ukhiya-go/driver/register'
       path: '/services/ukhiya-go/driver/register'
@@ -2526,6 +2547,7 @@ const rootRouteChildren: RootRouteChildren = {
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   ServicesUkhiyaGoDriverRegisterRoute: ServicesUkhiyaGoDriverRegisterRoute,
+  ServicesUkhiyaGoDriverIndexRoute: ServicesUkhiyaGoDriverIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
