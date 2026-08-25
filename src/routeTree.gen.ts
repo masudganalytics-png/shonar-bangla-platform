@@ -87,6 +87,7 @@ import { Route as TeachersTuitionsIdRouteImport } from './routes/teachers.tuitio
 import { Route as TeachersNewsIdRouteImport } from './routes/teachers.news.$id'
 import { Route as TeachersAchievementsIdRouteImport } from './routes/teachers.achievements.$id'
 import { Route as ServicesUkhiyaGoSearchRouteImport } from './routes/services.ukhiya-go.search'
+import { Route as ServicesUkhiyaGoBookingsRouteImport } from './routes/services.ukhiya-go.bookings'
 import { Route as CommunityUUserIdRouteImport } from './routes/community.u.$userId'
 import { Route as CommunityMosquesNewRouteImport } from './routes/community.mosques.new'
 import { Route as CommunityMosquesSlugRouteImport } from './routes/community.mosques.$slug'
@@ -118,6 +119,7 @@ import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
 import { Route as AuthenticatedAdminAchievementsRouteImport } from './routes/_authenticated/admin.achievements'
 import { Route as ServicesUkhiyaGoDriverIndexRouteImport } from './routes/services.ukhiya-go.driver.index'
+import { Route as ServicesUkhiyaGoTripTripIdRouteImport } from './routes/services.ukhiya-go.trip.$tripId'
 import { Route as ServicesUkhiyaGoDriverRegisterRouteImport } from './routes/services.ukhiya-go.driver.register'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
@@ -514,6 +516,12 @@ const ServicesUkhiyaGoSearchRoute = ServicesUkhiyaGoSearchRouteImport.update({
   path: '/services/ukhiya-go/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesUkhiyaGoBookingsRoute =
+  ServicesUkhiyaGoBookingsRouteImport.update({
+    id: '/services/ukhiya-go/bookings',
+    path: '/services/ukhiya-go/bookings',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CommunityUUserIdRoute = CommunityUUserIdRouteImport.update({
   id: '/u/$userId',
   path: '/u/$userId',
@@ -689,6 +697,12 @@ const ServicesUkhiyaGoDriverIndexRoute =
     path: '/services/ukhiya-go/driver/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ServicesUkhiyaGoTripTripIdRoute =
+  ServicesUkhiyaGoTripTripIdRouteImport.update({
+    id: '/services/ukhiya-go/trip/$tripId',
+    path: '/services/ukhiya-go/trip/$tripId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ServicesUkhiyaGoDriverRegisterRoute =
   ServicesUkhiyaGoDriverRegisterRouteImport.update({
     id: '/services/ukhiya-go/driver/register',
@@ -814,6 +828,7 @@ export interface FileRoutesByFullPath {
   '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
   '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
+  '/services/ukhiya-go/bookings': typeof ServicesUkhiyaGoBookingsRoute
   '/services/ukhiya-go/search': typeof ServicesUkhiyaGoSearchRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
@@ -831,6 +846,7 @@ export interface FileRoutesByFullPath {
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/services/ukhiya-go/driver/register': typeof ServicesUkhiyaGoDriverRegisterRoute
+  '/services/ukhiya-go/trip/$tripId': typeof ServicesUkhiyaGoTripTripIdRoute
   '/services/ukhiya-go/driver/': typeof ServicesUkhiyaGoDriverIndexRoute
 }
 export interface FileRoutesByTo {
@@ -916,6 +932,7 @@ export interface FileRoutesByTo {
   '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
   '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
+  '/services/ukhiya-go/bookings': typeof ServicesUkhiyaGoBookingsRoute
   '/services/ukhiya-go/search': typeof ServicesUkhiyaGoSearchRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
@@ -933,6 +950,7 @@ export interface FileRoutesByTo {
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/services/ukhiya-go/driver/register': typeof ServicesUkhiyaGoDriverRegisterRoute
+  '/services/ukhiya-go/trip/$tripId': typeof ServicesUkhiyaGoTripTripIdRoute
   '/services/ukhiya-go/driver': typeof ServicesUkhiyaGoDriverIndexRoute
 }
 export interface FileRoutesById {
@@ -1033,6 +1051,7 @@ export interface FileRoutesById {
   '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
   '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
+  '/services/ukhiya-go/bookings': typeof ServicesUkhiyaGoBookingsRoute
   '/services/ukhiya-go/search': typeof ServicesUkhiyaGoSearchRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
@@ -1050,6 +1069,7 @@ export interface FileRoutesById {
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/services/ukhiya-go/driver/register': typeof ServicesUkhiyaGoDriverRegisterRoute
+  '/services/ukhiya-go/trip/$tripId': typeof ServicesUkhiyaGoTripTripIdRoute
   '/services/ukhiya-go/driver/': typeof ServicesUkhiyaGoDriverIndexRoute
 }
 export interface FileRouteTypes {
@@ -1150,6 +1170,7 @@ export interface FileRouteTypes {
     | '/community/mosques/$slug'
     | '/community/mosques/new'
     | '/community/u/$userId'
+    | '/services/ukhiya-go/bookings'
     | '/services/ukhiya-go/search'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
@@ -1167,6 +1188,7 @@ export interface FileRouteTypes {
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/services/ukhiya-go/driver/register'
+    | '/services/ukhiya-go/trip/$tripId'
     | '/services/ukhiya-go/driver/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -1252,6 +1274,7 @@ export interface FileRouteTypes {
     | '/community/mosques/$slug'
     | '/community/mosques/new'
     | '/community/u/$userId'
+    | '/services/ukhiya-go/bookings'
     | '/services/ukhiya-go/search'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
@@ -1269,6 +1292,7 @@ export interface FileRouteTypes {
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/services/ukhiya-go/driver/register'
+    | '/services/ukhiya-go/trip/$tripId'
     | '/services/ukhiya-go/driver'
   id:
     | '__root__'
@@ -1368,6 +1392,7 @@ export interface FileRouteTypes {
     | '/community/mosques/$slug'
     | '/community/mosques/new'
     | '/community/u/$userId'
+    | '/services/ukhiya-go/bookings'
     | '/services/ukhiya-go/search'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
@@ -1385,6 +1410,7 @@ export interface FileRouteTypes {
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/services/ukhiya-go/driver/register'
+    | '/services/ukhiya-go/trip/$tripId'
     | '/services/ukhiya-go/driver/'
   fileRoutesById: FileRoutesById
 }
@@ -1418,12 +1444,14 @@ export interface RootRouteChildren {
   WorkersRoute: typeof WorkersRouteWithChildren
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
   ApiPublicStatsRoute: typeof ApiPublicStatsRoute
+  ServicesUkhiyaGoBookingsRoute: typeof ServicesUkhiyaGoBookingsRoute
   ServicesUkhiyaGoSearchRoute: typeof ServicesUkhiyaGoSearchRoute
   ServicesUkhiyaGoIndexRoute: typeof ServicesUkhiyaGoIndexRoute
   ApiPublicHooksRefreshExchangeRatesRoute: typeof ApiPublicHooksRefreshExchangeRatesRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   ServicesUkhiyaGoDriverRegisterRoute: typeof ServicesUkhiyaGoDriverRegisterRoute
+  ServicesUkhiyaGoTripTripIdRoute: typeof ServicesUkhiyaGoTripTripIdRoute
   ServicesUkhiyaGoDriverIndexRoute: typeof ServicesUkhiyaGoDriverIndexRoute
 }
 
@@ -1975,6 +2003,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesUkhiyaGoSearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/ukhiya-go/bookings': {
+      id: '/services/ukhiya-go/bookings'
+      path: '/services/ukhiya-go/bookings'
+      fullPath: '/services/ukhiya-go/bookings'
+      preLoaderRoute: typeof ServicesUkhiyaGoBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/community/u/$userId': {
       id: '/community/u/$userId'
       path: '/u/$userId'
@@ -2190,6 +2225,13 @@ declare module '@tanstack/react-router' {
       path: '/services/ukhiya-go/driver'
       fullPath: '/services/ukhiya-go/driver/'
       preLoaderRoute: typeof ServicesUkhiyaGoDriverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/ukhiya-go/trip/$tripId': {
+      id: '/services/ukhiya-go/trip/$tripId'
+      path: '/services/ukhiya-go/trip/$tripId'
+      fullPath: '/services/ukhiya-go/trip/$tripId'
+      preLoaderRoute: typeof ServicesUkhiyaGoTripTripIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services/ukhiya-go/driver/register': {
@@ -2561,6 +2603,7 @@ const rootRouteChildren: RootRouteChildren = {
   WorkersRoute: WorkersRouteWithChildren,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
   ApiPublicStatsRoute: ApiPublicStatsRoute,
+  ServicesUkhiyaGoBookingsRoute: ServicesUkhiyaGoBookingsRoute,
   ServicesUkhiyaGoSearchRoute: ServicesUkhiyaGoSearchRoute,
   ServicesUkhiyaGoIndexRoute: ServicesUkhiyaGoIndexRoute,
   ApiPublicHooksRefreshExchangeRatesRoute:
@@ -2568,6 +2611,7 @@ const rootRouteChildren: RootRouteChildren = {
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   ServicesUkhiyaGoDriverRegisterRoute: ServicesUkhiyaGoDriverRegisterRoute,
+  ServicesUkhiyaGoTripTripIdRoute: ServicesUkhiyaGoTripTripIdRoute,
   ServicesUkhiyaGoDriverIndexRoute: ServicesUkhiyaGoDriverIndexRoute,
 }
 export const routeTree = rootRouteImport
