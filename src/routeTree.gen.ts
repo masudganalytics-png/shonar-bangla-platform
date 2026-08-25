@@ -86,6 +86,7 @@ import { Route as TeachersTuitionsNewRouteImport } from './routes/teachers.tuiti
 import { Route as TeachersTuitionsIdRouteImport } from './routes/teachers.tuitions.$id'
 import { Route as TeachersNewsIdRouteImport } from './routes/teachers.news.$id'
 import { Route as TeachersAchievementsIdRouteImport } from './routes/teachers.achievements.$id'
+import { Route as ServicesUkhiyaGoSearchRouteImport } from './routes/services.ukhiya-go.search'
 import { Route as CommunityUUserIdRouteImport } from './routes/community.u.$userId'
 import { Route as CommunityMosquesNewRouteImport } from './routes/community.mosques.new'
 import { Route as CommunityMosquesSlugRouteImport } from './routes/community.mosques.$slug'
@@ -508,6 +509,11 @@ const TeachersAchievementsIdRoute = TeachersAchievementsIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => TeachersAchievementsRoute,
 } as any)
+const ServicesUkhiyaGoSearchRoute = ServicesUkhiyaGoSearchRouteImport.update({
+  id: '/services/ukhiya-go/search',
+  path: '/services/ukhiya-go/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CommunityUUserIdRoute = CommunityUUserIdRouteImport.update({
   id: '/u/$userId',
   path: '/u/$userId',
@@ -808,6 +814,7 @@ export interface FileRoutesByFullPath {
   '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
   '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
+  '/services/ukhiya-go/search': typeof ServicesUkhiyaGoSearchRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
   '/teachers/tuitions/$id': typeof TeachersTuitionsIdRoute
@@ -909,6 +916,7 @@ export interface FileRoutesByTo {
   '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
   '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
+  '/services/ukhiya-go/search': typeof ServicesUkhiyaGoSearchRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
   '/teachers/tuitions/$id': typeof TeachersTuitionsIdRoute
@@ -1025,6 +1033,7 @@ export interface FileRoutesById {
   '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
   '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
+  '/services/ukhiya-go/search': typeof ServicesUkhiyaGoSearchRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
   '/teachers/news/$id': typeof TeachersNewsIdRoute
   '/teachers/tuitions/$id': typeof TeachersTuitionsIdRoute
@@ -1141,6 +1150,7 @@ export interface FileRouteTypes {
     | '/community/mosques/$slug'
     | '/community/mosques/new'
     | '/community/u/$userId'
+    | '/services/ukhiya-go/search'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
     | '/teachers/tuitions/$id'
@@ -1242,6 +1252,7 @@ export interface FileRouteTypes {
     | '/community/mosques/$slug'
     | '/community/mosques/new'
     | '/community/u/$userId'
+    | '/services/ukhiya-go/search'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
     | '/teachers/tuitions/$id'
@@ -1357,6 +1368,7 @@ export interface FileRouteTypes {
     | '/community/mosques/$slug'
     | '/community/mosques/new'
     | '/community/u/$userId'
+    | '/services/ukhiya-go/search'
     | '/teachers/achievements/$id'
     | '/teachers/news/$id'
     | '/teachers/tuitions/$id'
@@ -1406,6 +1418,7 @@ export interface RootRouteChildren {
   WorkersRoute: typeof WorkersRouteWithChildren
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
   ApiPublicStatsRoute: typeof ApiPublicStatsRoute
+  ServicesUkhiyaGoSearchRoute: typeof ServicesUkhiyaGoSearchRoute
   ServicesUkhiyaGoIndexRoute: typeof ServicesUkhiyaGoIndexRoute
   ApiPublicHooksRefreshExchangeRatesRoute: typeof ApiPublicHooksRefreshExchangeRatesRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
@@ -1954,6 +1967,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/teachers/achievements/$id'
       preLoaderRoute: typeof TeachersAchievementsIdRouteImport
       parentRoute: typeof TeachersAchievementsRoute
+    }
+    '/services/ukhiya-go/search': {
+      id: '/services/ukhiya-go/search'
+      path: '/services/ukhiya-go/search'
+      fullPath: '/services/ukhiya-go/search'
+      preLoaderRoute: typeof ServicesUkhiyaGoSearchRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/community/u/$userId': {
       id: '/community/u/$userId'
@@ -2541,6 +2561,7 @@ const rootRouteChildren: RootRouteChildren = {
   WorkersRoute: WorkersRouteWithChildren,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
   ApiPublicStatsRoute: ApiPublicStatsRoute,
+  ServicesUkhiyaGoSearchRoute: ServicesUkhiyaGoSearchRoute,
   ServicesUkhiyaGoIndexRoute: ServicesUkhiyaGoIndexRoute,
   ApiPublicHooksRefreshExchangeRatesRoute:
     ApiPublicHooksRefreshExchangeRatesRoute,
