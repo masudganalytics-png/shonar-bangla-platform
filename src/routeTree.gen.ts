@@ -125,6 +125,7 @@ import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/em
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as ApiPublicHooksRefreshExchangeRatesRouteImport } from './routes/api/public/hooks/refresh-exchange-rates'
 import { Route as AuthenticatedBillsIdEditRouteImport } from './routes/_authenticated/bills.$id.edit'
+import { Route as AuthenticatedAdminUkhiyaGoDriversRouteImport } from './routes/_authenticated/admin.ukhiya-go.drivers'
 
 const WorkersRoute = WorkersRouteImport.update({
   id: '/workers',
@@ -731,6 +732,12 @@ const AuthenticatedBillsIdEditRoute =
     path: '/$id/edit',
     getParentRoute: () => AuthenticatedBillsRoute,
   } as any)
+const AuthenticatedAdminUkhiyaGoDriversRoute =
+  AuthenticatedAdminUkhiyaGoDriversRouteImport.update({
+    id: '/ukhiya-go/drivers',
+    path: '/ukhiya-go/drivers',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -841,6 +848,7 @@ export interface FileRoutesByFullPath {
   '/teachers/achievements/': typeof TeachersAchievementsIndexRoute
   '/teachers/news/': typeof TeachersNewsIndexRoute
   '/teachers/tuitions/': typeof TeachersTuitionsIndexRoute
+  '/admin/ukhiya-go/drivers': typeof AuthenticatedAdminUkhiyaGoDriversRoute
   '/bills/$id/edit': typeof AuthenticatedBillsIdEditRoute
   '/api/public/hooks/refresh-exchange-rates': typeof ApiPublicHooksRefreshExchangeRatesRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -945,6 +953,7 @@ export interface FileRoutesByTo {
   '/teachers/achievements': typeof TeachersAchievementsIndexRoute
   '/teachers/news': typeof TeachersNewsIndexRoute
   '/teachers/tuitions': typeof TeachersTuitionsIndexRoute
+  '/admin/ukhiya-go/drivers': typeof AuthenticatedAdminUkhiyaGoDriversRoute
   '/bills/$id/edit': typeof AuthenticatedBillsIdEditRoute
   '/api/public/hooks/refresh-exchange-rates': typeof ApiPublicHooksRefreshExchangeRatesRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -1064,6 +1073,7 @@ export interface FileRoutesById {
   '/teachers/achievements/': typeof TeachersAchievementsIndexRoute
   '/teachers/news/': typeof TeachersNewsIndexRoute
   '/teachers/tuitions/': typeof TeachersTuitionsIndexRoute
+  '/_authenticated/admin/ukhiya-go/drivers': typeof AuthenticatedAdminUkhiyaGoDriversRoute
   '/_authenticated/bills/$id/edit': typeof AuthenticatedBillsIdEditRoute
   '/api/public/hooks/refresh-exchange-rates': typeof ApiPublicHooksRefreshExchangeRatesRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -1183,6 +1193,7 @@ export interface FileRouteTypes {
     | '/teachers/achievements/'
     | '/teachers/news/'
     | '/teachers/tuitions/'
+    | '/admin/ukhiya-go/drivers'
     | '/bills/$id/edit'
     | '/api/public/hooks/refresh-exchange-rates'
     | '/lovable/email/auth/preview'
@@ -1287,6 +1298,7 @@ export interface FileRouteTypes {
     | '/teachers/achievements'
     | '/teachers/news'
     | '/teachers/tuitions'
+    | '/admin/ukhiya-go/drivers'
     | '/bills/$id/edit'
     | '/api/public/hooks/refresh-exchange-rates'
     | '/lovable/email/auth/preview'
@@ -1405,6 +1417,7 @@ export interface FileRouteTypes {
     | '/teachers/achievements/'
     | '/teachers/news/'
     | '/teachers/tuitions/'
+    | '/_authenticated/admin/ukhiya-go/drivers'
     | '/_authenticated/bills/$id/edit'
     | '/api/public/hooks/refresh-exchange-rates'
     | '/lovable/email/auth/preview'
@@ -2269,6 +2282,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBillsIdEditRouteImport
       parentRoute: typeof AuthenticatedBillsRoute
     }
+    '/_authenticated/admin/ukhiya-go/drivers': {
+      id: '/_authenticated/admin/ukhiya-go/drivers'
+      path: '/ukhiya-go/drivers'
+      fullPath: '/admin/ukhiya-go/drivers'
+      preLoaderRoute: typeof AuthenticatedAdminUkhiyaGoDriversRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
@@ -2296,6 +2316,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminWorkersRoute: typeof AuthenticatedAdminWorkersRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminUkhiyaGoDriversRoute: typeof AuthenticatedAdminUkhiyaGoDriversRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
@@ -2326,6 +2347,8 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminWorkersRoute: AuthenticatedAdminWorkersRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminUkhiyaGoDriversRoute:
+    AuthenticatedAdminUkhiyaGoDriversRoute,
 }
 
 const AuthenticatedAdminRouteWithChildren =
