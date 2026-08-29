@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Droplet, Briefcase, GraduationCap, Store, Scale, Wifi, FileText, Calculator, Landmark } from "lucide-react";
+import { ArrowRight, Droplet, Briefcase, GraduationCap, Store, Scale, Wifi, FileText, Calculator, Landmark, Car } from "lucide-react";
 
 const SERVICES = [
+  { to: "/services/ukhiya-go" as const, icon: Car, title: "🚗 UkhiyaGo", desc: "গাড়ি, CNG, বাইক ও ফেরত ট্রিপ বুকিং", tone: "text-primary bg-primary/10" },
   { to: "/blood-donors" as const, icon: Droplet, title: "রক্তদাতা", desc: "যাচাইকৃত রক্তদাতাদের সাথে যোগাযোগ", tone: "text-destructive bg-destructive/10" },
   { to: "/teachers/tuitions" as const, icon: Briefcase, title: "চাকরি ও টিউশন", desc: "শিক্ষক নিয়োগ ও টিউশন অনুরোধ", tone: "text-primary bg-primary/10" },
   { to: "/teachers" as const, icon: GraduationCap, title: "টিউশন", desc: "যাচাইকৃত শিক্ষক ও টিউটর খুঁজুন", tone: "text-primary bg-primary/10" },
