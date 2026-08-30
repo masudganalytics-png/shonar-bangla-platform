@@ -80,8 +80,11 @@ function UkhiyaGoSearchPage() {
         .select(
           "id,vehicle_type,vehicle_label,from_location,to_location,trip_type,trip_date,departure_time,available_seats,booked_seats,price_per_person,notes,status",
         )
-        .in("status", ["published", "full"])
-        .gte("trip_date", filters.date || today)
+        .in("status", ["published", "full"]);
+      q = filters.date
+        ? q.eq("trip_date", filters.date)
+        : q.gte("trip_date", today);
+      q = q
         .order("trip_date", { ascending: true })
         .order("departure_time", { ascending: true })
         .limit(50);
