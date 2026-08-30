@@ -159,7 +159,8 @@ function TripDetailsPage() {
   }
 
   const seatsLeft = trip ? Math.max(0, trip.available_seats - trip.booked_seats) : 0;
-  const bookable = !!trip && (trip.status === "published" || trip.status === "full");
+  const bookable =
+    !!trip && (trip.status === "published" || trip.status === "full") && seatsLeft > 0;
 
   const submitBooking = useMutation({
     mutationFn: async () => {
