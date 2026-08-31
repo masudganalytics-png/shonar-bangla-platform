@@ -197,11 +197,21 @@ function UkhiyaGoSearchPage() {
           </Card>
         ) : trips.length === 0 ? (
           <Card>
-            <CardContent className="p-8 text-center text-sm text-muted-foreground">
-              এই ফিল্টারে কোনো প্রকাশিত ট্রিপ পাওয়া যায়নি। অন্য তারিখ বা রুট চেষ্টা করুন।
+            <CardContent className="space-y-3 p-8 text-center text-sm text-muted-foreground">
+              <p>এই ফিল্টারে কোনো প্রকাশিত ট্রিপ পাওয়া যায়নি। অন্য তারিখ বা রুট চেষ্টা করুন।</p>
+              <p>
+                আপনি চালক হলে নিজেই ট্রিপ পোস্ট করতে পারেন —{" "}
+                <Link
+                  to="/services/ukhiya-go/driver/register"
+                  className="font-medium text-primary underline"
+                >
+                  🚗 চালক হিসেবে নিবন্ধন করুন
+                </Link>
+              </p>
             </CardContent>
           </Card>
         ) : (
+
           trips.map((t) => {
             const seatsLeft = Math.max(0, t.available_seats - t.booked_seats);
             return (
