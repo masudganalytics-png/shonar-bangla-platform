@@ -360,6 +360,8 @@ function DriverDashboardPage() {
     );
   }
 
+  const approved = driver.verification_status === "approved";
+
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
       <Link
@@ -376,12 +378,27 @@ function DriverDashboardPage() {
             {driver.name} — ট্রিপ পোস্ট করুন ও বুকিং অনুরোধ ব্যবস্থাপনা করুন।
           </p>
         </div>
-        <Button onClick={openCreate} disabled={vehicles.length === 0}>
+        <Button onClick={openCreate} disabled={vehicles.length === 0 || !approved}>
           <Plus className="mr-2 h-4 w-4" /> নতুন ট্রিপ পোস্ট করুন
         </Button>
       </header>
 
-      {vehicles.length === 0 && (
+      {!approved && (
+        <Card className="mt-5 border-primary/30">
+          <CardContent className="p-4 text-sm text-muted-foreground">
+            {driver.verification_status === "pending"
+              ? "আপনার চালক নিবন্ধন যাচাইয়ের অপেক্ষায় আছে। প্রশাসক অনুমোদন দিলে ট্রিপ পোস্ট করতে পারবেন।"
+              : driver.verification_status === "rejected"
+                ? "আপনার চালক নিবন্ধন অনুমোদিত হয়নি। তথ্য হালনাগাদ করে আবার আবেদন করুন।"
+                : "আপনার চালক প্রোফাইল স্থগিত আছে। সহায়তার জন্য যোগাযোগ করুন।"}{" "}
+            <Link to="/services/ukhiya-go/driver/register" className="text-primary underline">
+              নিবন্ধন তথ্য হালনাগাদ করুন
+            </Link>
+          </CardContent>
+        </Card>
+      )}
+
+      {approved && vehicles.length === 0 && (
         <Card className="mt-5 border-primary/30">
           <CardContent className="p-4 text-sm text-muted-foreground">
             ট্রিপ পোস্ট করার আগে অন্তত একটি গাড়ি যুক্ত করুন।{" "}
