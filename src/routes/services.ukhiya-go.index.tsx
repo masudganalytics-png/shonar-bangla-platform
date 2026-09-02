@@ -170,26 +170,6 @@ function UkhiyaGoPage() {
         <div className="mt-6">
           <DriverCta />
         </div>
-
-        <div className="mt-3 flex flex-col items-center gap-2">
-          <Button
-            asChild
-            size="lg"
-            className="h-12 rounded-full bg-[#25D366] px-6 text-white shadow-sm transition-shadow hover:bg-[#128C7E] hover:shadow-md"
-          >
-            <a
-              href="https://wa.me/8801821818183?text=%E0%A6%86%E0%A6%B8%E0%A6%B8%E0%A6%BE%E0%A6%B2%E0%A6%BE%E0%A6%AE%E0%A7%81%20%E0%A6%86%E0%A6%B2%E0%A6%BE%E0%A6%87%E0%A6%95%E0%A7%81%E0%A6%AE%2C%20%E0%A6%86%E0%A6%AE%E0%A6%BF%20UkhiyaGo%20%E0%A6%A5%E0%A7%87%E0%A6%95%E0%A7%87%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%97%E0%A6%BE%E0%A7%9C%E0%A6%BF%20%E0%A6%AC%E0%A7%81%E0%A6%95%20%E0%A6%95%E0%A6%B0%E0%A6%A4%E0%A7%87%20%E0%A6%9A%E0%A6%BE%E0%A6%87%E0%A5%A4"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <WhatsAppIcon className="mr-2 h-5 w-5" />
-              WhatsApp এ বুকিং করুন
-            </a>
-          </Button>
-          <span className="text-xs text-muted-foreground">
-            সরাসরি WhatsApp-এ মেসেজ দিন — দ্রুত বুকিং নিশ্চিত করুন।
-          </span>
-        </div>
       </header>
 
       <section className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
