@@ -121,6 +121,7 @@ function DriverCta() {
         <Button asChild size="sm" variant="outline" className="rounded-full">
           <Link to="/services/ukhiya-go/driver/register">নিবন্ধন তথ্য দেখুন / হালনাগাদ করুন</Link>
         </Button>
+        <WhatsAppBookingButton />
       </div>
     );
   }
