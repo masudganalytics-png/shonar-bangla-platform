@@ -134,6 +134,7 @@ function DriverCta() {
           🚗 চালক হিসেবে নিবন্ধন করুন
         </Link>
       </Button>
+      <WhatsAppBookingButton />
       <span className="text-xs text-muted-foreground">
         গাড়ি আছে? আপনার প্রোফাইল যুক্ত করে আয় শুরু করুন।
       </span>
