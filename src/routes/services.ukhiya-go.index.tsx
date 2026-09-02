@@ -99,6 +99,7 @@ function DriverCta() {
             🚗 ট্রিপ পোস্ট করুন / চালক ড্যাশবোর্ড
           </Link>
         </Button>
+        <WhatsAppBookingButton />
         <span className="text-xs text-muted-foreground">
           আপনার চালক প্রোফাইল অনুমোদিত — এখনই ট্রিপ পোস্ট করুন।
         </span>
