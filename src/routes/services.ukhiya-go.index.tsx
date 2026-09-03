@@ -7,6 +7,27 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 
+function MaterialOrderCta() {
+  return (
+    <MaterialOrderDialog
+      trigger={
+        <Button
+          size="lg"
+          variant="outline"
+          className="h-auto rounded-full border-2 border-primary/30 bg-background px-6 py-2.5 shadow-sm transition-shadow hover:shadow-md"
+        >
+          <span className="flex flex-col items-center leading-tight">
+            <span className="font-semibold">🧱 নির্মাণ সামগ্রী অর্ডার করুন</span>
+            <span className="text-xs font-normal text-muted-foreground">
+              ইট • বালু • সিমেন্ট • রড
+            </span>
+          </span>
+        </Button>
+      }
+    />
+  );
+}
+
 function WhatsAppBookingButton() {
   return (
     <Button
