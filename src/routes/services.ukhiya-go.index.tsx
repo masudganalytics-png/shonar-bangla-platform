@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
+import { MaterialOrderDialog } from "@/components/ukhiya-go/MaterialOrderDialog";
 
 function MaterialOrderCta() {
   return (
@@ -120,7 +121,9 @@ function DriverCta() {
             🚗 ট্রিপ পোস্ট করুন / চালক ড্যাশবোর্ড
           </Link>
         </Button>
-        <WhatsAppBookingButton />
+        <MaterialOrderCta />
+        <MaterialOrderCta />
+      <WhatsAppBookingButton />
         <span className="text-xs text-muted-foreground">
           আপনার চালক প্রোফাইল অনুমোদিত — এখনই ট্রিপ পোস্ট করুন।
         </span>
@@ -142,7 +145,9 @@ function DriverCta() {
         <Button asChild size="sm" variant="outline" className="rounded-full">
           <Link to="/services/ukhiya-go/driver/register">নিবন্ধন তথ্য দেখুন / হালনাগাদ করুন</Link>
         </Button>
-        <WhatsAppBookingButton />
+        <MaterialOrderCta />
+        <MaterialOrderCta />
+      <WhatsAppBookingButton />
       </div>
     );
   }
@@ -155,6 +160,7 @@ function DriverCta() {
           🚗 চালক হিসেবে নিবন্ধন করুন
         </Link>
       </Button>
+      <MaterialOrderCta />
       <WhatsAppBookingButton />
       <span className="text-xs text-muted-foreground">
         গাড়ি আছে? আপনার প্রোফাইল যুক্ত করে আয় শুরু করুন।
