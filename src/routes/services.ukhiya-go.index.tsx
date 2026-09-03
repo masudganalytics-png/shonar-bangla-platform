@@ -122,8 +122,7 @@ function DriverCta() {
           </Link>
         </Button>
         <MaterialOrderCta />
-        <MaterialOrderCta />
-      <WhatsAppBookingButton />
+        <WhatsAppBookingButton />
         <span className="text-xs text-muted-foreground">
           আপনার চালক প্রোফাইল অনুমোদিত — এখনই ট্রিপ পোস্ট করুন।
         </span>
@@ -146,8 +145,7 @@ function DriverCta() {
           <Link to="/services/ukhiya-go/driver/register">নিবন্ধন তথ্য দেখুন / হালনাগাদ করুন</Link>
         </Button>
         <MaterialOrderCta />
-        <MaterialOrderCta />
-      <WhatsAppBookingButton />
+        <WhatsAppBookingButton />
       </div>
     );
   }
