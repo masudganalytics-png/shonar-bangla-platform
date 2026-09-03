@@ -1061,6 +1061,48 @@ export type Database = {
           },
         ]
       }
+      construction_material_orders: {
+        Row: {
+          created_at: string
+          customer_name: string
+          delivery_location: string
+          id: string
+          material: string
+          notes: string | null
+          phone: string
+          quantity: string
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          customer_name: string
+          delivery_location: string
+          id?: string
+          material: string
+          notes?: string | null
+          phone: string
+          quantity: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          customer_name?: string
+          delivery_location?: string
+          id?: string
+          material?: string
+          notes?: string | null
+          phone?: string
+          quantity?: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       cv_submissions: {
         Row: {
           admin_notes: string | null
