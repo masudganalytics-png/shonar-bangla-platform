@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Users, FileText, MessageSquare, Wallet, CircleCheck, BarChart3, Download } from "lucide-react";
+import { Users, FileText, MessageSquare, Wallet, CircleCheck, BarChart3, Download, Car, Package } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -104,6 +104,26 @@ function AdminOverview() {
         <h2 className="mb-3 text-lg font-semibold">⚖️ আইনি সহায়তা ব্যবস্থাপনা</h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <Card className="p-4"><p className="mb-2 text-sm font-medium">অ্যাডভোকেট ও লিড</p><Button asChild size="sm" variant="outline"><Link to="/admin/legal">খুলুন</Link></Button></Card>
+        </div>
+      </div>
+
+      <div className="mt-8">
+        <h2 className="mb-3 text-lg font-semibold">🚗 UkhiyaGo ব্যবস্থাপনা</h2>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Card className="p-4">
+            <div className="mb-2 flex items-center gap-2 text-sm font-medium">
+              <Car className="h-4 w-4 text-primary" />
+              <span>চালক ও গাড়ি</span>
+            </div>
+            <Button asChild size="sm" variant="outline"><Link to="/admin/ukhiya-go/drivers">খুলুন</Link></Button>
+          </Card>
+          <Card className="p-4">
+            <div className="mb-2 flex items-center gap-2 text-sm font-medium">
+              <Package className="h-4 w-4 text-primary" />
+              <span>নির্মাণ সামগ্রী অর্ডার</span>
+            </div>
+            <Button asChild size="sm" variant="outline"><Link to="/admin/ukhiya-go/material-orders">খুলুন</Link></Button>
+          </Card>
         </div>
       </div>
     </div>
