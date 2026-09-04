@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Users, FileText, MessageSquare, Wallet, CircleCheck, BarChart3, Download } from "lucide-react";
+import { Users, FileText, MessageSquare, Wallet, CircleCheck, BarChart3, Download, Car, Package } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
