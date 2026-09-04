@@ -1574,6 +1574,118 @@ export type Database = {
         }
         Relationships: []
       }
+      isp_areas: {
+        Row: {
+          area_key: string
+          created_at: string
+          id: string
+          isp_id: string
+        }
+        Insert: {
+          area_key: string
+          created_at?: string
+          id?: string
+          isp_id: string
+        }
+        Update: {
+          area_key?: string
+          created_at?: string
+          id?: string
+          isp_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "isp_areas_isp_id_fkey"
+            columns: ["isp_id"]
+            isOneToOne: false
+            referencedRelation: "isps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      isp_packages: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          isp_id: string
+          name: string
+          note: string
+          price: number | null
+          sort_order: number
+          speed_mbps: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          isp_id: string
+          name: string
+          note?: string
+          price?: number | null
+          sort_order?: number
+          speed_mbps?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          isp_id?: string
+          name?: string
+          note?: string
+          price?: number | null
+          sort_order?: number
+          speed_mbps?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "isp_packages_isp_id_fkey"
+            columns: ["isp_id"]
+            isOneToOne: false
+            referencedRelation: "isps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      isps: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          is_btrc_approved: boolean
+          name: string
+          note: string
+          phones: string[]
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          is_btrc_approved?: boolean
+          name: string
+          note?: string
+          phones?: string[]
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          is_btrc_approved?: boolean
+          name?: string
+          note?: string
+          phones?: string[]
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       legal_leads: {
         Row: {
           admin_note: string | null

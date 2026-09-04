@@ -15,6 +15,13 @@
       "when": 1788397516904,
       "tag": "0001_create_construction_material_orders",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788495830399,
+      "tag": "0002_create_isp_management",
+      "breakpoints": true
     }
   ]
 }
