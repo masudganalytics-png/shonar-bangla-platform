@@ -1,0 +1,1 @@
+ALTER TYPE public.community_group_type ADD VALUE IF NOT EXISTS 'association';

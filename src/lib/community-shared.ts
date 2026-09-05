@@ -19,6 +19,7 @@ export const GROUP_TYPES = [
   "friends",
   "sports_team",
   "neighborhood",
+  "association",
   "other",
 ] as const;
 export type CommunityGroupType = (typeof GROUP_TYPES)[number];
