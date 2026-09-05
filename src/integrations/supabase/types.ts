@@ -3572,6 +3572,7 @@ export type Database = {
         | "sports_team"
         | "neighborhood"
         | "other"
+        | "association"
       community_kind: "community" | "club" | "group"
       community_member_role: "owner" | "admin" | "member"
       community_member_status: "active" | "inactive"
@@ -3814,6 +3815,7 @@ export const Constants = {
         "sports_team",
         "neighborhood",
         "other",
+        "association",
       ],
       community_kind: ["community", "club", "group"],
       community_member_role: ["owner", "admin", "member"],
