@@ -10,6 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { ISP_AREAS } from "@/lib/isp-shared";
 
 export const Route = createFileRoute("/isp")({
   head: () => ({
@@ -33,60 +36,46 @@ export const Route = createFileRoute("/isp")({
 });
 
 type Isp = {
+  id: string;
   name: string;
   phones: string[];
   note: string;
   approved?: boolean;
 };
 
-const AREAS = [
-  { value: "coxsbazar", label: "কক্সবাজার" },
-  { value: "courtbazar", label: "কোর্টবাজার" },
-  { value: "ukhiya", label: "উখিয়া" },
-  { value: "kutupalong", label: "কুতুপালং" },
-] as const;
-
-const ISP_BY_AREA: Record<string, Isp[]> = {
-  coxsbazar: [
-    {
-      name: "Hello IT",
-      phones: ["+8801719-322533"],
-      note: "লোকাল ISP",
-    },
-  ],
-  courtbazar: [
-    {
-      name: "Orange Communication",
-      phones: ["01817-648888", "01815-647777"],
-      note: "ন্যাশনওয়াইড ISP",
-    },
-  ],
-  ukhiya: [
-    {
-      name: "Mim Online",
-      phones: ["01835-401111"],
-      note: "লোকাল ISP",
-    },
-    {
-      name: "STAR NET Internet & Service",
-      phones: ["01817-969696", "01846-868686"],
-      note: "BTRC অনুমোদিত",
-      approved: true,
-    },
-  ],
-  kutupalong: [
-    {
-      name: "STAR NET Internet & Service",
-      phones: ["01817-969696", "01846-868686"],
-      note: "BTRC অনুমোদিত",
-      approved: true,
-    },
-  ],
-};
+const AREAS = ISP_AREAS;
 
 function IspPage() {
   const [area, setArea] = useState<string>("");
-  const isps = useMemo(() => (area ? ISP_BY_AREA[area] ?? [] : []), [area]);
+
+  const { data: rows } = useQuery({
+    queryKey: ["public", "isps"],
+    staleTime: 60_000,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("isps")
+        .select("id, name, note, phones, is_btrc_approved, sort_order, isp_areas(area_key)")
+        .eq("is_active", true)
+        .order("sort_order")
+        .order("name");
+      if (error) throw new Error(error.message);
+      return data ?? [];
+    },
+  });
+
+  const isps: Isp[] = useMemo(() => {
+    if (!area || !rows) return [];
+    return rows
+      .filter((r) => (r.isp_areas ?? []).some((a: { area_key: string }) => a.area_key === area))
+      .map((r) => ({
+        id: r.id,
+        name: r.name,
+        phones: r.phones ?? [],
+        note: r.note ?? "",
+        approved: r.is_btrc_approved ?? false,
+      }));
+  }, [area, rows]);
+
   const areaLabel = AREAS.find((a) => a.value === area)?.label;
 
   return (
