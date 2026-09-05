@@ -1824,6 +1824,154 @@ export type Database = {
           },
         ]
       }
+      match_interests: {
+        Row: {
+          created_at: string
+          id: string
+          message: string | null
+          request_id: string
+          sender_id: string
+          sender_name: string
+          sender_phone: string
+          status: Database["public"]["Enums"]["match_interest_status"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          request_id: string
+          sender_id: string
+          sender_name: string
+          sender_phone: string
+          status?: Database["public"]["Enums"]["match_interest_status"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          request_id?: string
+          sender_id?: string
+          sender_name?: string
+          sender_phone?: string
+          status?: Database["public"]["Enums"]["match_interest_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "match_interests_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "match_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      match_requests: {
+        Row: {
+          admin_note: string | null
+          age_max: number
+          age_min: number
+          area: string
+          contact_name: string | null
+          contact_phone: string
+          created_at: string
+          created_for: Database["public"]["Enums"]["match_created_for"]
+          display_name: string
+          education: string | null
+          expectations: string | null
+          family_info: string | null
+          height_cm: number | null
+          id: string
+          is_verified: boolean
+          looking_for: Database["public"]["Enums"]["match_looking_for"]
+          marital_status: Database["public"]["Enums"]["match_marital_status"]
+          photo_url: string | null
+          profession: string | null
+          status: Database["public"]["Enums"]["match_request_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_note?: string | null
+          age_max?: number
+          age_min?: number
+          area: string
+          contact_name?: string | null
+          contact_phone: string
+          created_at?: string
+          created_for?: Database["public"]["Enums"]["match_created_for"]
+          display_name: string
+          education?: string | null
+          expectations?: string | null
+          family_info?: string | null
+          height_cm?: number | null
+          id?: string
+          is_verified?: boolean
+          looking_for: Database["public"]["Enums"]["match_looking_for"]
+          marital_status?: Database["public"]["Enums"]["match_marital_status"]
+          photo_url?: string | null
+          profession?: string | null
+          status?: Database["public"]["Enums"]["match_request_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_note?: string | null
+          age_max?: number
+          age_min?: number
+          area?: string
+          contact_name?: string | null
+          contact_phone?: string
+          created_at?: string
+          created_for?: Database["public"]["Enums"]["match_created_for"]
+          display_name?: string
+          education?: string | null
+          expectations?: string | null
+          family_info?: string | null
+          height_cm?: number | null
+          id?: string
+          is_verified?: boolean
+          looking_for?: Database["public"]["Enums"]["match_looking_for"]
+          marital_status?: Database["public"]["Enums"]["match_marital_status"]
+          photo_url?: string | null
+          profession?: string | null
+          status?: Database["public"]["Enums"]["match_request_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      match_shortlists: {
+        Row: {
+          created_at: string
+          id: string
+          request_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          request_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          request_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "match_shortlists_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "match_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mosque_committee_members: {
         Row: {
           bio: string | null
@@ -3533,6 +3681,10 @@ export type Database = {
         Args: { _driver_id: string; _user_id: string }
         Returns: boolean
       }
+      owns_match_request: {
+        Args: { _request_id: string; _user_id: string }
+        Returns: boolean
+      }
       slugify_name: { Args: { input: string }; Returns: string }
     }
     Enums: {
@@ -3588,6 +3740,11 @@ export type Database = {
       govt_worker_status: "pending" | "approved" | "rejected" | "hidden"
       lead_status: "new" | "contacted" | "closed"
       listing_status: "pending" | "approved" | "rejected"
+      match_created_for: "self" | "guardian"
+      match_interest_status: "pending" | "accepted" | "declined" | "withdrawn"
+      match_looking_for: "groom" | "bride"
+      match_marital_status: "unmarried" | "divorced" | "widowed"
+      match_request_status: "pending" | "approved" | "rejected" | "hidden"
       mosque_committee_position:
         | "president"
         | "vice_president"
@@ -3832,6 +3989,11 @@ export const Constants = {
       govt_worker_status: ["pending", "approved", "rejected", "hidden"],
       lead_status: ["new", "contacted", "closed"],
       listing_status: ["pending", "approved", "rejected"],
+      match_created_for: ["self", "guardian"],
+      match_interest_status: ["pending", "accepted", "declined", "withdrawn"],
+      match_looking_for: ["groom", "bride"],
+      match_marital_status: ["unmarried", "divorced", "widowed"],
+      match_request_status: ["pending", "approved", "rejected", "hidden"],
       mosque_committee_position: [
         "president",
         "vice_president",
