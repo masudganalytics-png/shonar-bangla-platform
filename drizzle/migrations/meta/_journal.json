@@ -29,6 +29,13 @@
       "when": 1788579920436,
       "tag": "0003_add_association_group_type",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1788583127690,
+      "tag": "0004_create_khijirion_match",
+      "breakpoints": true
     }
   ]
 }
