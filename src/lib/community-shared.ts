@@ -31,6 +31,7 @@ export const GROUP_TYPE_LABEL_BN: Record<CommunityGroupType, string> = {
   friends: "বন্ধুদের গ্রুপ",
   sports_team: "স্পোর্টস টিম",
   neighborhood: "এলাকাভিত্তিক গ্রুপ",
+  association: "সমিতি",
   other: "অন্যান্য",
 };
 
