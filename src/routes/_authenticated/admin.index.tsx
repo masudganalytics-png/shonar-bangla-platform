@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Users, FileText, MessageSquare, Wallet, CircleCheck, BarChart3, Download, Car, Package } from "lucide-react";
+import { Users, FileText, MessageSquare, Wallet, CircleCheck, BarChart3, Download, Car, Package, Wifi } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -123,6 +123,19 @@ function AdminOverview() {
               <span>নির্মাণ সামগ্রী অর্ডার</span>
             </div>
             <Button asChild size="sm" variant="outline"><Link to="/admin/ukhiya-go/material-orders">খুলুন</Link></Button>
+          </Card>
+        </div>
+      </div>
+
+      <div className="mt-8">
+        <h2 className="mb-3 text-lg font-semibold">📶 ওয়াইফাই / ISP ব্যবস্থাপনা</h2>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Card className="p-4">
+            <div className="mb-2 flex items-center gap-2 text-sm font-medium">
+              <Wifi className="h-4 w-4 text-primary" />
+              <span>ISP, এলাকা ও প্যাকেজ</span>
+            </div>
+            <Button asChild size="sm" variant="outline"><Link to="/admin/isp">খুলুন</Link></Button>
           </Card>
         </div>
       </div>
