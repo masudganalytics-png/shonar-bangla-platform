@@ -265,7 +265,7 @@ export const getMatchContact = createServerFn({ method: "POST" })
       }
 
       const { data: isAdmin } = await (
-        context.supabase as {
+        context.supabase as unknown as {
           rpc: (fn: string, args: Record<string, unknown>) => Promise<{ data: boolean | null }>;
         }
       ).rpc("has_role", { _user_id: context.userId, _role: "admin" });
