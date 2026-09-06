@@ -36,6 +36,13 @@
       "when": 1788583127690,
       "tag": "0004_create_khijirion_match",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1788674965635,
+      "tag": "0005_grant_match_tables",
+      "breakpoints": true
     }
   ]
 }
