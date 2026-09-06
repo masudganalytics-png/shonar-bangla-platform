@@ -20,6 +20,7 @@ import { Route as RequestBloodRouteImport } from './routes/request-blood'
 import { Route as ProbashiRouteImport } from './routes/probashi'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as NoticesRouteImport } from './routes/notices'
+import { Route as MatchRouteImport } from './routes/match'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as IspRouteImport } from './routes/isp'
 import { Route as HelplineRouteImport } from './routes/helpline'
@@ -182,6 +183,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const NoticesRoute = NoticesRouteImport.update({
   id: '/notices',
   path: '/notices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MatchRoute = MatchRouteImport.update({
+  id: '/match',
+  path: '/match',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LegalRoute = LegalRouteImport.update({
@@ -768,6 +774,7 @@ export interface FileRoutesByFullPath {
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
+  '/match': typeof MatchRoute
   '/notices': typeof NoticesRoute
   '/privacy': typeof PrivacyRoute
   '/probashi': typeof ProbashiRouteWithChildren
@@ -883,6 +890,7 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
+  '/match': typeof MatchRoute
   '/notices': typeof NoticesRoute
   '/privacy': typeof PrivacyRoute
   '/request-blood': typeof RequestBloodRoute
@@ -997,6 +1005,7 @@ export interface FileRoutesById {
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
+  '/match': typeof MatchRoute
   '/notices': typeof NoticesRoute
   '/privacy': typeof PrivacyRoute
   '/probashi': typeof ProbashiRouteWithChildren
@@ -1119,6 +1128,7 @@ export interface FileRouteTypes {
     | '/helpline'
     | '/isp'
     | '/legal'
+    | '/match'
     | '/notices'
     | '/privacy'
     | '/probashi'
@@ -1234,6 +1244,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/helpline'
     | '/isp'
+    | '/match'
     | '/notices'
     | '/privacy'
     | '/request-blood'
@@ -1347,6 +1358,7 @@ export interface FileRouteTypes {
     | '/helpline'
     | '/isp'
     | '/legal'
+    | '/match'
     | '/notices'
     | '/privacy'
     | '/probashi'
@@ -1469,6 +1481,7 @@ export interface RootRouteChildren {
   HelplineRoute: typeof HelplineRoute
   IspRoute: typeof IspRoute
   LegalRoute: typeof LegalRouteWithChildren
+  MatchRoute: typeof MatchRoute
   NoticesRoute: typeof NoticesRoute
   PrivacyRoute: typeof PrivacyRoute
   ProbashiRoute: typeof ProbashiRouteWithChildren
@@ -1570,6 +1583,13 @@ declare module '@tanstack/react-router' {
       path: '/notices'
       fullPath: '/notices'
       preLoaderRoute: typeof NoticesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/match': {
+      id: '/match'
+      path: '/match'
+      fullPath: '/match'
+      preLoaderRoute: typeof MatchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/legal': {
@@ -2657,6 +2677,7 @@ const rootRouteChildren: RootRouteChildren = {
   HelplineRoute: HelplineRoute,
   IspRoute: IspRoute,
   LegalRoute: LegalRouteWithChildren,
+  MatchRoute: MatchRoute,
   NoticesRoute: NoticesRoute,
   PrivacyRoute: PrivacyRoute,
   ProbashiRoute: ProbashiRouteWithChildren,
