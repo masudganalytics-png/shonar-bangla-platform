@@ -40,6 +40,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as WorkersIndexRouteImport } from './routes/workers.index'
 import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
 import { Route as ProbashiIndexRouteImport } from './routes/probashi.index'
+import { Route as MatchIndexRouteImport } from './routes/match.index'
 import { Route as LegalIndexRouteImport } from './routes/legal.index'
 import { Route as GovtJobsIndexRouteImport } from './routes/govt-jobs.index'
 import { Route as CommunityIndexRouteImport } from './routes/community.index'
@@ -55,6 +56,8 @@ import { Route as TeachersAchievementsRouteImport } from './routes/teachers.achi
 import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
 import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register'
 import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
+import { Route as MatchNewRouteImport } from './routes/match.new'
+import { Route as MatchIdRouteImport } from './routes/match.$id'
 import { Route as LegalIdRouteImport } from './routes/legal.$id'
 import { Route as GovtJobsRegisterRouteImport } from './routes/govt-jobs.register'
 import { Route as GovtJobsIdRouteImport } from './routes/govt-jobs.$id'
@@ -284,6 +287,11 @@ const ProbashiIndexRoute = ProbashiIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ProbashiRoute,
 } as any)
+const MatchIndexRoute = MatchIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MatchRoute,
+} as any)
 const LegalIndexRoute = LegalIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -358,6 +366,16 @@ const ProbashiSlugRoute = ProbashiSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => ProbashiRoute,
+} as any)
+const MatchNewRoute = MatchNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => MatchRoute,
+} as any)
+const MatchIdRoute = MatchIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => MatchRoute,
 } as any)
 const LegalIdRoute = LegalIdRouteImport.update({
   id: '/$id',
@@ -774,7 +792,7 @@ export interface FileRoutesByFullPath {
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
-  '/match': typeof MatchRoute
+  '/match': typeof MatchRouteWithChildren
   '/notices': typeof NoticesRoute
   '/privacy': typeof PrivacyRoute
   '/probashi': typeof ProbashiRouteWithChildren
@@ -807,6 +825,8 @@ export interface FileRoutesByFullPath {
   '/govt-jobs/$id': typeof GovtJobsIdRoute
   '/govt-jobs/register': typeof GovtJobsRegisterRoute
   '/legal/$id': typeof LegalIdRoute
+  '/match/$id': typeof MatchIdRoute
+  '/match/new': typeof MatchNewRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
   '/teachers/$id': typeof TeachersIdRoute
@@ -822,6 +842,7 @@ export interface FileRoutesByFullPath {
   '/community/': typeof CommunityIndexRoute
   '/govt-jobs/': typeof GovtJobsIndexRoute
   '/legal/': typeof LegalIndexRoute
+  '/match/': typeof MatchIndexRoute
   '/probashi/': typeof ProbashiIndexRoute
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
@@ -890,7 +911,6 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
-  '/match': typeof MatchRoute
   '/notices': typeof NoticesRoute
   '/privacy': typeof PrivacyRoute
   '/request-blood': typeof RequestBloodRoute
@@ -918,6 +938,8 @@ export interface FileRoutesByTo {
   '/govt-jobs/$id': typeof GovtJobsIdRoute
   '/govt-jobs/register': typeof GovtJobsRegisterRoute
   '/legal/$id': typeof LegalIdRoute
+  '/match/$id': typeof MatchIdRoute
+  '/match/new': typeof MatchNewRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
   '/teachers/$id': typeof TeachersIdRoute
@@ -930,6 +952,7 @@ export interface FileRoutesByTo {
   '/community': typeof CommunityIndexRoute
   '/govt-jobs': typeof GovtJobsIndexRoute
   '/legal': typeof LegalIndexRoute
+  '/match': typeof MatchIndexRoute
   '/probashi': typeof ProbashiIndexRoute
   '/teachers': typeof TeachersIndexRoute
   '/workers': typeof WorkersIndexRoute
@@ -1005,7 +1028,7 @@ export interface FileRoutesById {
   '/helpline': typeof HelplineRoute
   '/isp': typeof IspRoute
   '/legal': typeof LegalRouteWithChildren
-  '/match': typeof MatchRoute
+  '/match': typeof MatchRouteWithChildren
   '/notices': typeof NoticesRoute
   '/privacy': typeof PrivacyRoute
   '/probashi': typeof ProbashiRouteWithChildren
@@ -1038,6 +1061,8 @@ export interface FileRoutesById {
   '/govt-jobs/$id': typeof GovtJobsIdRoute
   '/govt-jobs/register': typeof GovtJobsRegisterRoute
   '/legal/$id': typeof LegalIdRoute
+  '/match/$id': typeof MatchIdRoute
+  '/match/new': typeof MatchNewRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
   '/teachers/$id': typeof TeachersIdRoute
@@ -1053,6 +1078,7 @@ export interface FileRoutesById {
   '/community/': typeof CommunityIndexRoute
   '/govt-jobs/': typeof GovtJobsIndexRoute
   '/legal/': typeof LegalIndexRoute
+  '/match/': typeof MatchIndexRoute
   '/probashi/': typeof ProbashiIndexRoute
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
@@ -1161,6 +1187,8 @@ export interface FileRouteTypes {
     | '/govt-jobs/$id'
     | '/govt-jobs/register'
     | '/legal/$id'
+    | '/match/$id'
+    | '/match/new'
     | '/probashi/$slug'
     | '/probashi/register'
     | '/teachers/$id'
@@ -1176,6 +1204,7 @@ export interface FileRouteTypes {
     | '/community/'
     | '/govt-jobs/'
     | '/legal/'
+    | '/match/'
     | '/probashi/'
     | '/teachers/'
     | '/workers/'
@@ -1244,7 +1273,6 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/helpline'
     | '/isp'
-    | '/match'
     | '/notices'
     | '/privacy'
     | '/request-blood'
@@ -1272,6 +1300,8 @@ export interface FileRouteTypes {
     | '/govt-jobs/$id'
     | '/govt-jobs/register'
     | '/legal/$id'
+    | '/match/$id'
+    | '/match/new'
     | '/probashi/$slug'
     | '/probashi/register'
     | '/teachers/$id'
@@ -1284,6 +1314,7 @@ export interface FileRouteTypes {
     | '/community'
     | '/govt-jobs'
     | '/legal'
+    | '/match'
     | '/probashi'
     | '/teachers'
     | '/workers'
@@ -1391,6 +1422,8 @@ export interface FileRouteTypes {
     | '/govt-jobs/$id'
     | '/govt-jobs/register'
     | '/legal/$id'
+    | '/match/$id'
+    | '/match/new'
     | '/probashi/$slug'
     | '/probashi/register'
     | '/teachers/$id'
@@ -1406,6 +1439,7 @@ export interface FileRouteTypes {
     | '/community/'
     | '/govt-jobs/'
     | '/legal/'
+    | '/match/'
     | '/probashi/'
     | '/teachers/'
     | '/workers/'
@@ -1481,7 +1515,7 @@ export interface RootRouteChildren {
   HelplineRoute: typeof HelplineRoute
   IspRoute: typeof IspRoute
   LegalRoute: typeof LegalRouteWithChildren
-  MatchRoute: typeof MatchRoute
+  MatchRoute: typeof MatchRouteWithChildren
   NoticesRoute: typeof NoticesRoute
   PrivacyRoute: typeof PrivacyRoute
   ProbashiRoute: typeof ProbashiRouteWithChildren
@@ -1725,6 +1759,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProbashiIndexRouteImport
       parentRoute: typeof ProbashiRoute
     }
+    '/match/': {
+      id: '/match/'
+      path: '/'
+      fullPath: '/match/'
+      preLoaderRoute: typeof MatchIndexRouteImport
+      parentRoute: typeof MatchRoute
+    }
     '/legal/': {
       id: '/legal/'
       path: '/'
@@ -1829,6 +1870,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/probashi/$slug'
       preLoaderRoute: typeof ProbashiSlugRouteImport
       parentRoute: typeof ProbashiRoute
+    }
+    '/match/new': {
+      id: '/match/new'
+      path: '/new'
+      fullPath: '/match/new'
+      preLoaderRoute: typeof MatchNewRouteImport
+      parentRoute: typeof MatchRoute
+    }
+    '/match/$id': {
+      id: '/match/$id'
+      path: '/$id'
+      fullPath: '/match/$id'
+      preLoaderRoute: typeof MatchIdRouteImport
+      parentRoute: typeof MatchRoute
     }
     '/legal/$id': {
       id: '/legal/$id'
@@ -2563,6 +2618,20 @@ const LegalRouteChildren: LegalRouteChildren = {
 
 const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
 
+interface MatchRouteChildren {
+  MatchIdRoute: typeof MatchIdRoute
+  MatchNewRoute: typeof MatchNewRoute
+  MatchIndexRoute: typeof MatchIndexRoute
+}
+
+const MatchRouteChildren: MatchRouteChildren = {
+  MatchIdRoute: MatchIdRoute,
+  MatchNewRoute: MatchNewRoute,
+  MatchIndexRoute: MatchIndexRoute,
+}
+
+const MatchRouteWithChildren = MatchRoute._addFileChildren(MatchRouteChildren)
+
 interface ProbashiRouteChildren {
   ProbashiSlugRoute: typeof ProbashiSlugRoute
   ProbashiRegisterRoute: typeof ProbashiRegisterRoute
@@ -2677,7 +2746,7 @@ const rootRouteChildren: RootRouteChildren = {
   HelplineRoute: HelplineRoute,
   IspRoute: IspRoute,
   LegalRoute: LegalRouteWithChildren,
-  MatchRoute: MatchRoute,
+  MatchRoute: MatchRouteWithChildren,
   NoticesRoute: NoticesRoute,
   PrivacyRoute: PrivacyRoute,
   ProbashiRoute: ProbashiRouteWithChildren,
