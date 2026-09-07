@@ -57,6 +57,7 @@ import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
 import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register'
 import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
 import { Route as MatchNewRouteImport } from './routes/match.new'
+import { Route as MatchIdRouteImport } from './routes/match.$id'
 import { Route as LegalIdRouteImport } from './routes/legal.$id'
 import { Route as GovtJobsRegisterRouteImport } from './routes/govt-jobs.register'
 import { Route as GovtJobsIdRouteImport } from './routes/govt-jobs.$id'
@@ -369,6 +370,11 @@ const ProbashiSlugRoute = ProbashiSlugRouteImport.update({
 const MatchNewRoute = MatchNewRouteImport.update({
   id: '/new',
   path: '/new',
+  getParentRoute: () => MatchRoute,
+} as any)
+const MatchIdRoute = MatchIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
   getParentRoute: () => MatchRoute,
 } as any)
 const LegalIdRoute = LegalIdRouteImport.update({
@@ -819,6 +825,7 @@ export interface FileRoutesByFullPath {
   '/govt-jobs/$id': typeof GovtJobsIdRoute
   '/govt-jobs/register': typeof GovtJobsRegisterRoute
   '/legal/$id': typeof LegalIdRoute
+  '/match/$id': typeof MatchIdRoute
   '/match/new': typeof MatchNewRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
@@ -931,6 +938,7 @@ export interface FileRoutesByTo {
   '/govt-jobs/$id': typeof GovtJobsIdRoute
   '/govt-jobs/register': typeof GovtJobsRegisterRoute
   '/legal/$id': typeof LegalIdRoute
+  '/match/$id': typeof MatchIdRoute
   '/match/new': typeof MatchNewRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
@@ -1053,6 +1061,7 @@ export interface FileRoutesById {
   '/govt-jobs/$id': typeof GovtJobsIdRoute
   '/govt-jobs/register': typeof GovtJobsRegisterRoute
   '/legal/$id': typeof LegalIdRoute
+  '/match/$id': typeof MatchIdRoute
   '/match/new': typeof MatchNewRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
@@ -1178,6 +1187,7 @@ export interface FileRouteTypes {
     | '/govt-jobs/$id'
     | '/govt-jobs/register'
     | '/legal/$id'
+    | '/match/$id'
     | '/match/new'
     | '/probashi/$slug'
     | '/probashi/register'
@@ -1290,6 +1300,7 @@ export interface FileRouteTypes {
     | '/govt-jobs/$id'
     | '/govt-jobs/register'
     | '/legal/$id'
+    | '/match/$id'
     | '/match/new'
     | '/probashi/$slug'
     | '/probashi/register'
@@ -1411,6 +1422,7 @@ export interface FileRouteTypes {
     | '/govt-jobs/$id'
     | '/govt-jobs/register'
     | '/legal/$id'
+    | '/match/$id'
     | '/match/new'
     | '/probashi/$slug'
     | '/probashi/register'
@@ -1864,6 +1876,13 @@ declare module '@tanstack/react-router' {
       path: '/new'
       fullPath: '/match/new'
       preLoaderRoute: typeof MatchNewRouteImport
+      parentRoute: typeof MatchRoute
+    }
+    '/match/$id': {
+      id: '/match/$id'
+      path: '/$id'
+      fullPath: '/match/$id'
+      preLoaderRoute: typeof MatchIdRouteImport
       parentRoute: typeof MatchRoute
     }
     '/legal/$id': {
@@ -2600,11 +2619,13 @@ const LegalRouteChildren: LegalRouteChildren = {
 const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
 
 interface MatchRouteChildren {
+  MatchIdRoute: typeof MatchIdRoute
   MatchNewRoute: typeof MatchNewRoute
   MatchIndexRoute: typeof MatchIndexRoute
 }
 
 const MatchRouteChildren: MatchRouteChildren = {
+  MatchIdRoute: MatchIdRoute,
   MatchNewRoute: MatchNewRoute,
   MatchIndexRoute: MatchIndexRoute,
 }
