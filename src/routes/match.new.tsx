@@ -82,7 +82,26 @@ const EMPTY = {
   contact_phone: "",
 };
 
+type MatchRequestInput = {
+  display_name: string;
+  looking_for: "groom" | "bride";
+  created_for: "self" | "guardian";
+  age_min: number;
+  age_max: number;
+  area: string;
+  education: string | null;
+  profession: string | null;
+  marital_status: MatchMaritalStatus;
+  height_cm: number | null;
+  family_info: string | null;
+  expectations: string | null;
+  photo_url: string | null;
+  contact_name: string | null;
+  contact_phone: string;
+};
+
 function MatchNew() {
+
   const { isAuthenticated, loading } = useAuth();
   const navigate = useNavigate();
   const create = useServerFn(createMatchRequest);
