@@ -92,7 +92,8 @@ function MatchNew() {
   const set = (k: keyof typeof EMPTY, v: string) => setForm((p) => ({ ...p, [k]: v }));
 
   const mutation = useMutation({
-    mutationFn: (values: Parameters<typeof create>[0]["data"]) => create({ data: values }),
+    mutationFn: (values: MatchRequestInput) => create({ data: values }),
+
     onSuccess: () => {
       toast.success("রিকোয়েস্ট জমা হয়েছে — যাচাইয়ের পর প্রকাশিত হবে");
       navigate({ to: "/my-match" });
