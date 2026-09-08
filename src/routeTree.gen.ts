@@ -73,6 +73,7 @@ import { Route as BloodDonorsRegisterRouteImport } from './routes/blood-donors.r
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedMyMatchRouteImport } from './routes/_authenticated/my-match'
 import { Route as AuthenticatedMyBusinessRouteImport } from './routes/_authenticated/my-business'
 import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
@@ -452,6 +453,11 @@ const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMyMatchRoute = AuthenticatedMyMatchRouteImport.update({
+  id: '/my-match',
+  path: '/my-match',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedMyBusinessRoute = AuthenticatedMyBusinessRouteImport.update({
   id: '/my-business',
   path: '/my-business',
@@ -810,6 +816,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/insights': typeof AuthenticatedInsightsRoute
   '/my-business': typeof AuthenticatedMyBusinessRoute
+  '/my-match': typeof AuthenticatedMyMatchRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -924,6 +931,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/insights': typeof AuthenticatedInsightsRoute
   '/my-business': typeof AuthenticatedMyBusinessRoute
+  '/my-match': typeof AuthenticatedMyMatchRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -1046,6 +1054,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/insights': typeof AuthenticatedInsightsRoute
   '/_authenticated/my-business': typeof AuthenticatedMyBusinessRoute
+  '/_authenticated/my-match': typeof AuthenticatedMyMatchRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
@@ -1172,6 +1181,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/insights'
     | '/my-business'
+    | '/my-match'
     | '/profile'
     | '/reports'
     | '/settings'
@@ -1286,6 +1296,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/insights'
     | '/my-business'
+    | '/my-match'
     | '/profile'
     | '/reports'
     | '/settings'
@@ -1407,6 +1418,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/insights'
     | '/_authenticated/my-business'
+    | '/_authenticated/my-match'
     | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
@@ -1990,6 +2002,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/my-match': {
+      id: '/_authenticated/my-match'
+      path: '/my-match'
+      fullPath: '/my-match'
+      preLoaderRoute: typeof AuthenticatedMyMatchRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/my-business': {
       id: '/_authenticated/my-business'
       path: '/my-business'
@@ -2493,6 +2512,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedInsightsRoute: typeof AuthenticatedInsightsRoute
   AuthenticatedMyBusinessRoute: typeof AuthenticatedMyBusinessRoute
+  AuthenticatedMyMatchRoute: typeof AuthenticatedMyMatchRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
@@ -2505,6 +2525,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedInsightsRoute: AuthenticatedInsightsRoute,
   AuthenticatedMyBusinessRoute: AuthenticatedMyBusinessRoute,
+  AuthenticatedMyMatchRoute: AuthenticatedMyMatchRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
