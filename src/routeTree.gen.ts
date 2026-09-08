@@ -109,6 +109,7 @@ import { Route as AuthenticatedAdminTeachersRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_authenticated/admin.study-resources'
 import { Route as AuthenticatedAdminProbashiRouteImport } from './routes/_authenticated/admin.probashi'
 import { Route as AuthenticatedAdminMosquesRouteImport } from './routes/_authenticated/admin.mosques'
+import { Route as AuthenticatedAdminMatchRouteImport } from './routes/_authenticated/admin.match'
 import { Route as AuthenticatedAdminLegalRouteImport } from './routes/_authenticated/admin.legal'
 import { Route as AuthenticatedAdminIspRouteImport } from './routes/_authenticated/admin.isp'
 import { Route as AuthenticatedAdminGovtWorkersRouteImport } from './routes/_authenticated/admin.govt-workers'
@@ -642,6 +643,11 @@ const AuthenticatedAdminMosquesRoute =
     path: '/mosques',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminMatchRoute = AuthenticatedAdminMatchRouteImport.update({
+  id: '/match',
+  path: '/match',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedAdminLegalRoute = AuthenticatedAdminLegalRouteImport.update({
   id: '/legal',
   path: '/legal',
@@ -868,6 +874,7 @@ export interface FileRoutesByFullPath {
   '/admin/govt-workers': typeof AuthenticatedAdminGovtWorkersRoute
   '/admin/isp': typeof AuthenticatedAdminIspRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/admin/match': typeof AuthenticatedAdminMatchRoute
   '/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
@@ -979,6 +986,7 @@ export interface FileRoutesByTo {
   '/admin/govt-workers': typeof AuthenticatedAdminGovtWorkersRoute
   '/admin/isp': typeof AuthenticatedAdminIspRoute
   '/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/admin/match': typeof AuthenticatedAdminMatchRoute
   '/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
@@ -1106,6 +1114,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/govt-workers': typeof AuthenticatedAdminGovtWorkersRoute
   '/_authenticated/admin/isp': typeof AuthenticatedAdminIspRoute
   '/_authenticated/admin/legal': typeof AuthenticatedAdminLegalRoute
+  '/_authenticated/admin/match': typeof AuthenticatedAdminMatchRoute
   '/_authenticated/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/_authenticated/admin/probashi': typeof AuthenticatedAdminProbashiRoute
   '/_authenticated/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
@@ -1233,6 +1242,7 @@ export interface FileRouteTypes {
     | '/admin/govt-workers'
     | '/admin/isp'
     | '/admin/legal'
+    | '/admin/match'
     | '/admin/mosques'
     | '/admin/probashi'
     | '/admin/study-resources'
@@ -1344,6 +1354,7 @@ export interface FileRouteTypes {
     | '/admin/govt-workers'
     | '/admin/isp'
     | '/admin/legal'
+    | '/admin/match'
     | '/admin/mosques'
     | '/admin/probashi'
     | '/admin/study-resources'
@@ -1470,6 +1481,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/govt-workers'
     | '/_authenticated/admin/isp'
     | '/_authenticated/admin/legal'
+    | '/_authenticated/admin/match'
     | '/_authenticated/admin/mosques'
     | '/_authenticated/admin/probashi'
     | '/_authenticated/admin/study-resources'
@@ -2254,6 +2266,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminMosquesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/match': {
+      id: '/_authenticated/admin/match'
+      path: '/match'
+      fullPath: '/admin/match'
+      preLoaderRoute: typeof AuthenticatedAdminMatchRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/legal': {
       id: '/_authenticated/admin/legal'
       path: '/legal'
@@ -2441,6 +2460,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminGovtWorkersRoute: typeof AuthenticatedAdminGovtWorkersRoute
   AuthenticatedAdminIspRoute: typeof AuthenticatedAdminIspRoute
   AuthenticatedAdminLegalRoute: typeof AuthenticatedAdminLegalRoute
+  AuthenticatedAdminMatchRoute: typeof AuthenticatedAdminMatchRoute
   AuthenticatedAdminMosquesRoute: typeof AuthenticatedAdminMosquesRoute
   AuthenticatedAdminProbashiRoute: typeof AuthenticatedAdminProbashiRoute
   AuthenticatedAdminStudyResourcesRoute: typeof AuthenticatedAdminStudyResourcesRoute
@@ -2472,6 +2492,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminGovtWorkersRoute: AuthenticatedAdminGovtWorkersRoute,
   AuthenticatedAdminIspRoute: AuthenticatedAdminIspRoute,
   AuthenticatedAdminLegalRoute: AuthenticatedAdminLegalRoute,
+  AuthenticatedAdminMatchRoute: AuthenticatedAdminMatchRoute,
   AuthenticatedAdminMosquesRoute: AuthenticatedAdminMosquesRoute,
   AuthenticatedAdminProbashiRoute: AuthenticatedAdminProbashiRoute,
   AuthenticatedAdminStudyResourcesRoute: AuthenticatedAdminStudyResourcesRoute,
