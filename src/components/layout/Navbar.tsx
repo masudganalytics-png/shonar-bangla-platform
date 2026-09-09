@@ -31,6 +31,9 @@ export function Navbar() {
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [scrolled, setScrolled] = useState(false);
+  const { data: navSettings } = useNavSettings();
+  const visibleItems = NAV_ITEMS.filter((item) => navSettings?.[item.to] !== false);
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
