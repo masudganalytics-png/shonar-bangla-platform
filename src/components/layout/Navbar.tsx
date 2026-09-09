@@ -80,7 +80,7 @@ export function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {NAV_ITEMS.map((item) => {
+          {visibleItems.map((item) => {
             if (item.auth && !isAuthenticated) return null;
             const active = pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
             return (
@@ -175,7 +175,7 @@ export function Navbar() {
       {open && (
         <div className="border-t border-border/60 bg-background lg:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3">
-            {NAV_ITEMS.map((item) => {
+            {visibleItems.map((item) => {
               if (item.auth && !isAuthenticated) return null;
               return (
                 <Link
