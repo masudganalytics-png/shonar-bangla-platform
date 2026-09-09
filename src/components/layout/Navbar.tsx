@@ -19,22 +19,9 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 
-type NavItem = { to: string; label: string; auth?: boolean };
-const NAV_ITEMS: readonly NavItem[] = [
-  { to: "/", label: "হোম" },
-  { to: "/stats", label: "পরিসংখ্যান" },
-  { to: "/bills/new", label: "বিল জমা", auth: true },
-  { to: "/compare", label: "তুলনা", auth: true },
-  { to: "/calculator", label: "ক্যালকুলেটর" },
-  { to: "/isp", label: "ওয়াইফাই সেবা" },
-  { to: "/helpline", label: "হেল্পলাইন" },
-  { to: "/teachers", label: "শিক্ষক খুঁজুন" },
-  { to: "/workers", label: "কাজের লোক" },
-  { to: "/community", label: "কমিউনিটি" },
-  { to: "/probashi", label: "প্রবাসী কর্নার" },
-{ to: "/govt-jobs", label: "সরকারি চাকরিজীবী" },
-  { to: "/services/ukhiya-go", label: "🚗 UkhiyaGo" },
-];
+import { NAV_ITEMS } from "@/lib/nav-items";
+import { useNavSettings } from "@/hooks/use-nav-settings";
+
 
 
 export function Navbar() {
@@ -44,6 +31,9 @@ export function Navbar() {
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [scrolled, setScrolled] = useState(false);
+  const { data: navSettings } = useNavSettings();
+  const visibleItems = NAV_ITEMS.filter((item) => navSettings?.[item.to] !== false);
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -90,7 +80,7 @@ export function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {NAV_ITEMS.map((item) => {
+          {visibleItems.map((item) => {
             if (item.auth && !isAuthenticated) return null;
             const active = pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
             return (
@@ -185,7 +175,7 @@ export function Navbar() {
       {open && (
         <div className="border-t border-border/60 bg-background lg:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3">
-            {NAV_ITEMS.map((item) => {
+            {visibleItems.map((item) => {
               if (item.auth && !isAuthenticated) return null;
               return (
                 <Link
