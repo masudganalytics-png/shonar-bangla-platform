@@ -2260,6 +2260,24 @@ export type Database = {
         }
         Relationships: []
       }
+      nav_settings: {
+        Row: {
+          is_visible: boolean
+          item_key: string
+          updated_at: string
+        }
+        Insert: {
+          is_visible?: boolean
+          item_key: string
+          updated_at?: string
+        }
+        Update: {
+          is_visible?: boolean
+          item_key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       notifications: {
         Row: {
           body: string | null
