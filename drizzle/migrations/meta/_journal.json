@@ -43,6 +43,13 @@
       "when": 1788674965635,
       "tag": "0005_grant_match_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1788937833066,
+      "tag": "0006_match_public_requires_verified",
+      "breakpoints": true
     }
   ]
 }

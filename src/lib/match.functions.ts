@@ -118,11 +118,13 @@ export const sendMatchInterest = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: req, error: reqErr } = await supabaseAdmin
       .from("match_requests")
-      .select("id, user_id, status")
+      .select("id, user_id, status, is_verified")
       .eq("id", data.request_id)
       .maybeSingle();
     if (reqErr) throw new Error(reqErr.message);
-    if (!req || req.status !== "approved") throw new Error("এই রিকোয়েস্টটি এখন উপলব্ধ নয়");
+    if (!req || req.status !== "approved" || !req.is_verified)
+      throw new Error("এই রিকোয়েস্টটি এখন উপলব্ধ নয়");
+
     if (req.user_id === context.userId) throw new Error("নিজের রিকোয়েস্টে আগ্রহ প্রকাশ করা যায় না");
 
     const { data: existing } = await supabaseAdmin

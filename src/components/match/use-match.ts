@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { MATCH_PUBLIC_COLUMNS, type MatchRequest } from "@/lib/match-shared";
 
-/** Approved (published) match requests — public, contact columns excluded. */
+/** Approved + verified (published) match requests — public, contact columns excluded. */
 export function useApprovedMatchRequests() {
   return useQuery({
     queryKey: ["match", "approved"],
@@ -11,6 +11,7 @@ export function useApprovedMatchRequests() {
         .from("match_requests")
         .select(MATCH_PUBLIC_COLUMNS)
         .eq("status", "approved")
+        .eq("is_verified", true)
         .order("created_at", { ascending: false })
         .limit(500);
       if (error) throw new Error(error.message);
@@ -28,12 +29,14 @@ export function useMatchRequest(id: string) {
         .select(MATCH_PUBLIC_COLUMNS)
         .eq("id", id)
         .eq("status", "approved")
+        .eq("is_verified", true)
         .maybeSingle();
       if (error) throw new Error(error.message);
       return (data ?? null) as unknown as MatchRequest | null;
     },
   });
 }
+
 
 /** The signed-in user's shortlisted requests (ids). */
 export function useMyShortlist(userId: string | undefined) {
