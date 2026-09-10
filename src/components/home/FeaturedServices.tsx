@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { Phone, ArrowRight, Store, GraduationCap, Scale } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,25 +20,23 @@ const KIND_LABEL = { business: "ব্যবসা", teacher: "শিক্ষ�
 const KIND_ICON = { business: Store, teacher: GraduationCap, advocate: Scale } as const;
 
 export function FeaturedServices() {
-  const [items, setItems] = useState<Featured[] | null>(null);
-
-  useEffect(() => {
-    let alive = true;
-    (async () => {
+  const { data } = useQuery({
+    queryKey: ["home", "featured-services"],
+    queryFn: async (): Promise<Featured[]> => {
       const [b, t, a] = await Promise.all([
         supabase.from("businesses").select("id, slug, name, short_description, phone, logo_url, cover_url").eq("status", "approved").eq("is_featured", true).limit(3),
         supabase.from("teachers").select("id, full_name, subjects, photo_url").eq("status", "approved").eq("is_verified", true).limit(2),
         supabase.from("advocates").select("id, full_name, chamber_address, whatsapp, photo_url").eq("is_active", true).eq("is_verified", true).limit(2),
       ]);
-      if (!alive) return;
       const out: Featured[] = [];
       for (const r of (b.data ?? []) as any[]) out.push({ id: `b-${r.id}`, kind: "business", title: r.name, category: "স্থানীয় ব্যবসা", desc: r.short_description, phone: r.phone, image: r.cover_url || r.logo_url, href: `/business/${r.slug || r.id}` });
       for (const r of (t.data ?? []) as any[]) out.push({ id: `t-${r.id}`, kind: "teacher", title: r.full_name, category: "যাচাইকৃত শিক্ষক", desc: r.subjects, image: r.photo_url, href: `/teachers/${r.id}` });
       for (const r of (a.data ?? []) as any[]) out.push({ id: `a-${r.id}`, kind: "advocate", title: r.full_name, category: "আইনজীবী", desc: r.chamber_address, phone: r.whatsapp, image: r.photo_url, href: `/legal/${r.id}` });
-      setItems(out.slice(0, 6));
-    })();
-    return () => { alive = false; };
-  }, []);
+      return out.slice(0, 6);
+    },
+  });
+  const items = data ?? null;
+
 
   if (items !== null && items.length === 0) return null;
 
