@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { Menu, X, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun, ShieldCheck, GraduationCap } from "lucide-react";
+import { Menu, X, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun, ShieldCheck, GraduationCap, HeartHandshake } from "lucide-react";
 import logoAsset from "@/assets/khijirion-logo.png.asset.json";
 import { NotificationsBell } from "@/components/notifications/NotificationsBell";
 import { InstallAppButton } from "@/components/pwa/InstallAppButton";
