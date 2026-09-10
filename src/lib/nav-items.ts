@@ -15,4 +15,6 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { to: "/probashi", label: "প্রবাসী কর্নার" },
   { to: "/govt-jobs", label: "সরকারি চাকরিজীবী" },
   { to: "/services/ukhiya-go", label: "🚗 UkhiyaGo" },
+  { to: "/match", label: "💍 KHIJIRION Match" },
+  { to: "/my-match", label: "আমার ম্যাচ", auth: true },
 ];

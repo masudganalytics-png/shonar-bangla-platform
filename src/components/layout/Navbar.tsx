@@ -130,6 +130,11 @@ export function Navbar() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
+                  <Link to="/my-match">
+                    <HeartHandshake className="mr-2 h-4 w-4" /> আমার ম্যাচ
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link to="/settings">
                     <SettingsIcon className="mr-2 h-4 w-4" /> সেটিংস
                   </Link>
