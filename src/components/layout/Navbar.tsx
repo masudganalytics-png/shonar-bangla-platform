@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { Menu, X, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun, ShieldCheck, GraduationCap } from "lucide-react";
+import { Menu, X, LogOut, User as UserIcon, Settings as SettingsIcon, Moon, Sun, ShieldCheck, GraduationCap, HeartHandshake } from "lucide-react";
 import logoAsset from "@/assets/khijirion-logo.png.asset.json";
 import { NotificationsBell } from "@/components/notifications/NotificationsBell";
 import { InstallAppButton } from "@/components/pwa/InstallAppButton";
@@ -127,6 +127,11 @@ export function Navbar() {
                 <DropdownMenuItem asChild>
                   <Link to="/profile">
                     <UserIcon className="mr-2 h-4 w-4" /> প্রোফাইল
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/my-match">
+                    <HeartHandshake className="mr-2 h-4 w-4" /> আমার ম্যাচ
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
