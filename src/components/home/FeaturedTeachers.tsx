@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, GraduationCap, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -7,21 +7,20 @@ import { Card } from "@/components/ui/card";
 type Row = { id: string; full_name: string; subjects: string | null; phone?: string | null; photo_url: string | null };
 
 export function FeaturedTeachers() {
-  const [items, setItems] = useState<Row[] | null>(null);
-
-  useEffect(() => {
-    let alive = true;
-    (async () => {
+  const { data } = useQuery({
+    queryKey: ["home", "featured-teachers"],
+    queryFn: async (): Promise<Row[]> => {
       const { data } = await supabase
         .from("teachers")
         .select("id, full_name, subjects, photo_url")
         .eq("status", "approved")
         .order("created_at", { ascending: false })
         .limit(4);
-      if (alive) setItems((data ?? []) as Row[]);
-    })();
-    return () => { alive = false; };
-  }, []);
+      return (data ?? []) as Row[];
+    },
+  });
+  const items = data ?? null;
+
 
   if (items !== null && items.length === 0) return null;
 
