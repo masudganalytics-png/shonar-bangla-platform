@@ -54,6 +54,7 @@ import { Route as TeachersRegisterRouteImport } from './routes/teachers.register
 import { Route as TeachersNewsRouteImport } from './routes/teachers.news'
 import { Route as TeachersAchievementsRouteImport } from './routes/teachers.achievements'
 import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
+import { Route as ServicesReuseRouteImport } from './routes/services.reuse'
 import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register'
 import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
 import { Route as MatchNewRouteImport } from './routes/match.new'
@@ -359,6 +360,11 @@ const TeachersIdRoute = TeachersIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => TeachersRoute,
+} as any)
+const ServicesReuseRoute = ServicesReuseRouteImport.update({
+  id: '/services/reuse',
+  path: '/services/reuse',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ProbashiRegisterRoute = ProbashiRegisterRouteImport.update({
   id: '/register',
@@ -849,6 +855,7 @@ export interface FileRoutesByFullPath {
   '/match/new': typeof MatchNewRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
+  '/services/reuse': typeof ServicesReuseRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -965,6 +972,7 @@ export interface FileRoutesByTo {
   '/match/new': typeof MatchNewRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
+  '/services/reuse': typeof ServicesReuseRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/register': typeof TeachersRegisterRoute
   '/teachers/resources': typeof TeachersResourcesRoute
@@ -1091,6 +1099,7 @@ export interface FileRoutesById {
   '/match/new': typeof MatchNewRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
+  '/services/reuse': typeof ServicesReuseRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -1220,6 +1229,7 @@ export interface FileRouteTypes {
     | '/match/new'
     | '/probashi/$slug'
     | '/probashi/register'
+    | '/services/reuse'
     | '/teachers/$id'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -1336,6 +1346,7 @@ export interface FileRouteTypes {
     | '/match/new'
     | '/probashi/$slug'
     | '/probashi/register'
+    | '/services/reuse'
     | '/teachers/$id'
     | '/teachers/register'
     | '/teachers/resources'
@@ -1461,6 +1472,7 @@ export interface FileRouteTypes {
     | '/match/new'
     | '/probashi/$slug'
     | '/probashi/register'
+    | '/services/reuse'
     | '/teachers/$id'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -1564,6 +1576,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   UtilitiesRoute: typeof UtilitiesRoute
   WorkersRoute: typeof WorkersRouteWithChildren
+  ServicesReuseRoute: typeof ServicesReuseRoute
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
   ApiPublicStatsRoute: typeof ApiPublicStatsRoute
   ServicesUkhiyaGoBookingsRoute: typeof ServicesUkhiyaGoBookingsRoute
@@ -1893,6 +1906,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/teachers/$id'
       preLoaderRoute: typeof TeachersIdRouteImport
       parentRoute: typeof TeachersRoute
+    }
+    '/services/reuse': {
+      id: '/services/reuse'
+      path: '/services/reuse'
+      fullPath: '/services/reuse'
+      preLoaderRoute: typeof ServicesReuseRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/probashi/register': {
       id: '/probashi/register'
@@ -2822,6 +2842,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   UtilitiesRoute: UtilitiesRoute,
   WorkersRoute: WorkersRouteWithChildren,
+  ServicesReuseRoute: ServicesReuseRoute,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
   ApiPublicStatsRoute: ApiPublicStatsRoute,
   ServicesUkhiyaGoBookingsRoute: ServicesUkhiyaGoBookingsRoute,
