@@ -2508,6 +2508,104 @@ export type Database = {
         }
         Relationships: []
       }
+      reuse_listings: {
+        Row: {
+          admin_note: string | null
+          area: string | null
+          category: string
+          condition: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          listing_type: string
+          location: string
+          phone: string | null
+          price: number | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+          whatsapp: string | null
+        }
+        Insert: {
+          admin_note?: string | null
+          area?: string | null
+          category: string
+          condition: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          listing_type?: string
+          location: string
+          phone?: string | null
+          price?: number | null
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+          whatsapp?: string | null
+        }
+        Update: {
+          admin_note?: string | null
+          area?: string | null
+          category?: string
+          condition?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          listing_type?: string
+          location?: string
+          phone?: string | null
+          price?: number | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      reuse_reports: {
+        Row: {
+          created_at: string
+          details: string | null
+          id: string
+          listing_id: string
+          reason: string
+          reporter_id: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          details?: string | null
+          id?: string
+          listing_id: string
+          reason: string
+          reporter_id?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          details?: string | null
+          id?: string
+          listing_id?: string
+          reason?: string
+          reporter_id?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reuse_reports_listing_id_fkey"
+            columns: ["listing_id"]
+            isOneToOne: false
+            referencedRelation: "reuse_listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reviews: {
         Row: {
           comment: string | null

@@ -57,6 +57,13 @@
       "when": 1788937971845,
       "tag": "0007_create_nav_settings",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1789157469135,
+      "tag": "0008_create_reuse_listings",
+      "breakpoints": true
     }
   ]
 }
