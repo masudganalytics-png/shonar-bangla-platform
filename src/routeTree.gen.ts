@@ -85,6 +85,7 @@ import { Route as TeachersTuitionsIndexRouteImport } from './routes/teachers.tui
 import { Route as TeachersNewsIndexRouteImport } from './routes/teachers.news.index'
 import { Route as TeachersAchievementsIndexRouteImport } from './routes/teachers.achievements.index'
 import { Route as ServicesUkhiyaGoIndexRouteImport } from './routes/services.ukhiya-go.index'
+import { Route as ServicesReuseIndexRouteImport } from './routes/services.reuse.index'
 import { Route as CommunityMosquesIndexRouteImport } from './routes/community.mosques.index'
 import { Route as CommunityEventsIndexRouteImport } from './routes/community.events.index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
@@ -94,6 +95,9 @@ import { Route as TeachersNewsIdRouteImport } from './routes/teachers.news.$id'
 import { Route as TeachersAchievementsIdRouteImport } from './routes/teachers.achievements.$id'
 import { Route as ServicesUkhiyaGoSearchRouteImport } from './routes/services.ukhiya-go.search'
 import { Route as ServicesUkhiyaGoBookingsRouteImport } from './routes/services.ukhiya-go.bookings'
+import { Route as ServicesReuseMyListingsRouteImport } from './routes/services.reuse.my-listings'
+import { Route as ServicesReuseCreateRouteImport } from './routes/services.reuse.create'
+import { Route as ServicesReuseListingIdRouteImport } from './routes/services.reuse.$listingId'
 import { Route as CommunityUUserIdRouteImport } from './routes/community.u.$userId'
 import { Route as CommunityMosquesNewRouteImport } from './routes/community.mosques.new'
 import { Route as CommunityMosquesSlugRouteImport } from './routes/community.mosques.$slug'
@@ -517,6 +521,11 @@ const ServicesUkhiyaGoIndexRoute = ServicesUkhiyaGoIndexRouteImport.update({
   path: '/services/ukhiya-go/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesReuseIndexRoute = ServicesReuseIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ServicesReuseRoute,
+} as any)
 const CommunityMosquesIndexRoute = CommunityMosquesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -563,6 +572,21 @@ const ServicesUkhiyaGoBookingsRoute =
     path: '/services/ukhiya-go/bookings',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ServicesReuseMyListingsRoute = ServicesReuseMyListingsRouteImport.update({
+  id: '/my-listings',
+  path: '/my-listings',
+  getParentRoute: () => ServicesReuseRoute,
+} as any)
+const ServicesReuseCreateRoute = ServicesReuseCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => ServicesReuseRoute,
+} as any)
+const ServicesReuseListingIdRoute = ServicesReuseListingIdRouteImport.update({
+  id: '/$listingId',
+  path: '/$listingId',
+  getParentRoute: () => ServicesReuseRoute,
+} as any)
 const CommunityUUserIdRoute = CommunityUUserIdRouteImport.update({
   id: '/u/$userId',
   path: '/u/$userId',
@@ -855,7 +879,7 @@ export interface FileRoutesByFullPath {
   '/match/new': typeof MatchNewRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
-  '/services/reuse': typeof ServicesReuseRoute
+  '/services/reuse': typeof ServicesReuseRouteWithChildren
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -906,6 +930,9 @@ export interface FileRoutesByFullPath {
   '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
   '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
+  '/services/reuse/$listingId': typeof ServicesReuseListingIdRoute
+  '/services/reuse/create': typeof ServicesReuseCreateRoute
+  '/services/reuse/my-listings': typeof ServicesReuseMyListingsRoute
   '/services/ukhiya-go/bookings': typeof ServicesUkhiyaGoBookingsRoute
   '/services/ukhiya-go/search': typeof ServicesUkhiyaGoSearchRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
@@ -915,6 +942,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/community/events/': typeof CommunityEventsIndexRoute
   '/community/mosques/': typeof CommunityMosquesIndexRoute
+  '/services/reuse/': typeof ServicesReuseIndexRoute
   '/services/ukhiya-go/': typeof ServicesUkhiyaGoIndexRoute
   '/teachers/achievements/': typeof TeachersAchievementsIndexRoute
   '/teachers/news/': typeof TeachersNewsIndexRoute
@@ -972,7 +1000,6 @@ export interface FileRoutesByTo {
   '/match/new': typeof MatchNewRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
-  '/services/reuse': typeof ServicesReuseRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/register': typeof TeachersRegisterRoute
   '/teachers/resources': typeof TeachersResourcesRoute
@@ -1020,6 +1047,9 @@ export interface FileRoutesByTo {
   '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
   '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
+  '/services/reuse/$listingId': typeof ServicesReuseListingIdRoute
+  '/services/reuse/create': typeof ServicesReuseCreateRoute
+  '/services/reuse/my-listings': typeof ServicesReuseMyListingsRoute
   '/services/ukhiya-go/bookings': typeof ServicesUkhiyaGoBookingsRoute
   '/services/ukhiya-go/search': typeof ServicesUkhiyaGoSearchRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
@@ -1029,6 +1059,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/community/events': typeof CommunityEventsIndexRoute
   '/community/mosques': typeof CommunityMosquesIndexRoute
+  '/services/reuse': typeof ServicesReuseIndexRoute
   '/services/ukhiya-go': typeof ServicesUkhiyaGoIndexRoute
   '/teachers/achievements': typeof TeachersAchievementsIndexRoute
   '/teachers/news': typeof TeachersNewsIndexRoute
@@ -1099,7 +1130,7 @@ export interface FileRoutesById {
   '/match/new': typeof MatchNewRoute
   '/probashi/$slug': typeof ProbashiSlugRoute
   '/probashi/register': typeof ProbashiRegisterRoute
-  '/services/reuse': typeof ServicesReuseRoute
+  '/services/reuse': typeof ServicesReuseRouteWithChildren
   '/teachers/$id': typeof TeachersIdRoute
   '/teachers/achievements': typeof TeachersAchievementsRouteWithChildren
   '/teachers/news': typeof TeachersNewsRouteWithChildren
@@ -1150,6 +1181,9 @@ export interface FileRoutesById {
   '/community/mosques/$slug': typeof CommunityMosquesSlugRoute
   '/community/mosques/new': typeof CommunityMosquesNewRoute
   '/community/u/$userId': typeof CommunityUUserIdRoute
+  '/services/reuse/$listingId': typeof ServicesReuseListingIdRoute
+  '/services/reuse/create': typeof ServicesReuseCreateRoute
+  '/services/reuse/my-listings': typeof ServicesReuseMyListingsRoute
   '/services/ukhiya-go/bookings': typeof ServicesUkhiyaGoBookingsRoute
   '/services/ukhiya-go/search': typeof ServicesUkhiyaGoSearchRoute
   '/teachers/achievements/$id': typeof TeachersAchievementsIdRoute
@@ -1159,6 +1193,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/community/events/': typeof CommunityEventsIndexRoute
   '/community/mosques/': typeof CommunityMosquesIndexRoute
+  '/services/reuse/': typeof ServicesReuseIndexRoute
   '/services/ukhiya-go/': typeof ServicesUkhiyaGoIndexRoute
   '/teachers/achievements/': typeof TeachersAchievementsIndexRoute
   '/teachers/news/': typeof TeachersNewsIndexRoute
@@ -1280,6 +1315,9 @@ export interface FileRouteTypes {
     | '/community/mosques/$slug'
     | '/community/mosques/new'
     | '/community/u/$userId'
+    | '/services/reuse/$listingId'
+    | '/services/reuse/create'
+    | '/services/reuse/my-listings'
     | '/services/ukhiya-go/bookings'
     | '/services/ukhiya-go/search'
     | '/teachers/achievements/$id'
@@ -1289,6 +1327,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/community/events/'
     | '/community/mosques/'
+    | '/services/reuse/'
     | '/services/ukhiya-go/'
     | '/teachers/achievements/'
     | '/teachers/news/'
@@ -1346,7 +1385,6 @@ export interface FileRouteTypes {
     | '/match/new'
     | '/probashi/$slug'
     | '/probashi/register'
-    | '/services/reuse'
     | '/teachers/$id'
     | '/teachers/register'
     | '/teachers/resources'
@@ -1394,6 +1432,9 @@ export interface FileRouteTypes {
     | '/community/mosques/$slug'
     | '/community/mosques/new'
     | '/community/u/$userId'
+    | '/services/reuse/$listingId'
+    | '/services/reuse/create'
+    | '/services/reuse/my-listings'
     | '/services/ukhiya-go/bookings'
     | '/services/ukhiya-go/search'
     | '/teachers/achievements/$id'
@@ -1403,6 +1444,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/community/events'
     | '/community/mosques'
+    | '/services/reuse'
     | '/services/ukhiya-go'
     | '/teachers/achievements'
     | '/teachers/news'
@@ -1523,6 +1565,9 @@ export interface FileRouteTypes {
     | '/community/mosques/$slug'
     | '/community/mosques/new'
     | '/community/u/$userId'
+    | '/services/reuse/$listingId'
+    | '/services/reuse/create'
+    | '/services/reuse/my-listings'
     | '/services/ukhiya-go/bookings'
     | '/services/ukhiya-go/search'
     | '/teachers/achievements/$id'
@@ -1532,6 +1577,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/'
     | '/community/events/'
     | '/community/mosques/'
+    | '/services/reuse/'
     | '/services/ukhiya-go/'
     | '/teachers/achievements/'
     | '/teachers/news/'
@@ -1576,7 +1622,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   UtilitiesRoute: typeof UtilitiesRoute
   WorkersRoute: typeof WorkersRouteWithChildren
-  ServicesReuseRoute: typeof ServicesReuseRoute
+  ServicesReuseRoute: typeof ServicesReuseRouteWithChildren
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
   ApiPublicStatsRoute: typeof ApiPublicStatsRoute
   ServicesUkhiyaGoBookingsRoute: typeof ServicesUkhiyaGoBookingsRoute
@@ -2124,6 +2170,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesUkhiyaGoIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/reuse/': {
+      id: '/services/reuse/'
+      path: '/'
+      fullPath: '/services/reuse/'
+      preLoaderRoute: typeof ServicesReuseIndexRouteImport
+      parentRoute: typeof ServicesReuseRoute
+    }
     '/community/mosques/': {
       id: '/community/mosques/'
       path: '/'
@@ -2186,6 +2239,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/services/ukhiya-go/bookings'
       preLoaderRoute: typeof ServicesUkhiyaGoBookingsRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/services/reuse/my-listings': {
+      id: '/services/reuse/my-listings'
+      path: '/my-listings'
+      fullPath: '/services/reuse/my-listings'
+      preLoaderRoute: typeof ServicesReuseMyListingsRouteImport
+      parentRoute: typeof ServicesReuseRoute
+    }
+    '/services/reuse/create': {
+      id: '/services/reuse/create'
+      path: '/create'
+      fullPath: '/services/reuse/create'
+      preLoaderRoute: typeof ServicesReuseCreateRouteImport
+      parentRoute: typeof ServicesReuseRoute
+    }
+    '/services/reuse/$listingId': {
+      id: '/services/reuse/$listingId'
+      path: '/$listingId'
+      fullPath: '/services/reuse/$listingId'
+      preLoaderRoute: typeof ServicesReuseListingIdRouteImport
+      parentRoute: typeof ServicesReuseRoute
     }
     '/community/u/$userId': {
       id: '/community/u/$userId'
@@ -2813,6 +2887,24 @@ const WorkersRouteChildren: WorkersRouteChildren = {
 const WorkersRouteWithChildren =
   WorkersRoute._addFileChildren(WorkersRouteChildren)
 
+interface ServicesReuseRouteChildren {
+  ServicesReuseListingIdRoute: typeof ServicesReuseListingIdRoute
+  ServicesReuseCreateRoute: typeof ServicesReuseCreateRoute
+  ServicesReuseMyListingsRoute: typeof ServicesReuseMyListingsRoute
+  ServicesReuseIndexRoute: typeof ServicesReuseIndexRoute
+}
+
+const ServicesReuseRouteChildren: ServicesReuseRouteChildren = {
+  ServicesReuseListingIdRoute: ServicesReuseListingIdRoute,
+  ServicesReuseCreateRoute: ServicesReuseCreateRoute,
+  ServicesReuseMyListingsRoute: ServicesReuseMyListingsRoute,
+  ServicesReuseIndexRoute: ServicesReuseIndexRoute,
+}
+
+const ServicesReuseRouteWithChildren = ServicesReuseRoute._addFileChildren(
+  ServicesReuseRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -2842,7 +2934,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   UtilitiesRoute: UtilitiesRoute,
   WorkersRoute: WorkersRouteWithChildren,
-  ServicesReuseRoute: ServicesReuseRoute,
+  ServicesReuseRoute: ServicesReuseRouteWithChildren,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
   ApiPublicStatsRoute: ApiPublicStatsRoute,
   ServicesUkhiyaGoBookingsRoute: ServicesUkhiyaGoBookingsRoute,
