@@ -112,6 +112,7 @@ import { Route as AuthenticatedAdminTuitionRequestsRouteImport } from './routes/
 import { Route as AuthenticatedAdminTuitionApplicationsRouteImport } from './routes/_authenticated/admin.tuition-applications'
 import { Route as AuthenticatedAdminTeachersRouteImport } from './routes/_authenticated/admin.teachers'
 import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_authenticated/admin.study-resources'
+import { Route as AuthenticatedAdminReuseRouteImport } from './routes/_authenticated/admin.reuse'
 import { Route as AuthenticatedAdminProbashiRouteImport } from './routes/_authenticated/admin.probashi'
 import { Route as AuthenticatedAdminMosquesRouteImport } from './routes/_authenticated/admin.mosques'
 import { Route as AuthenticatedAdminMatchRouteImport } from './routes/_authenticated/admin.match'
@@ -662,6 +663,11 @@ const AuthenticatedAdminStudyResourcesRoute =
     path: '/study-resources',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminReuseRoute = AuthenticatedAdminReuseRouteImport.update({
+  id: '/reuse',
+  path: '/reuse',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedAdminProbashiRoute =
   AuthenticatedAdminProbashiRouteImport.update({
     id: '/probashi',
@@ -916,6 +922,7 @@ export interface FileRoutesByFullPath {
   '/admin/match': typeof AuthenticatedAdminMatchRoute
   '/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
+  '/admin/reuse': typeof AuthenticatedAdminReuseRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -1033,6 +1040,7 @@ export interface FileRoutesByTo {
   '/admin/match': typeof AuthenticatedAdminMatchRoute
   '/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/admin/probashi': typeof AuthenticatedAdminProbashiRoute
+  '/admin/reuse': typeof AuthenticatedAdminReuseRoute
   '/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -1167,6 +1175,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/match': typeof AuthenticatedAdminMatchRoute
   '/_authenticated/admin/mosques': typeof AuthenticatedAdminMosquesRoute
   '/_authenticated/admin/probashi': typeof AuthenticatedAdminProbashiRoute
+  '/_authenticated/admin/reuse': typeof AuthenticatedAdminReuseRoute
   '/_authenticated/admin/study-resources': typeof AuthenticatedAdminStudyResourcesRoute
   '/_authenticated/admin/teachers': typeof AuthenticatedAdminTeachersRoute
   '/_authenticated/admin/tuition-applications': typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -1301,6 +1310,7 @@ export interface FileRouteTypes {
     | '/admin/match'
     | '/admin/mosques'
     | '/admin/probashi'
+    | '/admin/reuse'
     | '/admin/study-resources'
     | '/admin/teachers'
     | '/admin/tuition-applications'
@@ -1418,6 +1428,7 @@ export interface FileRouteTypes {
     | '/admin/match'
     | '/admin/mosques'
     | '/admin/probashi'
+    | '/admin/reuse'
     | '/admin/study-resources'
     | '/admin/teachers'
     | '/admin/tuition-applications'
@@ -1551,6 +1562,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/match'
     | '/_authenticated/admin/mosques'
     | '/_authenticated/admin/probashi'
+    | '/_authenticated/admin/reuse'
     | '/_authenticated/admin/study-resources'
     | '/_authenticated/admin/teachers'
     | '/_authenticated/admin/tuition-applications'
@@ -2359,6 +2371,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminStudyResourcesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/reuse': {
+      id: '/_authenticated/admin/reuse'
+      path: '/reuse'
+      fullPath: '/admin/reuse'
+      preLoaderRoute: typeof AuthenticatedAdminReuseRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/probashi': {
       id: '/_authenticated/admin/probashi'
       path: '/probashi'
@@ -2578,6 +2597,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminMatchRoute: typeof AuthenticatedAdminMatchRoute
   AuthenticatedAdminMosquesRoute: typeof AuthenticatedAdminMosquesRoute
   AuthenticatedAdminProbashiRoute: typeof AuthenticatedAdminProbashiRoute
+  AuthenticatedAdminReuseRoute: typeof AuthenticatedAdminReuseRoute
   AuthenticatedAdminStudyResourcesRoute: typeof AuthenticatedAdminStudyResourcesRoute
   AuthenticatedAdminTeachersRoute: typeof AuthenticatedAdminTeachersRoute
   AuthenticatedAdminTuitionApplicationsRoute: typeof AuthenticatedAdminTuitionApplicationsRoute
@@ -2611,6 +2631,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminMatchRoute: AuthenticatedAdminMatchRoute,
   AuthenticatedAdminMosquesRoute: AuthenticatedAdminMosquesRoute,
   AuthenticatedAdminProbashiRoute: AuthenticatedAdminProbashiRoute,
+  AuthenticatedAdminReuseRoute: AuthenticatedAdminReuseRoute,
   AuthenticatedAdminStudyResourcesRoute: AuthenticatedAdminStudyResourcesRoute,
   AuthenticatedAdminTeachersRoute: AuthenticatedAdminTeachersRoute,
   AuthenticatedAdminTuitionApplicationsRoute:

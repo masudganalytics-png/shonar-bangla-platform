@@ -16,5 +16,6 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { to: "/govt-jobs", label: "সরকারি চাকরিজীবী" },
   { to: "/services/ukhiya-go", label: "🚗 UkhiyaGo" },
   { to: "/match", label: "💍 KHIJIRION Match" },
+  { to: "/services/reuse", label: "♻️ KHIJIRION Reuse" },
   { to: "/my-match", label: "আমার ম্যাচ", auth: true },
 ];
