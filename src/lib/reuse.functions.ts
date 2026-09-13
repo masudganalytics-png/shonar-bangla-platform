@@ -210,3 +210,46 @@ export const adminDeleteReuseListing = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
+
+export type ReuseReportRow = {
+  id: string;
+  listing_id: string;
+  reporter_id: string | null;
+  reason: string;
+  details: string | null;
+  status: string;
+  created_at: string;
+  listing_title: string | null;
+};
+
+export const listReuseReports = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }): Promise<ReuseReportRow[]> => {
+    await ensureAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await supabaseAdmin
+      .from("reuse_reports")
+      .select("id, listing_id, reporter_id, reason, details, status, created_at, reuse_listings(title)")
+      .order("created_at", { ascending: false })
+      .limit(300);
+    if (error) throw new Error(error.message);
+    return (data ?? []).map((r) => {
+      const row = r as Record<string, unknown>;
+      const listing = row.reuse_listings as { title?: string } | { title?: string }[] | null;
+      const title = Array.isArray(listing) ? listing[0]?.title : listing?.title;
+      return { ...(row as unknown as Omit<ReuseReportRow, "listing_title">), listing_title: title ?? null };
+    });
+  });
+
+export const updateReuseReportStatus = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) =>
+    z.object({ id: z.string().uuid(), status: z.enum(["open", "reviewed", "dismissed"]) }).parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    await ensureAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin.from("reuse_reports").update({ status: data.status }).eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
