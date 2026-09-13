@@ -24,10 +24,15 @@ import {
 import {
   REUSE_STATUS_META,
   REUSE_TYPE_META,
-  toBanglaReuseDigits,
-  formatReusePrice,
+  type ReuseListingType,
   type ReuseStatus,
 } from "@/lib/reuse-shared";
+import { toBanglaDigits } from "@/lib/bangla";
+
+function formatPrice(listingType: ReuseListingType, price: number | null): string {
+  if (listingType === "donation" || price == null) return "বিনামূল্যে";
+  return `৳${toBanglaDigits(price)}`;
+}
 
 export const Route = createFileRoute("/_authenticated/admin/reuse")({
   head: () => ({
