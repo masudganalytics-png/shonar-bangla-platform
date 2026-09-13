@@ -64,6 +64,13 @@
       "when": 1789157469135,
       "tag": "0008_create_reuse_listings",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1789280691556,
+      "tag": "0009_fix_reuse_guard_service_role",
+      "breakpoints": true
     }
   ]
 }
