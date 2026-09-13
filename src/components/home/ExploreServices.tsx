@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Droplet, Briefcase, GraduationCap, Store, Scale, Wifi, FileText, Calculator, Landmark, Car } from "lucide-react";
+import { ArrowRight, Droplet, Briefcase, GraduationCap, Store, Scale, Wifi, FileText, Calculator, Landmark, Car, Recycle } from "lucide-react";
 
 const SERVICES = [
   { to: "/services/ukhiya-go" as const, icon: Car, title: "🚗 UkhiyaGo", desc: "গাড়ি, CNG, বাইক ও ফেরত ট্রিপ বুকিং", tone: "text-primary bg-primary/10" },
