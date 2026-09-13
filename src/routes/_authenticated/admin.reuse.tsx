@@ -117,7 +117,7 @@ function AdminReuse() {
           তালিকাসমূহ
         </Button>
         <Button variant={tab === "reports" ? "default" : "outline"} size="sm" onClick={() => setTab("reports")}>
-          <Flag className="mr-1 h-4 w-4" /> রিপোর্ট{openCount > 0 ? ` (${toBanglaReuseDigits(openCount)})` : ""}
+          <Flag className="mr-1 h-4 w-4" /> রিপোর্ট{openCount > 0 ? ` (${toBanglaDigits(openCount)})` : ""}
         </Button>
       </div>
 
@@ -176,7 +176,7 @@ function AdminReuse() {
                 <SelectItem value="donation">দান</SelectItem>
               </SelectContent>
             </Select>
-            <span className="text-sm text-muted-foreground">{toBanglaReuseDigits(rows.length)} টি</span>
+            <span className="text-sm text-muted-foreground">{toBanglaDigits(rows.length)} টি</span>
           </div>
 
           {isLoading ? (
@@ -196,7 +196,7 @@ function AdminReuse() {
                       {l.title}
                     </Link>
                     <p className="text-sm text-muted-foreground">
-                      {l.category} • {l.condition} • {formatReusePrice(l.listing_type, l.price)}
+                      {l.category} • {l.condition} • {formatPrice(l.listing_type, l.price)}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       {l.location}{l.area ? ` • ${l.area}` : ""}{l.phone ? ` • ${l.phone}` : ""}
