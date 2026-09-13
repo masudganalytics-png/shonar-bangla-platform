@@ -12,6 +12,7 @@ const SERVICES = [
   { to: "/bills/new" as const, icon: FileText, title: "বিল সেবা", desc: "বিদ্যুৎ বিল যাচাই ও সংরক্ষণ", tone: "text-primary bg-primary/10" },
   { to: "/govt-jobs" as const, icon: Landmark, title: "সরকারি চাকরিজীবী", desc: "উখিয়ার যাচাইকৃত সরকারি চাকরিজীবী ডিরেক্টরি", tone: "text-primary bg-primary/10" },
   { to: "/calculator" as const, icon: Calculator, title: "ক্যালকুলেটর", desc: "ইউনিট থেকে বিল হিসাব", tone: "text-primary bg-primary/10" },
+  { to: "/services/reuse" as const, icon: Recycle, title: "♻️ KHIJIRION Reuse", desc: "ব্যবহৃত পণ্য কিনুন, বিক্রি করুন বা দান করুন।", tone: "text-primary bg-primary/10" },
 ];
 
 export function ExploreServices() {

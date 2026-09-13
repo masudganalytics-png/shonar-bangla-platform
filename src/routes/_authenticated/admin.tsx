@@ -24,6 +24,7 @@ const TABS: ReadonlyArray<{ to: string; label: string; icon: typeof Users; exact
   { to: "/admin/ukhiya-go/material-orders", label: "নির্মাণ অর্ডার", icon: Package },
   { to: "/admin/isp", label: "ওয়াইফাই / ISP", icon: Wifi },
   { to: "/admin/match", label: "ম্যাচ যাচাই", icon: Heart },
+  { to: "/admin/reuse", label: "Reuse মডারেশন", icon: Recycle },
   { to: "/admin/header", label: "হেডার মেনু", icon: Menu },
 ];
 
