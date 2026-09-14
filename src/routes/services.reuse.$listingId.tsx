@@ -119,7 +119,7 @@ function ReuseDetails() {
         <Card className="overflow-hidden border-border/60 bg-card/70 backdrop-blur-xl lg:col-span-3">
           <div className="aspect-[4/3] w-full bg-muted">
             {data.image_url ? (
-              <img src={data.image_url} alt={data.title} className="h-full w-full object-cover" />
+              <img src={data.image_url} alt={data.title} loading="lazy" className="h-full w-full object-cover" />
             ) : (
               <div className="grid h-full w-full place-items-center text-muted-foreground">
                 <ImageOff className="h-10 w-10" />
