@@ -22,13 +22,13 @@ import { BLOOD_GROUPS, GENDERS, UKHIYA_UNIONS, normalizePhone } from "@/lib/bloo
 export const Route = createFileRoute("/blood-donors/register")({
   head: () => ({
     meta: [
-      { title: "রক্তদাতা নিবন্ধন — উখিয়া সেবা" },
+      { title: "রক্তদাতা নিবন্ধন — KHIJIRION" },
       {
         name: "description",
         content:
           "উখিয়ার রক্তদাতা ডিরেক্টরিতে বিনামূল্যে নিবন্ধন করুন। জরুরি সময়ে জীবন বাঁচাতে সাহায্য করুন।",
       },
-      { property: "og:title", content: "রক্তদাতা হিসেবে যুক্ত হোন — উখিয়া সেবা" },
+      { property: "og:title", content: "রক্তদাতা হিসেবে যুক্ত হোন — KHIJIRION" },
       {
         property: "og:description",
         content: "সহজে নিবন্ধন করে আপনার এলাকার প্রয়োজনে রক্তদাতা হিসেবে যুক্ত হোন।",

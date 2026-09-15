@@ -7,7 +7,7 @@ import { Zap, Flame, Droplets, Wifi, Smartphone, Code2 } from "lucide-react";
 export const Route = createFileRoute("/utilities")({
   head: () => ({
     meta: [
-      { title: "ভবিষ্যৎ পরিষেবা — উখিয়া বিদ্যুৎ বিল" },
+      { title: "ভবিষ্যৎ পরিষেবা — KHIJIRION" },
       { name: "description", content: "গ্যাস, পানি, ইন্টারনেট বিল ও অ্যান্ড্রয়েড অ্যাপ API — শীঘ্রই আসছে।" },
       { property: "og:title", content: "ভবিষ্যৎ পরিষেবা" },
       { property: "og:description", content: "গ্যাস, পানি, ইন্টারনেট বিল ও অ্যান্ড্রয়েড অ্যাপ — শীঘ্রই।" },

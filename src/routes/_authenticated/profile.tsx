@@ -16,7 +16,7 @@ import { LocationPicker, type PickedLocation } from "@/components/location/Locat
 export const Route = createFileRoute("/_authenticated/profile")({
   head: () => ({
     meta: [
-      { title: "প্রোফাইল — উখিয়া বিদ্যুৎ বিল" },
+      { title: "প্রোফাইল — KHIJIRION" },
       { name: "description", content: "আপনার প্রোফাইল তথ্য দেখুন ও সম্পাদনা করুন।" },
       { name: "robots", content: "noindex" },
     ],

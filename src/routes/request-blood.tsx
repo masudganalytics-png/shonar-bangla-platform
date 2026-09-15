@@ -29,13 +29,13 @@ import {
 export const Route = createFileRoute("/request-blood")({
   head: () => ({
     meta: [
-      { title: "রক্তের জরুরি অনুরোধ — উখিয়া সেবা" },
+      { title: "রক্তের জরুরি অনুরোধ — KHIJIRION" },
       {
         name: "description",
         content:
           "রোগীর জন্য রক্তের প্রয়োজনে জরুরি অনুরোধ পাঠান। প্রশাসক অনুমোদনের পর দাতাদের কাছে পৌঁছাবে।",
       },
-      { property: "og:title", content: "রক্তের জরুরি অনুরোধ — উখিয়া সেবা" },
+      { property: "og:title", content: "রক্তের জরুরি অনুরোধ — KHIJIRION" },
       {
         property: "og:description",
         content: "উখিয়ার দাতাদের কাছে রক্তের জরুরি অনুরোধ পাঠান।",

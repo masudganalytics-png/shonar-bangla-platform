@@ -26,7 +26,7 @@ import {
 export const Route = createFileRoute("/community/mosques/new")({
   head: () => ({
     meta: [
-      { title: "মসজিদ ও সমাজের তথ্য যোগ করুন | উখিয়া সেবা" },
+      { title: "মসজিদ ও সমাজের তথ্য যোগ করুন | KHIJIRION" },
       {
         name: "description",
         content: "আপনার এলাকার মসজিদ, কমিটি, সমাজপতি, সমাজের সদস্য, দাতা ও উন্নয়ন কার্যক্রমের তথ্য যোগ করুন।",

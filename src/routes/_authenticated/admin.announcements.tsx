@@ -26,7 +26,7 @@ type Priority = typeof ANNOUNCEMENT_PRIORITIES[number]["value"];
 export const Route = createFileRoute("/_authenticated/admin/announcements")({
   head: () => ({
     meta: [
-      { title: "নোটিশ ব্যবস্থাপনা — উখিয়া বিদ্যুৎ বিল" },
+      { title: "নোটিশ ব্যবস্থাপনা — KHIJIRION" },
       { name: "description", content: "সরকারি নোটিশ, বিদ্যুৎ বিভ্রাট এবং ট্যারিফ পরিবর্তনের ঘোষণা ব্যবস্থাপনা।" },
       { name: "robots", content: "noindex" },
     ],

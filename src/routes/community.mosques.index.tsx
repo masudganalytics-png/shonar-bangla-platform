@@ -15,13 +15,13 @@ import type { MosqueListItem } from "@/lib/mosque-shared";
 export const Route = createFileRoute("/community/mosques/")({
   head: () => ({
     meta: [
-      { title: "মসজিদ ও সমাজ — কমিউনিটি | উখিয়া সেবা" },
+      { title: "মসজিদ ও সমাজ — কমিউনিটি | KHIJIRION" },
       {
         name: "description",
         content:
           "আপনার এলাকার মসজিদ, মসজিদ কমিটি, ইমাম-মুয়াজ্জিন, সমাজপতি, সমাজের সদস্য ও দাতা-সহযোগীদের তথ্য এক জায়গায় খুঁজুন।",
       },
-      { property: "og:title", content: "মসজিদ ও সমাজ — উখিয়া সেবা" },
+      { property: "og:title", content: "মসজিদ ও সমাজ — KHIJIRION" },
       { property: "og:description", content: "এলাকার মসজিদ কমিটি ও সমাজের তথ্য দেখুন।" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

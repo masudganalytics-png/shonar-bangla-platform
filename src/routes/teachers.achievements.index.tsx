@@ -10,7 +10,7 @@ import { EducationImage } from "@/components/teachers/EducationImage";
 
 export const Route = createFileRoute("/teachers/achievements/")({
   head: () => ({ meta: [
-    { title: "শিক্ষার্থীদের সাফল্য — উখিয়ার শিক্ষক খুঁজুন" },
+    { title: "শিক্ষার্থীদের সাফল্য — KHIJIRION" },
     { name: "description", content: "উখিয়া ও কক্সবাজারের শিক্ষার্থীদের অনন্য অর্জন ও সাফল্যের গল্প।" },
     { property: "og:title", content: "শিক্ষার্থীদের সাফল্য" },
     { property: "og:description", content: "স্থানীয় শিক্ষার্থীদের অর্জন।" },

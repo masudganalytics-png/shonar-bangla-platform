@@ -18,7 +18,7 @@ import { formatBanglaDate } from "@/lib/bangla";
 export const Route = createFileRoute("/_authenticated/reports")({
   head: () => ({
     meta: [
-      { title: "অভিযোগ — উখিয়া বিদ্যুৎ বিল" },
+      { title: "অভিযোগ — KHIJIRION" },
       { name: "description", content: "বিদ্যুৎ সংক্রান্ত অভিযোগ জমা দিন ও অগ্রগতি দেখুন।" },
       { name: "robots", content: "noindex" },
     ],

@@ -18,7 +18,7 @@ import { useAuth } from "@/hooks/use-auth";
 export const Route = createFileRoute("/teachers/register")({
   head: () => ({
     meta: [
-      { title: "শিক্ষক নিবন্ধন — উখিয়া বিদ্যুৎ বিল" },
+      { title: "শিক্ষক নিবন্ধন — KHIJIRION" },
       { name: "description", content: "আপনার দক্ষতা ও যোগ্যতা প্রকাশ করে বিনামূল্যে শিক্ষক ডিরেক্টরিতে নিবন্ধন করুন।" },
       { name: "robots", content: "noindex" },
     ],

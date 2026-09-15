@@ -53,7 +53,7 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="mailto:info@ukhiya-bidyut.gov.bd" className="inline-flex items-center gap-2 hover:text-primary">
+                <a href="mailto:support@khijirion.com" className="inline-flex items-center gap-2 hover:text-primary">
                   <Mail className="h-4 w-4" /> ইমেইল করুন
                 </a>
               </li>

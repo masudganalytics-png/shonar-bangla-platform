@@ -1,7 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 
 export const SITE_URL = "https://khijirion.com";
-export const SITE_BRAND = "উখিয়া সেবা";
+export const SITE_BRAND = "KHIJIRION";
 
 const FALLBACK_OG = `${SITE_URL}/favicon.png`;
 

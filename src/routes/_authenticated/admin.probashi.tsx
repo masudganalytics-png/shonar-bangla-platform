@@ -26,7 +26,7 @@ import {
 export const Route = createFileRoute("/_authenticated/admin/probashi")({
   head: () => ({
     meta: [
-      { title: "প্রবাসী কর্নার ব্যবস্থাপনা — অ্যাডমিন | উখিয়া সেবা" },
+      { title: "প্রবাসী কর্নার ব্যবস্থাপনা — অ্যাডমিন | KHIJIRION" },
       { name: "description", content: "প্রবাসী প্রোফাইল অনুমোদন, যাচাই ও ব্যবস্থাপনা।" },
       { name: "robots", content: "noindex" },
     ],

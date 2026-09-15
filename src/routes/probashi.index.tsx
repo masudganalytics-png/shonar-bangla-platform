@@ -26,7 +26,7 @@ import {
 export const Route = createFileRoute("/probashi/")({
   head: () => ({
     meta: [
-      { title: "প্রবাসী কর্নার — উখিয়ার প্রবাসীদের ডিরেক্টরি | উখিয়া সেবা" },
+      { title: "প্রবাসী কর্নার — উখিয়ার প্রবাসীদের ডিরেক্টরি | KHIJIRION" },
       {
         name: "description",
         content:

@@ -11,9 +11,9 @@ import type { CommunityRow } from "@/lib/community-shared";
 export const Route = createFileRoute("/community/clubs")({
   head: () => ({
     meta: [
-      { title: "সোশ্যাল ক্লাব — কমিউনিটি | উখিয়া সেবা" },
+      { title: "সোশ্যাল ক্লাব — কমিউনিটি | KHIJIRION" },
       { name: "description", content: "উখিয়ার সোশ্যাল ক্লাবগুলোর তালিকা। ক্লাবে যোগ দিন অথবা নিজের ক্লাব তৈরি করুন।" },
-      { property: "og:title", content: "সোশ্যাল ক্লাব — উখিয়া সেবা" },
+      { property: "og:title", content: "সোশ্যাল ক্লাব — KHIJIRION" },
       { property: "og:description", content: "এলাকার ক্লাবগুলোতে যোগ দিন।" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

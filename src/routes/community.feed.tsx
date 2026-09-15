@@ -19,12 +19,12 @@ import type { CommunityEventRow, CommunityPostRow, CommunityRow, FeedItem } from
 export const Route = createFileRoute("/community/feed")({
   head: () => ({
     meta: [
-      { title: "কমিউনিটি ফিড — উখিয়া সেবা" },
+      { title: "কমিউনিটি ফিড — KHIJIRION" },
       {
         name: "description",
         content: "উখিয়ার কমিউনিটি, ক্লাব ও গ্রুপের সব পোস্ট এবং পাবলিক অনুষ্ঠান একসাথে, সর্বশেষ আগে।",
       },
-      { property: "og:title", content: "কমিউনিটি ফিড — উখিয়া সেবা" },
+      { property: "og:title", content: "কমিউনিটি ফিড — KHIJIRION" },
       { property: "og:description", content: "স্থানীয় কমিউনিটির সর্বশেষ পোস্ট ও অনুষ্ঠান।" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

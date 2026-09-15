@@ -27,7 +27,7 @@ import {
 export const Route = createFileRoute("/community/new")({
   head: () => ({
     meta: [
-      { title: "নতুন কমিউনিটি, ক্লাব বা গ্রুপ তৈরি করুন | উখিয়া সেবা" },
+      { title: "নতুন কমিউনিটি, ক্লাব বা গ্রুপ তৈরি করুন | KHIJIRION" },
       { name: "description", content: "উখিয়ায় নিজের সোশ্যাল ক্লাব, ব্যাচ গ্রুপ বা এলাকাভিত্তিক কমিউনিটি বিনামূল্যে তৈরি করুন।" },
       { property: "og:title", content: "নতুন কমিউনিটি তৈরি করুন" },
       { property: "og:description", content: "ক্লাব, গ্রুপ বা কমিউনিটি খুলে সদস্য যুক্ত করুন।" },

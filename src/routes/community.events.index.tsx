@@ -21,7 +21,7 @@ import {
 export const Route = createFileRoute("/community/events/")({
   head: () => ({
     meta: [
-      { title: "আজিয়া মেলা হডে — স্থানীয় অনুষ্ঠান | উখিয়া সেবা" },
+      { title: "আজিয়া মেলা হডে — স্থানীয় অনুষ্ঠান | KHIJIRION" },
       {
         name: "description",
         content:

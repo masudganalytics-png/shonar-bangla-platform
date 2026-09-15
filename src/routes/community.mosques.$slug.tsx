@@ -42,12 +42,12 @@ import {
 export const Route = createFileRoute("/community/mosques/$slug")({
   head: ({ params }) => ({
     meta: [
-      { title: `মসজিদ ও সমাজ — ${params.slug} | উখিয়া সেবা` },
+      { title: `মসজিদ ও সমাজ — ${params.slug} | KHIJIRION` },
       {
         name: "description",
         content: "মসজিদের তথ্য, মসজিদ কমিটি, ইমাম ও মুয়াজ্জিন, আয়-ব্যয়ের হিসাব, কার্যক্রম ও সমাজের সদস্যদের তালিকা।",
       },
-      { property: "og:title", content: "মসজিদ ও সমাজ — উখিয়া সেবা" },
+      { property: "og:title", content: "মসজিদ ও সমাজ — KHIJIRION" },
       { property: "og:description", content: "মসজিদ কমিটি ও সমাজের তথ্য দেখুন।" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -15,7 +15,7 @@ import { useServerFn } from "@tanstack/react-start";
 export const Route = createFileRoute("/_authenticated/insights")({
   head: () => ({
     meta: [
-      { title: "AI বিশ্লেষণ — উখিয়া বিদ্যুৎ বিল" },
+      { title: "AI বিশ্লেষণ — KHIJIRION" },
       { name: "description", content: "AI-চালিত পূর্বাভাস, অস্বাভাবিক বিল সনাক্তকরণ এবং মাসিক অন্তর্দৃষ্টি।" },
       { name: "robots", content: "noindex" },
     ],

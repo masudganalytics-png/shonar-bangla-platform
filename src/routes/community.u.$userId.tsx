@@ -14,9 +14,9 @@ import type { CommunityEventRow, CommunityPublicProfile, CommunityRow } from "@/
 export const Route = createFileRoute("/community/u/$userId")({
   head: () => ({
     meta: [
-      { title: "সদস্য প্রোফাইল — কমিউনিটি | উখিয়া সেবা" },
+      { title: "সদস্য প্রোফাইল — কমিউনিটি | KHIJIRION" },
       { name: "description", content: "কমিউনিটি সদস্যের প্রোফাইল, যুক্ত ক্লাব-গ্রুপ এবং আয়োজিত অনুষ্ঠান দেখুন।" },
-      { property: "og:title", content: "সদস্য প্রোফাইল — উখিয়া সেবা" },
+      { property: "og:title", content: "সদস্য প্রোফাইল — KHIJIRION" },
       { property: "og:description", content: "কমিউনিটি সদস্যের কার্যক্রম।" },
       { property: "og:type", content: "profile" },
       { name: "twitter:card", content: "summary" },

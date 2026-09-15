@@ -28,7 +28,7 @@ type BillRow = Database["public"]["Tables"]["bills"]["Row"];
 export const Route = createFileRoute("/_authenticated/bills")({
   head: () => ({
     meta: [
-      { title: "বিল ইতিহাস — উখিয়া বিদ্যুৎ বিল" },
+      { title: "বিল ইতিহাস — KHIJIRION" },
       { name: "description", content: "আপনার জমা দেওয়া বিদ্যুৎ বিলের সম্পূর্ণ ইতিহাস দেখুন, সম্পাদনা ও মুছুন।" },
       { name: "robots", content: "noindex" },
     ],
