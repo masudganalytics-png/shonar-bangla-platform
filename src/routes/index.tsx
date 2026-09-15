@@ -21,7 +21,7 @@ import { LiveExchangeRates } from "@/components/home/LiveExchangeRates";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "উখিয়ার সব প্রয়োজনীয় সেবা, এক জায়গায় — উখিয়া সেবা" },
+      { title: "উখিয়ার সব প্রয়োজনীয় সেবা, এক জায়গায় — KHIJIRION" },
       {
         name: "description",
         content:

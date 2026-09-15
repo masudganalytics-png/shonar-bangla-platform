@@ -30,12 +30,12 @@ import {
 export const Route = createFileRoute("/probashi/register")({
   head: () => ({
     meta: [
-      { title: "প্রবাসী কর্নারে যুক্ত হোন — উখিয়া সেবা" },
+      { title: "প্রবাসী কর্নারে যুক্ত হোন — KHIJIRION" },
       {
         name: "description",
         content: "উখিয়ার প্রবাসী ডিরেক্টরিতে বিনামূল্যে নিবন্ধন করুন এবং এলাকার মানুষের সাথে সংযুক্ত থাকুন।",
       },
-      { property: "og:title", content: "প্রবাসী কর্নারে যুক্ত হোন — উখিয়া সেবা" },
+      { property: "og:title", content: "প্রবাসী কর্নারে যুক্ত হোন — KHIJIRION" },
       { property: "og:description", content: "প্রবাসী প্রোফাইল তৈরি করে এলাকার সাথে যুক্ত থাকুন।" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

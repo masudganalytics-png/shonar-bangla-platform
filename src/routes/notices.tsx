@@ -14,9 +14,9 @@ type CategoryFilter = "all" | typeof ANNOUNCEMENT_CATEGORIES[number]["value"];
 export const Route = createFileRoute("/notices")({
   head: () => ({
     meta: [
-      { title: "নোটিশ বোর্ড — উখিয়া বিদ্যুৎ বিল" },
+      { title: "নোটিশ বোর্ড — KHIJIRION" },
       { name: "description", content: "উখিয়া বিদ্যুৎ কর্তৃপক্ষের সর্বশেষ ঘোষণা, বিদ্যুৎ বিভ্রাট ও ট্যারিফ পরিবর্তনের নোটিশ।" },
-      { property: "og:title", content: "নোটিশ বোর্ড — উখিয়া বিদ্যুৎ বিল" },
+      { property: "og:title", content: "নোটিশ বোর্ড — KHIJIRION" },
       { property: "og:description", content: "সর্বশেষ সরকারি ঘোষণা, বিভ্রাট ও ট্যারিফ পরিবর্তন।" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

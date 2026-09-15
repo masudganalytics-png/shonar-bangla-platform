@@ -16,7 +16,7 @@ import { UNIONS } from "@/lib/bills-constants";
 export const Route = createFileRoute("/_authenticated/compare")({
   head: () => ({
     meta: [
-      { title: "বিল তুলনা — উখিয়া বিদ্যুৎ বিল" },
+      { title: "বিল তুলনা — KHIJIRION" },
       { name: "description", content: "এলাকার গড়ের সাথে আপনার বিদ্যুৎ বিল তুলনা করুন।" },
       { name: "robots", content: "noindex" },
     ],

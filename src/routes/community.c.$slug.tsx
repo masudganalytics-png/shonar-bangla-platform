@@ -34,9 +34,9 @@ import {
 export const Route = createFileRoute("/community/c/$slug")({
   head: () => ({
     meta: [
-      { title: "কমিউনিটি প্রোফাইল — উখিয়া সেবা" },
+      { title: "কমিউনিটি প্রোফাইল — KHIJIRION" },
       { name: "description", content: "উখিয়ার স্থানীয় কমিউনিটি, ক্লাব বা গ্রুপের পোস্ট, অনুষ্ঠান ও সদস্য তথ্য দেখুন।" },
-      { property: "og:title", content: "কমিউনিটি প্রোফাইল — উখিয়া সেবা" },
+      { property: "og:title", content: "কমিউনিটি প্রোফাইল — KHIJIRION" },
       { property: "og:description", content: "ক্লাব ও গ্রুপের পোস্ট এবং অনুষ্ঠান।" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

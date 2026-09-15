@@ -13,7 +13,7 @@ import { formatBanglaCurrency, toBanglaDigits } from "@/lib/bangla";
 export const Route = createFileRoute("/calculator")({
   head: () => ({
     meta: [
-      { title: "বিদ্যুৎ বিল ক্যালকুলেটর — উখিয়া বিদ্যুৎ বিল" },
+      { title: "বিদ্যুৎ বিল ক্যালকুলেটর — KHIJIRION" },
       {
         name: "description",
         content: "মাসিক ব্যবহৃত ইউনিটের ভিত্তিতে আপনার আনুমানিক বিদ্যুৎ বিল হিসাব করুন।",

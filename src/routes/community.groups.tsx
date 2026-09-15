@@ -11,9 +11,9 @@ import type { CommunityRow } from "@/lib/community-shared";
 export const Route = createFileRoute("/community/groups")({
   head: () => ({
     meta: [
-      { title: "গ্রুপ — কমিউনিটি | উখিয়া সেবা" },
+      { title: "গ্রুপ — কমিউনিটি | KHIJIRION" },
       { name: "description", content: "স্কুল ব্যাচ, কলেজ ব্যাচ, বন্ধুদের গ্রুপ, স্পোর্টস টিম ও এলাকাভিত্তিক গ্রুপ খুঁজুন।" },
-      { property: "og:title", content: "গ্রুপ — উখিয়া সেবা" },
+      { property: "og:title", content: "গ্রুপ — KHIJIRION" },
       { property: "og:description", content: "ব্যাচ, বন্ধু ও এলাকার গ্রুপে যোগ দিন।" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

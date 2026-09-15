@@ -17,7 +17,7 @@ import { WorkerPhoto } from "@/components/workers/WorkerPhoto";
 export const Route = createFileRoute("/workers/")({
   head: () => ({
     meta: [
-      { title: "কাজের লোক খুঁজুন — উখিয়া বিদ্যুৎ বিল" },
+      { title: "কাজের লোক খুঁজুন — KHIJIRION" },
       { name: "description", content: "আপনার এলাকার দক্ষ ইলেকট্রিশিয়ান, প্লাম্বার, রাজমিস্ত্রি ও অন্যান্য কাজের লোক সহজে খুঁজুন।" },
       { property: "og:title", content: "কাজের লোক খুঁজুন" },
       { property: "og:description", content: "আপনার এলাকার দক্ষ কাজের লোকের যাচাইকৃত তালিকা।" },

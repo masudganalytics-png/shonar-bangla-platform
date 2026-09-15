@@ -14,9 +14,9 @@ import { PRACTICE_AREAS, practiceAreaLabel, type AdvocateRow } from "@/lib/legal
 export const Route = createFileRoute("/legal/")({
   head: () => ({
     meta: [
-      { title: "আইনি সহায়তা — উখিয়া সেবা" },
+      { title: "আইনি সহায়তা — KHIJIRION" },
       { name: "description", content: "উখিয়ার যাচাইকৃত অ্যাডভোকেটদের সাথে সরাসরি WhatsApp-এ পরামর্শ নিন — জমি, পারিবারিক, ফৌজদারি ও দেওয়ানি মামলা।" },
-      { property: "og:title", content: "আইনি সহায়তা — উখিয়া সেবা" },
+      { property: "og:title", content: "আইনি সহায়তা — KHIJIRION" },
       { property: "og:description", content: "উখিয়ার যাচাইকৃত অ্যাডভোকেটদের সাথে WhatsApp-এ যোগাযোগ করুন।" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

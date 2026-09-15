@@ -31,7 +31,7 @@ const TABS: ReadonlyArray<{ to: string; label: string; icon: typeof Users; exact
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
     meta: [
-      { title: "অ্যাডমিন প্যানেল — উখিয়া বিদ্যুৎ বিল" },
+      { title: "অ্যাডমিন প্যানেল — KHIJIRION" },
       { name: "description", content: "ব্যবহারকারী, বিল ও অভিযোগ ব্যবস্থাপনা।" },
       { name: "robots", content: "noindex" },
     ],

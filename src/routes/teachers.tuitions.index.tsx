@@ -17,7 +17,7 @@ import { toBanglaDigits } from "@/lib/bangla";
 export const Route = createFileRoute("/teachers/tuitions/")({
   head: () => ({
     meta: [
-      { title: "টিউশনের সুযোগ — উখিয়ার শিক্ষক খুঁজুন" },
+      { title: "টিউশনের সুযোগ — KHIJIRION" },
       { name: "description", content: "উখিয়া ও কক্সবাজারের অনুমোদিত টিউশনের সুযোগ। শ্রেণি, বিষয় ও এলাকা অনুযায়ী খুঁজুন।" },
       { property: "og:title", content: "টিউশনের সুযোগ" },
       { property: "og:description", content: "আপনার জন্য নতুন টিউশন খুঁজুন।" },

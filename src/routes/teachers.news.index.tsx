@@ -12,7 +12,7 @@ import { EducationImage } from "@/components/teachers/EducationImage";
 
 export const Route = createFileRoute("/teachers/news/")({
   head: () => ({ meta: [
-    { title: "শিক্ষা সংবাদ — উখিয়ার শিক্ষক খুঁজুন" },
+    { title: "শিক্ষা সংবাদ — KHIJIRION" },
     { name: "description", content: "শিক্ষা সংক্রান্ত সাম্প্রতিক সংবাদ, বিজ্ঞপ্তি ও ঘোষণা।" },
     { property: "og:title", content: "শিক্ষা সংবাদ" },
     { property: "og:description", content: "সাম্প্রতিক শিক্ষা সংবাদ।" },

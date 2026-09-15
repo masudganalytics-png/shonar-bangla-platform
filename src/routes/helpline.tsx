@@ -8,9 +8,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/helpline")({
   head: () => ({
     meta: [
-      { title: "অভিযোগ কেন্দ্র ও হেল্পলাইন — উখিয়া বিদ্যুৎ বিল" },
+      { title: "অভিযোগ কেন্দ্র ও হেল্পলাইন — KHIJIRION" },
       { name: "description", content: "উখিয়া পল্লী বিদ্যুতের সরকারী অভিযোগ কেন্দ্রের ফোন নম্বর এবং বিদ্যুৎ সংক্রান্ত সাধারণ সমস্যার সমাধান নির্দেশিকা।" },
-      { property: "og:title", content: "অভিযোগ কেন্দ্র ও হেল্পলাইন — উখিয়া বিদ্যুৎ বিল" },
+      { property: "og:title", content: "অভিযোগ কেন্দ্র ও হেল্পলাইন — KHIJIRION" },
       { property: "og:description", content: "উখিয়া পল্লী বিদ্যুতের সরকারী অভিযোগ কেন্দ্রের ফোন নম্বর ও সমাধান নির্দেশিকা।" },
     ],
   }),

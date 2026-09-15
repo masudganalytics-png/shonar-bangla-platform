@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/_authenticated/bills/new")({
   head: () => ({
     meta: [
-      { title: "নতুন বিল জমা — উখিয়া বিদ্যুৎ বিল" },
+      { title: "নতুন বিল জমা — KHIJIRION" },
       { name: "description", content: "আপনার মাসিক বিদ্যুৎ বিল জমা দিন। বিলের ছবি থেকে AI স্বয়ংক্রিয়ভাবে তথ্য পড়বে।" },
       { name: "robots", content: "noindex" },
     ],

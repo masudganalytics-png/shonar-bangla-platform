@@ -12,9 +12,9 @@ import {
 export const Route = createFileRoute("/stats")({
   head: () => ({
     meta: [
-      { title: "লাইভ পরিসংখ্যান — উখিয়া বিদ্যুৎ বিল" },
+      { title: "লাইভ পরিসংখ্যান — KHIJIRION" },
       { name: "description", content: "উখিয়ার হাজারো গ্রাহকের বিদ্যুৎ বিলের রিয়েল-টাইম পরিসংখ্যান, ইউনিয়ন ভিত্তিক গড় ও প্রবণতা।" },
-      { property: "og:title", content: "লাইভ পরিসংখ্যান — উখিয়া বিদ্যুৎ বিল" },
+      { property: "og:title", content: "লাইভ পরিসংখ্যান — KHIJIRION" },
       { property: "og:description", content: "উখিয়ার হাজারো গ্রাহকের বিদ্যুৎ বিলের রিয়েল-টাইম পরিসংখ্যান।" },
     ],
   }),

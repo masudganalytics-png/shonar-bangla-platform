@@ -21,13 +21,13 @@ import {
 export const Route = createFileRoute("/blood-donors/")({
   head: () => ({
     meta: [
-      { title: "রক্তদাতা ডিরেক্টরি — উখিয়া সেবা" },
+      { title: "রক্তদাতা ডিরেক্টরি — KHIJIRION" },
       {
         name: "description",
         content:
           "উখিয়ার যাচাইকৃত রক্তদাতাদের তালিকা। রক্তের গ্রুপ, ইউনিয়ন ও অ্যাভেইলেবিলিটি অনুযায়ী খুঁজুন — ফোন বা WhatsApp-এ সরাসরি যোগাযোগ করুন।",
       },
-      { property: "og:title", content: "রক্তদাতা ডিরেক্টরি — উখিয়া সেবা" },
+      { property: "og:title", content: "রক্তদাতা ডিরেক্টরি — KHIJIRION" },
       {
         property: "og:description",
         content: "উখিয়ার যাচাইকৃত রক্তদাতাদের তালিকা। কয়েক মিনিটেই কাছের দাতা খুঁজুন।",

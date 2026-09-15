@@ -26,7 +26,7 @@ import {
 export const Route = createFileRoute("/community/events/new")({
   head: () => ({
     meta: [
-      { title: "নতুন অনুষ্ঠান যোগ করুন — কমিউনিটি | উখিয়া সেবা" },
+      { title: "নতুন অনুষ্ঠান যোগ করুন — কমিউনিটি | KHIJIRION" },
       { name: "description", content: "আপনার ওয়ালিমা, আকিকা, মিলাদ, ইফতার বা খেলার অনুষ্ঠান বিনামূল্যে প্রকাশ করুন।" },
       { property: "og:title", content: "নতুন অনুষ্ঠান যোগ করুন" },
       { property: "og:description", content: "উখিয়া সেবার কমিউনিটিতে আপনার অনুষ্ঠান জানান।" },

@@ -85,14 +85,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "theme-color", content: "#1565C0" },
-      { title: "উখিয়া সেবা — উখিয়ার সকল ডিজিটাল সেবা, এক জায়গায়" },
+      { name: "theme-color", content: "#E1B94E" },
+      { title: "KHIJIRION — উখিয়ার সকল ডিজিটাল সেবা, এক জায়গায়" },
       {
         name: "description",
         content:
           "বিদ্যুৎ বিল, গ্যাস বিল, পানি বিল, মোবাইল রিচার্জ, প্রয়োজনীয় সরকারি ওয়েবসাইট, স্থানীয় সেবা, চাকরির খবর, টেন্ডার, জরুরি নম্বর এবং আরও অনেক কিছু—সব এক প্ল্যাটফর্মে।",
       },
-      { property: "og:title", content: "উখিয়া সেবা" },
+      { property: "og:title", content: "KHIJIRION" },
       {
         property: "og:description",
         content: "উখিয়ার সকল ডিজিটাল সেবা, এক জায়গায়।",
@@ -103,12 +103,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "google-site-verification",
         content: "Za0Ll1xFFtxBVpqx3jgGBjhKUHIMru6ZpyxNJjOjsHw",
       },
-      { name: "application-name", content: "উখিয়া সেবা" },
+      { name: "application-name", content: "KHIJIRION" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
-      { name: "apple-mobile-web-app-title", content: "উখিয়া সেবা" },
+      { name: "apple-mobile-web-app-title", content: "KHIJIRION" },
       { name: "mobile-web-app-capable", content: "yes" },
-      { name: "msapplication-TileColor", content: "#1565C0" },
+      { name: "msapplication-TileColor", content: "#E1B94E" },
       { name: "msapplication-TileImage", content: "/pwa-192x192.png" },
     ],
     links: [

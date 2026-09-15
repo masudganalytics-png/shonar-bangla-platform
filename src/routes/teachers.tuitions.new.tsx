@@ -16,7 +16,7 @@ import { submitTuitionRequest } from "@/lib/education.functions";
 
 export const Route = createFileRoute("/teachers/tuitions/new")({
   head: () => ({ meta: [
-    { title: "টিউশন খুঁজছি (অভিভাবক ফর্ম) — উখিয়ার শিক্ষক খুঁজুন" },
+    { title: "টিউশন খুঁজছি (অভিভাবক ফর্ম) — KHIJIRION" },
     { name: "description", content: "সন্তানের জন্য উপযুক্ত টিউটর খুঁজতে অনুরোধ জমা দিন। অ্যাডমিন যাচাই করে প্রকাশ করবে।" },
     { name: "robots", content: "noindex" },
   ] }),

@@ -16,13 +16,13 @@ import { EVENT_CATEGORY_LABEL_BN } from "@/lib/community-shared";
 export const Route = createFileRoute("/community/")({
   head: () => ({
     meta: [
-      { title: "কমিউনিটি — উখিয়া সেবা" },
+      { title: "কমিউনিটি — KHIJIRION" },
       {
         name: "description",
         content:
           "উখিয়ার স্থানীয় কমিউনিটি, সোশ্যাল ক্লাব, গ্রুপ ও অনুষ্ঠান এক জায়গায়। ওয়ালিমা, আকিকা, মিলাদ, ইফতার, খেলা ও মেলার খবর জানুন।",
       },
-      { property: "og:title", content: "কমিউনিটি — উখিয়া সেবা" },
+      { property: "og:title", content: "কমিউনিটি — KHIJIRION" },
       { property: "og:description", content: "স্থানীয় ক্লাব, গ্রুপ ও অনুষ্ঠানের কমিউনিটি প্ল্যাটফর্ম।" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

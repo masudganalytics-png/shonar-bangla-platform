@@ -15,7 +15,7 @@ import { EducationImage } from "@/components/teachers/EducationImage";
 
 export const Route = createFileRoute("/teachers/resources")({
   head: () => ({ meta: [
-    { title: "শিক্ষা রিসোর্স — উখিয়ার শিক্ষক খুঁজুন" },
+    { title: "শিক্ষা রিসোর্স — KHIJIRION" },
     { name: "description", content: "শিক্ষার্থীদের জন্য বিনামূল্যে গাইড, ভিডিও, PDF ও ওয়েবসাইট।" },
     { property: "og:title", content: "শিক্ষা রিসোর্স" },
     { property: "og:description", content: "সব ক্লাসের বিনামূল্যের রিসোর্স।" },

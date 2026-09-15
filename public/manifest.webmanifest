@@ -1,13 +1,13 @@
 {
-  "name": "উখিয়া সেবা",
-  "short_name": "উখিয়া সেবা",
+  "name": "KHIJIRION",
+  "short_name": "KHIJIRION",
   "description": "উখিয়ার সকল ডিজিটাল সেবা, এক জায়গায়।",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0b1220",
-  "theme_color": "#1565C0",
+  "theme_color": "#E1B94E",
   "lang": "bn",
   "dir": "ltr",
   "icons": [

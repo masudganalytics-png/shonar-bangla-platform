@@ -14,7 +14,7 @@ type BillRow = Database["public"]["Tables"]["bills"]["Row"];
 export const Route = createFileRoute("/_authenticated/bills/$id/edit")({
   head: () => ({
     meta: [
-      { title: "বিল সম্পাদনা — উখিয়া বিদ্যুৎ বিল" },
+      { title: "বিল সম্পাদনা — KHIJIRION" },
       { name: "robots", content: "noindex" },
     ],
   }),

@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 export const Route = createFileRoute("/_authenticated/settings")({
   head: () => ({
     meta: [
-      { title: "সেটিংস — উখিয়া বিদ্যুৎ বিল" },
+      { title: "সেটিংস — KHIJIRION" },
       { name: "description", content: "থিম, বিজ্ঞপ্তি ও অ্যাকাউন্ট সেটিংস।" },
       { name: "robots", content: "noindex" },
     ],

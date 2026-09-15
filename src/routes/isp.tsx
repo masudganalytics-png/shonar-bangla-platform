@@ -17,7 +17,7 @@ import { ISP_AREAS } from "@/lib/isp-shared";
 export const Route = createFileRoute("/isp")({
   head: () => ({
     meta: [
-      { title: "এরিয়াভিত্তিক ওয়াইফাই সেবা — উখিয়া বিদ্যুৎ বিল" },
+      { title: "এরিয়াভিত্তিক ওয়াইফাই সেবা — KHIJIRION" },
       {
         name: "description",
         content:

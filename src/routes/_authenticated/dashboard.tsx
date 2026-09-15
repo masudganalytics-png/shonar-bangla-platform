@@ -8,7 +8,7 @@ import { toBanglaDigits, formatBanglaCurrency } from "@/lib/bangla";
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
-      { title: "ড্যাশবোর্ড — উখিয়া বিদ্যুৎ বিল" },
+      { title: "ড্যাশবোর্ড — KHIJIRION" },
       { name: "description", content: "আপনার বিদ্যুৎ বিলের সারাংশ, বকেয়া ও পরিসংখ্যান।" },
       { name: "robots", content: "noindex" },
     ],

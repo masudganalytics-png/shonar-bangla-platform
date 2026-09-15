@@ -17,7 +17,7 @@ import { useAuth } from "@/hooks/use-auth";
 export const Route = createFileRoute("/workers/register")({
   head: () => ({
     meta: [
-      { title: "কাজের লোক নিবন্ধন — উখিয়া বিদ্যুৎ বিল" },
+      { title: "কাজের লোক নিবন্ধন — KHIJIRION" },
       { name: "description", content: "আপনার দক্ষতা প্রকাশ করে বিনামূল্যে ডিরেক্টরিতে নিবন্ধন করুন।" },
       { name: "robots", content: "noindex" },
     ],

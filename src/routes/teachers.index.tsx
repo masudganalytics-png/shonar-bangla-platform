@@ -18,7 +18,7 @@ import { EducationSubNav } from "@/components/teachers/EducationSubNav";
 export const Route = createFileRoute("/teachers/")({
   head: () => ({
     meta: [
-      { title: "উখিয়ার শিক্ষক খুঁজুন — উখিয়া বিদ্যুৎ বিল" },
+      { title: "উখিয়ার শিক্ষক খুঁজুন — KHIJIRION" },
       { name: "description", content: "উখিয়ার যাচাইকৃত শিক্ষক, টিউটর ও প্রশিক্ষকদের ফ্রি ডিরেক্টরি। বিষয়, উপজেলা ও এলাকা অনুযায়ী খুঁজুন।" },
       { property: "og:title", content: "উখিয়ার শিক্ষক খুঁজুন" },
       { property: "og:description", content: "উখিয়ার যাচাইকৃত শিক্ষক ও টিউটরদের তালিকা।" },

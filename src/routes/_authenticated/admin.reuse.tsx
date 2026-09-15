@@ -37,7 +37,7 @@ function formatPrice(listingType: ReuseListingType, price: number | null): strin
 export const Route = createFileRoute("/_authenticated/admin/reuse")({
   head: () => ({
     meta: [
-      { title: "KHIJIRION Reuse ব্যবস্থাপনা — অ্যাডমিন | উখিয়া সেবা" },
+      { title: "KHIJIRION Reuse ব্যবস্থাপনা — অ্যাডমিন | KHIJIRION" },
       { name: "description", content: "ব্যবহৃত পণ্যের তালিকা অনুমোদন ও মডারেশন।" },
       { name: "robots", content: "noindex" },
     ],

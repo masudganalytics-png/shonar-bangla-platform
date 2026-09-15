@@ -40,12 +40,12 @@ import { formatBanglaDate } from "@/lib/bangla";
 export const Route = createFileRoute("/probashi/$slug")({
   head: () => ({
     meta: [
-      { title: "প্রবাসী প্রোফাইল — প্রবাসী কর্নার | উখিয়া সেবা" },
+      { title: "প্রবাসী প্রোফাইল — প্রবাসী কর্নার | KHIJIRION" },
       {
         name: "description",
         content: "উখিয়ার প্রবাসী সদস্যের প্রোফাইল — দেশ, শহর, পেশা এবং দেশে ফেরার সম্ভাব্য তারিখ।",
       },
-      { property: "og:title", content: "প্রবাসী প্রোফাইল — উখিয়া সেবা" },
+      { property: "og:title", content: "প্রবাসী প্রোফাইল — KHIJIRION" },
       { property: "og:description", content: "উখিয়ার প্রবাসী সদস্যের প্রোফাইল দেখুন।" },
       { property: "og:type", content: "profile" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -208,7 +208,7 @@ function ProbashiProfilePage() {
           </div>
 
           <div className="mt-6 border-t border-border/60 pt-4">
-            <ShareButtons title={`${data.full_name} — প্রবাসী কর্নার | উখিয়া সেবা`} />
+            <ShareButtons title={`${data.full_name} — প্রবাসী কর্নার | KHIJIRION`} />
           </div>
         </div>
       </Card>
