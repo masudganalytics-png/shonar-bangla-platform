@@ -141,6 +141,8 @@ export function LiveExchangeRates() {
   const { data, isLoading, isError } = useExchangeRates();
   const rates = data ?? [];
 
+  if (!isLoading && !isError && rates.length === 0) return null;
+
   return (
     <section
       aria-labelledby="exchange-rates-heading"

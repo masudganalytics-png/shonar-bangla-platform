@@ -184,6 +184,9 @@ function BusinessDirectory() {
         <Card className="p-10 text-center">
           <Filter className="mx-auto h-10 w-10 text-muted-foreground" />
           <p className="mt-3 text-sm text-muted-foreground">এই ফিল্টারে কোন ব্যবসা পাওয়া যায়নি।</p>
+          <Button asChild className="mt-5">
+            <Link to="/business/register"><Plus className="mr-2 h-4 w-4" /> আপনার ব্যবসা নিবন্ধন করুন</Link>
+          </Button>
         </Card>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

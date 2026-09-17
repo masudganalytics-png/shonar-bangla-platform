@@ -157,9 +157,16 @@ function DonorDirectory() {
       {donorsQ.isLoading ? (
         <p className="py-16 text-center text-sm text-muted-foreground">লোড হচ্ছে…</p>
       ) : list.length === 0 ? (
-        <p className="py-16 text-center text-sm text-muted-foreground">
-          কোনো দাতা পাওয়া যায়নি। ফিল্টার পরিবর্তন করে দেখুন।
-        </p>
+        <Card className="p-10 text-center">
+          <p className="text-sm text-muted-foreground">
+            কোনো দাতা পাওয়া যায়নি। ফিল্টার পরিবর্তন করে দেখুন।
+          </p>
+          <Button asChild className="mt-5 bg-red-600 hover:bg-red-700">
+            <Link to="/blood-donors/register">
+              <UserPlus className="mr-2 h-4 w-4" /> প্রথম রক্তদাতা হিসেবে নিবন্ধন করুন
+            </Link>
+          </Button>
+        </Card>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((d) => (

@@ -54,6 +54,8 @@ export function TodaysHighlights() {
     return () => { alive = false; };
   }, []);
 
+  if (stats !== null && stats.every((stat) => stat.value === 0)) return null;
+
   return (
     <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6" aria-label="আজকের হাইলাইট">
       <div className="mb-7">
