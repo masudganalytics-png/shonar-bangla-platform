@@ -119,8 +119,15 @@ function TeachersDirectory() {
           {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="h-56" />)}
         </div>
       ) : filtered.length === 0 ? (
-        <Card className="p-8 text-center text-sm text-muted-foreground">
-          কোনো শিক্ষক পাওয়া যায়নি। ফিল্টার পরিবর্তন করে দেখুন অথবা নতুন নিবন্ধনের জন্য অপেক্ষা করুন।
+        <Card className="p-8 text-center">
+          <p className="text-sm text-muted-foreground">
+            কোনো শিক্ষক পাওয়া যায়নি। ফিল্টার পরিবর্তন করে দেখুন অথবা নতুন নিবন্ধনের জন্য অপেক্ষা করুন।
+          </p>
+          <Button asChild className="mt-5">
+            <Link to="/teachers/register">
+              <UserPlus className="mr-2 h-4 w-4" /> প্রথম যাচাইকৃত শিক্ষক হিসেবে নিবন্ধন করুন
+            </Link>
+          </Button>
         </Card>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

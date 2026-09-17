@@ -62,6 +62,8 @@ export function LatestUpdates() {
 
   const filtered = (items ?? []).filter((i) => filter === "all" || i.kind === filter).slice(0, 9);
 
+  if (items !== null && items.length === 0) return null;
+
   return (
     <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6" aria-label="সর্বশেষ আপডেট">
       <div className="mb-5">

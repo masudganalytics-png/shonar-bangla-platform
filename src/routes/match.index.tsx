@@ -197,8 +197,13 @@ function MatchIndex() {
         ) : error ? (
           <p className="py-12 text-center text-destructive">তথ্য আনা যায়নি। আবার চেষ্টা করুন।</p>
         ) : filtered.length === 0 ? (
-          <Card className="p-10 text-center text-muted-foreground">
-            কোনো রিকোয়েস্ট পাওয়া যায়নি।
+          <Card className="p-10 text-center">
+            <p className="text-muted-foreground">কোনো রিকোয়েস্ট পাওয়া যায়নি।</p>
+            <Button asChild className="mt-5">
+              <Link to="/match/new">
+                <UserPlus className="mr-2 h-4 w-4" /> ম্যাচ রিকোয়েস্ট জমা দিন
+              </Link>
+            </Button>
           </Card>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

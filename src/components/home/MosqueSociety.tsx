@@ -12,6 +12,8 @@ export function MosqueSociety() {
   const q = useQuery({ queryKey: ["mosques-recent-home"], queryFn: () => fetchRecent() });
   const rows = q.data ?? [];
 
+  if (q.isSuccess && rows.length === 0) return null;
+
   return (
     <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
       <Card className="gold-hover rounded-2xl p-6 sm:p-8">
