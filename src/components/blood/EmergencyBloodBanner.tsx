@@ -48,7 +48,9 @@ export function EmergencyBloodBanner() {
     staleTime: 60_000,
   });
 
-  if (dismissed) return null;
+  const s = stats.data ?? { activeRequests: 0, totalDonors: 0, availableToday: 0 };
+
+  if (dismissed || (stats.isSuccess && s.activeRequests === 0 && s.totalDonors === 0 && s.availableToday === 0)) return null;
 
   const dismiss = () => {
     try {
@@ -58,8 +60,6 @@ export function EmergencyBloodBanner() {
     }
     setDismissed(true);
   };
-
-  const s = stats.data ?? { activeRequests: 0, totalDonors: 0, availableToday: 0 };
 
   return (
     <section
