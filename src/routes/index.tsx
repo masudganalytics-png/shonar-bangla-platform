@@ -134,6 +134,7 @@ function HomePage() {
 
   return (
     <>
+      <AiSearchBox />
       <EmergencyBloodBanner />
       <LiveExchangeRates />
 
