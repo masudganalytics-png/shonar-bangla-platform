@@ -134,6 +134,7 @@ function HomePage() {
 
   return (
     <>
+      <AiSearchBox />
       <EmergencyBloodBanner />
       <LiveExchangeRates />
 
@@ -217,7 +218,6 @@ function HomePage() {
       </section>
 
       <UniversalSearch />
-      <AiSearchBox />
       <CoreServices />
       <FeaturedServices />
       <FeaturedTeachers />
