@@ -6,6 +6,7 @@ import { useAuth } from "@/hooks/use-auth";
 import logoAsset from "@/assets/khijirion-logo.png.asset.json";
 import { EmergencyBloodBanner } from "@/components/blood/EmergencyBloodBanner";
 import { UniversalSearch } from "@/components/home/UniversalSearch";
+import { AiSearchBox } from "@/components/home/AiSearchBox";
 import { CoreServices } from "@/components/home/CoreServices";
 import { ExploreServices } from "@/components/home/ExploreServices";
 import { LatestUpdates } from "@/components/home/LatestUpdates";
@@ -216,6 +217,7 @@ function HomePage() {
       </section>
 
       <UniversalSearch />
+      <AiSearchBox />
       <CoreServices />
       <FeaturedServices />
       <FeaturedTeachers />
