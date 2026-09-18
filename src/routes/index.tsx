@@ -216,6 +216,7 @@ function HomePage() {
       </section>
 
       <UniversalSearch />
+      <AiSearchBox />
       <CoreServices />
       <FeaturedServices />
       <FeaturedTeachers />
