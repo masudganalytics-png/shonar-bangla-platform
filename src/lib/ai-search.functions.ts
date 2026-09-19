@@ -1,11 +1,21 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  AI_MODULE_KEYS,
+  AI_SCHEMA_VERSION,
+  getModuleMap,
+  schemaPromptSummary,
+  selectColumns,
+  validateSchemaMap,
+  type AiModuleKey,
+  type AiModuleMap,
+} from "@/lib/ai-schema-map";
 
 const inputSchema = z.object({ query: z.string().trim().min(2).max(200) });
 
 export type AiSearchResult = {
-  kind: "business" | "teacher" | "blood_donor" | "match";
+  kind: AiModuleKey;
   id: string;
   slug: string | null;
   title: string;
@@ -15,6 +25,7 @@ export type AiSearchResult = {
 export type AiSearchResponse = {
   answer: string;
   results: AiSearchResult[];
+  schemaVersion: string;
 };
 
 type Intent = {
@@ -44,8 +55,9 @@ async function extractIntent(query: string): Promise<Intent> {
       reasoning: { effort: "low" },
       instructions:
         "You convert a Bangla or English local-services query for the Ukhiya (Bangladesh) directory KHIJIRION into a search intent. " +
-        "Categories must be a subset of: business, teacher, blood_donor, match. Pick every category the user could mean; if unclear pick business and teacher. " +
-        "keyword: the core search term, keep it in the user's original language and short (a shop name, subject, profession). null if none. " +
+        `Modules available — ${schemaPromptSummary()}. ` +
+        `categories must be a subset of: ${AI_MODULE_KEYS.join(", ")}. Pick every module the user could mean; if unclear pick business and teacher. ` +
+        "keyword: the core search term, keep it in the user's original language and short (a shop name, subject, profession, place, product). null if none. " +
         "area: a place/union/area name if mentioned, else null. blood_group: one of A+,A-,B+,B-,AB+,AB-,O+,O- if the user asks for blood, else null. " +
         "answer: one short friendly sentence in Bangla telling the user what is being searched.",
       input: [{ role: "user", content: [{ type: "input_text", text: query }] }],
@@ -58,10 +70,7 @@ async function extractIntent(query: string): Promise<Intent> {
             type: "object",
             additionalProperties: false,
             properties: {
-              categories: {
-                type: "array",
-                items: { type: "string", enum: ["business", "teacher", "blood_donor", "match"] },
-              },
+              categories: { type: "array", items: { type: "string", enum: AI_MODULE_KEYS } },
               keyword: { type: ["string", "null"] },
               area: { type: ["string", "null"] },
               blood_group: { type: ["string", "null"] },
@@ -105,19 +114,82 @@ async function extractIntent(query: string): Promise<Intent> {
     }
   }
 
-  const parsed = JSON.parse(text) as Intent;
-  return parsed;
+  return JSON.parse(text) as Intent;
+}
+
+type Row = Record<string, unknown>;
+
+const str = (v: unknown): string | null => (typeof v === "string" && v.trim() ? v : typeof v === "number" ? String(v) : null);
+const join = (...parts: Array<unknown>) => parts.map(str).filter(Boolean).join(", ") || null;
+
+/** Title/subtitle projection per module — only mapped public fields are read. */
+const PRESENTERS: Record<AiModuleKey, (r: Row) => { title: string; subtitle: string | null; slug: string | null }> = {
+  business: (r) => ({ title: str(r.name) ?? "—", subtitle: join(r.area, r.upazila), slug: str(r.slug) }),
+  teacher: (r) => ({ title: str(r.full_name) ?? "—", subtitle: str(r.subjects) ?? join(r.area, r.upazila), slug: null }),
+  blood_donor: (r) => ({
+    title: `${str(r.full_name) ?? "—"} — ${str(r.blood_group) ?? ""}`.trim(),
+    subtitle: join(r.village, r.union_name),
+    slug: null,
+  }),
+  match: (r) => ({ title: str(r.display_name) ?? "—", subtitle: join(r.profession, r.area), slug: null }),
+  ukhiya_go: (r) => ({
+    title: `${str(r.from_location) ?? "?"} → ${str(r.to_location) ?? "?"}`,
+    subtitle: join(r.vehicle_label ?? r.vehicle_type, r.trip_date),
+    slug: null,
+  }),
+  reuse: (r) => ({ title: str(r.title) ?? "—", subtitle: join(r.category, r.area ?? r.location), slug: null }),
+  isp: (r) => ({ title: str(r.name) ?? "—", subtitle: str(r.note), slug: null }),
+  govt_job: (r) => ({
+    title: str(r.full_name) ?? "—",
+    subtitle: join(r.designation, r.organization),
+    slug: null,
+  }),
+};
+
+async function searchModule(
+  map: AiModuleMap,
+  opts: { term: string; area: string | null; bloodGroup: string | null },
+): Promise<AiSearchResult[]> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let q: any = (supabase.from(map.table as never) as any).select(selectColumns(map)).limit(5);
+
+  for (const [col, val] of Object.entries(map.visibility)) q = q.eq(col, val);
+
+  if (map.key === "blood_donor" && opts.bloodGroup) {
+    q = q.eq("blood_group", opts.bloodGroup);
+  } else if (opts.term) {
+    const like = `%${opts.term.replace(/[%,()]/g, " ")}%`;
+    q = q.or(map.searchableFields.map((f) => `${f}.ilike.${like}`).join(","));
+  }
+
+  if (opts.area && map.areaFields.length) {
+    const areaLike = `%${opts.area.trim().replace(/[%,()]/g, " ")}%`;
+    q = q.or(map.areaFields.map((f) => `${f}.ilike.${areaLike}`).join(","));
+  }
+
+  const { data, error } = await q;
+  if (error) return [];
+  const present = PRESENTERS[map.key];
+  return ((data ?? []) as Row[]).map((row) => {
+    const { title, subtitle, slug } = present(row);
+    return { kind: map.key, id: String(row.id), slug, title, subtitle };
+  });
 }
 
 export const aiSearch = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => inputSchema.parse(data))
   .handler(async ({ data }): Promise<AiSearchResponse> => {
+    const issues = validateSchemaMap();
+    if (issues.length > 0) {
+      throw new Error(`AI schema map validation failed: ${issues.map((i) => `${i.module}: ${i.problem}`).join("; ")}`);
+    }
+
     let intent: Intent;
     try {
       intent = await extractIntent(data.query);
     } catch {
       intent = {
-        categories: ["business", "teacher", "blood_donor", "match"],
+        categories: ["business", "teacher", "reuse", "ukhiya_go"],
         keyword: data.query,
         area: null,
         blood_group: null,
@@ -125,122 +197,21 @@ export const aiSearch = createServerFn({ method: "POST" })
       };
     }
 
-    const categories = new Set(
-      (intent.categories?.length ? intent.categories : ["business", "teacher"]).filter((c) =>
-        ["business", "teacher", "blood_donor", "match"].includes(c),
+    const categories = new Set<AiModuleKey>(
+      (intent.categories?.length ? intent.categories : ["business", "teacher"]).filter((c): c is AiModuleKey =>
+        (AI_MODULE_KEYS as string[]).includes(c),
       ),
     );
+
     const term = (intent.keyword || data.query).trim();
-    const like = `%${term}%`;
-    const areaLike = intent.area ? `%${intent.area.trim()}%` : null;
     const bloodGroup =
       intent.blood_group && BLOOD_GROUPS.includes(intent.blood_group) ? intent.blood_group : null;
     if (bloodGroup) categories.add("blood_donor");
 
-    const results: AiSearchResult[] = [];
-
-    const tasks: Promise<void>[] = [];
-
-    if (categories.has("business")) {
-      tasks.push(
-        (async () => {
-          let q = supabase
-            .from("businesses")
-            .select("id, slug, name, area, upazila, products")
-            .eq("status", "approved")
-            .limit(5);
-          q = q.or(`name.ilike.${like},full_description.ilike.${like}`);
-          if (areaLike) q = q.or(`area.ilike.${areaLike},upazila.ilike.${areaLike}`);
-          const { data: rows } = await q;
-          rows?.forEach((r) =>
-            results.push({
-              kind: "business",
-              id: r.id,
-              slug: r.slug,
-              title: r.name,
-              subtitle: [r.area, r.upazila].filter(Boolean).join(", ") || null,
-            }),
-          );
-        })(),
-      );
-    }
-
-    if (categories.has("teacher")) {
-      tasks.push(
-        (async () => {
-          let q = supabase
-            .from("teachers")
-            .select("id, full_name, subjects, upazila, area")
-            .eq("status", "approved")
-            .limit(5);
-          q = q.or(`full_name.ilike.${like},subjects.ilike.${like},qualification.ilike.${like}`);
-          if (areaLike) q = q.or(`area.ilike.${areaLike},upazila.ilike.${areaLike}`);
-          const { data: rows } = await q;
-          rows?.forEach((r) =>
-            results.push({
-              kind: "teacher",
-              id: r.id,
-              slug: null,
-              title: r.full_name,
-              subtitle: r.subjects || [r.area, r.upazila].filter(Boolean).join(", ") || null,
-            }),
-          );
-        })(),
-      );
-    }
-
-    if (categories.has("blood_donor")) {
-      tasks.push(
-        (async () => {
-          let q = supabase
-            .from("blood_donors")
-            .select("id, full_name, blood_group, village, union_name, available")
-            .eq("status", "approved")
-            .eq("is_active", true)
-            .limit(5);
-          if (bloodGroup) q = q.eq("blood_group", bloodGroup as never);
-          else q = q.ilike("full_name", like);
-          if (areaLike) q = q.or(`village.ilike.${areaLike},union_name.ilike.${areaLike}`);
-          const { data: rows } = await q;
-          rows?.forEach((r) =>
-            results.push({
-              kind: "blood_donor",
-              id: r.id,
-              slug: null,
-              title: `${r.full_name} — ${r.blood_group}`,
-              subtitle: [r.village, r.union_name].filter(Boolean).join(", ") || null,
-            }),
-          );
-        })(),
-      );
-    }
-
-    if (categories.has("match")) {
-      tasks.push(
-        (async () => {
-          let q = supabase
-            .from("match_requests")
-            .select("id, display_name, area, profession, education, looking_for")
-            .eq("status", "approved")
-            .eq("is_verified", true)
-            .limit(5);
-          q = q.or(`display_name.ilike.${like},profession.ilike.${like},education.ilike.${like}`);
-          if (areaLike) q = q.ilike("area", areaLike);
-          const { data: rows } = await q;
-          rows?.forEach((r) =>
-            results.push({
-              kind: "match",
-              id: r.id,
-              slug: null,
-              title: r.display_name,
-              subtitle: [r.profession, r.area].filter(Boolean).join(", ") || null,
-            }),
-          );
-        })(),
-      );
-    }
-
-    await Promise.all(tasks);
+    const settled = await Promise.all(
+      [...categories].map((key) => searchModule(getModuleMap(key), { term, area: intent.area, bloodGroup })),
+    );
+    const results = settled.flat();
 
     return {
       answer:
@@ -248,5 +219,6 @@ export const aiSearch = createServerFn({ method: "POST" })
           ? intent.answer || "আপনার জন্য প্রাসঙ্গিক ফলাফল পাওয়া গেছে।"
           : "দুঃখিত, এই মুহূর্তে মিল পাওয়া যায়নি। অন্য শব্দে চেষ্টা করুন।",
       results,
+      schemaVersion: AI_SCHEMA_VERSION,
     };
   });
