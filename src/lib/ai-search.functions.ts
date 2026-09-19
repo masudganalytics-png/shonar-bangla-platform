@@ -167,13 +167,26 @@ async function searchModule(
     q = q.or(map.areaFields.map((f) => `${f}.ilike.${areaLike}`).join(","));
   }
 
+  const present = PRESENTERS[map.key];
+  const project = (rows: Row[]): AiSearchResult[] =>
+    rows.map((row) => {
+      const { title, subtitle, slug } = present(row);
+      return { kind: map.key, id: String(row.id), slug, title, subtitle };
+    });
+
   const { data, error } = await q;
   if (error) return [];
-  const present = PRESENTERS[map.key];
-  return ((data ?? []) as Row[]).map((row) => {
-    const { title, subtitle, slug } = present(row);
-    return { kind: map.key, id: String(row.id), slug, title, subtitle };
-  });
+  const rows = (data ?? []) as Row[];
+  if (rows.length > 0) return project(rows);
+
+  // Keyword matching is language-sensitive (Bangla query vs English row text).
+  // When the module itself was clearly requested, fall back to its latest public rows.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let fb: any = (supabase.from(map.table as never) as any).select(selectColumns(map)).limit(5);
+  for (const [col, val] of Object.entries(map.visibility)) fb = fb.eq(col, val);
+  const { data: fbData, error: fbError } = await fb;
+  if (fbError) return [];
+  return project((fbData ?? []) as Row[]);
 }
 
 export const aiSearch = createServerFn({ method: "POST" })
