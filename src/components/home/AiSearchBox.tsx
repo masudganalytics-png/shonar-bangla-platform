@@ -62,6 +62,12 @@ export function AiSearchBox() {
     if (item.kind === "business") navigate({ to: "/business/$slug", params: { slug: item.slug || item.id } });
     else if (item.kind === "teacher") navigate({ to: "/teachers/$id", params: { id: item.id } });
     else if (item.kind === "match") navigate({ to: "/match/$id", params: { id: item.id } });
+    else if (item.kind === "ukhiya_go")
+      navigate({ to: "/services/ukhiya-go/trip/$tripId", params: { tripId: item.id } });
+    else if (item.kind === "reuse")
+      navigate({ to: "/services/reuse/$listingId", params: { listingId: item.id } });
+    else if (item.kind === "isp") navigate({ to: "/isp" });
+    else if (item.kind === "govt_job") navigate({ to: "/govt-jobs/$id", params: { id: item.id } });
     else navigate({ to: "/blood-donors" });
   };
 
