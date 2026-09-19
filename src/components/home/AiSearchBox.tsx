@@ -1,7 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { Sparkle, Loader2, Store, GraduationCap, Droplet, HeartHandshake } from "lucide-react";
+import {
+  Sparkle,
+  Loader2,
+  Store,
+  GraduationCap,
+  Droplet,
+  HeartHandshake,
+  Car,
+  Recycle,
+  Wifi,
+  Briefcase,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { aiSearch, type AiSearchResponse, type AiSearchResult } from "@/lib/ai-search.functions";
@@ -11,6 +22,10 @@ const META: Record<AiSearchResult["kind"], { label: string; icon: typeof Store }
   teacher: { label: "শিক্ষক", icon: GraduationCap },
   blood_donor: { label: "রক্তদাতা", icon: Droplet },
   match: { label: "ম্যাচ", icon: HeartHandshake },
+  ukhiya_go: { label: "উখিয়াগো", icon: Car },
+  reuse: { label: "রিইউজ", icon: Recycle },
+  isp: { label: "ওয়াইফাই", icon: Wifi },
+  govt_job: { label: "চাকরি", icon: Briefcase },
 };
 
 const SUGGESTIONS = [
