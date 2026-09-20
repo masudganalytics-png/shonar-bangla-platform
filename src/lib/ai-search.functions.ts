@@ -203,49 +203,70 @@ async function searchModule(
   return project((fbData ?? []) as Row[]);
 }
 
+/**
+ * Shared pipeline: natural language -> model intent -> allowlisted module search.
+ * The model never sees data and never produces SQL; only the schema map is used.
+ */
+export async function performAiSearch(
+  query: string,
+  history: ChatTurn[] = [],
+): Promise<AiSearchResponse & { clarify: string | null; aiUnavailable: boolean }> {
+  const issues = validateSchemaMap();
+  if (issues.length > 0) {
+    throw new Error(`AI schema map validation failed: ${issues.map((i) => `${i.module}: ${i.problem}`).join("; ")}`);
+  }
+
+  let intent: Intent;
+  let aiUnavailable = false;
+  try {
+    intent = await extractIntent(query, history);
+  } catch {
+    aiUnavailable = true;
+    intent = {
+      categories: ["business", "teacher", "reuse", "ukhiya_go"],
+      keyword: query,
+      area: null,
+      blood_group: null,
+      answer: "আপনার অনুসন্ধানের সম্ভাব্য ফলাফল দেখানো হচ্ছে।",
+      clarify: null,
+    };
+  }
+
+  const categories = new Set<AiModuleKey>(
+    (intent.categories?.length ? intent.categories : ["business", "teacher"]).filter((c): c is AiModuleKey =>
+      (AI_MODULE_KEYS as string[]).includes(c),
+    ),
+  );
+
+  const term = (intent.keyword || query).trim();
+  const bloodGroup = intent.blood_group && BLOOD_GROUPS.includes(intent.blood_group) ? intent.blood_group : null;
+  if (bloodGroup) categories.add("blood_donor");
+
+  const clarify = intent.clarify && intent.clarify.trim() ? intent.clarify.trim() : null;
+  if (clarify) {
+    return { answer: clarify, results: [], schemaVersion: AI_SCHEMA_VERSION, clarify, aiUnavailable };
+  }
+
+  const settled = await Promise.all(
+    [...categories].map((key) => searchModule(getModuleMap(key), { term, area: intent.area, bloodGroup })),
+  );
+  const results = settled.flat();
+
+  return {
+    answer:
+      results.length > 0
+        ? intent.answer || "আপনার জন্য প্রাসঙ্গিক ফলাফল পাওয়া গেছে।"
+        : "এই মুহূর্তে KHIJIRION-এ এর সঙ্গে মিলে এমন তথ্য পাওয়া যায়নি।",
+    results,
+    schemaVersion: AI_SCHEMA_VERSION,
+    clarify: null,
+    aiUnavailable,
+  };
+}
+
 export const aiSearch = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => inputSchema.parse(data))
   .handler(async ({ data }): Promise<AiSearchResponse> => {
-    const issues = validateSchemaMap();
-    if (issues.length > 0) {
-      throw new Error(`AI schema map validation failed: ${issues.map((i) => `${i.module}: ${i.problem}`).join("; ")}`);
-    }
-
-    let intent: Intent;
-    try {
-      intent = await extractIntent(data.query);
-    } catch {
-      intent = {
-        categories: ["business", "teacher", "reuse", "ukhiya_go"],
-        keyword: data.query,
-        area: null,
-        blood_group: null,
-        answer: "আপনার অনুসন্ধানের সম্ভাব্য ফলাফল দেখানো হচ্ছে।",
-      };
-    }
-
-    const categories = new Set<AiModuleKey>(
-      (intent.categories?.length ? intent.categories : ["business", "teacher"]).filter((c): c is AiModuleKey =>
-        (AI_MODULE_KEYS as string[]).includes(c),
-      ),
-    );
-
-    const term = (intent.keyword || data.query).trim();
-    const bloodGroup =
-      intent.blood_group && BLOOD_GROUPS.includes(intent.blood_group) ? intent.blood_group : null;
-    if (bloodGroup) categories.add("blood_donor");
-
-    const settled = await Promise.all(
-      [...categories].map((key) => searchModule(getModuleMap(key), { term, area: intent.area, bloodGroup })),
-    );
-    const results = settled.flat();
-
-    return {
-      answer:
-        results.length > 0
-          ? intent.answer || "আপনার জন্য প্রাসঙ্গিক ফলাফল পাওয়া গেছে।"
-          : "দুঃখিত, এই মুহূর্তে মিল পাওয়া যায়নি। অন্য শব্দে চেষ্টা করুন।",
-      results,
-      schemaVersion: AI_SCHEMA_VERSION,
-    };
+    const { answer, results, schemaVersion } = await performAiSearch(data.query);
+    return { answer, results, schemaVersion };
   });
