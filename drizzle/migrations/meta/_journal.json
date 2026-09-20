@@ -71,6 +71,13 @@
       "when": 1789280691556,
       "tag": "0009_fix_reuse_guard_service_role",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1789932022087,
+      "tag": "0010_create_ai_chat_tables",
+      "breakpoints": true
     }
   ]
 }
