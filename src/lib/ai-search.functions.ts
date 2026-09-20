@@ -62,8 +62,18 @@ export async function extractIntent(query: string, history: ChatTurn[] = []): Pr
         `categories must be a subset of: ${AI_MODULE_KEYS.join(", ")}. Pick every module the user could mean; if unclear pick business and teacher. ` +
         "keyword: the core search term, keep it in the user's original language and short (a shop name, subject, profession, place, product). null if none. " +
         "area: a place/union/area name if mentioned, else null. blood_group: one of A+,A-,B+,B-,AB+,AB-,O+,O- if the user asks for blood, else null. " +
-        "answer: one short friendly sentence in Bangla telling the user what is being searched.",
-      input: [{ role: "user", content: [{ type: "input_text", text: query }] }],
+        "answer: one short friendly conversational sentence in Bangla telling the user what is being searched. " +
+        "clarify: if the request is too vague to pick a module or a keyword, a single short Bangla clarifying question; otherwise null. " +
+        "Earlier turns of the same conversation may be provided — resolve follow-up questions using them and never ask the user to repeat themselves.",
+      input: [
+        ...history.map((turn) => ({
+          role: turn.role,
+          content: [
+            { type: turn.role === "assistant" ? "output_text" : "input_text", text: turn.content.slice(0, 500) },
+          ],
+        })),
+        { role: "user", content: [{ type: "input_text", text: query }] },
+      ],
       text: {
         format: {
           type: "json_schema",
