@@ -28,17 +28,20 @@ export type AiSearchResponse = {
   schemaVersion: string;
 };
 
-type Intent = {
+export type Intent = {
   categories: string[];
   keyword: string | null;
   area: string | null;
   blood_group: string | null;
   answer: string;
+  clarify: string | null;
 };
+
+export type ChatTurn = { role: "user" | "assistant"; content: string };
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
-async function extractIntent(query: string): Promise<Intent> {
+export async function extractIntent(query: string, history: ChatTurn[] = []): Promise<Intent> {
   const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) throw new Error("Missing LOVABLE_API_KEY");
 
