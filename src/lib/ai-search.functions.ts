@@ -28,17 +28,20 @@ export type AiSearchResponse = {
   schemaVersion: string;
 };
 
-type Intent = {
+export type Intent = {
   categories: string[];
   keyword: string | null;
   area: string | null;
   blood_group: string | null;
   answer: string;
+  clarify: string | null;
 };
+
+export type ChatTurn = { role: "user" | "assistant"; content: string };
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
-async function extractIntent(query: string): Promise<Intent> {
+export async function extractIntent(query: string, history: ChatTurn[] = []): Promise<Intent> {
   const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) throw new Error("Missing LOVABLE_API_KEY");
 
@@ -59,8 +62,18 @@ async function extractIntent(query: string): Promise<Intent> {
         `categories must be a subset of: ${AI_MODULE_KEYS.join(", ")}. Pick every module the user could mean; if unclear pick business and teacher. ` +
         "keyword: the core search term, keep it in the user's original language and short (a shop name, subject, profession, place, product). null if none. " +
         "area: a place/union/area name if mentioned, else null. blood_group: one of A+,A-,B+,B-,AB+,AB-,O+,O- if the user asks for blood, else null. " +
-        "answer: one short friendly sentence in Bangla telling the user what is being searched.",
-      input: [{ role: "user", content: [{ type: "input_text", text: query }] }],
+        "answer: one short friendly conversational sentence in Bangla telling the user what is being searched. " +
+        "clarify: if the request is too vague to pick a module or a keyword, a single short Bangla clarifying question; otherwise null. " +
+        "Earlier turns of the same conversation may be provided — resolve follow-up questions using them and never ask the user to repeat themselves.",
+      input: [
+        ...history.map((turn) => ({
+          role: turn.role,
+          content: [
+            { type: turn.role === "assistant" ? "output_text" : "input_text", text: turn.content.slice(0, 500) },
+          ],
+        })),
+        { role: "user", content: [{ type: "input_text", text: query }] },
+      ],
       text: {
         format: {
           type: "json_schema",
@@ -75,8 +88,9 @@ async function extractIntent(query: string): Promise<Intent> {
               area: { type: ["string", "null"] },
               blood_group: { type: ["string", "null"] },
               answer: { type: "string" },
+              clarify: { type: ["string", "null"] },
             },
-            required: ["categories", "keyword", "area", "blood_group", "answer"],
+            required: ["categories", "keyword", "area", "blood_group", "answer", "clarify"],
           },
         },
       },
@@ -189,49 +203,70 @@ async function searchModule(
   return project((fbData ?? []) as Row[]);
 }
 
+/**
+ * Shared pipeline: natural language -> model intent -> allowlisted module search.
+ * The model never sees data and never produces SQL; only the schema map is used.
+ */
+export async function performAiSearch(
+  query: string,
+  history: ChatTurn[] = [],
+): Promise<AiSearchResponse & { clarify: string | null; aiUnavailable: boolean }> {
+  const issues = validateSchemaMap();
+  if (issues.length > 0) {
+    throw new Error(`AI schema map validation failed: ${issues.map((i) => `${i.module}: ${i.problem}`).join("; ")}`);
+  }
+
+  let intent: Intent;
+  let aiUnavailable = false;
+  try {
+    intent = await extractIntent(query, history);
+  } catch {
+    aiUnavailable = true;
+    intent = {
+      categories: ["business", "teacher", "reuse", "ukhiya_go"],
+      keyword: query,
+      area: null,
+      blood_group: null,
+      answer: "আপনার অনুসন্ধানের সম্ভাব্য ফলাফল দেখানো হচ্ছে।",
+      clarify: null,
+    };
+  }
+
+  const categories = new Set<AiModuleKey>(
+    (intent.categories?.length ? intent.categories : ["business", "teacher"]).filter((c): c is AiModuleKey =>
+      (AI_MODULE_KEYS as string[]).includes(c),
+    ),
+  );
+
+  const term = (intent.keyword || query).trim();
+  const bloodGroup = intent.blood_group && BLOOD_GROUPS.includes(intent.blood_group) ? intent.blood_group : null;
+  if (bloodGroup) categories.add("blood_donor");
+
+  const clarify = intent.clarify && intent.clarify.trim() ? intent.clarify.trim() : null;
+  if (clarify) {
+    return { answer: clarify, results: [], schemaVersion: AI_SCHEMA_VERSION, clarify, aiUnavailable };
+  }
+
+  const settled = await Promise.all(
+    [...categories].map((key) => searchModule(getModuleMap(key), { term, area: intent.area, bloodGroup })),
+  );
+  const results = settled.flat();
+
+  return {
+    answer:
+      results.length > 0
+        ? intent.answer || "আপনার জন্য প্রাসঙ্গিক ফলাফল পাওয়া গেছে।"
+        : "এই মুহূর্তে KHIJIRION-এ এর সঙ্গে মিলে এমন তথ্য পাওয়া যায়নি।",
+    results,
+    schemaVersion: AI_SCHEMA_VERSION,
+    clarify: null,
+    aiUnavailable,
+  };
+}
+
 export const aiSearch = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => inputSchema.parse(data))
   .handler(async ({ data }): Promise<AiSearchResponse> => {
-    const issues = validateSchemaMap();
-    if (issues.length > 0) {
-      throw new Error(`AI schema map validation failed: ${issues.map((i) => `${i.module}: ${i.problem}`).join("; ")}`);
-    }
-
-    let intent: Intent;
-    try {
-      intent = await extractIntent(data.query);
-    } catch {
-      intent = {
-        categories: ["business", "teacher", "reuse", "ukhiya_go"],
-        keyword: data.query,
-        area: null,
-        blood_group: null,
-        answer: "আপনার অনুসন্ধানের সম্ভাব্য ফলাফল দেখানো হচ্ছে।",
-      };
-    }
-
-    const categories = new Set<AiModuleKey>(
-      (intent.categories?.length ? intent.categories : ["business", "teacher"]).filter((c): c is AiModuleKey =>
-        (AI_MODULE_KEYS as string[]).includes(c),
-      ),
-    );
-
-    const term = (intent.keyword || data.query).trim();
-    const bloodGroup =
-      intent.blood_group && BLOOD_GROUPS.includes(intent.blood_group) ? intent.blood_group : null;
-    if (bloodGroup) categories.add("blood_donor");
-
-    const settled = await Promise.all(
-      [...categories].map((key) => searchModule(getModuleMap(key), { term, area: intent.area, bloodGroup })),
-    );
-    const results = settled.flat();
-
-    return {
-      answer:
-        results.length > 0
-          ? intent.answer || "আপনার জন্য প্রাসঙ্গিক ফলাফল পাওয়া গেছে।"
-          : "দুঃখিত, এই মুহূর্তে মিল পাওয়া যায়নি। অন্য শব্দে চেষ্টা করুন।",
-      results,
-      schemaVersion: AI_SCHEMA_VERSION,
-    };
+    const { answer, results, schemaVersion } = await performAiSearch(data.query);
+    return { answer, results, schemaVersion };
   });
