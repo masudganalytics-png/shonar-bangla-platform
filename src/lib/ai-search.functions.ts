@@ -190,17 +190,9 @@ async function searchModule(
 
   const { data, error } = await q;
   if (error) return [];
-  const rows = (data ?? []) as Row[];
-  if (rows.length > 0) return project(rows);
-
-  // Keyword matching is language-sensitive (Bangla query vs English row text).
-  // When the module itself was clearly requested, fall back to its latest public rows.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let fb: any = (supabase.from(map.table as never) as any).select(selectColumns(map)).limit(5);
-  for (const [col, val] of Object.entries(map.visibility)) fb = fb.eq(col, val);
-  const { data: fbData, error: fbError } = await fb;
-  if (fbError) return [];
-  return project((fbData ?? []) as Row[]);
+  // No silent fallback: showing arbitrary latest rows would present unrelated
+  // listings as if they answered the question.
+  return project((data ?? []) as Row[]);
 }
 
 /**
