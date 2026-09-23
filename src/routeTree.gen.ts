@@ -131,6 +131,7 @@ import { Route as AuthenticatedAdminBloodRequestsRouteImport } from './routes/_a
 import { Route as AuthenticatedAdminBloodDonorsRouteImport } from './routes/_authenticated/admin.blood-donors'
 import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authenticated/admin.bills'
 import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
+import { Route as AuthenticatedAdminAiChatRouteImport } from './routes/_authenticated/admin.ai-chat'
 import { Route as AuthenticatedAdminAchievementsRouteImport } from './routes/_authenticated/admin.achievements'
 import { Route as ServicesUkhiyaGoDriverIndexRouteImport } from './routes/services.ukhiya-go.driver.index'
 import { Route as ServicesUkhiyaGoTripTripIdRouteImport } from './routes/services.ukhiya-go.trip.$tripId'
@@ -772,6 +773,12 @@ const AuthenticatedAdminAnnouncementsRoute =
     path: '/announcements',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminAiChatRoute =
+  AuthenticatedAdminAiChatRouteImport.update({
+    id: '/ai-chat',
+    path: '/ai-chat',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminAchievementsRoute =
   AuthenticatedAdminAchievementsRouteImport.update({
     id: '/achievements',
@@ -904,6 +911,7 @@ export interface FileRoutesByFullPath {
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
   '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
+  '/admin/ai-chat': typeof AuthenticatedAdminAiChatRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/bills': typeof AuthenticatedAdminBillsRoute
   '/admin/blood-donors': typeof AuthenticatedAdminBloodDonorsRoute
@@ -1022,6 +1030,7 @@ export interface FileRoutesByTo {
   '/teachers': typeof TeachersIndexRoute
   '/workers': typeof WorkersIndexRoute
   '/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
+  '/admin/ai-chat': typeof AuthenticatedAdminAiChatRoute
   '/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/admin/bills': typeof AuthenticatedAdminBillsRoute
   '/admin/blood-donors': typeof AuthenticatedAdminBloodDonorsRoute
@@ -1157,6 +1166,7 @@ export interface FileRoutesById {
   '/teachers/': typeof TeachersIndexRoute
   '/workers/': typeof WorkersIndexRoute
   '/_authenticated/admin/achievements': typeof AuthenticatedAdminAchievementsRoute
+  '/_authenticated/admin/ai-chat': typeof AuthenticatedAdminAiChatRoute
   '/_authenticated/admin/announcements': typeof AuthenticatedAdminAnnouncementsRoute
   '/_authenticated/admin/bills': typeof AuthenticatedAdminBillsRoute
   '/_authenticated/admin/blood-donors': typeof AuthenticatedAdminBloodDonorsRoute
@@ -1292,6 +1302,7 @@ export interface FileRouteTypes {
     | '/teachers/'
     | '/workers/'
     | '/admin/achievements'
+    | '/admin/ai-chat'
     | '/admin/announcements'
     | '/admin/bills'
     | '/admin/blood-donors'
@@ -1410,6 +1421,7 @@ export interface FileRouteTypes {
     | '/teachers'
     | '/workers'
     | '/admin/achievements'
+    | '/admin/ai-chat'
     | '/admin/announcements'
     | '/admin/bills'
     | '/admin/blood-donors'
@@ -1544,6 +1556,7 @@ export interface FileRouteTypes {
     | '/teachers/'
     | '/workers/'
     | '/_authenticated/admin/achievements'
+    | '/_authenticated/admin/ai-chat'
     | '/_authenticated/admin/announcements'
     | '/_authenticated/admin/bills'
     | '/_authenticated/admin/blood-donors'
@@ -2504,6 +2517,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAnnouncementsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/ai-chat': {
+      id: '/_authenticated/admin/ai-chat'
+      path: '/ai-chat'
+      fullPath: '/admin/ai-chat'
+      preLoaderRoute: typeof AuthenticatedAdminAiChatRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/achievements': {
       id: '/_authenticated/admin/achievements'
       path: '/achievements'
@@ -2579,6 +2599,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAchievementsRoute: typeof AuthenticatedAdminAchievementsRoute
+  AuthenticatedAdminAiChatRoute: typeof AuthenticatedAdminAiChatRoute
   AuthenticatedAdminAnnouncementsRoute: typeof AuthenticatedAdminAnnouncementsRoute
   AuthenticatedAdminBillsRoute: typeof AuthenticatedAdminBillsRoute
   AuthenticatedAdminBloodDonorsRoute: typeof AuthenticatedAdminBloodDonorsRoute
@@ -2611,6 +2632,7 @@ interface AuthenticatedAdminRouteChildren {
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAchievementsRoute: AuthenticatedAdminAchievementsRoute,
+  AuthenticatedAdminAiChatRoute: AuthenticatedAdminAiChatRoute,
   AuthenticatedAdminAnnouncementsRoute: AuthenticatedAdminAnnouncementsRoute,
   AuthenticatedAdminBillsRoute: AuthenticatedAdminBillsRoute,
   AuthenticatedAdminBloodDonorsRoute: AuthenticatedAdminBloodDonorsRoute,

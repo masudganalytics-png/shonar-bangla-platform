@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useRouterState, redirect } from "@tanstack/react-router";
-import { Users, FileText, MessageSquare, LayoutDashboard, ShieldAlert, Megaphone, HardHat, GraduationCap, Store, Scale, Droplet, HeartPulse, Handshake, Plane, FileSignature, Landmark, Car, Package, Wifi, Heart, Menu, Recycle } from "lucide-react";
+import { Users, FileText, MessageSquare, LayoutDashboard, ShieldAlert, Megaphone, HardHat, GraduationCap, Store, Scale, Droplet, HeartPulse, Handshake, Plane, FileSignature, Landmark, Car, Package, Wifi, Heart, Menu, Recycle, Bot } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +25,7 @@ const TABS: ReadonlyArray<{ to: string; label: string; icon: typeof Users; exact
   { to: "/admin/isp", label: "ওয়াইফাই / ISP", icon: Wifi },
   { to: "/admin/match", label: "ম্যাচ যাচাই", icon: Heart },
   { to: "/admin/reuse", label: "Reuse মডারেশন", icon: Recycle },
+  { to: "/admin/ai-chat", label: "AI কথোপকথন", icon: Bot },
   { to: "/admin/header", label: "হেডার মেনু", icon: Menu },
 ];
 
