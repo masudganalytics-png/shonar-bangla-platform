@@ -125,6 +125,14 @@ export const sendAiChatMessage = createServerFn({ method: "POST" })
       const res = await performAiSearch(data.message, history);
       answer = res.answer;
       results = res.results;
+      if (!res.clarify && process.env["GEMINI_API_KEY"]) {
+        try {
+          const { geminiAnswer } = await import("@/lib/gemini.server");
+          answer = await geminiAnswer(data.message, results, history);
+        } catch (e) {
+          console.error("[ai-chat] gemini answer failed", e);
+        }
+      }
     } catch {
       answer = "KHIJIRION-এর তথ্য আনতে সমস্যা হয়েছে। আবার চেষ্টা করুন।";
     }
