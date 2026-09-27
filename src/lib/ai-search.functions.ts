@@ -153,6 +153,15 @@ const PRESENTERS: Record<AiModuleKey, (r: Row) => { title: string; subtitle: str
   }),
   reuse: (r) => ({ title: str(r.title) ?? "—", subtitle: join(r.category, r.area ?? r.location), slug: null }),
   isp: (r) => ({ title: str(r.name) ?? "—", subtitle: str(r.note), slug: null }),
+  advocate: (r) => ({
+    title: str(r.full_name) ?? "—",
+    subtitle:
+      join(
+        Array.isArray(r.practice_areas) ? (r.practice_areas as string[]).slice(0, 3).join(", ") : null,
+        r.experience_years ? `${r.experience_years} বছর অভিজ্ঞতা` : null,
+      ) ?? str(r.chamber_address),
+    slug: str(r.slug),
+  }),
   govt_job: (r) => ({
     title: str(r.full_name) ?? "—",
     subtitle: join(r.designation, r.organization),
@@ -189,10 +198,17 @@ async function searchModule(
     });
 
   const { data, error } = await q;
-  if (error) return [];
-  // No silent fallback: showing arbitrary latest rows would present unrelated
-  // listings as if they answered the question.
-  return project((data ?? []) as Row[]);
+  const rows = error ? [] : ((data ?? []) as Row[]);
+  // Small directories (WiFi, advocates): the user asked for the category itself
+  // (e.g. "wifi আছে?"), so listing active entries is a relevant answer.
+  if (rows.length === 0 && map.listAllWhenNoMatch && !opts.area) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let all: any = (supabase.from(map.table as never) as any).select(selectColumns(map)).limit(5);
+    for (const [col, val] of Object.entries(map.visibility)) all = all.eq(col, val);
+    const res = await all;
+    return res.error ? [] : project((res.data ?? []) as Row[]);
+  }
+  return project(rows);
 }
 
 /**

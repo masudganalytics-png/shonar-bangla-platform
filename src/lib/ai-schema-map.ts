@@ -17,7 +17,8 @@ export type AiModuleKey =
   | "ukhiya_go"
   | "reuse"
   | "isp"
-  | "govt_job";
+  | "govt_job"
+  | "advocate";
 
 export type AiModuleMap = {
   key: AiModuleKey;
@@ -25,6 +26,8 @@ export type AiModuleMap = {
   label: string;
   /** Short English hint used in the model prompt. */
   hint: string;
+  /** Small public directories: when the category itself was asked for, list active rows. */
+  listAllWhenNoMatch?: boolean;
   table: string;
   /** Columns the AI layer may match a keyword against. */
   searchableFields: string[];
@@ -133,6 +136,20 @@ export const AI_SCHEMA_MAP: AiModuleMap[] = [
     areaFields: [],
     visibility: { is_active: true },
     route: "/isp",
+    listAllWhenNoMatch: true,
+  },
+  {
+    key: "advocate",
+    label: "আইনজীবী",
+    hint: "advocates, lawyers, legal help, court cases (উকিল, আইনজীবী, অ্যাডভোকেট)",
+    table: "advocates",
+    searchableFields: ["full_name", "bio", "chamber_address", "availability"],
+    publicFields: ["id", "slug", "full_name", "chamber_address", "experience_years", "practice_areas"],
+    privateFields: ["phone", "whatsapp", "email"],
+    areaFields: ["chamber_address"],
+    visibility: { is_active: true },
+    route: "/legal/$id",
+    listAllWhenNoMatch: true,
   },
   {
     key: "govt_job",

@@ -13,7 +13,7 @@ export async function geminiAnswer(question: string, results: AiSearchResult[], 
     ? results.map((r, i) => `${i + 1}. [${r.kind}] ${r.title}${r.subtitle ? ` — ${r.subtitle}` : ""}`).join("\n")
     : "(no matching records)";
 
-  const res = await fetch(
+  const call = () => fetch(
     "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
     {
       method: "POST",

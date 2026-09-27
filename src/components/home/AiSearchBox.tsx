@@ -15,6 +15,7 @@ import {
   Wifi,
   Briefcase,
   MessageCircle,
+  Scale,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai-elements/conversation";
@@ -45,6 +46,7 @@ const META: Record<AiSearchResult["kind"], { label: string; icon: typeof Store }
   reuse: { label: "রিইউজ", icon: Recycle },
   isp: { label: "ওয়াইফাই", icon: Wifi },
   govt_job: { label: "চাকরি", icon: Briefcase },
+  advocate: { label: "আইনজীবী", icon: Scale },
 };
 
 const SUGGESTIONS = [
@@ -154,6 +156,7 @@ export function AiSearchBox() {
     else if (item.kind === "reuse") navigate({ to: "/services/reuse/$listingId", params: { listingId: item.id } });
     else if (item.kind === "isp") navigate({ to: "/isp" });
     else if (item.kind === "govt_job") navigate({ to: "/govt-jobs/$id", params: { id: item.id } });
+    else if (item.kind === "advocate") navigate({ to: "/legal/$id", params: { id: item.slug || item.id } });
     else navigate({ to: "/blood-donors" });
   };
 
