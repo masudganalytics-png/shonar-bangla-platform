@@ -1,1 +1,1 @@
-- [ ] Chatbox: general questions (Bangla+English) via Gemini, key server-side
+- [x] Chatbox: general questions (Bangla+English) via Gemini, key server-side
