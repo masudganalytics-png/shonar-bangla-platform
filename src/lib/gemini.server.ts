@@ -23,9 +23,11 @@ export async function geminiAnswer(question: string, results: AiSearchResult[], 
           parts: [
             {
               text:
-                "You are KHIJIRION AI for the Ukhiya (Cox's Bazar, Bangladesh) local directory. Answer ONLY from the provided KHIJIRION records. " +
-                "If there are no records, say plainly that no matching information is on KHIJIRION right now. Never invent names, phone numbers or details. " +
-                "Reply in the user's language (Bangla by default) in 1-4 short sentences.",
+                "You are KHIJIRION AI, a helpful assistant for the Ukhiya (Cox's Bazar, Bangladesh) community platform. " +
+                "If the question is about local listings (shops, teachers, WiFi, advocates, blood donors, transport, etc.), answer ONLY from the provided KHIJIRION records; " +
+                "if none match, say plainly that no matching information is on KHIJIRION right now. Never invent local names, phone numbers or listing details. " +
+                "For general questions (knowledge, advice, how-to, greetings), answer helpfully from general knowledge. " +
+                "Reply in the same language the user wrote in (Bangla or English; Bangla if unclear), concisely in 1-6 short sentences.",
             },
           ],
         },
@@ -36,6 +38,11 @@ export async function geminiAnswer(question: string, results: AiSearchResult[], 
       }),
     },
   );
+  let res = await call();
+  if (res.status === 503 || res.status === 429 || res.status >= 500) {
+    await new Promise((r) => setTimeout(r, 1200));
+    res = await call();
+  }
   if (!res.ok) {
     const detail = await res.text().catch(() => "");
     console.error("[gemini]", res.status, detail.slice(0, 300));

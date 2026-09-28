@@ -125,7 +125,7 @@ export const sendAiChatMessage = createServerFn({ method: "POST" })
       const res = await performAiSearch(data.message, history);
       answer = res.answer;
       results = res.results;
-      if (!res.clarify && process.env["GEMINI_API_KEY"]) {
+      if (process.env["GEMINI_API_KEY"]) {
         try {
           const { geminiAnswer } = await import("@/lib/gemini.server");
           answer = await geminiAnswer(data.message, results, history);

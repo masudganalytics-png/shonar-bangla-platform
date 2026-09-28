@@ -201,7 +201,7 @@ async function searchModule(
   const rows = error ? [] : ((data ?? []) as Row[]);
   // Small directories (WiFi, advocates): the user asked for the category itself
   // (e.g. "wifi আছে?"), so listing active entries is a relevant answer.
-  if (rows.length === 0 && map.listAllWhenNoMatch && !opts.area) {
+  if (rows.length === 0 && map.listAllWhenNoMatch) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let all: any = (supabase.from(map.table as never) as any).select(selectColumns(map)).limit(5);
     for (const [col, val] of Object.entries(map.visibility)) all = all.eq(col, val);
@@ -249,6 +249,9 @@ export async function performAiSearch(
   const term = (intent.keyword || query).trim();
   const bloodGroup = intent.blood_group && BLOOD_GROUPS.includes(intent.blood_group) ? intent.blood_group : null;
   if (bloodGroup) categories.add("blood_donor");
+  const lower = query.toLowerCase();
+  if (/wi-?fi|internet|broadband|isp|ওয়াইফাই|ওয়াই-ফাই|ইন্টারনেট|ব্রডব্যান্ড/.test(lower)) categories.add("isp");
+  if (/lawyer|advocate|legal|উকিল|আইনজীবী|অ্যাডভোকেট|এডভোকেট|আইনি/.test(lower)) categories.add("advocate");
 
   const clarify = intent.clarify && intent.clarify.trim() ? intent.clarify.trim() : null;
   if (clarify) {
