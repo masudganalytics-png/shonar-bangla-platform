@@ -35,6 +35,11 @@ export async function geminiAnswer(question: string, results: AiSearchResult[], 
           ...history.map((t) => ({ role: t.role === "assistant" ? "model" : "user", parts: [{ text: t.content.slice(0, 500) }] })),
           { role: "user", parts: [{ text: `Question: ${question}\n\nKHIJIRION records:\n${context}` }] },
         ],
+        generationConfig: {
+          temperature: 0.6,
+          maxOutputTokens: 800,
+          thinkingConfig: { thinkingBudget: 0 },
+        },
       }),
     },
   );
