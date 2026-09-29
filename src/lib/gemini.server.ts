@@ -13,12 +13,9 @@ export async function geminiAnswer(question: string, results: AiSearchResult[], 
     ? results.map((r, i) => `${i + 1}. [${r.kind}] ${r.title}${r.subtitle ? ` — ${r.subtitle}` : ""}`).join("\n")
     : "(no matching records)";
 
-  const call = () => fetch(
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "x-goog-api-key": key },
-      body: JSON.stringify({
+  // Free-tier quota is per model, so fall through a few Gemini models on 429/5xx/404.
+  const MODELS = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite", "gemini-3.5-flash-lite"];
+  const body = JSON.stringify({
         systemInstruction: {
           parts: [
             {
@@ -40,19 +37,20 @@ export async function geminiAnswer(question: string, results: AiSearchResult[], 
           maxOutputTokens: 800,
           thinkingConfig: { thinkingBudget: 0 },
         },
-      }),
-    },
-  );
-  let res = await call();
-  if (res.status === 503 || res.status === 429 || res.status >= 500) {
-    await new Promise((r) => setTimeout(r, 1200));
-    res = await call();
-  }
-  if (!res.ok) {
+      });
+  let res: Response | null = null;
+  for (const model of MODELS) {
+    res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+      body,
+    });
+    if (res.ok) break;
     const detail = await res.text().catch(() => "");
-    console.error("[gemini]", res.status, detail.slice(0, 300));
-    throw new Error(`GEMINI_${res.status}`);
+    console.error("[gemini]", model, res.status, detail.slice(0, 200));
+    if (!(res.status === 429 || res.status === 404 || res.status >= 500)) break;
   }
+  if (!res || !res.ok) throw new Error(`GEMINI_${res?.status ?? 0}`);
   const json = (await res.json()) as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> };
   const text = (json.candidates?.[0]?.content?.parts ?? []).map((p) => p.text ?? "").join("").trim();
   if (!text) throw new Error("GEMINI_EMPTY");
