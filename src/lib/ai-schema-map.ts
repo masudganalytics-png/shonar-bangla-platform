@@ -240,7 +240,9 @@ export function getModuleMap(key: AiModuleKey): AiModuleMap {
 
 /** Columns the AI layer may select for a module (private fields can never leak). */
 export function selectColumns(map: AiModuleMap): string {
-  return map.publicFields.filter((c) => !map.privateFields.includes(c)).join(", ");
+  const cols = map.publicFields.filter((c) => !map.privateFields.includes(c));
+  if (map.publicPhoneField && !map.privateFields.includes(map.publicPhoneField)) cols.push(map.publicPhoneField);
+  return cols.join(", ");
 }
 
 /** Compact module catalogue handed to the model — metadata only, never data. */
@@ -259,6 +261,8 @@ export function validateSchemaMap(): SchemaValidationIssue[] {
       if (m.searchableFields.includes(field))
         issues.push({ module: m.key, problem: `private field "${field}" is searchable` });
     }
+    if (m.publicPhoneField && m.privateFields.includes(m.publicPhoneField))
+      issues.push({ module: m.key, problem: "public phone field is also private" });
     if (m.publicFields.length === 0) issues.push({ module: m.key, problem: "no public fields mapped" });
     if (Object.keys(m.visibility).length === 0)
       issues.push({ module: m.key, problem: "no approval/visibility rule" });
