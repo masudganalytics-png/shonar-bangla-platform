@@ -7,7 +7,10 @@
  * excluded from every AI-driven query and from anything returned to the client.
  */
 
-export const AI_SCHEMA_VERSION = "1.0.0";
+export const AI_SCHEMA_VERSION = "1.1.0";
+
+/** Hard cap on records handed to the model / shown per answer. */
+export const AI_MAX_RESULTS = 5;
 
 export type AiModuleKey =
   | "business"
@@ -18,7 +21,11 @@ export type AiModuleKey =
   | "reuse"
   | "isp"
   | "govt_job"
-  | "advocate";
+  | "advocate"
+  | "worker"
+  | "community"
+  | "mosque"
+  | "notice";
 
 export type AiModuleMap = {
   key: AiModuleKey;
@@ -33,6 +40,11 @@ export type AiModuleMap = {
   searchableFields: string[];
   /** Columns safe to read and show publicly. */
   publicFields: string[];
+  /**
+   * Phone column that is already publicly visible (granted to anonymous visitors
+   * and shown on the public page). Only this column may reach the AI context.
+   */
+  publicPhoneField?: string;
   /** Never selected by the AI layer, never returned to the browser. */
   privateFields: string[];
   /** Area/location columns used for a place filter. */
@@ -47,14 +59,64 @@ export const AI_SCHEMA_MAP: AiModuleMap[] = [
   {
     key: "business",
     label: "ব্যবসা",
-    hint: "local shops, businesses, services, products",
+    hint: "local shops, businesses, services, products (dokan)",
     table: "businesses",
     searchableFields: ["name", "short_description", "full_description"],
     publicFields: ["id", "slug", "name", "area", "upazila", "short_description"],
-    privateFields: ["phone", "whatsapp", "email", "address", "owner_id"],
+    publicPhoneField: "phone",
+    privateFields: ["whatsapp", "email", "address", "owner_id", "lat", "lng"],
     areaFields: ["area", "upazila", "union_name"],
     visibility: { status: "approved" },
     route: "/business/$slug",
+  },
+  {
+    key: "worker",
+    label: "কাজের লোক",
+    hint: "local workers: electrician, plumber, mason, painter, driver, mechanic (kajer lok, mistri)",
+    table: "workers",
+    searchableFields: ["full_name", "skills", "description"],
+    publicFields: ["id", "slug", "full_name", "skills", "area", "upazila", "experience_years"],
+    privateFields: ["phone", "whatsapp", "submitted_by"],
+    areaFields: ["area", "upazila"],
+    visibility: { status: "approved" },
+    route: "/workers/$id",
+  },
+  {
+    key: "community",
+    label: "কমিউনিটি",
+    hint: "community groups, clubs, associations (somiti)",
+    table: "communities",
+    searchableFields: ["name", "description", "area"],
+    publicFields: ["id", "slug", "name", "area", "member_count"],
+    privateFields: ["created_by"],
+    areaFields: ["area"],
+    visibility: { is_active: true },
+    route: "/community/c/$slug",
+  },
+  {
+    key: "mosque",
+    label: "মসজিদ",
+    hint: "mosques, imam, masjid",
+    table: "mosques",
+    searchableFields: ["name", "area", "union_name", "imam_name"],
+    publicFields: ["id", "slug", "name", "area", "union_name", "imam_name"],
+    privateFields: ["phone", "created_by", "updated_by", "verified_by", "rejection_reason"],
+    areaFields: ["area", "union_name", "upazila"],
+    visibility: { status: "verified" },
+    route: "/community/mosques/$slug",
+  },
+  {
+    key: "notice",
+    label: "নোটিশ",
+    hint: "official notices, announcements, power outage, tariff news",
+    table: "announcements",
+    searchableFields: ["title", "body", "location"],
+    publicFields: ["id", "title", "location", "published_at", "category"],
+    privateFields: ["published_by"],
+    areaFields: ["location"],
+    visibility: { is_published: true },
+    route: "/notices",
+    listAllWhenNoMatch: true,
   },
   {
     key: "teacher",
