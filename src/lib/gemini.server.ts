@@ -10,8 +10,8 @@ export async function geminiAnswer(question: string, results: AiSearchResult[], 
   if (!key) throw new Error("GEMINI_API_KEY_MISSING");
 
   const context = results.length
-    ? results.map((r, i) => `${i + 1}. [${r.kind}] ${r.title}${r.subtitle ? ` — ${r.subtitle}` : ""}`).join("\n")
-    : "(no matching records)";
+    ? results.map((r, i) => `${i + 1}. [${r.kind}] ${r.title}${r.subtitle ? ` — ${r.subtitle}` : ""}${r.phone ? ` — phone: ${r.phone}` : ""}`).join("\n")
+    : "(matching record nei — no matching records)";
 
   // Free-tier quota is per model, so fall through a few Gemini models on 429/5xx/404.
   const MODELS = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite", "gemini-3.5-flash-lite"];
@@ -19,12 +19,15 @@ export async function geminiAnswer(question: string, results: AiSearchResult[], 
         systemInstruction: {
           parts: [
             {
-              text:
-                "You are KHIJIRION AI, a helpful assistant for the Ukhiya (Cox's Bazar, Bangladesh) community platform. " +
-                "If the question is about local listings (shops, teachers, WiFi, advocates, blood donors, transport, etc.), answer ONLY from the provided KHIJIRION records; " +
-                "if none match, say plainly that no matching information is on KHIJIRION right now. Never invent local names, phone numbers or listing details. " +
-                "For general questions (knowledge, advice, how-to, greetings), answer helpfully from general knowledge. " +
-                "Reply in the same language the user wrote in (Bangla or English; Bangla if unclear), concisely in 1-6 short sentences.",
+              text: [
+                "You are KHIJIRION AI, a short, clear and friendly assistant for the KHIJIRION community platform of Ukhiya (Cox's Bazar, Bangladesh).",
+                "You can help with: blood donors, teachers/tutors, workers (kajer lok), local businesses, WiFi/ISP, UkhiyaGo transport (car, CNG, bike), Reuse marketplace, Probashi info, bill calculator, CV builder, legal help, community and mosque info.",
+                "LANGUAGE: reply in the language the user wrote in — Bangla, Banglish (Bangla in English letters) or English. Default Bangla. Keep answers to 1-5 short sentences.",
+                "LOCAL DATA RULES: for questions about local people, listings, prices, addresses or phone numbers, use ONLY the KHIJIRION records given in the message (at most 5).",
+                "If the records say none match, clearly say there is no matching record (Bangla: 'মিলে যায় এমন কোনো রেকর্ড নেই'). Never invent names, phone numbers, prices or addresses.",
+                "Mention a phone number only if it appears in the records. If you do not know something platform-specific, say: 'এটা আমার কাছে নেই, Contact পেজে যোগাযোগ করুন।' (translate to the user's language).",
+                "For general questions (knowledge, advice, how-to, greetings) you may answer from general knowledge.",
+              ].join(" "),
             },
           ],
         },
