@@ -16,6 +16,10 @@ import {
   Briefcase,
   MessageCircle,
   Scale,
+  Wrench,
+  Users,
+  Landmark,
+  Megaphone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai-elements/conversation";
@@ -47,6 +51,10 @@ const META: Record<AiSearchResult["kind"], { label: string; icon: typeof Store }
   isp: { label: "ওয়াইফাই", icon: Wifi },
   govt_job: { label: "চাকরি", icon: Briefcase },
   advocate: { label: "আইনজীবী", icon: Scale },
+  worker: { label: "কাজের লোক", icon: Wrench },
+  community: { label: "কমিউনিটি", icon: Users },
+  mosque: { label: "মসজিদ", icon: Landmark },
+  notice: { label: "নোটিশ", icon: Megaphone },
 };
 
 const SUGGESTIONS = [
@@ -157,6 +165,11 @@ export function AiSearchBox() {
     else if (item.kind === "isp") navigate({ to: "/isp" });
     else if (item.kind === "govt_job") navigate({ to: "/govt-jobs/$id", params: { id: item.id } });
     else if (item.kind === "advocate") navigate({ to: "/legal/$id", params: { id: item.slug || item.id } });
+    else if (item.kind === "worker") navigate({ to: "/workers/$id", params: { id: item.slug || item.id } });
+    else if (item.kind === "community" && item.slug) navigate({ to: "/community/c/$slug", params: { slug: item.slug } });
+    else if (item.kind === "mosque" && item.slug) navigate({ to: "/community/mosques/$slug", params: { slug: item.slug } });
+    else if (item.kind === "notice") navigate({ to: "/notices" });
+    else if (item.kind === "community" || item.kind === "mosque") navigate({ to: "/community" });
     else navigate({ to: "/blood-donors" });
   };
 

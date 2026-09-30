@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import {
+  AI_MAX_RESULTS,
   AI_MODULE_KEYS,
   AI_SCHEMA_VERSION,
   getModuleMap,
@@ -20,6 +21,8 @@ export type AiSearchResult = {
   slug: string | null;
   title: string;
   subtitle: string | null;
+  /** Only present when the record's phone is already publicly visible. */
+  phone?: string | null;
 };
 
 export type AiSearchResponse = {
@@ -167,7 +170,34 @@ const PRESENTERS: Record<AiModuleKey, (r: Row) => { title: string; subtitle: str
     subtitle: join(r.designation, r.organization),
     slug: null,
   }),
+  worker: (r) => ({
+    title: str(r.full_name) ?? "—",
+    subtitle: join(r.skills, r.area ?? r.upazila, r.experience_years ? `${r.experience_years} বছর অভিজ্ঞতা` : null),
+    slug: str(r.slug),
+  }),
+  community: (r) => ({
+    title: str(r.name) ?? "—",
+    subtitle: join(r.area, r.member_count ? `${r.member_count} জন সদস্য` : null),
+    slug: str(r.slug),
+  }),
+  mosque: (r) => ({
+    title: str(r.name) ?? "—",
+    subtitle: join(r.area ?? r.union_name, r.imam_name ? `ইমাম: ${r.imam_name}` : null),
+    slug: str(r.slug),
+  }),
+  notice: (r) => ({
+    title: str(r.title) ?? "—",
+    subtitle: join(r.location, typeof r.published_at === "string" ? r.published_at.slice(0, 10) : null),
+    slug: null,
+  }),
 };
+
+function publicPhone(map: AiModuleMap, row: Row): string | null {
+  if (!map.publicPhoneField) return null;
+  const v = row[map.publicPhoneField];
+  if (Array.isArray(v)) return v.map(str).filter(Boolean).slice(0, 2).join(", ") || null;
+  return str(v);
+}
 
 async function searchModule(
   map: AiModuleMap,
@@ -194,7 +224,7 @@ async function searchModule(
   const project = (rows: Row[]): AiSearchResult[] =>
     rows.map((row) => {
       const { title, subtitle, slug } = present(row);
-      return { kind: map.key, id: String(row.id), slug, title, subtitle };
+      return { kind: map.key, id: String(row.id), slug, title, subtitle, phone: publicPhone(map, row) };
     });
 
   const { data, error } = await q;
@@ -251,7 +281,16 @@ export async function performAiSearch(
   if (bloodGroup) categories.add("blood_donor");
   const lower = query.toLowerCase();
   if (/wi-?fi|internet|broadband|isp|ওয়াইফাই|ওয়াই-ফাই|ইন্টারনেট|ব্রডব্যান্ড/.test(lower)) categories.add("isp");
-  if (/lawyer|advocate|legal|উকিল|আইনজীবী|অ্যাডভোকেট|এডভোকেট|আইনি/.test(lower)) categories.add("advocate");
+  if (/lawyer|advocate|legal|ukil|উকিল|আইনজীবী|অ্যাডভোকেট|এডভোকেট|আইনি/.test(lower)) categories.add("advocate");
+  if (/rokto|blood|রক্ত/.test(lower)) categories.add("blood_donor");
+  if (/teacher|tutor|shikkhok|shikkok|শিক্ষক|টিউটর|টিউশন/.test(lower)) categories.add("teacher");
+  if (/worker|mistri|kajer lok|electrician|plumber|মিস্ত্রি|কাজের লোক|ইলেকট্রিশিয়ান|প্লাম্বার|রাজমিস্ত্রি/.test(lower)) categories.add("worker");
+  if (/gari|gadi|cng|bike|car|microbus|ukhiyago|গাড়ি|সিএনজি|বাইক|মাইক্রো|উখিয়াগো/.test(lower)) categories.add("ukhiya_go");
+  if (/reuse|purono|used|second.?hand|পুরনো|পুরাতন|রিইউজ|বাসা ভাড়া|জমি/.test(lower)) categories.add("reuse");
+  if (/mosque|masjid|mosjid|imam|মসজিদ|ইমাম/.test(lower)) categories.add("mosque");
+  if (/community|club|somiti|samity|কমিউনিটি|ক্লাব|সমিতি|সংগঠন/.test(lower)) categories.add("community");
+  if (/notice|announcement|load.?shedding|নোটিশ|ঘোষণা|বিজ্ঞপ্তি|লোডশেডিং/.test(lower)) categories.add("notice");
+  if (/dokan|shop|store|দোকান|ব্যবসা/.test(lower)) categories.add("business");
 
   const clarify = intent.clarify && intent.clarify.trim() ? intent.clarify.trim() : null;
   if (clarify) {
@@ -261,7 +300,11 @@ export async function performAiSearch(
   const settled = await Promise.all(
     [...categories].map((key) => searchModule(getModuleMap(key), { term, area: intent.area, bloodGroup })),
   );
-  const results = settled.flat();
+  // Round-robin across modules so the most relevant mix fits the hard cap.
+  const results: AiSearchResult[] = [];
+  for (let i = 0; results.length < AI_MAX_RESULTS && settled.some((l) => l[i]); i++) {
+    for (const list of settled) if (list[i] && results.length < AI_MAX_RESULTS) results.push(list[i]);
+  }
 
   return {
     answer:
