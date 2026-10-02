@@ -199,7 +199,7 @@ function publicPhone(map: AiModuleMap, row: Row): string | null {
   return str(v);
 }
 
-async function searchModule(
+export async function searchModule(
   map: AiModuleMap,
   opts: { term: string; area: string | null; bloodGroup: string | null },
 ): Promise<AiSearchResult[]> {
