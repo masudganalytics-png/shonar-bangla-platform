@@ -14,7 +14,6 @@ export async function geminiAnswer(question: string, results: AiSearchResult[], 
     : "(matching record nei — no matching records)";
 
   // Free-tier quota is per model, so fall through a few Gemini models on 429/5xx/404.
-  const MODELS = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite", "gemini-3.5-flash-lite"];
   const body = JSON.stringify({
         systemInstruction: {
           parts: [
@@ -41,6 +40,14 @@ export async function geminiAnswer(question: string, results: AiSearchResult[], 
           thinkingConfig: { thinkingBudget: 0 },
         },
       });
+  return callGemini(body);
+}
+
+const MODELS = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite", "gemini-3.5-flash-lite"];
+
+export async function callGemini(body: string): Promise<string> {
+  const key = process.env["GEMINI_API_KEY"];
+  if (!key) throw new Error("GEMINI_API_KEY_MISSING");
   let res: Response | null = null;
   for (const model of MODELS) {
     res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
@@ -58,4 +65,74 @@ export async function geminiAnswer(question: string, results: AiSearchResult[], 
   const text = (json.candidates?.[0]?.content?.parts ?? []).map((p) => p.text ?? "").join("").trim();
   if (!text) throw new Error("GEMINI_EMPTY");
   return text;
+}
+
+export type InternalIntent = { category: string; keywords: string; blood_group: string | null };
+
+/** Step a: question -> {category, keywords, blood_group} JSON. */
+export async function geminiExtractIntent(question: string): Promise<InternalIntent> {
+  const text = await callGemini(
+    JSON.stringify({
+      systemInstruction: {
+        parts: [{ text:
+          "Extract a search intent from a Bangla/Banglish/English question for a local directory in Ukhiya, Bangladesh. " +
+          "category: one of blood, teacher, business, isp, ride, reuse, worker, legal, other. " +
+          "keywords: short core search term (profession, subject, product, shop type, place), keep user's language; empty string if none. " +
+          "blood_group: one of A+,A-,B+,B-,AB+,AB-,O+,O- if blood is asked (normalize 'O positive', 'ও পজিটিভ', 'O+ve' to O+), else null." }],
+      },
+      contents: [{ role: "user", parts: [{ text: question }] }],
+      generationConfig: {
+        temperature: 0,
+        maxOutputTokens: 200,
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: "OBJECT",
+          properties: {
+            category: { type: "STRING", enum: ["blood", "teacher", "business", "isp", "ride", "reuse", "worker", "legal", "other"] },
+            keywords: { type: "STRING" },
+            blood_group: { type: "STRING", nullable: true },
+          },
+          required: ["category", "keywords", "blood_group"],
+        },
+        thinkingConfig: { thinkingBudget: 0 },
+      },
+    }),
+  );
+  return JSON.parse(text) as InternalIntent;
+}
+
+/** Step c: format ONLY the given records in Bangla. */
+export async function geminiFormatResults(question: string, results: AiSearchResult[]): Promise<string> {
+  const data = results
+    .map((r, i) => `${i + 1}. ${r.title}${r.subtitle ? ` — ${r.subtitle}` : ""}${r.phone ? ` — ফোন: ${r.phone}` : ""}`)
+    .join("\n");
+  return callGemini(
+    JSON.stringify({
+      systemInstruction: {
+        parts: [{ text:
+          "You are KHIJIRION AI. Answer in Bangla, short and friendly, using ONLY the records given. " +
+          "Do not add any name, phone, price, address or fact that is not in the records. List the records clearly." }],
+      },
+      contents: [{ role: "user", parts: [{ text: `প্রশ্ন: ${question}\n\nKHIJIRION রেকর্ড:\n${data}` }] }],
+      generationConfig: { temperature: 0.2, maxOutputTokens: 600, thinkingConfig: { thinkingBudget: 0 } },
+    }),
+  );
+}
+
+/** Step 3: general-knowledge answer in Bangla. */
+export async function geminiGeneralAnswer(question: string, history: ChatTurn[]): Promise<string> {
+  return callGemini(
+    JSON.stringify({
+      systemInstruction: {
+        parts: [{ text:
+          "You are KHIJIRION AI. Answer the question from general knowledge in Bangla (use English only if the user wrote English). " +
+          "Keep it short and clear. Do not claim to have KHIJIRION platform data." }],
+      },
+      contents: [
+        ...history.map((t) => ({ role: t.role === "assistant" ? "model" : "user", parts: [{ text: t.content.slice(0, 500) }] })),
+        { role: "user", parts: [{ text: question }] },
+      ],
+      generationConfig: { temperature: 0.6, maxOutputTokens: 800, thinkingConfig: { thinkingBudget: 0 } },
+    }),
+  );
 }
