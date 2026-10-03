@@ -135,11 +135,32 @@ async function rateLimited(userId: string | null, sessionId: string): Promise<bo
   return (count ?? 0) >= RATE_LIMIT_PER_MIN;
 }
 
+const QUICK_RULES: Array<[string, RegExp]> = [
+  ["blood", /rokto|blood|রক্ত|donor|ডোনার/i],
+  ["isp", /wi-?fi|internet|broadband|\bisp\b|ওয়াইফাই|ওয়াই-ফাই|ইন্টারনেট|ব্রডব্যান্ড/i],
+  ["legal", /lawyer|advocate|ukil|উকিল|আইনজীবী|অ্যাডভোকেট|এডভোকেট/i],
+  ["teacher", /teacher|tutor|shikkhok|শিক্ষক|টিউটর|টিউশন/i],
+  ["worker", /mistri|kajer lok|electrician|plumber|মিস্ত্রি|কাজের লোক|ইলেকট্রিশিয়ান|প্লাম্বার/i],
+  ["ride", /gari|gadi|\bcng\b|bike|microbus|ukhiyago|গাড়ি|সিএনজি|বাইক|মাইক্রো|উখিয়াগো/i],
+  ["reuse", /reuse|purono|second.?hand|পুরনো|পুরাতন|রিইউজ/i],
+];
+const FILLER = /\b(lagbe|ache|ase|kothay|khuji|need|want|find|please|plz|ukhiya|ukhiyay)\b|লাগবে|আছে|কোথায়|খুঁজছি|দরকার|চাই|উখিয়ায়|উখিয়া|কি|কে|\?|।/gi;
+function quickCategory(q: string): string | null {
+  const hits = QUICK_RULES.filter(([, re]) => re.test(q));
+  return hits.length === 1 ? hits[0][0] : null;
+}
+function quickKeywords(q: string): string {
+  const [, re] = QUICK_RULES.find(([, r]) => r.test(q))!;
+  return q.replace(re, " ").replace(FILLER, " ").replace(/\s+/g, " ").trim();
+}
+
 async function internalAnswer(question: string, userId: string | null): Promise<{ answer: string; results: AiSearchResult[]; notFound: boolean }> {
   const { geminiExtractIntent, geminiFormatResults } = await import("@/lib/gemini.server");
   let intent: { category: string; keywords: string; blood_group: string | null };
+  const quick = quickCategory(question);
   try {
-    intent = await geminiExtractIntent(question);
+    // Fast path: obvious category from keywords skips one Gemini round-trip.
+    intent = quick ? { category: quick, keywords: quickKeywords(question), blood_group: null } : await geminiExtractIntent(question);
   } catch (e) {
     console.error("[khijirion-ai] intent extraction failed, using keyword fallback", e);
     intent = { category: "other", keywords: question, blood_group: null };
@@ -192,7 +213,11 @@ export const sendAiChatMessage = createServerFn({ method: "POST" })
     const userId = await currentUserId();
     const sb = await admin();
 
-    if (await rateLimited(userId, data.sessionId)) {
+    const [limited, existing] = await Promise.all([
+      rateLimited(userId, data.sessionId),
+      data.conversationId ? loadOwnedConversation(data.conversationId, userId, data.sessionId) : Promise.resolve(null),
+    ]);
+    if (limited) {
       console.log("[khijirion-ai] rate limited", userId ?? data.sessionId.slice(0, 6));
       return {
         conversationId: data.conversationId ?? "",
@@ -205,9 +230,7 @@ export const sendAiChatMessage = createServerFn({ method: "POST" })
       };
     }
 
-    let conversation = data.conversationId
-      ? await loadOwnedConversation(data.conversationId, userId, data.sessionId)
-      : null;
+    let conversation = existing;
 
     if (!conversation) {
       const { data: created, error } = await sb
