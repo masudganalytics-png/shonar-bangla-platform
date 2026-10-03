@@ -45,17 +45,24 @@ export async function geminiAnswer(question: string, results: AiSearchResult[], 
 
 const MODELS = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite", "gemini-3.5-flash-lite"];
 
+let workingModel: string | null = null;
+
 export async function callGemini(body: string): Promise<string> {
   const key = process.env["GEMINI_API_KEY"];
   if (!key) throw new Error("GEMINI_API_KEY_MISSING");
   let res: Response | null = null;
-  for (const model of MODELS) {
+  // Try the last model that worked first, so failing models are not retried on every call.
+  const order = workingModel ? [workingModel, ...MODELS.filter((m) => m !== workingModel)] : MODELS;
+  for (const model of order) {
     res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-goog-api-key": key },
       body,
     });
-    if (res.ok) break;
+    if (res.ok) {
+      workingModel = model;
+      break;
+    }
     const detail = await res.text().catch(() => "");
     console.error("[gemini]", model, res.status, detail.slice(0, 200));
     if (!(res.status === 429 || res.status === 404 || res.status >= 500)) break;

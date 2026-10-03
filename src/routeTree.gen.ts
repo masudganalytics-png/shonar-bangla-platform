@@ -9,263 +9,147 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WorkersRouteImport } from './routes/workers'
-import { Route as UtilitiesRouteImport } from './routes/utilities'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as TeachersRouteImport } from './routes/teachers'
-import { Route as StatsRouteImport } from './routes/stats'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as RequestBloodRouteImport } from './routes/request-blood'
-import { Route as ProbashiRouteImport } from './routes/probashi'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as NoticesRouteImport } from './routes/notices'
-import { Route as MatchRouteImport } from './routes/match'
-import { Route as LegalRouteImport } from './routes/legal'
-import { Route as IspRouteImport } from './routes/isp'
-import { Route as HelplineRouteImport } from './routes/helpline'
-import { Route as GovtJobsRouteImport } from './routes/govt-jobs'
-import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
-import { Route as CvBuilderRouteImport } from './routes/cv-builder'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as CommunityRouteImport } from './routes/community'
-import { Route as CalculatorRouteImport } from './routes/calculator'
-import { Route as BusinessRouteImport } from './routes/business'
-import { Route as BloodDonorsRouteImport } from './routes/blood-donors'
-import { Route as AuthCallbackRouteImport } from './routes/auth-callback'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as WorkersIndexRouteImport } from './routes/workers.index'
-import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
-import { Route as ProbashiIndexRouteImport } from './routes/probashi.index'
-import { Route as MatchIndexRouteImport } from './routes/match.index'
-import { Route as LegalIndexRouteImport } from './routes/legal.index'
-import { Route as GovtJobsIndexRouteImport } from './routes/govt-jobs.index'
-import { Route as CommunityIndexRouteImport } from './routes/community.index'
-import { Route as BusinessIndexRouteImport } from './routes/business.index'
-import { Route as BloodDonorsIndexRouteImport } from './routes/blood-donors.index'
-import { Route as WorkersRegisterRouteImport } from './routes/workers.register'
-import { Route as WorkersIdRouteImport } from './routes/workers.$id'
-import { Route as TeachersTuitionsRouteImport } from './routes/teachers.tuitions'
-import { Route as TeachersResourcesRouteImport } from './routes/teachers.resources'
-import { Route as TeachersRegisterRouteImport } from './routes/teachers.register'
-import { Route as TeachersNewsRouteImport } from './routes/teachers.news'
-import { Route as TeachersAchievementsRouteImport } from './routes/teachers.achievements'
-import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
-import { Route as ServicesReuseRouteImport } from './routes/services.reuse'
-import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register'
-import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
-import { Route as MatchNewRouteImport } from './routes/match.new'
-import { Route as MatchIdRouteImport } from './routes/match.$id'
-import { Route as LegalIdRouteImport } from './routes/legal.$id'
-import { Route as GovtJobsRegisterRouteImport } from './routes/govt-jobs.register'
-import { Route as GovtJobsIdRouteImport } from './routes/govt-jobs.$id'
-import { Route as CommunityNewRouteImport } from './routes/community.new'
-import { Route as CommunityMosquesRouteImport } from './routes/community.mosques'
-import { Route as CommunityGroupsRouteImport } from './routes/community.groups'
-import { Route as CommunityFeedRouteImport } from './routes/community.feed'
-import { Route as CommunityClubsRouteImport } from './routes/community.clubs'
-import { Route as BusinessRegisterRouteImport } from './routes/business.register'
-import { Route as BusinessDirectoryRouteImport } from './routes/business.directory'
-import { Route as BusinessSlugRouteImport } from './routes/business.$slug'
-import { Route as BloodDonorsRegisterRouteImport } from './routes/blood-donors.register'
-import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
-import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
-import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
-import { Route as AuthenticatedMyMatchRouteImport } from './routes/_authenticated/my-match'
-import { Route as AuthenticatedMyBusinessRouteImport } from './routes/_authenticated/my-business'
-import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedCompareRouteImport } from './routes/_authenticated/compare'
-import { Route as AuthenticatedBillsRouteImport } from './routes/_authenticated/bills'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthCallbackRouteImport } from './routes/auth-callback'
+import { Route as BloodDonorsRouteImport } from './routes/blood-donors'
+import { Route as BusinessRouteImport } from './routes/business'
+import { Route as CalculatorRouteImport } from './routes/calculator'
+import { Route as CommunityRouteImport } from './routes/community'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CvBuilderRouteImport } from './routes/cv-builder'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as GovtJobsRouteImport } from './routes/govt-jobs'
+import { Route as HelplineRouteImport } from './routes/helpline'
+import { Route as IspRouteImport } from './routes/isp'
+import { Route as LegalRouteImport } from './routes/legal'
+import { Route as MatchRouteImport } from './routes/match'
+import { Route as NoticesRouteImport } from './routes/notices'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ProbashiRouteImport } from './routes/probashi'
+import { Route as RequestBloodRouteImport } from './routes/request-blood'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as StatsRouteImport } from './routes/stats'
+import { Route as TeachersRouteImport } from './routes/teachers'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as UtilitiesRouteImport } from './routes/utilities'
+import { Route as WorkersRouteImport } from './routes/workers'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
-import { Route as TeachersTuitionsIndexRouteImport } from './routes/teachers.tuitions.index'
-import { Route as TeachersNewsIndexRouteImport } from './routes/teachers.news.index'
-import { Route as TeachersAchievementsIndexRouteImport } from './routes/teachers.achievements.index'
-import { Route as ServicesUkhiyaGoIndexRouteImport } from './routes/services.ukhiya-go.index'
-import { Route as ServicesReuseIndexRouteImport } from './routes/services.reuse.index'
-import { Route as CommunityMosquesIndexRouteImport } from './routes/community.mosques.index'
-import { Route as CommunityEventsIndexRouteImport } from './routes/community.events.index'
+import { Route as AuthenticatedBillsRouteImport } from './routes/_authenticated/bills'
+import { Route as AuthenticatedCompareRouteImport } from './routes/_authenticated/compare'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
+import { Route as AuthenticatedMyBusinessRouteImport } from './routes/_authenticated/my-business'
+import { Route as AuthenticatedMyMatchRouteImport } from './routes/_authenticated/my-match'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as BloodDonorsIndexRouteImport } from './routes/blood-donors.index'
+import { Route as BloodDonorsRegisterRouteImport } from './routes/blood-donors.register'
+import { Route as BusinessIndexRouteImport } from './routes/business.index'
+import { Route as BusinessSlugRouteImport } from './routes/business.$slug'
+import { Route as BusinessDirectoryRouteImport } from './routes/business.directory'
+import { Route as BusinessRegisterRouteImport } from './routes/business.register'
+import { Route as CommunityIndexRouteImport } from './routes/community.index'
+import { Route as CommunityClubsRouteImport } from './routes/community.clubs'
+import { Route as CommunityFeedRouteImport } from './routes/community.feed'
+import { Route as CommunityGroupsRouteImport } from './routes/community.groups'
+import { Route as CommunityMosquesRouteImport } from './routes/community.mosques'
+import { Route as CommunityNewRouteImport } from './routes/community.new'
+import { Route as GovtJobsIndexRouteImport } from './routes/govt-jobs.index'
+import { Route as GovtJobsIdRouteImport } from './routes/govt-jobs.$id'
+import { Route as GovtJobsRegisterRouteImport } from './routes/govt-jobs.register'
+import { Route as LegalIndexRouteImport } from './routes/legal.index'
+import { Route as LegalIdRouteImport } from './routes/legal.$id'
+import { Route as MatchIndexRouteImport } from './routes/match.index'
+import { Route as MatchIdRouteImport } from './routes/match.$id'
+import { Route as MatchNewRouteImport } from './routes/match.new'
+import { Route as ProbashiIndexRouteImport } from './routes/probashi.index'
+import { Route as ProbashiSlugRouteImport } from './routes/probashi.$slug'
+import { Route as ProbashiRegisterRouteImport } from './routes/probashi.register'
+import { Route as ServicesReuseRouteImport } from './routes/services.reuse'
+import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
+import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
+import { Route as TeachersAchievementsRouteImport } from './routes/teachers.achievements'
+import { Route as TeachersNewsRouteImport } from './routes/teachers.news'
+import { Route as TeachersRegisterRouteImport } from './routes/teachers.register'
+import { Route as TeachersResourcesRouteImport } from './routes/teachers.resources'
+import { Route as TeachersTuitionsRouteImport } from './routes/teachers.tuitions'
+import { Route as WorkersIndexRouteImport } from './routes/workers.index'
+import { Route as WorkersIdRouteImport } from './routes/workers.$id'
+import { Route as WorkersRegisterRouteImport } from './routes/workers.register'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
-import { Route as TeachersTuitionsNewRouteImport } from './routes/teachers.tuitions.new'
-import { Route as TeachersTuitionsIdRouteImport } from './routes/teachers.tuitions.$id'
-import { Route as TeachersNewsIdRouteImport } from './routes/teachers.news.$id'
-import { Route as TeachersAchievementsIdRouteImport } from './routes/teachers.achievements.$id'
-import { Route as ServicesUkhiyaGoSearchRouteImport } from './routes/services.ukhiya-go.search'
-import { Route as ServicesUkhiyaGoBookingsRouteImport } from './routes/services.ukhiya-go.bookings'
-import { Route as ServicesReuseMyListingsRouteImport } from './routes/services.reuse.my-listings'
-import { Route as ServicesReuseCreateRouteImport } from './routes/services.reuse.create'
-import { Route as ServicesReuseListingIdRouteImport } from './routes/services.reuse.$listingId'
-import { Route as CommunityUUserIdRouteImport } from './routes/community.u.$userId'
-import { Route as CommunityMosquesNewRouteImport } from './routes/community.mosques.new'
-import { Route as CommunityMosquesSlugRouteImport } from './routes/community.mosques.$slug'
-import { Route as CommunityEventsNewRouteImport } from './routes/community.events.new'
-import { Route as CommunityCSlugRouteImport } from './routes/community.c.$slug'
-import { Route as ApiPublicStatsRouteImport } from './routes/api/public/stats'
-import { Route as ApiPublicAnnouncementsRouteImport } from './routes/api/public/announcements'
-import { Route as AuthenticatedBillsNewRouteImport } from './routes/_authenticated/bills.new'
-import { Route as AuthenticatedAdminWorkersRouteImport } from './routes/_authenticated/admin.workers'
-import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
-import { Route as AuthenticatedAdminTuitionRequestsRouteImport } from './routes/_authenticated/admin.tuition-requests'
-import { Route as AuthenticatedAdminTuitionApplicationsRouteImport } from './routes/_authenticated/admin.tuition-applications'
-import { Route as AuthenticatedAdminTeachersRouteImport } from './routes/_authenticated/admin.teachers'
-import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_authenticated/admin.study-resources'
-import { Route as AuthenticatedAdminReuseRouteImport } from './routes/_authenticated/admin.reuse'
-import { Route as AuthenticatedAdminProbashiRouteImport } from './routes/_authenticated/admin.probashi'
-import { Route as AuthenticatedAdminMosquesRouteImport } from './routes/_authenticated/admin.mosques'
-import { Route as AuthenticatedAdminMatchRouteImport } from './routes/_authenticated/admin.match'
-import { Route as AuthenticatedAdminLegalRouteImport } from './routes/_authenticated/admin.legal'
-import { Route as AuthenticatedAdminIspRouteImport } from './routes/_authenticated/admin.isp'
-import { Route as AuthenticatedAdminHeaderRouteImport } from './routes/_authenticated/admin.header'
-import { Route as AuthenticatedAdminGovtWorkersRouteImport } from './routes/_authenticated/admin.govt-workers'
-import { Route as AuthenticatedAdminEducationNewsRouteImport } from './routes/_authenticated/admin.education-news'
-import { Route as AuthenticatedAdminCvSubmissionsRouteImport } from './routes/_authenticated/admin.cv-submissions'
-import { Route as AuthenticatedAdminComplaintsRouteImport } from './routes/_authenticated/admin.complaints'
-import { Route as AuthenticatedAdminCommunityRouteImport } from './routes/_authenticated/admin.community'
-import { Route as AuthenticatedAdminBusinessesRouteImport } from './routes/_authenticated/admin.businesses'
-import { Route as AuthenticatedAdminBusinessReviewsRouteImport } from './routes/_authenticated/admin.business-reviews'
-import { Route as AuthenticatedAdminBusinessCategoriesRouteImport } from './routes/_authenticated/admin.business-categories'
-import { Route as AuthenticatedAdminBloodRequestsRouteImport } from './routes/_authenticated/admin.blood-requests'
-import { Route as AuthenticatedAdminBloodDonorsRouteImport } from './routes/_authenticated/admin.blood-donors'
-import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authenticated/admin.bills'
-import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
-import { Route as AuthenticatedAdminAiChatRouteImport } from './routes/_authenticated/admin.ai-chat'
 import { Route as AuthenticatedAdminAchievementsRouteImport } from './routes/_authenticated/admin.achievements'
-import { Route as ServicesUkhiyaGoDriverIndexRouteImport } from './routes/services.ukhiya-go.driver.index'
-import { Route as ServicesUkhiyaGoTripTripIdRouteImport } from './routes/services.ukhiya-go.trip.$tripId'
-import { Route as ServicesUkhiyaGoDriverRegisterRouteImport } from './routes/services.ukhiya-go.driver.register'
-import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
-import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
-import { Route as ApiPublicHooksRefreshExchangeRatesRouteImport } from './routes/api/public/hooks/refresh-exchange-rates'
-import { Route as AuthenticatedBillsIdEditRouteImport } from './routes/_authenticated/bills.$id.edit'
-import { Route as AuthenticatedAdminUkhiyaGoMaterialOrdersRouteImport } from './routes/_authenticated/admin.ukhiya-go.material-orders'
+import { Route as AuthenticatedAdminAiChatRouteImport } from './routes/_authenticated/admin.ai-chat'
+import { Route as AuthenticatedAdminAnnouncementsRouteImport } from './routes/_authenticated/admin.announcements'
+import { Route as AuthenticatedAdminBillsRouteImport } from './routes/_authenticated/admin.bills'
+import { Route as AuthenticatedAdminBloodDonorsRouteImport } from './routes/_authenticated/admin.blood-donors'
+import { Route as AuthenticatedAdminBloodRequestsRouteImport } from './routes/_authenticated/admin.blood-requests'
+import { Route as AuthenticatedAdminBusinessCategoriesRouteImport } from './routes/_authenticated/admin.business-categories'
+import { Route as AuthenticatedAdminBusinessReviewsRouteImport } from './routes/_authenticated/admin.business-reviews'
+import { Route as AuthenticatedAdminBusinessesRouteImport } from './routes/_authenticated/admin.businesses'
+import { Route as AuthenticatedAdminCommunityRouteImport } from './routes/_authenticated/admin.community'
+import { Route as AuthenticatedAdminComplaintsRouteImport } from './routes/_authenticated/admin.complaints'
+import { Route as AuthenticatedAdminCvSubmissionsRouteImport } from './routes/_authenticated/admin.cv-submissions'
+import { Route as AuthenticatedAdminEducationNewsRouteImport } from './routes/_authenticated/admin.education-news'
+import { Route as AuthenticatedAdminGovtWorkersRouteImport } from './routes/_authenticated/admin.govt-workers'
+import { Route as AuthenticatedAdminHeaderRouteImport } from './routes/_authenticated/admin.header'
+import { Route as AuthenticatedAdminIspRouteImport } from './routes/_authenticated/admin.isp'
+import { Route as AuthenticatedAdminLegalRouteImport } from './routes/_authenticated/admin.legal'
+import { Route as AuthenticatedAdminMatchRouteImport } from './routes/_authenticated/admin.match'
+import { Route as AuthenticatedAdminMosquesRouteImport } from './routes/_authenticated/admin.mosques'
+import { Route as AuthenticatedAdminProbashiRouteImport } from './routes/_authenticated/admin.probashi'
+import { Route as AuthenticatedAdminReuseRouteImport } from './routes/_authenticated/admin.reuse'
+import { Route as AuthenticatedAdminStudyResourcesRouteImport } from './routes/_authenticated/admin.study-resources'
+import { Route as AuthenticatedAdminTeachersRouteImport } from './routes/_authenticated/admin.teachers'
+import { Route as AuthenticatedAdminTuitionApplicationsRouteImport } from './routes/_authenticated/admin.tuition-applications'
+import { Route as AuthenticatedAdminTuitionRequestsRouteImport } from './routes/_authenticated/admin.tuition-requests'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAdminWorkersRouteImport } from './routes/_authenticated/admin.workers'
+import { Route as AuthenticatedBillsNewRouteImport } from './routes/_authenticated/bills.new'
+import { Route as ApiPublicAnnouncementsRouteImport } from './routes/api/public/announcements'
+import { Route as ApiPublicStatsRouteImport } from './routes/api/public/stats'
+import { Route as CommunityCSlugRouteImport } from './routes/community.c.$slug'
+import { Route as CommunityEventsIndexRouteImport } from './routes/community.events.index'
+import { Route as CommunityEventsNewRouteImport } from './routes/community.events.new'
+import { Route as CommunityMosquesIndexRouteImport } from './routes/community.mosques.index'
+import { Route as CommunityMosquesSlugRouteImport } from './routes/community.mosques.$slug'
+import { Route as CommunityMosquesNewRouteImport } from './routes/community.mosques.new'
+import { Route as CommunityUUserIdRouteImport } from './routes/community.u.$userId'
+import { Route as ServicesReuseIndexRouteImport } from './routes/services.reuse.index'
+import { Route as ServicesReuseListingIdRouteImport } from './routes/services.reuse.$listingId'
+import { Route as ServicesReuseCreateRouteImport } from './routes/services.reuse.create'
+import { Route as ServicesReuseMyListingsRouteImport } from './routes/services.reuse.my-listings'
+import { Route as ServicesUkhiyaGoIndexRouteImport } from './routes/services.ukhiya-go.index'
+import { Route as ServicesUkhiyaGoBookingsRouteImport } from './routes/services.ukhiya-go.bookings'
+import { Route as ServicesUkhiyaGoSearchRouteImport } from './routes/services.ukhiya-go.search'
+import { Route as TeachersAchievementsIndexRouteImport } from './routes/teachers.achievements.index'
+import { Route as TeachersAchievementsIdRouteImport } from './routes/teachers.achievements.$id'
+import { Route as TeachersNewsIndexRouteImport } from './routes/teachers.news.index'
+import { Route as TeachersNewsIdRouteImport } from './routes/teachers.news.$id'
+import { Route as TeachersTuitionsIndexRouteImport } from './routes/teachers.tuitions.index'
+import { Route as TeachersTuitionsIdRouteImport } from './routes/teachers.tuitions.$id'
+import { Route as TeachersTuitionsNewRouteImport } from './routes/teachers.tuitions.new'
 import { Route as AuthenticatedAdminUkhiyaGoDriversRouteImport } from './routes/_authenticated/admin.ukhiya-go.drivers'
+import { Route as AuthenticatedAdminUkhiyaGoMaterialOrdersRouteImport } from './routes/_authenticated/admin.ukhiya-go.material-orders'
+import { Route as AuthenticatedBillsIdEditRouteImport } from './routes/_authenticated/bills.$id.edit'
+import { Route as ApiPublicHooksRefreshExchangeRatesRouteImport } from './routes/api/public/hooks/refresh-exchange-rates'
+import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
+import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
+import { Route as ServicesUkhiyaGoDriverIndexRouteImport } from './routes/services.ukhiya-go.driver.index'
+import { Route as ServicesUkhiyaGoDriverRegisterRouteImport } from './routes/services.ukhiya-go.driver.register'
+import { Route as ServicesUkhiyaGoTripTripIdRouteImport } from './routes/services.ukhiya-go.trip.$tripId'
 
-const WorkersRoute = WorkersRouteImport.update({
-  id: '/workers',
-  path: '/workers',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UtilitiesRoute = UtilitiesRouteImport.update({
-  id: '/utilities',
-  path: '/utilities',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TeachersRoute = TeachersRouteImport.update({
-  id: '/teachers',
-  path: '/teachers',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StatsRoute = StatsRouteImport.update({
-  id: '/stats',
-  path: '/stats',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RequestBloodRoute = RequestBloodRouteImport.update({
-  id: '/request-blood',
-  path: '/request-blood',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProbashiRoute = ProbashiRouteImport.update({
-  id: '/probashi',
-  path: '/probashi',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NoticesRoute = NoticesRouteImport.update({
-  id: '/notices',
-  path: '/notices',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MatchRoute = MatchRouteImport.update({
-  id: '/match',
-  path: '/match',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LegalRoute = LegalRouteImport.update({
-  id: '/legal',
-  path: '/legal',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IspRoute = IspRouteImport.update({
-  id: '/isp',
-  path: '/isp',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HelplineRoute = HelplineRouteImport.update({
-  id: '/helpline',
-  path: '/helpline',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GovtJobsRoute = GovtJobsRouteImport.update({
-  id: '/govt-jobs',
-  path: '/govt-jobs',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
-  id: '/forgot-password',
-  path: '/forgot-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CvBuilderRoute = CvBuilderRouteImport.update({
-  id: '/cv-builder',
-  path: '/cv-builder',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CommunityRoute = CommunityRouteImport.update({
-  id: '/community',
-  path: '/community',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CalculatorRoute = CalculatorRouteImport.update({
-  id: '/calculator',
-  path: '/calculator',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BusinessRoute = BusinessRouteImport.update({
-  id: '/business',
-  path: '/business',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BloodDonorsRoute = BloodDonorsRouteImport.update({
-  id: '/blood-donors',
-  path: '/blood-donors',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthCallbackRoute = AuthCallbackRouteImport.update({
-  id: '/auth-callback',
-  path: '/auth-callback',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -273,223 +157,134 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth-callback',
+  path: '/auth-callback',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WorkersIndexRoute = WorkersIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => WorkersRoute,
-} as any)
-const TeachersIndexRoute = TeachersIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => TeachersRoute,
-} as any)
-const ProbashiIndexRoute = ProbashiIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ProbashiRoute,
-} as any)
-const MatchIndexRoute = MatchIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => MatchRoute,
-} as any)
-const LegalIndexRoute = LegalIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => LegalRoute,
-} as any)
-const GovtJobsIndexRoute = GovtJobsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => GovtJobsRoute,
-} as any)
-const CommunityIndexRoute = CommunityIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => CommunityRoute,
-} as any)
-const BusinessIndexRoute = BusinessIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => BusinessRoute,
-} as any)
-const BloodDonorsIndexRoute = BloodDonorsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => BloodDonorsRoute,
-} as any)
-const WorkersRegisterRoute = WorkersRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => WorkersRoute,
-} as any)
-const WorkersIdRoute = WorkersIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => WorkersRoute,
-} as any)
-const TeachersTuitionsRoute = TeachersTuitionsRouteImport.update({
-  id: '/tuitions',
-  path: '/tuitions',
-  getParentRoute: () => TeachersRoute,
-} as any)
-const TeachersResourcesRoute = TeachersResourcesRouteImport.update({
-  id: '/resources',
-  path: '/resources',
-  getParentRoute: () => TeachersRoute,
-} as any)
-const TeachersRegisterRoute = TeachersRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => TeachersRoute,
-} as any)
-const TeachersNewsRoute = TeachersNewsRouteImport.update({
-  id: '/news',
-  path: '/news',
-  getParentRoute: () => TeachersRoute,
-} as any)
-const TeachersAchievementsRoute = TeachersAchievementsRouteImport.update({
-  id: '/achievements',
-  path: '/achievements',
-  getParentRoute: () => TeachersRoute,
-} as any)
-const TeachersIdRoute = TeachersIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => TeachersRoute,
-} as any)
-const ServicesReuseRoute = ServicesReuseRouteImport.update({
-  id: '/services/reuse',
-  path: '/services/reuse',
+const BloodDonorsRoute = BloodDonorsRouteImport.update({
+  id: '/blood-donors',
+  path: '/blood-donors',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProbashiRegisterRoute = ProbashiRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => ProbashiRoute,
+const BusinessRoute = BusinessRouteImport.update({
+  id: '/business',
+  path: '/business',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const ProbashiSlugRoute = ProbashiSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => ProbashiRoute,
+const CalculatorRoute = CalculatorRouteImport.update({
+  id: '/calculator',
+  path: '/calculator',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const MatchNewRoute = MatchNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => MatchRoute,
+const CommunityRoute = CommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const MatchIdRoute = MatchIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => MatchRoute,
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const LegalIdRoute = LegalIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => LegalRoute,
+const CvBuilderRoute = CvBuilderRouteImport.update({
+  id: '/cv-builder',
+  path: '/cv-builder',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const GovtJobsRegisterRoute = GovtJobsRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => GovtJobsRoute,
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const GovtJobsIdRoute = GovtJobsIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => GovtJobsRoute,
+const GovtJobsRoute = GovtJobsRouteImport.update({
+  id: '/govt-jobs',
+  path: '/govt-jobs',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const CommunityNewRoute = CommunityNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => CommunityRoute,
+const HelplineRoute = HelplineRouteImport.update({
+  id: '/helpline',
+  path: '/helpline',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const CommunityMosquesRoute = CommunityMosquesRouteImport.update({
-  id: '/mosques',
-  path: '/mosques',
-  getParentRoute: () => CommunityRoute,
+const IspRoute = IspRouteImport.update({
+  id: '/isp',
+  path: '/isp',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const CommunityGroupsRoute = CommunityGroupsRouteImport.update({
-  id: '/groups',
-  path: '/groups',
-  getParentRoute: () => CommunityRoute,
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const CommunityFeedRoute = CommunityFeedRouteImport.update({
-  id: '/feed',
-  path: '/feed',
-  getParentRoute: () => CommunityRoute,
+const MatchRoute = MatchRouteImport.update({
+  id: '/match',
+  path: '/match',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const CommunityClubsRoute = CommunityClubsRouteImport.update({
-  id: '/clubs',
-  path: '/clubs',
-  getParentRoute: () => CommunityRoute,
+const NoticesRoute = NoticesRouteImport.update({
+  id: '/notices',
+  path: '/notices',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const BusinessRegisterRoute = BusinessRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => BusinessRoute,
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const BusinessDirectoryRoute = BusinessDirectoryRouteImport.update({
-  id: '/directory',
-  path: '/directory',
-  getParentRoute: () => BusinessRoute,
+const ProbashiRoute = ProbashiRouteImport.update({
+  id: '/probashi',
+  path: '/probashi',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const BusinessSlugRoute = BusinessSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => BusinessRoute,
+const RequestBloodRoute = RequestBloodRouteImport.update({
+  id: '/request-blood',
+  path: '/request-blood',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const BloodDonorsRegisterRoute = BloodDonorsRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => BloodDonorsRoute,
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const StatsRoute = StatsRouteImport.update({
+  id: '/stats',
+  path: '/stats',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const TeachersRoute = TeachersRouteImport.update({
+  id: '/teachers',
+  path: '/teachers',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedMyMatchRoute = AuthenticatedMyMatchRouteImport.update({
-  id: '/my-match',
-  path: '/my-match',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedMyBusinessRoute = AuthenticatedMyBusinessRouteImport.update({
-  id: '/my-business',
-  path: '/my-business',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const UtilitiesRoute = UtilitiesRouteImport.update({
+  id: '/utilities',
+  path: '/utilities',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedInsightsRoute = AuthenticatedInsightsRouteImport.update({
-  id: '/insights',
-  path: '/insights',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const WorkersRoute = WorkersRouteImport.update({
+  id: '/workers',
+  path: '/workers',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedCompareRoute = AuthenticatedCompareRouteImport.update({
-  id: '/compare',
-  path: '/compare',
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedBillsRoute = AuthenticatedBillsRouteImport.update({
@@ -497,280 +292,225 @@ const AuthenticatedBillsRoute = AuthenticatedBillsRouteImport.update({
   path: '/bills',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+const AuthenticatedCompareRoute = AuthenticatedCompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const TeachersTuitionsIndexRoute = TeachersTuitionsIndexRouteImport.update({
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInsightsRoute = AuthenticatedInsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyBusinessRoute = AuthenticatedMyBusinessRouteImport.update({
+  id: '/my-business',
+  path: '/my-business',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyMatchRoute = AuthenticatedMyMatchRouteImport.update({
+  id: '/my-match',
+  path: '/my-match',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const BloodDonorsIndexRoute = BloodDonorsIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => TeachersTuitionsRoute,
+  getParentRoute: () => BloodDonorsRoute,
 } as any)
-const TeachersNewsIndexRoute = TeachersNewsIndexRouteImport.update({
+const BloodDonorsRegisterRoute = BloodDonorsRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => BloodDonorsRoute,
+} as any)
+const BusinessIndexRoute = BusinessIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => TeachersNewsRoute,
+  getParentRoute: () => BusinessRoute,
 } as any)
-const TeachersAchievementsIndexRoute =
-  TeachersAchievementsIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => TeachersAchievementsRoute,
-  } as any)
-const ServicesUkhiyaGoIndexRoute = ServicesUkhiyaGoIndexRouteImport.update({
-  id: '/services/ukhiya-go/',
-  path: '/services/ukhiya-go/',
+const BusinessSlugRoute = BusinessSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BusinessRoute,
+} as any)
+const BusinessDirectoryRoute = BusinessDirectoryRouteImport.update({
+  id: '/directory',
+  path: '/directory',
+  getParentRoute: () => BusinessRoute,
+} as any)
+const BusinessRegisterRoute = BusinessRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => BusinessRoute,
+} as any)
+const CommunityIndexRoute = CommunityIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CommunityRoute,
+} as any)
+const CommunityClubsRoute = CommunityClubsRouteImport.update({
+  id: '/clubs',
+  path: '/clubs',
+  getParentRoute: () => CommunityRoute,
+} as any)
+const CommunityFeedRoute = CommunityFeedRouteImport.update({
+  id: '/feed',
+  path: '/feed',
+  getParentRoute: () => CommunityRoute,
+} as any)
+const CommunityGroupsRoute = CommunityGroupsRouteImport.update({
+  id: '/groups',
+  path: '/groups',
+  getParentRoute: () => CommunityRoute,
+} as any)
+const CommunityMosquesRoute = CommunityMosquesRouteImport.update({
+  id: '/mosques',
+  path: '/mosques',
+  getParentRoute: () => CommunityRoute,
+} as any)
+const CommunityNewRoute = CommunityNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => CommunityRoute,
+} as any)
+const GovtJobsIndexRoute = GovtJobsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GovtJobsRoute,
+} as any)
+const GovtJobsIdRoute = GovtJobsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => GovtJobsRoute,
+} as any)
+const GovtJobsRegisterRoute = GovtJobsRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => GovtJobsRoute,
+} as any)
+const LegalIndexRoute = LegalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LegalRoute,
+} as any)
+const LegalIdRoute = LegalIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => LegalRoute,
+} as any)
+const MatchIndexRoute = MatchIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MatchRoute,
+} as any)
+const MatchIdRoute = MatchIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => MatchRoute,
+} as any)
+const MatchNewRoute = MatchNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => MatchRoute,
+} as any)
+const ProbashiIndexRoute = ProbashiIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProbashiRoute,
+} as any)
+const ProbashiSlugRoute = ProbashiSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ProbashiRoute,
+} as any)
+const ProbashiRegisterRoute = ProbashiRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => ProbashiRoute,
+} as any)
+const ServicesReuseRoute = ServicesReuseRouteImport.update({
+  id: '/services/reuse',
+  path: '/services/reuse',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesReuseIndexRoute = ServicesReuseIndexRouteImport.update({
+const TeachersIndexRoute = TeachersIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => ServicesReuseRoute,
+  getParentRoute: () => TeachersRoute,
 } as any)
-const CommunityMosquesIndexRoute = CommunityMosquesIndexRouteImport.update({
+const TeachersIdRoute = TeachersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => TeachersRoute,
+} as any)
+const TeachersAchievementsRoute = TeachersAchievementsRouteImport.update({
+  id: '/achievements',
+  path: '/achievements',
+  getParentRoute: () => TeachersRoute,
+} as any)
+const TeachersNewsRoute = TeachersNewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => TeachersRoute,
+} as any)
+const TeachersRegisterRoute = TeachersRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => TeachersRoute,
+} as any)
+const TeachersResourcesRoute = TeachersResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => TeachersRoute,
+} as any)
+const TeachersTuitionsRoute = TeachersTuitionsRouteImport.update({
+  id: '/tuitions',
+  path: '/tuitions',
+  getParentRoute: () => TeachersRoute,
+} as any)
+const WorkersIndexRoute = WorkersIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => CommunityMosquesRoute,
+  getParentRoute: () => WorkersRoute,
 } as any)
-const CommunityEventsIndexRoute = CommunityEventsIndexRouteImport.update({
-  id: '/events/',
-  path: '/events/',
-  getParentRoute: () => CommunityRoute,
+const WorkersIdRoute = WorkersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => WorkersRoute,
+} as any)
+const WorkersRegisterRoute = WorkersRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => WorkersRoute,
 } as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
-const TeachersTuitionsNewRoute = TeachersTuitionsNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => TeachersTuitionsRoute,
-} as any)
-const TeachersTuitionsIdRoute = TeachersTuitionsIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => TeachersTuitionsRoute,
-} as any)
-const TeachersNewsIdRoute = TeachersNewsIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => TeachersNewsRoute,
-} as any)
-const TeachersAchievementsIdRoute = TeachersAchievementsIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => TeachersAchievementsRoute,
-} as any)
-const ServicesUkhiyaGoSearchRoute = ServicesUkhiyaGoSearchRouteImport.update({
-  id: '/services/ukhiya-go/search',
-  path: '/services/ukhiya-go/search',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ServicesUkhiyaGoBookingsRoute =
-  ServicesUkhiyaGoBookingsRouteImport.update({
-    id: '/services/ukhiya-go/bookings',
-    path: '/services/ukhiya-go/bookings',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ServicesReuseMyListingsRoute = ServicesReuseMyListingsRouteImport.update({
-  id: '/my-listings',
-  path: '/my-listings',
-  getParentRoute: () => ServicesReuseRoute,
-} as any)
-const ServicesReuseCreateRoute = ServicesReuseCreateRouteImport.update({
-  id: '/create',
-  path: '/create',
-  getParentRoute: () => ServicesReuseRoute,
-} as any)
-const ServicesReuseListingIdRoute = ServicesReuseListingIdRouteImport.update({
-  id: '/$listingId',
-  path: '/$listingId',
-  getParentRoute: () => ServicesReuseRoute,
-} as any)
-const CommunityUUserIdRoute = CommunityUUserIdRouteImport.update({
-  id: '/u/$userId',
-  path: '/u/$userId',
-  getParentRoute: () => CommunityRoute,
-} as any)
-const CommunityMosquesNewRoute = CommunityMosquesNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => CommunityMosquesRoute,
-} as any)
-const CommunityMosquesSlugRoute = CommunityMosquesSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => CommunityMosquesRoute,
-} as any)
-const CommunityEventsNewRoute = CommunityEventsNewRouteImport.update({
-  id: '/events/new',
-  path: '/events/new',
-  getParentRoute: () => CommunityRoute,
-} as any)
-const CommunityCSlugRoute = CommunityCSlugRouteImport.update({
-  id: '/c/$slug',
-  path: '/c/$slug',
-  getParentRoute: () => CommunityRoute,
-} as any)
-const ApiPublicStatsRoute = ApiPublicStatsRouteImport.update({
-  id: '/api/public/stats',
-  path: '/api/public/stats',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicAnnouncementsRoute = ApiPublicAnnouncementsRouteImport.update({
-  id: '/api/public/announcements',
-  path: '/api/public/announcements',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedBillsNewRoute = AuthenticatedBillsNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AuthenticatedBillsRoute,
-} as any)
-const AuthenticatedAdminWorkersRoute =
-  AuthenticatedAdminWorkersRouteImport.update({
-    id: '/workers',
-    path: '/workers',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminTuitionRequestsRoute =
-  AuthenticatedAdminTuitionRequestsRouteImport.update({
-    id: '/tuition-requests',
-    path: '/tuition-requests',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminTuitionApplicationsRoute =
-  AuthenticatedAdminTuitionApplicationsRouteImport.update({
-    id: '/tuition-applications',
-    path: '/tuition-applications',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminTeachersRoute =
-  AuthenticatedAdminTeachersRouteImport.update({
-    id: '/teachers',
-    path: '/teachers',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminStudyResourcesRoute =
-  AuthenticatedAdminStudyResourcesRouteImport.update({
-    id: '/study-resources',
-    path: '/study-resources',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminReuseRoute = AuthenticatedAdminReuseRouteImport.update({
-  id: '/reuse',
-  path: '/reuse',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminProbashiRoute =
-  AuthenticatedAdminProbashiRouteImport.update({
-    id: '/probashi',
-    path: '/probashi',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminMosquesRoute =
-  AuthenticatedAdminMosquesRouteImport.update({
-    id: '/mosques',
-    path: '/mosques',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminMatchRoute = AuthenticatedAdminMatchRouteImport.update({
-  id: '/match',
-  path: '/match',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminLegalRoute = AuthenticatedAdminLegalRouteImport.update({
-  id: '/legal',
-  path: '/legal',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminIspRoute = AuthenticatedAdminIspRouteImport.update({
-  id: '/isp',
-  path: '/isp',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminHeaderRoute =
-  AuthenticatedAdminHeaderRouteImport.update({
-    id: '/header',
-    path: '/header',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminGovtWorkersRoute =
-  AuthenticatedAdminGovtWorkersRouteImport.update({
-    id: '/govt-workers',
-    path: '/govt-workers',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminEducationNewsRoute =
-  AuthenticatedAdminEducationNewsRouteImport.update({
-    id: '/education-news',
-    path: '/education-news',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminCvSubmissionsRoute =
-  AuthenticatedAdminCvSubmissionsRouteImport.update({
-    id: '/cv-submissions',
-    path: '/cv-submissions',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminComplaintsRoute =
-  AuthenticatedAdminComplaintsRouteImport.update({
-    id: '/complaints',
-    path: '/complaints',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminCommunityRoute =
-  AuthenticatedAdminCommunityRouteImport.update({
-    id: '/community',
-    path: '/community',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminBusinessesRoute =
-  AuthenticatedAdminBusinessesRouteImport.update({
-    id: '/businesses',
-    path: '/businesses',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminBusinessReviewsRoute =
-  AuthenticatedAdminBusinessReviewsRouteImport.update({
-    id: '/business-reviews',
-    path: '/business-reviews',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminBusinessCategoriesRoute =
-  AuthenticatedAdminBusinessCategoriesRouteImport.update({
-    id: '/business-categories',
-    path: '/business-categories',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminBloodRequestsRoute =
-  AuthenticatedAdminBloodRequestsRouteImport.update({
-    id: '/blood-requests',
-    path: '/blood-requests',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminBloodDonorsRoute =
-  AuthenticatedAdminBloodDonorsRouteImport.update({
-    id: '/blood-donors',
-    path: '/blood-donors',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminBillsRoute = AuthenticatedAdminBillsRouteImport.update({
-  id: '/bills',
-  path: '/bills',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminAnnouncementsRoute =
-  AuthenticatedAdminAnnouncementsRouteImport.update({
-    id: '/announcements',
-    path: '/announcements',
+const AuthenticatedAdminAchievementsRoute =
+  AuthenticatedAdminAchievementsRouteImport.update({
+    id: '/achievements',
+    path: '/achievements',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminAiChatRoute =
@@ -779,22 +519,310 @@ const AuthenticatedAdminAiChatRoute =
     path: '/ai-chat',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
-const AuthenticatedAdminAchievementsRoute =
-  AuthenticatedAdminAchievementsRouteImport.update({
-    id: '/achievements',
-    path: '/achievements',
+const AuthenticatedAdminAnnouncementsRoute =
+  AuthenticatedAdminAnnouncementsRouteImport.update({
+    id: '/announcements',
+    path: '/announcements',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminBillsRoute = AuthenticatedAdminBillsRouteImport.update({
+  id: '/bills',
+  path: '/bills',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminBloodDonorsRoute =
+  AuthenticatedAdminBloodDonorsRouteImport.update({
+    id: '/blood-donors',
+    path: '/blood-donors',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBloodRequestsRoute =
+  AuthenticatedAdminBloodRequestsRouteImport.update({
+    id: '/blood-requests',
+    path: '/blood-requests',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBusinessCategoriesRoute =
+  AuthenticatedAdminBusinessCategoriesRouteImport.update({
+    id: '/business-categories',
+    path: '/business-categories',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBusinessReviewsRoute =
+  AuthenticatedAdminBusinessReviewsRouteImport.update({
+    id: '/business-reviews',
+    path: '/business-reviews',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBusinessesRoute =
+  AuthenticatedAdminBusinessesRouteImport.update({
+    id: '/businesses',
+    path: '/businesses',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminCommunityRoute =
+  AuthenticatedAdminCommunityRouteImport.update({
+    id: '/community',
+    path: '/community',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminComplaintsRoute =
+  AuthenticatedAdminComplaintsRouteImport.update({
+    id: '/complaints',
+    path: '/complaints',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminCvSubmissionsRoute =
+  AuthenticatedAdminCvSubmissionsRouteImport.update({
+    id: '/cv-submissions',
+    path: '/cv-submissions',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminEducationNewsRoute =
+  AuthenticatedAdminEducationNewsRouteImport.update({
+    id: '/education-news',
+    path: '/education-news',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminGovtWorkersRoute =
+  AuthenticatedAdminGovtWorkersRouteImport.update({
+    id: '/govt-workers',
+    path: '/govt-workers',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminHeaderRoute =
+  AuthenticatedAdminHeaderRouteImport.update({
+    id: '/header',
+    path: '/header',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminIspRoute = AuthenticatedAdminIspRouteImport.update({
+  id: '/isp',
+  path: '/isp',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminLegalRoute = AuthenticatedAdminLegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminMatchRoute = AuthenticatedAdminMatchRouteImport.update({
+  id: '/match',
+  path: '/match',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminMosquesRoute =
+  AuthenticatedAdminMosquesRouteImport.update({
+    id: '/mosques',
+    path: '/mosques',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminProbashiRoute =
+  AuthenticatedAdminProbashiRouteImport.update({
+    id: '/probashi',
+    path: '/probashi',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminReuseRoute = AuthenticatedAdminReuseRouteImport.update({
+  id: '/reuse',
+  path: '/reuse',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminStudyResourcesRoute =
+  AuthenticatedAdminStudyResourcesRouteImport.update({
+    id: '/study-resources',
+    path: '/study-resources',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminTeachersRoute =
+  AuthenticatedAdminTeachersRouteImport.update({
+    id: '/teachers',
+    path: '/teachers',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminTuitionApplicationsRoute =
+  AuthenticatedAdminTuitionApplicationsRouteImport.update({
+    id: '/tuition-applications',
+    path: '/tuition-applications',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminTuitionRequestsRoute =
+  AuthenticatedAdminTuitionRequestsRouteImport.update({
+    id: '/tuition-requests',
+    path: '/tuition-requests',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminWorkersRoute =
+  AuthenticatedAdminWorkersRouteImport.update({
+    id: '/workers',
+    path: '/workers',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedBillsNewRoute = AuthenticatedBillsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AuthenticatedBillsRoute,
+} as any)
+const ApiPublicAnnouncementsRoute = ApiPublicAnnouncementsRouteImport.update({
+  id: '/api/public/announcements',
+  path: '/api/public/announcements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicStatsRoute = ApiPublicStatsRouteImport.update({
+  id: '/api/public/stats',
+  path: '/api/public/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunityCSlugRoute = CommunityCSlugRouteImport.update({
+  id: '/c/$slug',
+  path: '/c/$slug',
+  getParentRoute: () => CommunityRoute,
+} as any)
+const CommunityEventsIndexRoute = CommunityEventsIndexRouteImport.update({
+  id: '/events/',
+  path: '/events/',
+  getParentRoute: () => CommunityRoute,
+} as any)
+const CommunityEventsNewRoute = CommunityEventsNewRouteImport.update({
+  id: '/events/new',
+  path: '/events/new',
+  getParentRoute: () => CommunityRoute,
+} as any)
+const CommunityMosquesIndexRoute = CommunityMosquesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CommunityMosquesRoute,
+} as any)
+const CommunityMosquesSlugRoute = CommunityMosquesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => CommunityMosquesRoute,
+} as any)
+const CommunityMosquesNewRoute = CommunityMosquesNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => CommunityMosquesRoute,
+} as any)
+const CommunityUUserIdRoute = CommunityUUserIdRouteImport.update({
+  id: '/u/$userId',
+  path: '/u/$userId',
+  getParentRoute: () => CommunityRoute,
+} as any)
+const ServicesReuseIndexRoute = ServicesReuseIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ServicesReuseRoute,
+} as any)
+const ServicesReuseListingIdRoute = ServicesReuseListingIdRouteImport.update({
+  id: '/$listingId',
+  path: '/$listingId',
+  getParentRoute: () => ServicesReuseRoute,
+} as any)
+const ServicesReuseCreateRoute = ServicesReuseCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => ServicesReuseRoute,
+} as any)
+const ServicesReuseMyListingsRoute = ServicesReuseMyListingsRouteImport.update({
+  id: '/my-listings',
+  path: '/my-listings',
+  getParentRoute: () => ServicesReuseRoute,
+} as any)
+const ServicesUkhiyaGoIndexRoute = ServicesUkhiyaGoIndexRouteImport.update({
+  id: '/services/ukhiya-go/',
+  path: '/services/ukhiya-go/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesUkhiyaGoBookingsRoute =
+  ServicesUkhiyaGoBookingsRouteImport.update({
+    id: '/services/ukhiya-go/bookings',
+    path: '/services/ukhiya-go/bookings',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ServicesUkhiyaGoSearchRoute = ServicesUkhiyaGoSearchRouteImport.update({
+  id: '/services/ukhiya-go/search',
+  path: '/services/ukhiya-go/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeachersAchievementsIndexRoute =
+  TeachersAchievementsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => TeachersAchievementsRoute,
+  } as any)
+const TeachersAchievementsIdRoute = TeachersAchievementsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => TeachersAchievementsRoute,
+} as any)
+const TeachersNewsIndexRoute = TeachersNewsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TeachersNewsRoute,
+} as any)
+const TeachersNewsIdRoute = TeachersNewsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => TeachersNewsRoute,
+} as any)
+const TeachersTuitionsIndexRoute = TeachersTuitionsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TeachersTuitionsRoute,
+} as any)
+const TeachersTuitionsIdRoute = TeachersTuitionsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => TeachersTuitionsRoute,
+} as any)
+const TeachersTuitionsNewRoute = TeachersTuitionsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => TeachersTuitionsRoute,
+} as any)
+const AuthenticatedAdminUkhiyaGoDriversRoute =
+  AuthenticatedAdminUkhiyaGoDriversRouteImport.update({
+    id: '/ukhiya-go/drivers',
+    path: '/ukhiya-go/drivers',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminUkhiyaGoMaterialOrdersRoute =
+  AuthenticatedAdminUkhiyaGoMaterialOrdersRouteImport.update({
+    id: '/ukhiya-go/material-orders',
+    path: '/ukhiya-go/material-orders',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedBillsIdEditRoute =
+  AuthenticatedBillsIdEditRouteImport.update({
+    id: '/$id/edit',
+    path: '/$id/edit',
+    getParentRoute: () => AuthenticatedBillsRoute,
+  } as any)
+const ApiPublicHooksRefreshExchangeRatesRoute =
+  ApiPublicHooksRefreshExchangeRatesRouteImport.update({
+    id: '/api/public/hooks/refresh-exchange-rates',
+    path: '/api/public/hooks/refresh-exchange-rates',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
+  id: '/lovable/email/auth/preview',
+  path: '/lovable/email/auth/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
+  id: '/lovable/email/auth/webhook',
+  path: '/lovable/email/auth/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesUkhiyaGoDriverIndexRoute =
   ServicesUkhiyaGoDriverIndexRouteImport.update({
     id: '/services/ukhiya-go/driver/',
     path: '/services/ukhiya-go/driver/',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ServicesUkhiyaGoTripTripIdRoute =
-  ServicesUkhiyaGoTripTripIdRouteImport.update({
-    id: '/services/ukhiya-go/trip/$tripId',
-    path: '/services/ukhiya-go/trip/$tripId',
     getParentRoute: () => rootRouteImport,
   } as any)
 const ServicesUkhiyaGoDriverRegisterRoute =
@@ -803,39 +831,11 @@ const ServicesUkhiyaGoDriverRegisterRoute =
     path: '/services/ukhiya-go/driver/register',
     getParentRoute: () => rootRouteImport,
   } as any)
-const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
-  id: '/lovable/email/auth/webhook',
-  path: '/lovable/email/auth/webhook',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
-  id: '/lovable/email/auth/preview',
-  path: '/lovable/email/auth/preview',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiPublicHooksRefreshExchangeRatesRoute =
-  ApiPublicHooksRefreshExchangeRatesRouteImport.update({
-    id: '/api/public/hooks/refresh-exchange-rates',
-    path: '/api/public/hooks/refresh-exchange-rates',
+const ServicesUkhiyaGoTripTripIdRoute =
+  ServicesUkhiyaGoTripTripIdRouteImport.update({
+    id: '/services/ukhiya-go/trip/$tripId',
+    path: '/services/ukhiya-go/trip/$tripId',
     getParentRoute: () => rootRouteImport,
-  } as any)
-const AuthenticatedBillsIdEditRoute =
-  AuthenticatedBillsIdEditRouteImport.update({
-    id: '/$id/edit',
-    path: '/$id/edit',
-    getParentRoute: () => AuthenticatedBillsRoute,
-  } as any)
-const AuthenticatedAdminUkhiyaGoMaterialOrdersRoute =
-  AuthenticatedAdminUkhiyaGoMaterialOrdersRouteImport.update({
-    id: '/ukhiya-go/material-orders',
-    path: '/ukhiya-go/material-orders',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminUkhiyaGoDriversRoute =
-  AuthenticatedAdminUkhiyaGoDriversRouteImport.update({
-    id: '/ukhiya-go/drivers',
-    path: '/ukhiya-go/drivers',
-    getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -1663,186 +1663,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/workers': {
-      id: '/workers'
-      path: '/workers'
-      fullPath: '/workers'
-      preLoaderRoute: typeof WorkersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/utilities': {
-      id: '/utilities'
-      path: '/utilities'
-      fullPath: '/utilities'
-      preLoaderRoute: typeof UtilitiesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/teachers': {
-      id: '/teachers'
-      path: '/teachers'
-      fullPath: '/teachers'
-      preLoaderRoute: typeof TeachersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/stats': {
-      id: '/stats'
-      path: '/stats'
-      fullPath: '/stats'
-      preLoaderRoute: typeof StatsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/request-blood': {
-      id: '/request-blood'
-      path: '/request-blood'
-      fullPath: '/request-blood'
-      preLoaderRoute: typeof RequestBloodRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/probashi': {
-      id: '/probashi'
-      path: '/probashi'
-      fullPath: '/probashi'
-      preLoaderRoute: typeof ProbashiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/notices': {
-      id: '/notices'
-      path: '/notices'
-      fullPath: '/notices'
-      preLoaderRoute: typeof NoticesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/match': {
-      id: '/match'
-      path: '/match'
-      fullPath: '/match'
-      preLoaderRoute: typeof MatchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/legal': {
-      id: '/legal'
-      path: '/legal'
-      fullPath: '/legal'
-      preLoaderRoute: typeof LegalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/isp': {
-      id: '/isp'
-      path: '/isp'
-      fullPath: '/isp'
-      preLoaderRoute: typeof IspRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/helpline': {
-      id: '/helpline'
-      path: '/helpline'
-      fullPath: '/helpline'
-      preLoaderRoute: typeof HelplineRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/govt-jobs': {
-      id: '/govt-jobs'
-      path: '/govt-jobs'
-      fullPath: '/govt-jobs'
-      preLoaderRoute: typeof GovtJobsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/forgot-password': {
-      id: '/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/forgot-password'
-      preLoaderRoute: typeof ForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cv-builder': {
-      id: '/cv-builder'
-      path: '/cv-builder'
-      fullPath: '/cv-builder'
-      preLoaderRoute: typeof CvBuilderRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/community': {
-      id: '/community'
-      path: '/community'
-      fullPath: '/community'
-      preLoaderRoute: typeof CommunityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/calculator': {
-      id: '/calculator'
-      path: '/calculator'
-      fullPath: '/calculator'
-      preLoaderRoute: typeof CalculatorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/business': {
-      id: '/business'
-      path: '/business'
-      fullPath: '/business'
-      preLoaderRoute: typeof BusinessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blood-donors': {
-      id: '/blood-donors'
-      path: '/blood-donors'
-      fullPath: '/blood-donors'
-      preLoaderRoute: typeof BloodDonorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth-callback': {
-      id: '/auth-callback'
-      path: '/auth-callback'
-      fullPath: '/auth-callback'
-      preLoaderRoute: typeof AuthCallbackRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -1852,305 +1677,193 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/workers/': {
-      id: '/workers/'
-      path: '/'
-      fullPath: '/workers/'
-      preLoaderRoute: typeof WorkersIndexRouteImport
-      parentRoute: typeof WorkersRoute
-    }
-    '/teachers/': {
-      id: '/teachers/'
-      path: '/'
-      fullPath: '/teachers/'
-      preLoaderRoute: typeof TeachersIndexRouteImport
-      parentRoute: typeof TeachersRoute
-    }
-    '/probashi/': {
-      id: '/probashi/'
-      path: '/'
-      fullPath: '/probashi/'
-      preLoaderRoute: typeof ProbashiIndexRouteImport
-      parentRoute: typeof ProbashiRoute
-    }
-    '/match/': {
-      id: '/match/'
-      path: '/'
-      fullPath: '/match/'
-      preLoaderRoute: typeof MatchIndexRouteImport
-      parentRoute: typeof MatchRoute
-    }
-    '/legal/': {
-      id: '/legal/'
-      path: '/'
-      fullPath: '/legal/'
-      preLoaderRoute: typeof LegalIndexRouteImport
-      parentRoute: typeof LegalRoute
-    }
-    '/govt-jobs/': {
-      id: '/govt-jobs/'
-      path: '/'
-      fullPath: '/govt-jobs/'
-      preLoaderRoute: typeof GovtJobsIndexRouteImport
-      parentRoute: typeof GovtJobsRoute
-    }
-    '/community/': {
-      id: '/community/'
-      path: '/'
-      fullPath: '/community/'
-      preLoaderRoute: typeof CommunityIndexRouteImport
-      parentRoute: typeof CommunityRoute
-    }
-    '/business/': {
-      id: '/business/'
-      path: '/'
-      fullPath: '/business/'
-      preLoaderRoute: typeof BusinessIndexRouteImport
-      parentRoute: typeof BusinessRoute
-    }
-    '/blood-donors/': {
-      id: '/blood-donors/'
-      path: '/'
-      fullPath: '/blood-donors/'
-      preLoaderRoute: typeof BloodDonorsIndexRouteImport
-      parentRoute: typeof BloodDonorsRoute
-    }
-    '/workers/register': {
-      id: '/workers/register'
-      path: '/register'
-      fullPath: '/workers/register'
-      preLoaderRoute: typeof WorkersRegisterRouteImport
-      parentRoute: typeof WorkersRoute
-    }
-    '/workers/$id': {
-      id: '/workers/$id'
-      path: '/$id'
-      fullPath: '/workers/$id'
-      preLoaderRoute: typeof WorkersIdRouteImport
-      parentRoute: typeof WorkersRoute
-    }
-    '/teachers/tuitions': {
-      id: '/teachers/tuitions'
-      path: '/tuitions'
-      fullPath: '/teachers/tuitions'
-      preLoaderRoute: typeof TeachersTuitionsRouteImport
-      parentRoute: typeof TeachersRoute
-    }
-    '/teachers/resources': {
-      id: '/teachers/resources'
-      path: '/resources'
-      fullPath: '/teachers/resources'
-      preLoaderRoute: typeof TeachersResourcesRouteImport
-      parentRoute: typeof TeachersRoute
-    }
-    '/teachers/register': {
-      id: '/teachers/register'
-      path: '/register'
-      fullPath: '/teachers/register'
-      preLoaderRoute: typeof TeachersRegisterRouteImport
-      parentRoute: typeof TeachersRoute
-    }
-    '/teachers/news': {
-      id: '/teachers/news'
-      path: '/news'
-      fullPath: '/teachers/news'
-      preLoaderRoute: typeof TeachersNewsRouteImport
-      parentRoute: typeof TeachersRoute
-    }
-    '/teachers/achievements': {
-      id: '/teachers/achievements'
-      path: '/achievements'
-      fullPath: '/teachers/achievements'
-      preLoaderRoute: typeof TeachersAchievementsRouteImport
-      parentRoute: typeof TeachersRoute
-    }
-    '/teachers/$id': {
-      id: '/teachers/$id'
-      path: '/$id'
-      fullPath: '/teachers/$id'
-      preLoaderRoute: typeof TeachersIdRouteImport
-      parentRoute: typeof TeachersRoute
-    }
-    '/services/reuse': {
-      id: '/services/reuse'
-      path: '/services/reuse'
-      fullPath: '/services/reuse'
-      preLoaderRoute: typeof ServicesReuseRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/probashi/register': {
-      id: '/probashi/register'
-      path: '/register'
-      fullPath: '/probashi/register'
-      preLoaderRoute: typeof ProbashiRegisterRouteImport
-      parentRoute: typeof ProbashiRoute
+    '/auth-callback': {
+      id: '/auth-callback'
+      path: '/auth-callback'
+      fullPath: '/auth-callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/probashi/$slug': {
-      id: '/probashi/$slug'
-      path: '/$slug'
-      fullPath: '/probashi/$slug'
-      preLoaderRoute: typeof ProbashiSlugRouteImport
-      parentRoute: typeof ProbashiRoute
+    '/blood-donors': {
+      id: '/blood-donors'
+      path: '/blood-donors'
+      fullPath: '/blood-donors'
+      preLoaderRoute: typeof BloodDonorsRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/match/new': {
-      id: '/match/new'
-      path: '/new'
-      fullPath: '/match/new'
-      preLoaderRoute: typeof MatchNewRouteImport
-      parentRoute: typeof MatchRoute
+    '/business': {
+      id: '/business'
+      path: '/business'
+      fullPath: '/business'
+      preLoaderRoute: typeof BusinessRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/match/$id': {
-      id: '/match/$id'
-      path: '/$id'
-      fullPath: '/match/$id'
-      preLoaderRoute: typeof MatchIdRouteImport
-      parentRoute: typeof MatchRoute
+    '/calculator': {
+      id: '/calculator'
+      path: '/calculator'
+      fullPath: '/calculator'
+      preLoaderRoute: typeof CalculatorRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/legal/$id': {
-      id: '/legal/$id'
-      path: '/$id'
-      fullPath: '/legal/$id'
-      preLoaderRoute: typeof LegalIdRouteImport
-      parentRoute: typeof LegalRoute
+    '/community': {
+      id: '/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof CommunityRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/govt-jobs/register': {
-      id: '/govt-jobs/register'
-      path: '/register'
-      fullPath: '/govt-jobs/register'
-      preLoaderRoute: typeof GovtJobsRegisterRouteImport
-      parentRoute: typeof GovtJobsRoute
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/govt-jobs/$id': {
-      id: '/govt-jobs/$id'
-      path: '/$id'
-      fullPath: '/govt-jobs/$id'
-      preLoaderRoute: typeof GovtJobsIdRouteImport
-      parentRoute: typeof GovtJobsRoute
+    '/cv-builder': {
+      id: '/cv-builder'
+      path: '/cv-builder'
+      fullPath: '/cv-builder'
+      preLoaderRoute: typeof CvBuilderRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/community/new': {
-      id: '/community/new'
-      path: '/new'
-      fullPath: '/community/new'
-      preLoaderRoute: typeof CommunityNewRouteImport
-      parentRoute: typeof CommunityRoute
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/community/mosques': {
-      id: '/community/mosques'
-      path: '/mosques'
-      fullPath: '/community/mosques'
-      preLoaderRoute: typeof CommunityMosquesRouteImport
-      parentRoute: typeof CommunityRoute
+    '/govt-jobs': {
+      id: '/govt-jobs'
+      path: '/govt-jobs'
+      fullPath: '/govt-jobs'
+      preLoaderRoute: typeof GovtJobsRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/community/groups': {
-      id: '/community/groups'
-      path: '/groups'
-      fullPath: '/community/groups'
-      preLoaderRoute: typeof CommunityGroupsRouteImport
-      parentRoute: typeof CommunityRoute
+    '/helpline': {
+      id: '/helpline'
+      path: '/helpline'
+      fullPath: '/helpline'
+      preLoaderRoute: typeof HelplineRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/community/feed': {
-      id: '/community/feed'
-      path: '/feed'
-      fullPath: '/community/feed'
-      preLoaderRoute: typeof CommunityFeedRouteImport
-      parentRoute: typeof CommunityRoute
+    '/isp': {
+      id: '/isp'
+      path: '/isp'
+      fullPath: '/isp'
+      preLoaderRoute: typeof IspRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/community/clubs': {
-      id: '/community/clubs'
-      path: '/clubs'
-      fullPath: '/community/clubs'
-      preLoaderRoute: typeof CommunityClubsRouteImport
-      parentRoute: typeof CommunityRoute
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/business/register': {
-      id: '/business/register'
-      path: '/register'
-      fullPath: '/business/register'
-      preLoaderRoute: typeof BusinessRegisterRouteImport
-      parentRoute: typeof BusinessRoute
+    '/match': {
+      id: '/match'
+      path: '/match'
+      fullPath: '/match'
+      preLoaderRoute: typeof MatchRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/business/directory': {
-      id: '/business/directory'
-      path: '/directory'
-      fullPath: '/business/directory'
-      preLoaderRoute: typeof BusinessDirectoryRouteImport
-      parentRoute: typeof BusinessRoute
+    '/notices': {
+      id: '/notices'
+      path: '/notices'
+      fullPath: '/notices'
+      preLoaderRoute: typeof NoticesRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/business/$slug': {
-      id: '/business/$slug'
-      path: '/$slug'
-      fullPath: '/business/$slug'
-      preLoaderRoute: typeof BusinessSlugRouteImport
-      parentRoute: typeof BusinessRoute
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/blood-donors/register': {
-      id: '/blood-donors/register'
-      path: '/register'
-      fullPath: '/blood-donors/register'
-      preLoaderRoute: typeof BloodDonorsRegisterRouteImport
-      parentRoute: typeof BloodDonorsRoute
+    '/probashi': {
+      id: '/probashi'
+      path: '/probashi'
+      fullPath: '/probashi'
+      preLoaderRoute: typeof ProbashiRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/settings': {
-      id: '/_authenticated/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/request-blood': {
+      id: '/request-blood'
+      path: '/request-blood'
+      fullPath: '/request-blood'
+      preLoaderRoute: typeof RequestBloodRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/reports': {
-      id: '/_authenticated/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof AuthenticatedReportsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/profile': {
-      id: '/_authenticated/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthenticatedProfileRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/my-match': {
-      id: '/_authenticated/my-match'
-      path: '/my-match'
-      fullPath: '/my-match'
-      preLoaderRoute: typeof AuthenticatedMyMatchRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/stats': {
+      id: '/stats'
+      path: '/stats'
+      fullPath: '/stats'
+      preLoaderRoute: typeof StatsRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/my-business': {
-      id: '/_authenticated/my-business'
-      path: '/my-business'
-      fullPath: '/my-business'
-      preLoaderRoute: typeof AuthenticatedMyBusinessRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/teachers': {
+      id: '/teachers'
+      path: '/teachers'
+      fullPath: '/teachers'
+      preLoaderRoute: typeof TeachersRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/insights': {
-      id: '/_authenticated/insights'
-      path: '/insights'
-      fullPath: '/insights'
-      preLoaderRoute: typeof AuthenticatedInsightsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/utilities': {
+      id: '/utilities'
+      path: '/utilities'
+      fullPath: '/utilities'
+      preLoaderRoute: typeof UtilitiesRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/compare': {
-      id: '/_authenticated/compare'
-      path: '/compare'
-      fullPath: '/compare'
-      preLoaderRoute: typeof AuthenticatedCompareRouteImport
+    '/workers': {
+      id: '/workers'
+      path: '/workers'
+      fullPath: '/workers'
+      preLoaderRoute: typeof WorkersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/bills': {
@@ -2160,368 +1873,305 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBillsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+    '/_authenticated/compare': {
+      id: '/_authenticated/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof AuthenticatedCompareRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/teachers/tuitions/': {
-      id: '/teachers/tuitions/'
-      path: '/'
-      fullPath: '/teachers/tuitions/'
-      preLoaderRoute: typeof TeachersTuitionsIndexRouteImport
-      parentRoute: typeof TeachersTuitionsRoute
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/teachers/news/': {
-      id: '/teachers/news/'
-      path: '/'
-      fullPath: '/teachers/news/'
-      preLoaderRoute: typeof TeachersNewsIndexRouteImport
-      parentRoute: typeof TeachersNewsRoute
+    '/_authenticated/insights': {
+      id: '/_authenticated/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof AuthenticatedInsightsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/teachers/achievements/': {
-      id: '/teachers/achievements/'
-      path: '/'
-      fullPath: '/teachers/achievements/'
-      preLoaderRoute: typeof TeachersAchievementsIndexRouteImport
-      parentRoute: typeof TeachersAchievementsRoute
+    '/_authenticated/my-business': {
+      id: '/_authenticated/my-business'
+      path: '/my-business'
+      fullPath: '/my-business'
+      preLoaderRoute: typeof AuthenticatedMyBusinessRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/services/ukhiya-go/': {
-      id: '/services/ukhiya-go/'
-      path: '/services/ukhiya-go'
-      fullPath: '/services/ukhiya-go/'
-      preLoaderRoute: typeof ServicesUkhiyaGoIndexRouteImport
+    '/_authenticated/my-match': {
+      id: '/_authenticated/my-match'
+      path: '/my-match'
+      fullPath: '/my-match'
+      preLoaderRoute: typeof AuthenticatedMyMatchRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/blood-donors/': {
+      id: '/blood-donors/'
+      path: '/'
+      fullPath: '/blood-donors/'
+      preLoaderRoute: typeof BloodDonorsIndexRouteImport
+      parentRoute: typeof BloodDonorsRoute
+    }
+    '/blood-donors/register': {
+      id: '/blood-donors/register'
+      path: '/register'
+      fullPath: '/blood-donors/register'
+      preLoaderRoute: typeof BloodDonorsRegisterRouteImport
+      parentRoute: typeof BloodDonorsRoute
+    }
+    '/business/': {
+      id: '/business/'
+      path: '/'
+      fullPath: '/business/'
+      preLoaderRoute: typeof BusinessIndexRouteImport
+      parentRoute: typeof BusinessRoute
+    }
+    '/business/$slug': {
+      id: '/business/$slug'
+      path: '/$slug'
+      fullPath: '/business/$slug'
+      preLoaderRoute: typeof BusinessSlugRouteImport
+      parentRoute: typeof BusinessRoute
+    }
+    '/business/directory': {
+      id: '/business/directory'
+      path: '/directory'
+      fullPath: '/business/directory'
+      preLoaderRoute: typeof BusinessDirectoryRouteImport
+      parentRoute: typeof BusinessRoute
+    }
+    '/business/register': {
+      id: '/business/register'
+      path: '/register'
+      fullPath: '/business/register'
+      preLoaderRoute: typeof BusinessRegisterRouteImport
+      parentRoute: typeof BusinessRoute
+    }
+    '/community/': {
+      id: '/community/'
+      path: '/'
+      fullPath: '/community/'
+      preLoaderRoute: typeof CommunityIndexRouteImport
+      parentRoute: typeof CommunityRoute
+    }
+    '/community/clubs': {
+      id: '/community/clubs'
+      path: '/clubs'
+      fullPath: '/community/clubs'
+      preLoaderRoute: typeof CommunityClubsRouteImport
+      parentRoute: typeof CommunityRoute
+    }
+    '/community/feed': {
+      id: '/community/feed'
+      path: '/feed'
+      fullPath: '/community/feed'
+      preLoaderRoute: typeof CommunityFeedRouteImport
+      parentRoute: typeof CommunityRoute
+    }
+    '/community/groups': {
+      id: '/community/groups'
+      path: '/groups'
+      fullPath: '/community/groups'
+      preLoaderRoute: typeof CommunityGroupsRouteImport
+      parentRoute: typeof CommunityRoute
+    }
+    '/community/mosques': {
+      id: '/community/mosques'
+      path: '/mosques'
+      fullPath: '/community/mosques'
+      preLoaderRoute: typeof CommunityMosquesRouteImport
+      parentRoute: typeof CommunityRoute
+    }
+    '/community/new': {
+      id: '/community/new'
+      path: '/new'
+      fullPath: '/community/new'
+      preLoaderRoute: typeof CommunityNewRouteImport
+      parentRoute: typeof CommunityRoute
+    }
+    '/govt-jobs/': {
+      id: '/govt-jobs/'
+      path: '/'
+      fullPath: '/govt-jobs/'
+      preLoaderRoute: typeof GovtJobsIndexRouteImport
+      parentRoute: typeof GovtJobsRoute
+    }
+    '/govt-jobs/$id': {
+      id: '/govt-jobs/$id'
+      path: '/$id'
+      fullPath: '/govt-jobs/$id'
+      preLoaderRoute: typeof GovtJobsIdRouteImport
+      parentRoute: typeof GovtJobsRoute
+    }
+    '/govt-jobs/register': {
+      id: '/govt-jobs/register'
+      path: '/register'
+      fullPath: '/govt-jobs/register'
+      preLoaderRoute: typeof GovtJobsRegisterRouteImport
+      parentRoute: typeof GovtJobsRoute
+    }
+    '/legal/': {
+      id: '/legal/'
+      path: '/'
+      fullPath: '/legal/'
+      preLoaderRoute: typeof LegalIndexRouteImport
+      parentRoute: typeof LegalRoute
+    }
+    '/legal/$id': {
+      id: '/legal/$id'
+      path: '/$id'
+      fullPath: '/legal/$id'
+      preLoaderRoute: typeof LegalIdRouteImport
+      parentRoute: typeof LegalRoute
+    }
+    '/match/': {
+      id: '/match/'
+      path: '/'
+      fullPath: '/match/'
+      preLoaderRoute: typeof MatchIndexRouteImport
+      parentRoute: typeof MatchRoute
+    }
+    '/match/$id': {
+      id: '/match/$id'
+      path: '/$id'
+      fullPath: '/match/$id'
+      preLoaderRoute: typeof MatchIdRouteImport
+      parentRoute: typeof MatchRoute
+    }
+    '/match/new': {
+      id: '/match/new'
+      path: '/new'
+      fullPath: '/match/new'
+      preLoaderRoute: typeof MatchNewRouteImport
+      parentRoute: typeof MatchRoute
+    }
+    '/probashi/': {
+      id: '/probashi/'
+      path: '/'
+      fullPath: '/probashi/'
+      preLoaderRoute: typeof ProbashiIndexRouteImport
+      parentRoute: typeof ProbashiRoute
+    }
+    '/probashi/$slug': {
+      id: '/probashi/$slug'
+      path: '/$slug'
+      fullPath: '/probashi/$slug'
+      preLoaderRoute: typeof ProbashiSlugRouteImport
+      parentRoute: typeof ProbashiRoute
+    }
+    '/probashi/register': {
+      id: '/probashi/register'
+      path: '/register'
+      fullPath: '/probashi/register'
+      preLoaderRoute: typeof ProbashiRegisterRouteImport
+      parentRoute: typeof ProbashiRoute
+    }
+    '/services/reuse': {
+      id: '/services/reuse'
+      path: '/services/reuse'
+      fullPath: '/services/reuse'
+      preLoaderRoute: typeof ServicesReuseRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/reuse/': {
-      id: '/services/reuse/'
+    '/teachers/': {
+      id: '/teachers/'
       path: '/'
-      fullPath: '/services/reuse/'
-      preLoaderRoute: typeof ServicesReuseIndexRouteImport
-      parentRoute: typeof ServicesReuseRoute
+      fullPath: '/teachers/'
+      preLoaderRoute: typeof TeachersIndexRouteImport
+      parentRoute: typeof TeachersRoute
     }
-    '/community/mosques/': {
-      id: '/community/mosques/'
+    '/teachers/$id': {
+      id: '/teachers/$id'
+      path: '/$id'
+      fullPath: '/teachers/$id'
+      preLoaderRoute: typeof TeachersIdRouteImport
+      parentRoute: typeof TeachersRoute
+    }
+    '/teachers/achievements': {
+      id: '/teachers/achievements'
+      path: '/achievements'
+      fullPath: '/teachers/achievements'
+      preLoaderRoute: typeof TeachersAchievementsRouteImport
+      parentRoute: typeof TeachersRoute
+    }
+    '/teachers/news': {
+      id: '/teachers/news'
+      path: '/news'
+      fullPath: '/teachers/news'
+      preLoaderRoute: typeof TeachersNewsRouteImport
+      parentRoute: typeof TeachersRoute
+    }
+    '/teachers/register': {
+      id: '/teachers/register'
+      path: '/register'
+      fullPath: '/teachers/register'
+      preLoaderRoute: typeof TeachersRegisterRouteImport
+      parentRoute: typeof TeachersRoute
+    }
+    '/teachers/resources': {
+      id: '/teachers/resources'
+      path: '/resources'
+      fullPath: '/teachers/resources'
+      preLoaderRoute: typeof TeachersResourcesRouteImport
+      parentRoute: typeof TeachersRoute
+    }
+    '/teachers/tuitions': {
+      id: '/teachers/tuitions'
+      path: '/tuitions'
+      fullPath: '/teachers/tuitions'
+      preLoaderRoute: typeof TeachersTuitionsRouteImport
+      parentRoute: typeof TeachersRoute
+    }
+    '/workers/': {
+      id: '/workers/'
       path: '/'
-      fullPath: '/community/mosques/'
-      preLoaderRoute: typeof CommunityMosquesIndexRouteImport
-      parentRoute: typeof CommunityMosquesRoute
+      fullPath: '/workers/'
+      preLoaderRoute: typeof WorkersIndexRouteImport
+      parentRoute: typeof WorkersRoute
     }
-    '/community/events/': {
-      id: '/community/events/'
-      path: '/events'
-      fullPath: '/community/events/'
-      preLoaderRoute: typeof CommunityEventsIndexRouteImport
-      parentRoute: typeof CommunityRoute
+    '/workers/$id': {
+      id: '/workers/$id'
+      path: '/$id'
+      fullPath: '/workers/$id'
+      preLoaderRoute: typeof WorkersIdRouteImport
+      parentRoute: typeof WorkersRoute
+    }
+    '/workers/register': {
+      id: '/workers/register'
+      path: '/register'
+      fullPath: '/workers/register'
+      preLoaderRoute: typeof WorkersRegisterRouteImport
+      parentRoute: typeof WorkersRoute
     }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/teachers/tuitions/new': {
-      id: '/teachers/tuitions/new'
-      path: '/new'
-      fullPath: '/teachers/tuitions/new'
-      preLoaderRoute: typeof TeachersTuitionsNewRouteImport
-      parentRoute: typeof TeachersTuitionsRoute
-    }
-    '/teachers/tuitions/$id': {
-      id: '/teachers/tuitions/$id'
-      path: '/$id'
-      fullPath: '/teachers/tuitions/$id'
-      preLoaderRoute: typeof TeachersTuitionsIdRouteImport
-      parentRoute: typeof TeachersTuitionsRoute
-    }
-    '/teachers/news/$id': {
-      id: '/teachers/news/$id'
-      path: '/$id'
-      fullPath: '/teachers/news/$id'
-      preLoaderRoute: typeof TeachersNewsIdRouteImport
-      parentRoute: typeof TeachersNewsRoute
-    }
-    '/teachers/achievements/$id': {
-      id: '/teachers/achievements/$id'
-      path: '/$id'
-      fullPath: '/teachers/achievements/$id'
-      preLoaderRoute: typeof TeachersAchievementsIdRouteImport
-      parentRoute: typeof TeachersAchievementsRoute
-    }
-    '/services/ukhiya-go/search': {
-      id: '/services/ukhiya-go/search'
-      path: '/services/ukhiya-go/search'
-      fullPath: '/services/ukhiya-go/search'
-      preLoaderRoute: typeof ServicesUkhiyaGoSearchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services/ukhiya-go/bookings': {
-      id: '/services/ukhiya-go/bookings'
-      path: '/services/ukhiya-go/bookings'
-      fullPath: '/services/ukhiya-go/bookings'
-      preLoaderRoute: typeof ServicesUkhiyaGoBookingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services/reuse/my-listings': {
-      id: '/services/reuse/my-listings'
-      path: '/my-listings'
-      fullPath: '/services/reuse/my-listings'
-      preLoaderRoute: typeof ServicesReuseMyListingsRouteImport
-      parentRoute: typeof ServicesReuseRoute
-    }
-    '/services/reuse/create': {
-      id: '/services/reuse/create'
-      path: '/create'
-      fullPath: '/services/reuse/create'
-      preLoaderRoute: typeof ServicesReuseCreateRouteImport
-      parentRoute: typeof ServicesReuseRoute
-    }
-    '/services/reuse/$listingId': {
-      id: '/services/reuse/$listingId'
-      path: '/$listingId'
-      fullPath: '/services/reuse/$listingId'
-      preLoaderRoute: typeof ServicesReuseListingIdRouteImport
-      parentRoute: typeof ServicesReuseRoute
-    }
-    '/community/u/$userId': {
-      id: '/community/u/$userId'
-      path: '/u/$userId'
-      fullPath: '/community/u/$userId'
-      preLoaderRoute: typeof CommunityUUserIdRouteImport
-      parentRoute: typeof CommunityRoute
-    }
-    '/community/mosques/new': {
-      id: '/community/mosques/new'
-      path: '/new'
-      fullPath: '/community/mosques/new'
-      preLoaderRoute: typeof CommunityMosquesNewRouteImport
-      parentRoute: typeof CommunityMosquesRoute
-    }
-    '/community/mosques/$slug': {
-      id: '/community/mosques/$slug'
-      path: '/$slug'
-      fullPath: '/community/mosques/$slug'
-      preLoaderRoute: typeof CommunityMosquesSlugRouteImport
-      parentRoute: typeof CommunityMosquesRoute
-    }
-    '/community/events/new': {
-      id: '/community/events/new'
-      path: '/events/new'
-      fullPath: '/community/events/new'
-      preLoaderRoute: typeof CommunityEventsNewRouteImport
-      parentRoute: typeof CommunityRoute
-    }
-    '/community/c/$slug': {
-      id: '/community/c/$slug'
-      path: '/c/$slug'
-      fullPath: '/community/c/$slug'
-      preLoaderRoute: typeof CommunityCSlugRouteImport
-      parentRoute: typeof CommunityRoute
-    }
-    '/api/public/stats': {
-      id: '/api/public/stats'
-      path: '/api/public/stats'
-      fullPath: '/api/public/stats'
-      preLoaderRoute: typeof ApiPublicStatsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/announcements': {
-      id: '/api/public/announcements'
-      path: '/api/public/announcements'
-      fullPath: '/api/public/announcements'
-      preLoaderRoute: typeof ApiPublicAnnouncementsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated/bills/new': {
-      id: '/_authenticated/bills/new'
-      path: '/new'
-      fullPath: '/bills/new'
-      preLoaderRoute: typeof AuthenticatedBillsNewRouteImport
-      parentRoute: typeof AuthenticatedBillsRoute
-    }
-    '/_authenticated/admin/workers': {
-      id: '/_authenticated/admin/workers'
-      path: '/workers'
-      fullPath: '/admin/workers'
-      preLoaderRoute: typeof AuthenticatedAdminWorkersRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/users': {
-      id: '/_authenticated/admin/users'
-      path: '/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/tuition-requests': {
-      id: '/_authenticated/admin/tuition-requests'
-      path: '/tuition-requests'
-      fullPath: '/admin/tuition-requests'
-      preLoaderRoute: typeof AuthenticatedAdminTuitionRequestsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/tuition-applications': {
-      id: '/_authenticated/admin/tuition-applications'
-      path: '/tuition-applications'
-      fullPath: '/admin/tuition-applications'
-      preLoaderRoute: typeof AuthenticatedAdminTuitionApplicationsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/teachers': {
-      id: '/_authenticated/admin/teachers'
-      path: '/teachers'
-      fullPath: '/admin/teachers'
-      preLoaderRoute: typeof AuthenticatedAdminTeachersRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/study-resources': {
-      id: '/_authenticated/admin/study-resources'
-      path: '/study-resources'
-      fullPath: '/admin/study-resources'
-      preLoaderRoute: typeof AuthenticatedAdminStudyResourcesRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/reuse': {
-      id: '/_authenticated/admin/reuse'
-      path: '/reuse'
-      fullPath: '/admin/reuse'
-      preLoaderRoute: typeof AuthenticatedAdminReuseRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/probashi': {
-      id: '/_authenticated/admin/probashi'
-      path: '/probashi'
-      fullPath: '/admin/probashi'
-      preLoaderRoute: typeof AuthenticatedAdminProbashiRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/mosques': {
-      id: '/_authenticated/admin/mosques'
-      path: '/mosques'
-      fullPath: '/admin/mosques'
-      preLoaderRoute: typeof AuthenticatedAdminMosquesRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/match': {
-      id: '/_authenticated/admin/match'
-      path: '/match'
-      fullPath: '/admin/match'
-      preLoaderRoute: typeof AuthenticatedAdminMatchRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/legal': {
-      id: '/_authenticated/admin/legal'
-      path: '/legal'
-      fullPath: '/admin/legal'
-      preLoaderRoute: typeof AuthenticatedAdminLegalRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/isp': {
-      id: '/_authenticated/admin/isp'
-      path: '/isp'
-      fullPath: '/admin/isp'
-      preLoaderRoute: typeof AuthenticatedAdminIspRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/header': {
-      id: '/_authenticated/admin/header'
-      path: '/header'
-      fullPath: '/admin/header'
-      preLoaderRoute: typeof AuthenticatedAdminHeaderRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/govt-workers': {
-      id: '/_authenticated/admin/govt-workers'
-      path: '/govt-workers'
-      fullPath: '/admin/govt-workers'
-      preLoaderRoute: typeof AuthenticatedAdminGovtWorkersRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/education-news': {
-      id: '/_authenticated/admin/education-news'
-      path: '/education-news'
-      fullPath: '/admin/education-news'
-      preLoaderRoute: typeof AuthenticatedAdminEducationNewsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/cv-submissions': {
-      id: '/_authenticated/admin/cv-submissions'
-      path: '/cv-submissions'
-      fullPath: '/admin/cv-submissions'
-      preLoaderRoute: typeof AuthenticatedAdminCvSubmissionsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/complaints': {
-      id: '/_authenticated/admin/complaints'
-      path: '/complaints'
-      fullPath: '/admin/complaints'
-      preLoaderRoute: typeof AuthenticatedAdminComplaintsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/community': {
-      id: '/_authenticated/admin/community'
-      path: '/community'
-      fullPath: '/admin/community'
-      preLoaderRoute: typeof AuthenticatedAdminCommunityRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/businesses': {
-      id: '/_authenticated/admin/businesses'
-      path: '/businesses'
-      fullPath: '/admin/businesses'
-      preLoaderRoute: typeof AuthenticatedAdminBusinessesRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/business-reviews': {
-      id: '/_authenticated/admin/business-reviews'
-      path: '/business-reviews'
-      fullPath: '/admin/business-reviews'
-      preLoaderRoute: typeof AuthenticatedAdminBusinessReviewsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/business-categories': {
-      id: '/_authenticated/admin/business-categories'
-      path: '/business-categories'
-      fullPath: '/admin/business-categories'
-      preLoaderRoute: typeof AuthenticatedAdminBusinessCategoriesRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/blood-requests': {
-      id: '/_authenticated/admin/blood-requests'
-      path: '/blood-requests'
-      fullPath: '/admin/blood-requests'
-      preLoaderRoute: typeof AuthenticatedAdminBloodRequestsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/blood-donors': {
-      id: '/_authenticated/admin/blood-donors'
-      path: '/blood-donors'
-      fullPath: '/admin/blood-donors'
-      preLoaderRoute: typeof AuthenticatedAdminBloodDonorsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/bills': {
-      id: '/_authenticated/admin/bills'
-      path: '/bills'
-      fullPath: '/admin/bills'
-      preLoaderRoute: typeof AuthenticatedAdminBillsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/announcements': {
-      id: '/_authenticated/admin/announcements'
-      path: '/announcements'
-      fullPath: '/admin/announcements'
-      preLoaderRoute: typeof AuthenticatedAdminAnnouncementsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/ai-chat': {
-      id: '/_authenticated/admin/ai-chat'
-      path: '/ai-chat'
-      fullPath: '/admin/ai-chat'
-      preLoaderRoute: typeof AuthenticatedAdminAiChatRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/achievements': {
@@ -2531,32 +2181,382 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAchievementsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/services/ukhiya-go/driver/': {
-      id: '/services/ukhiya-go/driver/'
-      path: '/services/ukhiya-go/driver'
-      fullPath: '/services/ukhiya-go/driver/'
-      preLoaderRoute: typeof ServicesUkhiyaGoDriverIndexRouteImport
+    '/_authenticated/admin/ai-chat': {
+      id: '/_authenticated/admin/ai-chat'
+      path: '/ai-chat'
+      fullPath: '/admin/ai-chat'
+      preLoaderRoute: typeof AuthenticatedAdminAiChatRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/announcements': {
+      id: '/_authenticated/admin/announcements'
+      path: '/announcements'
+      fullPath: '/admin/announcements'
+      preLoaderRoute: typeof AuthenticatedAdminAnnouncementsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/bills': {
+      id: '/_authenticated/admin/bills'
+      path: '/bills'
+      fullPath: '/admin/bills'
+      preLoaderRoute: typeof AuthenticatedAdminBillsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/blood-donors': {
+      id: '/_authenticated/admin/blood-donors'
+      path: '/blood-donors'
+      fullPath: '/admin/blood-donors'
+      preLoaderRoute: typeof AuthenticatedAdminBloodDonorsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/blood-requests': {
+      id: '/_authenticated/admin/blood-requests'
+      path: '/blood-requests'
+      fullPath: '/admin/blood-requests'
+      preLoaderRoute: typeof AuthenticatedAdminBloodRequestsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/business-categories': {
+      id: '/_authenticated/admin/business-categories'
+      path: '/business-categories'
+      fullPath: '/admin/business-categories'
+      preLoaderRoute: typeof AuthenticatedAdminBusinessCategoriesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/business-reviews': {
+      id: '/_authenticated/admin/business-reviews'
+      path: '/business-reviews'
+      fullPath: '/admin/business-reviews'
+      preLoaderRoute: typeof AuthenticatedAdminBusinessReviewsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/businesses': {
+      id: '/_authenticated/admin/businesses'
+      path: '/businesses'
+      fullPath: '/admin/businesses'
+      preLoaderRoute: typeof AuthenticatedAdminBusinessesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/community': {
+      id: '/_authenticated/admin/community'
+      path: '/community'
+      fullPath: '/admin/community'
+      preLoaderRoute: typeof AuthenticatedAdminCommunityRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/complaints': {
+      id: '/_authenticated/admin/complaints'
+      path: '/complaints'
+      fullPath: '/admin/complaints'
+      preLoaderRoute: typeof AuthenticatedAdminComplaintsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/cv-submissions': {
+      id: '/_authenticated/admin/cv-submissions'
+      path: '/cv-submissions'
+      fullPath: '/admin/cv-submissions'
+      preLoaderRoute: typeof AuthenticatedAdminCvSubmissionsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/education-news': {
+      id: '/_authenticated/admin/education-news'
+      path: '/education-news'
+      fullPath: '/admin/education-news'
+      preLoaderRoute: typeof AuthenticatedAdminEducationNewsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/govt-workers': {
+      id: '/_authenticated/admin/govt-workers'
+      path: '/govt-workers'
+      fullPath: '/admin/govt-workers'
+      preLoaderRoute: typeof AuthenticatedAdminGovtWorkersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/header': {
+      id: '/_authenticated/admin/header'
+      path: '/header'
+      fullPath: '/admin/header'
+      preLoaderRoute: typeof AuthenticatedAdminHeaderRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/isp': {
+      id: '/_authenticated/admin/isp'
+      path: '/isp'
+      fullPath: '/admin/isp'
+      preLoaderRoute: typeof AuthenticatedAdminIspRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/legal': {
+      id: '/_authenticated/admin/legal'
+      path: '/legal'
+      fullPath: '/admin/legal'
+      preLoaderRoute: typeof AuthenticatedAdminLegalRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/match': {
+      id: '/_authenticated/admin/match'
+      path: '/match'
+      fullPath: '/admin/match'
+      preLoaderRoute: typeof AuthenticatedAdminMatchRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/mosques': {
+      id: '/_authenticated/admin/mosques'
+      path: '/mosques'
+      fullPath: '/admin/mosques'
+      preLoaderRoute: typeof AuthenticatedAdminMosquesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/probashi': {
+      id: '/_authenticated/admin/probashi'
+      path: '/probashi'
+      fullPath: '/admin/probashi'
+      preLoaderRoute: typeof AuthenticatedAdminProbashiRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/reuse': {
+      id: '/_authenticated/admin/reuse'
+      path: '/reuse'
+      fullPath: '/admin/reuse'
+      preLoaderRoute: typeof AuthenticatedAdminReuseRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/study-resources': {
+      id: '/_authenticated/admin/study-resources'
+      path: '/study-resources'
+      fullPath: '/admin/study-resources'
+      preLoaderRoute: typeof AuthenticatedAdminStudyResourcesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/teachers': {
+      id: '/_authenticated/admin/teachers'
+      path: '/teachers'
+      fullPath: '/admin/teachers'
+      preLoaderRoute: typeof AuthenticatedAdminTeachersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/tuition-applications': {
+      id: '/_authenticated/admin/tuition-applications'
+      path: '/tuition-applications'
+      fullPath: '/admin/tuition-applications'
+      preLoaderRoute: typeof AuthenticatedAdminTuitionApplicationsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/tuition-requests': {
+      id: '/_authenticated/admin/tuition-requests'
+      path: '/tuition-requests'
+      fullPath: '/admin/tuition-requests'
+      preLoaderRoute: typeof AuthenticatedAdminTuitionRequestsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/workers': {
+      id: '/_authenticated/admin/workers'
+      path: '/workers'
+      fullPath: '/admin/workers'
+      preLoaderRoute: typeof AuthenticatedAdminWorkersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/bills/new': {
+      id: '/_authenticated/bills/new'
+      path: '/new'
+      fullPath: '/bills/new'
+      preLoaderRoute: typeof AuthenticatedBillsNewRouteImport
+      parentRoute: typeof AuthenticatedBillsRoute
+    }
+    '/api/public/announcements': {
+      id: '/api/public/announcements'
+      path: '/api/public/announcements'
+      fullPath: '/api/public/announcements'
+      preLoaderRoute: typeof ApiPublicAnnouncementsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/ukhiya-go/trip/$tripId': {
-      id: '/services/ukhiya-go/trip/$tripId'
-      path: '/services/ukhiya-go/trip/$tripId'
-      fullPath: '/services/ukhiya-go/trip/$tripId'
-      preLoaderRoute: typeof ServicesUkhiyaGoTripTripIdRouteImport
+    '/api/public/stats': {
+      id: '/api/public/stats'
+      path: '/api/public/stats'
+      fullPath: '/api/public/stats'
+      preLoaderRoute: typeof ApiPublicStatsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/ukhiya-go/driver/register': {
-      id: '/services/ukhiya-go/driver/register'
-      path: '/services/ukhiya-go/driver/register'
-      fullPath: '/services/ukhiya-go/driver/register'
-      preLoaderRoute: typeof ServicesUkhiyaGoDriverRegisterRouteImport
+    '/community/c/$slug': {
+      id: '/community/c/$slug'
+      path: '/c/$slug'
+      fullPath: '/community/c/$slug'
+      preLoaderRoute: typeof CommunityCSlugRouteImport
+      parentRoute: typeof CommunityRoute
+    }
+    '/community/events/': {
+      id: '/community/events/'
+      path: '/events'
+      fullPath: '/community/events/'
+      preLoaderRoute: typeof CommunityEventsIndexRouteImport
+      parentRoute: typeof CommunityRoute
+    }
+    '/community/events/new': {
+      id: '/community/events/new'
+      path: '/events/new'
+      fullPath: '/community/events/new'
+      preLoaderRoute: typeof CommunityEventsNewRouteImport
+      parentRoute: typeof CommunityRoute
+    }
+    '/community/mosques/': {
+      id: '/community/mosques/'
+      path: '/'
+      fullPath: '/community/mosques/'
+      preLoaderRoute: typeof CommunityMosquesIndexRouteImport
+      parentRoute: typeof CommunityMosquesRoute
+    }
+    '/community/mosques/$slug': {
+      id: '/community/mosques/$slug'
+      path: '/$slug'
+      fullPath: '/community/mosques/$slug'
+      preLoaderRoute: typeof CommunityMosquesSlugRouteImport
+      parentRoute: typeof CommunityMosquesRoute
+    }
+    '/community/mosques/new': {
+      id: '/community/mosques/new'
+      path: '/new'
+      fullPath: '/community/mosques/new'
+      preLoaderRoute: typeof CommunityMosquesNewRouteImport
+      parentRoute: typeof CommunityMosquesRoute
+    }
+    '/community/u/$userId': {
+      id: '/community/u/$userId'
+      path: '/u/$userId'
+      fullPath: '/community/u/$userId'
+      preLoaderRoute: typeof CommunityUUserIdRouteImport
+      parentRoute: typeof CommunityRoute
+    }
+    '/services/reuse/': {
+      id: '/services/reuse/'
+      path: '/'
+      fullPath: '/services/reuse/'
+      preLoaderRoute: typeof ServicesReuseIndexRouteImport
+      parentRoute: typeof ServicesReuseRoute
+    }
+    '/services/reuse/$listingId': {
+      id: '/services/reuse/$listingId'
+      path: '/$listingId'
+      fullPath: '/services/reuse/$listingId'
+      preLoaderRoute: typeof ServicesReuseListingIdRouteImport
+      parentRoute: typeof ServicesReuseRoute
+    }
+    '/services/reuse/create': {
+      id: '/services/reuse/create'
+      path: '/create'
+      fullPath: '/services/reuse/create'
+      preLoaderRoute: typeof ServicesReuseCreateRouteImport
+      parentRoute: typeof ServicesReuseRoute
+    }
+    '/services/reuse/my-listings': {
+      id: '/services/reuse/my-listings'
+      path: '/my-listings'
+      fullPath: '/services/reuse/my-listings'
+      preLoaderRoute: typeof ServicesReuseMyListingsRouteImport
+      parentRoute: typeof ServicesReuseRoute
+    }
+    '/services/ukhiya-go/': {
+      id: '/services/ukhiya-go/'
+      path: '/services/ukhiya-go'
+      fullPath: '/services/ukhiya-go/'
+      preLoaderRoute: typeof ServicesUkhiyaGoIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lovable/email/auth/webhook': {
-      id: '/lovable/email/auth/webhook'
-      path: '/lovable/email/auth/webhook'
-      fullPath: '/lovable/email/auth/webhook'
-      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
+    '/services/ukhiya-go/bookings': {
+      id: '/services/ukhiya-go/bookings'
+      path: '/services/ukhiya-go/bookings'
+      fullPath: '/services/ukhiya-go/bookings'
+      preLoaderRoute: typeof ServicesUkhiyaGoBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/ukhiya-go/search': {
+      id: '/services/ukhiya-go/search'
+      path: '/services/ukhiya-go/search'
+      fullPath: '/services/ukhiya-go/search'
+      preLoaderRoute: typeof ServicesUkhiyaGoSearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teachers/achievements/': {
+      id: '/teachers/achievements/'
+      path: '/'
+      fullPath: '/teachers/achievements/'
+      preLoaderRoute: typeof TeachersAchievementsIndexRouteImport
+      parentRoute: typeof TeachersAchievementsRoute
+    }
+    '/teachers/achievements/$id': {
+      id: '/teachers/achievements/$id'
+      path: '/$id'
+      fullPath: '/teachers/achievements/$id'
+      preLoaderRoute: typeof TeachersAchievementsIdRouteImport
+      parentRoute: typeof TeachersAchievementsRoute
+    }
+    '/teachers/news/': {
+      id: '/teachers/news/'
+      path: '/'
+      fullPath: '/teachers/news/'
+      preLoaderRoute: typeof TeachersNewsIndexRouteImport
+      parentRoute: typeof TeachersNewsRoute
+    }
+    '/teachers/news/$id': {
+      id: '/teachers/news/$id'
+      path: '/$id'
+      fullPath: '/teachers/news/$id'
+      preLoaderRoute: typeof TeachersNewsIdRouteImport
+      parentRoute: typeof TeachersNewsRoute
+    }
+    '/teachers/tuitions/': {
+      id: '/teachers/tuitions/'
+      path: '/'
+      fullPath: '/teachers/tuitions/'
+      preLoaderRoute: typeof TeachersTuitionsIndexRouteImport
+      parentRoute: typeof TeachersTuitionsRoute
+    }
+    '/teachers/tuitions/$id': {
+      id: '/teachers/tuitions/$id'
+      path: '/$id'
+      fullPath: '/teachers/tuitions/$id'
+      preLoaderRoute: typeof TeachersTuitionsIdRouteImport
+      parentRoute: typeof TeachersTuitionsRoute
+    }
+    '/teachers/tuitions/new': {
+      id: '/teachers/tuitions/new'
+      path: '/new'
+      fullPath: '/teachers/tuitions/new'
+      preLoaderRoute: typeof TeachersTuitionsNewRouteImport
+      parentRoute: typeof TeachersTuitionsRoute
+    }
+    '/_authenticated/admin/ukhiya-go/drivers': {
+      id: '/_authenticated/admin/ukhiya-go/drivers'
+      path: '/ukhiya-go/drivers'
+      fullPath: '/admin/ukhiya-go/drivers'
+      preLoaderRoute: typeof AuthenticatedAdminUkhiyaGoDriversRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/ukhiya-go/material-orders': {
+      id: '/_authenticated/admin/ukhiya-go/material-orders'
+      path: '/ukhiya-go/material-orders'
+      fullPath: '/admin/ukhiya-go/material-orders'
+      preLoaderRoute: typeof AuthenticatedAdminUkhiyaGoMaterialOrdersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/bills/$id/edit': {
+      id: '/_authenticated/bills/$id/edit'
+      path: '/$id/edit'
+      fullPath: '/bills/$id/edit'
+      preLoaderRoute: typeof AuthenticatedBillsIdEditRouteImport
+      parentRoute: typeof AuthenticatedBillsRoute
+    }
+    '/api/public/hooks/refresh-exchange-rates': {
+      id: '/api/public/hooks/refresh-exchange-rates'
+      path: '/api/public/hooks/refresh-exchange-rates'
+      fullPath: '/api/public/hooks/refresh-exchange-rates'
+      preLoaderRoute: typeof ApiPublicHooksRefreshExchangeRatesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lovable/email/auth/preview': {
@@ -2566,33 +2566,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/hooks/refresh-exchange-rates': {
-      id: '/api/public/hooks/refresh-exchange-rates'
-      path: '/api/public/hooks/refresh-exchange-rates'
-      fullPath: '/api/public/hooks/refresh-exchange-rates'
-      preLoaderRoute: typeof ApiPublicHooksRefreshExchangeRatesRouteImport
+    '/lovable/email/auth/webhook': {
+      id: '/lovable/email/auth/webhook'
+      path: '/lovable/email/auth/webhook'
+      fullPath: '/lovable/email/auth/webhook'
+      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/bills/$id/edit': {
-      id: '/_authenticated/bills/$id/edit'
-      path: '/$id/edit'
-      fullPath: '/bills/$id/edit'
-      preLoaderRoute: typeof AuthenticatedBillsIdEditRouteImport
-      parentRoute: typeof AuthenticatedBillsRoute
+    '/services/ukhiya-go/driver/': {
+      id: '/services/ukhiya-go/driver/'
+      path: '/services/ukhiya-go/driver'
+      fullPath: '/services/ukhiya-go/driver/'
+      preLoaderRoute: typeof ServicesUkhiyaGoDriverIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/ukhiya-go/material-orders': {
-      id: '/_authenticated/admin/ukhiya-go/material-orders'
-      path: '/ukhiya-go/material-orders'
-      fullPath: '/admin/ukhiya-go/material-orders'
-      preLoaderRoute: typeof AuthenticatedAdminUkhiyaGoMaterialOrdersRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+    '/services/ukhiya-go/driver/register': {
+      id: '/services/ukhiya-go/driver/register'
+      path: '/services/ukhiya-go/driver/register'
+      fullPath: '/services/ukhiya-go/driver/register'
+      preLoaderRoute: typeof ServicesUkhiyaGoDriverRegisterRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/ukhiya-go/drivers': {
-      id: '/_authenticated/admin/ukhiya-go/drivers'
-      path: '/ukhiya-go/drivers'
-      fullPath: '/admin/ukhiya-go/drivers'
-      preLoaderRoute: typeof AuthenticatedAdminUkhiyaGoDriversRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+    '/services/ukhiya-go/trip/$tripId': {
+      id: '/services/ukhiya-go/trip/$tripId'
+      path: '/services/ukhiya-go/trip/$tripId'
+      fullPath: '/services/ukhiya-go/trip/$tripId'
+      preLoaderRoute: typeof ServicesUkhiyaGoTripTripIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
