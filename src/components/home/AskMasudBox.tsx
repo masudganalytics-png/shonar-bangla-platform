@@ -13,8 +13,7 @@ const SUGGESTIONS = ["CV লিখতে সাহায্য", "আবেদ�
 
 type Msg = { role: "user" | "assistant"; content: string; error?: boolean };
 
-export function AskMasudBox({ hideHeaderBorder }: { hideHeaderBorder?: boolean } = {}) {
-  void hideHeaderBorder;
+export function AskMasudBox() {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [q, setQ] = useState("");
   const [loading, setLoading] = useState(false);

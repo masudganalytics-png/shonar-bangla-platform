@@ -47,6 +47,7 @@ import { Route as AuthenticatedMyMatchRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as ApiAskmasudRouteImport } from './routes/api/askmasud'
 import { Route as BloodDonorsIndexRouteImport } from './routes/blood-donors.index'
 import { Route as BloodDonorsRegisterRouteImport } from './routes/blood-donors.register'
 import { Route as BusinessIndexRouteImport } from './routes/business.index'
@@ -331,6 +332,11 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ApiAskmasudRoute = ApiAskmasudRouteImport.update({
+  id: '/api/askmasud',
+  path: '/api/askmasud',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BloodDonorsIndexRoute = BloodDonorsIndexRouteImport.update({
   id: '/',
@@ -876,6 +882,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/api/askmasud': typeof ApiAskmasudRoute
   '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
@@ -1000,6 +1007,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/api/askmasud': typeof ApiAskmasudRoute
   '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
@@ -1131,6 +1139,7 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/api/askmasud': typeof ApiAskmasudRoute
   '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
@@ -1267,6 +1276,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/api/askmasud'
     | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
@@ -1391,6 +1401,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/api/askmasud'
     | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
@@ -1521,6 +1532,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
+    | '/api/askmasud'
     | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
@@ -1647,6 +1659,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   UtilitiesRoute: typeof UtilitiesRoute
   WorkersRoute: typeof WorkersRouteWithChildren
+  ApiAskmasudRoute: typeof ApiAskmasudRoute
   ServicesReuseRoute: typeof ServicesReuseRouteWithChildren
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
   ApiPublicStatsRoute: typeof ApiPublicStatsRoute
@@ -1928,6 +1941,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/settings'
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/askmasud': {
+      id: '/api/askmasud'
+      path: '/api/askmasud'
+      fullPath: '/api/askmasud'
+      preLoaderRoute: typeof ApiAskmasudRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/blood-donors/': {
       id: '/blood-donors/'
@@ -2977,6 +2997,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   UtilitiesRoute: UtilitiesRoute,
   WorkersRoute: WorkersRouteWithChildren,
+  ApiAskmasudRoute: ApiAskmasudRoute,
   ServicesReuseRoute: ServicesReuseRouteWithChildren,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
   ApiPublicStatsRoute: ApiPublicStatsRoute,
