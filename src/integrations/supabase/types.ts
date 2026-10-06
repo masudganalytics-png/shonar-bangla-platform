@@ -190,6 +190,24 @@ export type Database = {
         }
         Relationships: []
       }
+      askmasud_usage: {
+        Row: {
+          count: number
+          day: string
+          usage_key: string
+        }
+        Insert: {
+          count?: number
+          day?: string
+          usage_key: string
+        }
+        Update: {
+          count?: number
+          day?: string
+          usage_key?: string
+        }
+        Relationships: []
+      }
       bills: {
         Row: {
           amount: number
@@ -3834,6 +3852,10 @@ export type Database = {
       }
     }
     Functions: {
+      askmasud_consume: {
+        Args: { _key: string; _limit: number }
+        Returns: boolean
+      }
       can_view_member_phone: {
         Args: { _target: string; _viewer: string }
         Returns: boolean

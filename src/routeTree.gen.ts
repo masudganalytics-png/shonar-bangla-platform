@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AskmasudRouteImport } from './routes/askmasud'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthCallbackRouteImport } from './routes/auth-callback'
 import { Route as BloodDonorsRouteImport } from './routes/blood-donors'
@@ -47,6 +48,7 @@ import { Route as AuthenticatedMyMatchRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as ApiAskmasudRouteImport } from './routes/api/askmasud'
 import { Route as BloodDonorsIndexRouteImport } from './routes/blood-donors.index'
 import { Route as BloodDonorsRegisterRouteImport } from './routes/blood-donors.register'
 import { Route as BusinessIndexRouteImport } from './routes/business.index'
@@ -155,6 +157,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AskmasudRoute = AskmasudRouteImport.update({
+  id: '/askmasud',
+  path: '/askmasud',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -331,6 +338,11 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ApiAskmasudRoute = ApiAskmasudRouteImport.update({
+  id: '/api/askmasud',
+  path: '/api/askmasud',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BloodDonorsIndexRoute = BloodDonorsIndexRouteImport.update({
   id: '/',
@@ -841,6 +853,7 @@ const ServicesUkhiyaGoTripTripIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/askmasud': typeof AskmasudRoute
   '/auth': typeof AuthRoute
   '/auth-callback': typeof AuthCallbackRoute
   '/blood-donors': typeof BloodDonorsRouteWithChildren
@@ -876,6 +889,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/api/askmasud': typeof ApiAskmasudRoute
   '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
@@ -975,6 +989,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/askmasud': typeof AskmasudRoute
   '/auth': typeof AuthRoute
   '/auth-callback': typeof AuthCallbackRoute
   '/calculator': typeof CalculatorRoute
@@ -1000,6 +1015,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/api/askmasud': typeof ApiAskmasudRoute
   '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
@@ -1096,6 +1112,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/askmasud': typeof AskmasudRoute
   '/auth': typeof AuthRoute
   '/auth-callback': typeof AuthCallbackRoute
   '/blood-donors': typeof BloodDonorsRouteWithChildren
@@ -1131,6 +1148,7 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/api/askmasud': typeof ApiAskmasudRoute
   '/blood-donors/register': typeof BloodDonorsRegisterRoute
   '/business/$slug': typeof BusinessSlugRoute
   '/business/directory': typeof BusinessDirectoryRoute
@@ -1232,6 +1250,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/askmasud'
     | '/auth'
     | '/auth-callback'
     | '/blood-donors'
@@ -1267,6 +1286,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/api/askmasud'
     | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
@@ -1366,6 +1386,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/askmasud'
     | '/auth'
     | '/auth-callback'
     | '/calculator'
@@ -1391,6 +1412,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reports'
     | '/settings'
+    | '/api/askmasud'
     | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
@@ -1486,6 +1508,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/about'
+    | '/askmasud'
     | '/auth'
     | '/auth-callback'
     | '/blood-donors'
@@ -1521,6 +1544,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/reports'
     | '/_authenticated/settings'
+    | '/api/askmasud'
     | '/blood-donors/register'
     | '/business/$slug'
     | '/business/directory'
@@ -1622,6 +1646,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  AskmasudRoute: typeof AskmasudRoute
   AuthRoute: typeof AuthRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   BloodDonorsRoute: typeof BloodDonorsRouteWithChildren
@@ -1647,6 +1672,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   UtilitiesRoute: typeof UtilitiesRoute
   WorkersRoute: typeof WorkersRouteWithChildren
+  ApiAskmasudRoute: typeof ApiAskmasudRoute
   ServicesReuseRoute: typeof ServicesReuseRouteWithChildren
   ApiPublicAnnouncementsRoute: typeof ApiPublicAnnouncementsRoute
   ApiPublicStatsRoute: typeof ApiPublicStatsRoute
@@ -1682,6 +1708,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/askmasud': {
+      id: '/askmasud'
+      path: '/askmasud'
+      fullPath: '/askmasud'
+      preLoaderRoute: typeof AskmasudRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -1928,6 +1961,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/settings'
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/askmasud': {
+      id: '/api/askmasud'
+      path: '/api/askmasud'
+      fullPath: '/api/askmasud'
+      preLoaderRoute: typeof ApiAskmasudRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/blood-donors/': {
       id: '/blood-donors/'
@@ -2952,6 +2992,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  AskmasudRoute: AskmasudRoute,
   AuthRoute: AuthRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   BloodDonorsRoute: BloodDonorsRouteWithChildren,
@@ -2977,6 +3018,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   UtilitiesRoute: UtilitiesRoute,
   WorkersRoute: WorkersRouteWithChildren,
+  ApiAskmasudRoute: ApiAskmasudRoute,
   ServicesReuseRoute: ServicesReuseRouteWithChildren,
   ApiPublicAnnouncementsRoute: ApiPublicAnnouncementsRoute,
   ApiPublicStatsRoute: ApiPublicStatsRoute,
