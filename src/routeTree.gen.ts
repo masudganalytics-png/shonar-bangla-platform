@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AskmasudRouteImport } from './routes/askmasud'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthCallbackRouteImport } from './routes/auth-callback'
 import { Route as BloodDonorsRouteImport } from './routes/blood-donors'
@@ -156,6 +157,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AskmasudRoute = AskmasudRouteImport.update({
+  id: '/askmasud',
+  path: '/askmasud',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -847,6 +853,7 @@ const ServicesUkhiyaGoTripTripIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/askmasud': typeof AskmasudRoute
   '/auth': typeof AuthRoute
   '/auth-callback': typeof AuthCallbackRoute
   '/blood-donors': typeof BloodDonorsRouteWithChildren
@@ -982,6 +989,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/askmasud': typeof AskmasudRoute
   '/auth': typeof AuthRoute
   '/auth-callback': typeof AuthCallbackRoute
   '/calculator': typeof CalculatorRoute
@@ -1104,6 +1112,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/askmasud': typeof AskmasudRoute
   '/auth': typeof AuthRoute
   '/auth-callback': typeof AuthCallbackRoute
   '/blood-donors': typeof BloodDonorsRouteWithChildren
@@ -1241,6 +1250,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/askmasud'
     | '/auth'
     | '/auth-callback'
     | '/blood-donors'
@@ -1376,6 +1386,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/askmasud'
     | '/auth'
     | '/auth-callback'
     | '/calculator'
@@ -1497,6 +1508,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/about'
+    | '/askmasud'
     | '/auth'
     | '/auth-callback'
     | '/blood-donors'
@@ -1634,6 +1646,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  AskmasudRoute: typeof AskmasudRoute
   AuthRoute: typeof AuthRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   BloodDonorsRoute: typeof BloodDonorsRouteWithChildren
@@ -1695,6 +1708,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/askmasud': {
+      id: '/askmasud'
+      path: '/askmasud'
+      fullPath: '/askmasud'
+      preLoaderRoute: typeof AskmasudRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -2972,6 +2992,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  AskmasudRoute: AskmasudRoute,
   AuthRoute: AuthRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   BloodDonorsRoute: BloodDonorsRouteWithChildren,
