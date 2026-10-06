@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
 import { Bot, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Conversation, ConversationContent, ConversationScrollButton } from "@/components/ai-elements/conversation";
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
 import { PromptInput, PromptInputTextarea, PromptInputFooter, PromptInputSubmit } from "@/components/ai-elements/prompt-input";
 import { Shimmer } from "@/components/ai-elements/shimmer";
-import { askMasud } from "@/lib/askmasud.functions";
+import { supabase } from "@/integrations/supabase/client";
 
 const WELCOME =
   "আসসালামু আলাইকুম! আমি AskMasud, একটি AI সহায়ক। পড়াশোনা, সিভি, আবেদনপত্র, অনুবাদ বা সাধারণ যেকোনো প্রশ্ন করুন। উখিয়ার রক্তদাতা, শিক্ষক বা দোকান খুঁজতে KHIJIRION AI-তে যান।";
@@ -14,11 +13,11 @@ const SUGGESTIONS = ["CV লিখতে সাহায্য", "আবেদ�
 
 type Msg = { role: "user" | "assistant"; content: string; error?: boolean };
 
-export function AskMasudBox() {
+export function AskMasudBox({ hideHeaderBorder }: { hideHeaderBorder?: boolean } = {}) {
+  void hideHeaderBorder;
   const [messages, setMessages] = useState<Msg[]>([]);
   const [q, setQ] = useState("");
   const [loading, setLoading] = useState(false);
-  const send = useServerFn(askMasud);
 
   const ask = async (text: string) => {
     const value = text.trim();
@@ -27,12 +26,33 @@ export function AskMasudBox() {
     setMessages(next);
     setQ("");
     setLoading(true);
+    const FAIL = "এই মুহূর্তে উত্তর দিতে পারছি না, একটু পরে আবার চেষ্টা করুন।";
     try {
       const history = next.filter((m) => !m.error).map(({ role, content }) => ({ role, content }));
-      const res = await send({ data: { messages: history.slice(-10) } });
-      setMessages((p) => [...p, { role: "assistant", content: res.answer, error: !res.ok }]);
+      const { data: sess } = await supabase.auth.getSession();
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (sess.session) headers.Authorization = `Bearer ${sess.session.access_token}`;
+      const res = await fetch("/api/askmasud", { method: "POST", headers, body: JSON.stringify({ messages: history.slice(-10) }) });
+      if (!res.ok || !res.body) {
+        const msg = res.status === 429 ? await res.text() : FAIL;
+        setMessages((p) => [...p, { role: "assistant", content: msg, error: true }]);
+        return;
+      }
+      setMessages((p) => [...p, { role: "assistant", content: "" }]);
+      setLoading(false);
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let acc = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        acc += decoder.decode(value, { stream: true });
+        const snapshot = acc;
+        setMessages((p) => [...p.slice(0, -1), { role: "assistant", content: snapshot }]);
+      }
+      if (!acc.trim()) setMessages((p) => [...p.slice(0, -1), { role: "assistant", content: FAIL, error: true }]);
     } catch {
-      setMessages((p) => [...p, { role: "assistant", content: "এই মুহূর্তে উত্তর দিতে পারছি না, একটু পরে আবার চেষ্টা করুন।", error: true }]);
+      setMessages((p) => [...p, { role: "assistant", content: FAIL, error: true }]);
     } finally {
       setLoading(false);
     }
