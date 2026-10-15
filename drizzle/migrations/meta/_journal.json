@@ -85,6 +85,13 @@
       "when": 1791250808106,
       "tag": "0011_askmasud_usage",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1792050941191,
+      "tag": "0012_ebooks_private_storage",
+      "breakpoints": true
     }
   ]
 }
