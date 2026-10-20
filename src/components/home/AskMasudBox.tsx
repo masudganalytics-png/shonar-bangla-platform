@@ -17,10 +17,14 @@ export function AskMasudBox() {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [q, setQ] = useState("");
   const [loading, setLoading] = useState(false);
+  // Stays true for the whole request including streaming, so a second send
+  // (or "নতুন চ্যাট") cannot interleave with the active stream.
+  const [busy, setBusy] = useState(false);
 
   const ask = async (text: string) => {
     const value = text.trim();
-    if (!value || loading) return;
+    if (!value || busy) return;
+    setBusy(true);
     const next: Msg[] = [...messages, { role: "user", content: value }];
     setMessages(next);
     setQ("");
@@ -54,6 +58,7 @@ export function AskMasudBox() {
       setMessages((p) => [...p, { role: "assistant", content: FAIL, error: true }]);
     } finally {
       setLoading(false);
+      setBusy(false);
     }
   };
 
@@ -70,7 +75,7 @@ export function AskMasudBox() {
           </p>
         </div>
         {messages.length > 0 && (
-          <Button variant="ghost" size="sm" onClick={() => setMessages([])} disabled={loading}>
+          <Button variant="ghost" size="sm" onClick={() => setMessages([])} disabled={busy}>
             <Plus /> নতুন চ্যাট
           </Button>
         )}
@@ -130,7 +135,7 @@ export function AskMasudBox() {
             className="min-h-10"
           />
           <PromptInputFooter className="justify-end">
-            <PromptInputSubmit status={loading ? "submitted" : undefined} disabled={loading || !q.trim()} />
+            <PromptInputSubmit status={busy ? "submitted" : undefined} disabled={busy || !q.trim()} />
           </PromptInputFooter>
         </PromptInput>
         <p className="mt-2 text-[11px] leading-snug text-muted-foreground">
