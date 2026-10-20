@@ -17,10 +17,14 @@ export function AskMasudBox() {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [q, setQ] = useState("");
   const [loading, setLoading] = useState(false);
+  // Stays true for the whole request including streaming, so a second send
+  // (or "নতুন চ্যাট") cannot interleave with the active stream.
+  const [busy, setBusy] = useState(false);
 
   const ask = async (text: string) => {
     const value = text.trim();
-    if (!value || loading) return;
+    if (!value || busy) return;
+    setBusy(true);
     const next: Msg[] = [...messages, { role: "user", content: value }];
     setMessages(next);
     setQ("");
