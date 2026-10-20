@@ -144,7 +144,10 @@ const QUICK_RULES: Array<[string, RegExp]> = [
   ["ride", /gari|gadi|\bcng\b|bike|microbus|ukhiyago|গাড়ি|সিএনজি|বাইক|মাইক্রো|উখিয়াগো/i],
   ["reuse", /reuse|purono|second.?hand|পুরনো|পুরাতন|রিইউজ/i],
 ];
-const FILLER = /\b(lagbe|ache|ase|kothay|khuji|need|want|find|please|plz|ukhiya|ukhiyay)\b|লাগবে|আছে|কোথায়|খুঁজছি|দরকার|চাই|উখিয়ায়|উখিয়া|কি|কে|\?|।/gi;
+// Conversational words stripped before searching. Standalone কি/কে use lookarounds
+// so they are removed only as separate words, not out of the middle of real words.
+const FILLER =
+  /\b(lagbe|ache|ase|kothay|khuji|khujchi|need|want|find|please|plz|ukhiya|ukhiyay|dorkar|chai|ekjon|jonno|theke|ami|amar|amra|kono|kichu|jan|den|dao|te)\b|লাগবে|আছে|কোথায়|খুঁজছি|দরকার|চাই|উখিয়ায়|উখিয়া|একজন|জন্য|আমি|আমার|আমরা|কিছু|কোনো|(?<=^|\s)কি(?=\s|$)|(?<=^|\s)কে(?=\s|$)|\?|।/gi;
 function quickCategory(q: string): string | null {
   const hits = QUICK_RULES.filter(([, re]) => re.test(q));
   return hits.length === 1 ? hits[0][0] : null;
