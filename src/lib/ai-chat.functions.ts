@@ -168,21 +168,38 @@ async function internalAnswer(question: string, userId: string | null): Promise<
     console.error("[khijirion-ai] intent extraction failed, using keyword fallback", e);
     intent = { category: "other", keywords: question, blood_group: null };
   }
-  const bloodGroup = normalizeBloodGroup(intent.blood_group) ?? normalizeBloodGroup(question);
-  const category = bloodGroup && intent.category === "other" ? "blood" : intent.category;
-  const modules = CATEGORY_MODULES[category] ?? CATEGORY_MODULES.other;
-  const term = (intent.keywords || "").trim();
-  console.log("[khijirion-ai] intent", JSON.stringify({ category, keywords: term, blood_group: bloodGroup }));
 
-  const lists = await Promise.all(
-    modules.map(async (key) => {
-      const map = getModuleMap(key);
-      const rows = await searchModule(map, { term, area: null, bloodGroup: key === "blood_donor" ? bloodGroup : null });
-      console.log(`[khijirion-ai] table=${map.table} results=${rows.length}`);
-      return rows;
-    }),
-  );
-  const results = lists.flat().slice(0, 5);
+  const search = async (categoryRaw: string, keywords: string, group: string | null): Promise<AiSearchResult[]> => {
+    const category = group && categoryRaw === "other" ? "blood" : categoryRaw;
+    const modules = CATEGORY_MODULES[category] ?? CATEGORY_MODULES.other;
+    const term = (keywords || "").trim();
+    console.log("[khijirion-ai] intent", JSON.stringify({ category, keywords: term, blood_group: group }));
+    const lists = await Promise.all(
+      modules.map(async (key) => {
+        const map = getModuleMap(key);
+        const rows = await searchModule(map, { term, area: null, bloodGroup: key === "blood_donor" ? group : null });
+        console.log(`[khijirion-ai] table=${map.table} results=${rows.length}`);
+        return rows;
+      }),
+    );
+    return lists.flat().slice(0, 5);
+  };
+
+  const bloodGroup = normalizeBloodGroup(intent.blood_group) ?? normalizeBloodGroup(question);
+  let results = await search(intent.category, intent.keywords, bloodGroup);
+
+  // Fast path leftover words can produce a phrase that matches nothing; retry once
+  // with Gemini-extracted clean keywords before declaring "not found".
+  if (!results.length && quick) {
+    try {
+      const refined = await geminiExtractIntent(question);
+      const refinedGroup = normalizeBloodGroup(refined.blood_group) ?? bloodGroup;
+      console.log("[khijirion-ai] quick path empty, retrying with Gemini intent", JSON.stringify(refined));
+      results = await search(refined.category, refined.keywords, refinedGroup);
+    } catch (e) {
+      console.error("[khijirion-ai] Gemini retry failed", e);
+    }
+  }
 
   // Blood donor phones only for signed-in users.
   const donorIds = results.filter((r) => r.kind === "blood_donor").map((r) => r.id);
